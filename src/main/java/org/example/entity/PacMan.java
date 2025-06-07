@@ -28,20 +28,20 @@ public class PacMan implements Sprite{
 
         switch (direction) {
             case RIGHT:
-                drawRightOpenMousePacMan(con);
                 centerX+= Dimensions.PAC_MAN_STRIDE / 60;
+                drawRightOpenMousePacMan(con);
                 break;
             case UP:
-                drawUpOpenMousePacMan(con);
                 centerY-= Dimensions.PAC_MAN_STRIDE / 60;
+                drawUpOpenMousePacMan(con);
                 break;
             case LEFT:
-                drawLeftOpenMousePacMan(con);
                 centerX-= Dimensions.PAC_MAN_STRIDE / 60;
+                drawLeftOpenMousePacMan(con);
                 break;
             case DOWN:
-                drawDownOpenMousePacMan(con);
                 centerY+= Dimensions.PAC_MAN_STRIDE / 60;
+                drawDownOpenMousePacMan(con);
                 break;
             case STILL:
                 drawClosedMousePacMan(con);
