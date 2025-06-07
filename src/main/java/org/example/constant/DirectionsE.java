@@ -1,2 +1,9 @@
-package org.example.constant;public class DirectionsE {
+package org.example.constant;
+
+public enum DirectionsE {
+    RIGHT,
+    UP,
+    LEFT,
+    DOWN,
+    STILL;
 }
