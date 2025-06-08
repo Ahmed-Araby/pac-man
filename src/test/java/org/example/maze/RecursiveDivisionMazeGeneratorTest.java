@@ -2,7 +2,6 @@ package org.example.maze;
 
 
 import org.junit.jupiter.api.RepeatedTest;
-import org.junit.jupiter.api.Test;
 
 class RecursiveDivisionMazeGeneratorTest {
 

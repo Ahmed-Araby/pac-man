@@ -1,13 +1,9 @@
 package org.example.maze;
 
-import java.util.concurrent.ThreadLocalRandom;
-
 public class RecursiveDivisionMazeGenerator implements MazeGenerator {
 
     @Override
     public boolean[][] generateMaze(int width, int height, int chamberMinWidth, int chamberMinHeight) {
-        ThreadLocalRandom.current().setSeed(Thread.currentThread().threadId());
-
         final boolean[][] chamber = new boolean[width][height];
         generateMaze(chamber, 0, 0,
                 width, height,
@@ -23,10 +19,10 @@ public class RecursiveDivisionMazeGenerator implements MazeGenerator {
         }
 
         // build perpendicular walls
-        int interPRow = getRandomRow(topLeftCornerRow, height);
+        int interPRow = getRandomRowForPlacingWalls(topLeftCornerRow, height);
         putWallsInRow(chamber, topLeftCornerCol, width, interPRow);
 
-        int interPCol = getRandomCol(topLeftCornerCol, width);
+        int interPCol = getRandomColForPlacingWalls(topLeftCornerCol, width);
         putWallsInCol(chamber, topLeftCornerRow, height, interPCol);
 
         // randomly open passages
@@ -34,7 +30,8 @@ public class RecursiveDivisionMazeGenerator implements MazeGenerator {
         openWallToTheRightOfIntersectionPoint(chamber, interPRow, interPCol, width);
         openWallBellowTheIntersectionPoint(chamber, interPRow, interPCol, height);
         openWallToTheLeftOfIntersectionPoint(chamber, topLeftCornerCol, interPRow, interPCol);
-        // work on the smaller chambers
+
+        // recurse and work on the smaller chambers
     }
 
     private void putWallsInRow(boolean[][] chamber, int topLeftCornerCol, int width, int row) {
@@ -49,37 +46,38 @@ public class RecursiveDivisionMazeGenerator implements MazeGenerator {
         }
     }
 
-    private int getRandomRow(int topLeftCornerRow, int chamberHeight) {
+    private int getRandomRowForPlacingWalls(int topLeftCornerRow, int chamberHeight) {
         int minRow = topLeftCornerRow + 1;
         int maxRow = topLeftCornerRow + chamberHeight - 2;
-        return random.nextInt(maxRow - minRow + 1) + minRow;
+        return enrichedRandom.nextIntStartInclEndIncl(minRow, maxRow);
     }
 
-    private int getRandomCol(int topLeftCornerCol, int chamberWidth) {
+    private int getRandomColForPlacingWalls(int topLeftCornerCol, int chamberWidth) {
         int minCol = topLeftCornerCol + 1;
         int maxCol = topLeftCornerCol + chamberWidth - 2;
-        return random.nextInt(maxCol - minCol + 1) + minCol;
+        return enrichedRandom.nextIntStartExclEndExcl(minCol, maxCol);
     }
 
+    // OPEN WALS
     // can we open the wall while building the perpendicular walls !?
     private void openWallToTheRightOfIntersectionPoint(boolean[][] chamber, int interPRow, int interPCol, int chamberWidth) {
-        final int nextToInterPCol = interPCol + 1; // exclude the intersection point col from the possible positions of an open wall
-        final int randCol = random.nextInt(chamberWidth - nextToInterPCol) + nextToInterPCol;
+        // exclude the intersection point col from the possible positions of an open wall
+        final int randCol = enrichedRandom.nextIntStartExclEndExcl(interPCol, chamberWidth);
         chamber[interPRow][randCol] = false;
     }
 
     private void openWallToTheLeftOfIntersectionPoint(boolean[][] chamber, int topLeftCornerCol, int interPRow, int interPCol) {
-        final int randCol = random.nextInt(interPCol - topLeftCornerCol) + topLeftCornerCol;
+        final int randCol = enrichedRandom.nextIntStartInclEndExcl(topLeftCornerCol, interPCol);
         chamber[interPRow][randCol] = false;
     }
 
     private void openWallAboveTheIntersectionPoint(boolean[][] chamber, int topLeftCornerRow, int interPRow, int interPCol) {
-        final int randRow = random.nextInt(interPRow - topLeftCornerRow) + topLeftCornerRow;
+        final int randRow = enrichedRandom.nextIntStartInclEndExcl(topLeftCornerRow, interPRow);
         chamber[randRow][interPCol] = false;
     }
     private void openWallBellowTheIntersectionPoint(boolean[][] chamber, int interPRow, int interPCol, int chamberHeight) {
-        int nextToInterPRow = interPRow + 1; // exclude the intersection point row from the possible positions of an open wall
-        final int randRow = random.nextInt(chamberHeight - nextToInterPRow) + nextToInterPRow;
+        // exclude the intersection point row from the possible positions of an open wall
+        final int randRow = enrichedRandom. nextIntStartExclEndExcl(interPRow, chamberHeight);
         chamber[randRow][interPCol] = false;
     }
 }

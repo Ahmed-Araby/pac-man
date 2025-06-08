@@ -1,8 +1,8 @@
 package org.example.maze;
 
-import java.util.Random;
+import org.example.util.EnrichedThreadLocalRandom;
 
 public interface MazeGenerator {
-    Random random = new Random();
+    EnrichedThreadLocalRandom  enrichedRandom = new EnrichedThreadLocalRandom();
     boolean[][] generateMaze(int width, int height, int chamberMinWidth, int chamberMinHeight);
 }
