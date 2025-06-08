@@ -5,6 +5,7 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.RepeatedTest;
+import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
 import org.junit.jupiter.params.provider.ValueSource;
@@ -80,7 +81,7 @@ class RecursiveDivisionMazeGeneratorTest {
         final RecursiveDivisionMazeGenerator mazeGenerator = new RecursiveDivisionMazeGenerator();
 
         // when
-        final boolean[][] maze = mazeGenerator.generateMaze(width, height, 2, 2);
+        final boolean[][] maze = mazeGenerator.generateMaze(height, width, 2, 2);
 
         // then
         for (int i=0; i<height; i++) {
@@ -93,7 +94,7 @@ class RecursiveDivisionMazeGeneratorTest {
     }
 
     @ParameterizedTest
-    @CsvSource({"100, 100", "100, 100", "100, 100", "100, 100", "50, 50", "200, 200", "1000, 1000", "10000, 10000"})
+    @CsvSource({"10, 10", "10, 15", "50, 25","100, 100", "100, 100", "100, 100", "100, 100", "50, 50", "200, 200", "1000, 1000", "10000, 10000"})
     void generateMaze_MazeShouldBeAConnectedGraph(int mazeHeight, int mazeWidth) throws InterruptedException {
         final RecursiveDivisionMazeGenerator mazeGenerator = new RecursiveDivisionMazeGenerator();
         final boolean[][] maze = mazeGenerator.generateMaze(mazeHeight, mazeWidth, 2, 2);
@@ -102,6 +103,29 @@ class RecursiveDivisionMazeGeneratorTest {
         boolean[][] visited = new boolean[mazeHeight][mazeWidth];
         bfsMazeTraversal(maze, visited, cellPos.getX(), cellPos.getY());
         final boolean isConnectedGraph = isMazeAConnectedGraph(maze, visited);
+
+        Assertions.assertTrue(isConnectedGraph, "Generated Maze Should be a connected Graph");
+    }
+
+    @RepeatedTest(10)
+    void generateMaze_MazeShouldBeAConnectedGraph() throws InterruptedException {
+        int mazeHeight = 10;
+        int mazeWidth = 15;
+        final RecursiveDivisionMazeGenerator mazeGenerator = new RecursiveDivisionMazeGenerator();
+        final boolean[][] maze = mazeGenerator.generateMaze(mazeHeight, mazeWidth, 2, 2);
+
+        final Pair cellPos = getEmptyMazeCell(maze);
+        boolean[][] visited = new boolean[mazeHeight][mazeWidth];
+        bfsMazeTraversal(maze, visited, cellPos.getX(), cellPos.getY());
+        final boolean isConnectedGraph = isMazeAConnectedGraph(maze, visited);
+
+        for (int i=0; i<mazeHeight; i++) {
+            for (int j=0; j<mazeWidth; j++) {
+                System.out.print(maze[i][j] ? 1 : 0);
+                System.out.print(" ");
+            }
+            System.out.println();
+        }
 
         Assertions.assertTrue(isConnectedGraph, "Generated Maze Should be a connected Graph");
     }
