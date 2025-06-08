@@ -9,6 +9,7 @@ import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
 import org.example.constant.ColorConstants;
 import org.example.constant.Dimensions;
+import org.example.entity.Maze;
 import org.example.entity.PacMan;
 
 
@@ -34,6 +35,7 @@ public class Main extends Application
         stage.setScene(gamePlayScene);
         stage.show();
         final PacMan pacMan = new PacMan();
+        final Maze maze = new Maze();
 
         final AnimationTimer gameLoop = new AnimationTimer() {
             @Override
@@ -42,6 +44,7 @@ public class Main extends Application
                 context.setFill(ColorConstants.CANVAS_COLOR);
                 context.fillRect(0, 0, Dimensions.CANVAS_WIDTH, Dimensions.CANVAS_HEIGHT);
 
+                maze.render(canvas);
                 pacMan.render(canvas);
             }
         };

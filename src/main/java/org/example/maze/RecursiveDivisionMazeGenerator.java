@@ -29,7 +29,7 @@ public class RecursiveDivisionMazeGenerator implements MazeGenerator {
         openWallAboveTheIntersectionPoint(chamber, topLeftCornerRow, interPRow, interPCol);
         openWallToTheRightOfIntersectionPoint(chamber, interPRow, interPCol, bottomRightCornerCol);
         openWallBellowTheIntersectionPoint(chamber, interPRow, interPCol, bottomRightCornerRow);
-//        openWallToTheLeftOfIntersectionPoint(chamber, topLeftCornerCol, interPRow, interPCol);
+        openWallToTheLeftOfIntersectionPoint(chamber, topLeftCornerCol, interPRow, interPCol);
 
         // recurse and work on the smaller chambers
         recurseOnTopRightChamber(chamber, bottomRightCornerCol, topLeftCornerRow, interPRow, interPCol, chamberMinWidth, chamberMinHeight);

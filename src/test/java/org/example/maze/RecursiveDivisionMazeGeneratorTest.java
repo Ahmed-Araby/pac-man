@@ -5,10 +5,8 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.RepeatedTest;
-import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
-import org.junit.jupiter.params.provider.ValueSource;
 
 import java.util.LinkedList;
 import java.util.Queue;
@@ -38,7 +36,7 @@ class RecursiveDivisionMazeGeneratorTest {
         int dRow[] = {-1, 1, 0, 0};
         int dCol[] = {0, 0, 1, -1};
 
-        final Queue<Pair> queue = new ConcurrentLinkedQueue<>();
+        final Queue<Pair> queue = new LinkedList<>();
         queue.add(new Pair(row, col));
         visited[row][col] = true;
 
