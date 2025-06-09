@@ -4,17 +4,17 @@ public class Dimensions {
 
     // measurements are in pixels, otherwise it will be explicitly specified.
     // canvas
-    public static double CANVAS_WIDTH = 1000;
-    public static double CANVAS_HEIGHT = 1000;
+    public static double CANVAS_WIDTH = 2056;
+    public static double CANVAS_HEIGHT = 1329;
 
     // maze
     public static double MAZE_CELL_SIZE = 50;
-    public static double MAZE_CHAMBER_MIN_WIDTH = MAZE_CELL_SIZE * 2;
-    public static double MAZE_CHAMBER_MIN_HEIGHT = MAZE_CELL_SIZE * 2;
+    public static double MAZE_CHAMBER_MIN_WIDTH = MAZE_CELL_SIZE * 2; // min number of cells can't be less than 2
+    public static double MAZE_CHAMBER_MIN_HEIGHT = MAZE_CELL_SIZE * 2; // min number of cells can't be less than 2
 
     // pac man
-    public static double PAC_MAN_DIAMETER = MAZE_CELL_SIZE; // Pac Man should fill a complete cell.
-    public static double PAC_MAN_STRIDE = MAZE_CELL_SIZE; // Pac Man should move one cell at a time.
+    public static double PAC_MAN_DIAMETER = MAZE_CELL_SIZE; // Pac-Man should fill a complete cell.
+    public static double PAC_MAN_STRIDE = MAZE_CELL_SIZE; // Pac-Man should move one cell at a time.
 
     public static double PAC_MAN_OPEN_MOUSE_ARC_EXTENT_IN_DEGREES = 270;
     public static double PAC_MAN_CLOSED_MOUSE_ARC_EXTENT_IN_DEGREES = 360;
