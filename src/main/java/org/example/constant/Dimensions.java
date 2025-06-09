@@ -8,13 +8,14 @@ public class Dimensions {
     public static double CANVAS_HEIGHT = 1000;
 
     // maze
-    public static double MAZE_CELL_SIZE = 30;
-    public static double MAZE_CHAMBER_MIN_WIDTH = 100;
-    public static double MAZE_CHAMBER_MIN_HEIGHT = 100;
+    public static double MAZE_CELL_SIZE = 50;
+    public static double MAZE_CHAMBER_MIN_WIDTH = MAZE_CELL_SIZE * 2;
+    public static double MAZE_CHAMBER_MIN_HEIGHT = MAZE_CELL_SIZE * 2;
 
     // pac man
-    public static double PAC_MAN_REDIUS = 50;
-    public static double PAC_MAN_STRIDE = MAZE_CELL_SIZE;
+    public static double PAC_MAN_DIAMETER = MAZE_CELL_SIZE; // Pac Man should fill a complete cell.
+    public static double PAC_MAN_STRIDE = MAZE_CELL_SIZE; // Pac Man should move one cell at a time.
+
     public static double PAC_MAN_OPEN_MOUSE_ARC_EXTENT_IN_DEGREES = 270;
     public static double PAC_MAN_CLOSED_MOUSE_ARC_EXTENT_IN_DEGREES = 360;
     public static double PAC_MAN_CLOSED_MOUSE_START_ANGLE_IN_DEGREES = 0;

@@ -6,6 +6,7 @@ import javafx.scene.input.KeyEvent;
 import javafx.scene.paint.Color;
 import org.example.constant.Dimensions;
 import org.example.constant.MazeCellContentE;
+import org.example.maze.Coordinate;
 import org.example.maze.MazeGenerator;
 import org.example.maze.RecursiveDivisionMazeGenerator;
 
@@ -38,12 +39,13 @@ public class Maze implements Sprite {
         final GraphicsContext con = canvas.getGraphicsContext2D();
         con.setFill(Color.BLUE);
 
-        for (int i=0; i<maze.length; i++) {
-            for(int j=0; j<maze[0].length; j++) {
-                if (maze[i][j] == MazeCellContentE.WALL) {
-                    int canvasX = (int) (i * Dimensions.MAZE_CELL_SIZE);
-                    int canvasY = (int) (j * Dimensions.MAZE_CELL_SIZE);
-                    con.fillRect(canvasX, canvasY, Dimensions.MAZE_CELL_SIZE, Dimensions.MAZE_CELL_SIZE);
+        for (int row=0; row<maze.length; row++) {
+            for(int col=0; col<maze[0].length; col++) {
+                if (maze[row][col] == MazeCellContentE.WALL) {
+                    // map from the abstract maze scale to the graphical maze scale
+                    int canvasCol = (int) (col * Dimensions.MAZE_CELL_SIZE);
+                    int canvasRow = (int) (row * Dimensions.MAZE_CELL_SIZE);
+                    con.fillRect(canvasCol, canvasRow, Dimensions.MAZE_CELL_SIZE, Dimensions.MAZE_CELL_SIZE);
                 }
             }
         }
@@ -52,5 +54,16 @@ public class Maze implements Sprite {
     @Override
     public void move(KeyEvent event) {
         throw new UnsupportedOperationException();
+    }
+
+    public Coordinate getEmptyPosition() {
+        for (int i=0; i<maze.length; i++) {
+            for (int j=0; j<maze[0].length; j++) {
+                if (maze[i][j] == MazeCellContentE.EMPTY) {
+                    return new Coordinate(i, j);
+                }
+            }
+        }
+        return null;
     }
 }
