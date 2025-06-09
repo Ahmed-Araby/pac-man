@@ -16,8 +16,8 @@ public class PacMan implements Sprite{
     private DirectionsE direction;
 
     public PacMan() {
-        this.centerX = Dimensions.CANVAS_WIDTH - Dimensions.PAC_MAN_DIAMِETER;
-        this.centerY = Dimensions.CANVAS_HEIGHT - Dimensions.PAC_MAN_DIAMِETER;
+        this.centerX = Dimensions.CANVAS_WIDTH - Dimensions.PAC_MAN_REDIUS;
+        this.centerY = Dimensions.CANVAS_HEIGHT - Dimensions.PAC_MAN_REDIUS;
         this.direction = DirectionsE.STILL;
     }
 
@@ -73,27 +73,27 @@ public class PacMan implements Sprite{
     }
 
     private void drawClosedMousePacMan(GraphicsContext con) {
-        con.fillArc(centerX, centerY, Dimensions.PAC_MAN_DIAMِETER, Dimensions.PAC_MAN_DIAMِETER,
+        con.fillArc(centerX, centerY, Dimensions.PAC_MAN_REDIUS, Dimensions.PAC_MAN_REDIUS,
                 Dimensions.PAC_MAN_CLOSED_MOUSE_START_ANGLE_IN_DEGREES, Dimensions.PAC_MAN_CLOSED_MOUSE_ARC_EXTENT_IN_DEGREES, ArcType.ROUND);
     }
 
     private void drawRightOpenMousePacMan(GraphicsContext con) {
-        con.fillArc(centerX, centerY, Dimensions.PAC_MAN_DIAMِETER, Dimensions.PAC_MAN_DIAMِETER,
+        con.fillArc(centerX, centerY, Dimensions.PAC_MAN_REDIUS, Dimensions.PAC_MAN_REDIUS,
                 Dimensions.PAC_MAN_RIGHT_OPEN_MOUSE_START_ANGLE_IN_DEGREES, Dimensions.PAC_MAN_OPEN_MOUSE_ARC_EXTENT_IN_DEGREES, ArcType.ROUND);
     }
 
     private void drawUpOpenMousePacMan(GraphicsContext con) {
-        con.fillArc(centerX, centerY, Dimensions.PAC_MAN_DIAMِETER, Dimensions.PAC_MAN_DIAMِETER,
+        con.fillArc(centerX, centerY, Dimensions.PAC_MAN_REDIUS, Dimensions.PAC_MAN_REDIUS,
                 Dimensions.PAC_MAN_UP_OPEN_MOUSE_START_ANGLE_IN_DEGREES, Dimensions.PAC_MAN_OPEN_MOUSE_ARC_EXTENT_IN_DEGREES, ArcType.ROUND);
     }
 
     private void drawLeftOpenMousePacMan(GraphicsContext con) {
-        con.fillArc(centerX, centerY, Dimensions.PAC_MAN_DIAMِETER, Dimensions.PAC_MAN_DIAMِETER,
+        con.fillArc(centerX, centerY, Dimensions.PAC_MAN_REDIUS, Dimensions.PAC_MAN_REDIUS,
                 Dimensions.PAC_MAN_LEFT_OPEN_MOUSE_START_ANGLE_IN_DEGREES, Dimensions.PAC_MAN_OPEN_MOUSE_ARC_EXTENT_IN_DEGREES, ArcType.ROUND);
     }
 
     private void drawDownOpenMousePacMan(GraphicsContext con) {
-        con.fillArc(centerX, centerY, Dimensions.PAC_MAN_DIAMِETER, Dimensions.PAC_MAN_DIAMِETER,
+        con.fillArc(centerX, centerY, Dimensions.PAC_MAN_REDIUS, Dimensions.PAC_MAN_REDIUS,
                 Dimensions.PAC_MAN_DOWN_OPEN_MOUSE_START_ANGLE_IN_DEGREES, Dimensions.PAC_MAN_OPEN_MOUSE_ARC_EXTENT_IN_DEGREES, ArcType.ROUND);
     }
 }
