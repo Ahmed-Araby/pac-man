@@ -1,4 +1,4 @@
-package org.example.entity;
+package org.example.sprite;
 
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;

@@ -8,8 +8,8 @@ import javafx.scene.paint.Color;
 import org.example.collision.PacManToWallCollisionDetection;
 import org.example.constant.ColorConstants;
 import org.example.constant.Dimensions;
-import org.example.entity.Maze;
-import org.example.entity.PacMan;
+import org.example.sprite.Maze;
+import org.example.sprite.PacMan;
 import org.example.maze.Coordinate;
 
 public class GamePlayGameScene implements GameScene {
