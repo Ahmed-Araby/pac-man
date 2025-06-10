@@ -58,8 +58,6 @@ public class PacMan implements Sprite{
                 drawClosedMousePacMan(con);
                 break;
         }
-
-        System.out.println("pac man row = " + canvasRow + ", pac man col = " + canvasCol + ", pac man stride = " + Dimensions.PAC_MAN_STRIDE_PIXELS / 60);
     }
 
     @Override
@@ -70,28 +68,28 @@ public class PacMan implements Sprite{
         switch (code) {
             case RIGHT:
                 newCanvasCol = canvasCol + Dimensions.PAC_MAN_STRIDE_PIXELS / Configs.FRAMES_PER_SEC;
-                if (!pacManToWallCollisionDetection.isAboutToCollide(new Coordinate(canvasRow, newCanvasCol), DirectionsE.RIGHT)){
+                if (!pacManToWallCollisionDetection.isAboutToCollide(new Coordinate(canvasRow, newCanvasCol))){
                     direction = DirectionsE.RIGHT;
                     canvasCol = newCanvasCol;
                 }
                 break;
             case UP:
                 newCanvasRow = canvasRow - Dimensions.PAC_MAN_STRIDE_PIXELS / Configs.FRAMES_PER_SEC;
-                if (!pacManToWallCollisionDetection.isAboutToCollide(new Coordinate(newCanvasRow, canvasCol), DirectionsE.UP)) {
+                if (!pacManToWallCollisionDetection.isAboutToCollide(new Coordinate(newCanvasRow, canvasCol))) {
                     direction = DirectionsE.UP;
                     canvasRow = newCanvasRow;
                 }
                 break;
             case LEFT:
                 newCanvasCol = canvasCol - Dimensions.PAC_MAN_STRIDE_PIXELS / Configs.FRAMES_PER_SEC;
-                if (!pacManToWallCollisionDetection.isAboutToCollide(new Coordinate(canvasRow, newCanvasCol), DirectionsE.LEFT)) {
+                if (!pacManToWallCollisionDetection.isAboutToCollide(new Coordinate(canvasRow, newCanvasCol))) {
                     direction = DirectionsE.LEFT;
                     canvasCol = newCanvasCol;
                 }
                 break;
             case DOWN:
                 newCanvasRow = canvasRow + Dimensions.PAC_MAN_STRIDE_PIXELS / Configs.FRAMES_PER_SEC;
-                if (!pacManToWallCollisionDetection.isAboutToCollide(new Coordinate(newCanvasRow, canvasCol), DirectionsE.DOWN)) {
+                if (!pacManToWallCollisionDetection.isAboutToCollide(new Coordinate(newCanvasRow, canvasCol))) {
                     direction = DirectionsE.DOWN;
                     canvasRow = newCanvasRow;
                 }

@@ -1,10 +1,12 @@
 package org.example.collision;
 
 import org.example.constant.Dimensions;
-import org.example.constant.DirectionsE;
 import org.example.constant.MazeCellContentE;
 import org.example.maze.Coordinate;
 import org.example.util.MazeCanvasCoordinateMapping;
+import org.example.util.RectUtils;
+
+import java.util.List;
 
 public class PacManToWallCollisionDetection {
     private MazeCellContentE[][] maze;
@@ -13,37 +15,24 @@ public class PacManToWallCollisionDetection {
         this.maze = maze;
     }
 
-    public boolean isAboutToCollide(Coordinate pacManCanvasCord, DirectionsE direction) {
-
-        return isPacManGoingOutOfCanvas(pacManCanvasCord) || isNextCellWall(pacManCanvasCord);
-    }
-
-    private boolean isPacManGoingOutOfCanvas(Coordinate pacManCanvasCord) {
-        return pacManCanvasCord.getRow() < 0 || pacManCanvasCord.getRow() >= Dimensions.CANVAS_HEIGHT_PIXELS - Dimensions.PAC_MAN_DIAMETER_PIXELS ||
-                pacManCanvasCord.getCol() < 0 || pacManCanvasCord.getCol() >= Dimensions.CANVAS_WIDTH_PIXELS - Dimensions.PAC_MAN_DIAMETER_PIXELS;
-    }
-
-    private boolean isNextCellWall(Coordinate pacManCanvasCord) {
-        final Coordinate nextPacManCanvasCellCoordinates = getNextPacManCanvasCellCoordinates(pacManCanvasCord);
-        final Coordinate nextPacManMazeCellCoordinates = MazeCanvasCoordinateMapping.canvasCordToMazeCordFloored(nextPacManCanvasCellCoordinates);
-        return maze[(int) nextPacManMazeCellCoordinates.getRow()][(int) nextPacManMazeCellCoordinates.getCol()] == MazeCellContentE.WALL;
-    }
-    private Coordinate getNextPacManCanvasCellCoordinates(Coordinate pacManCanvasCord) {
-        final double nextPacManCellCanvasRow = getNextCellCanvasRow(pacManCanvasCord.getRow());
-        final double nextPacManCellCanvasCol = getNextCellCanvasCol(pacManCanvasCord.getCol());
-        return new Coordinate(nextPacManCellCanvasRow, nextPacManCellCanvasCol);
-    }
-    private double getNextCellCanvasRow(double currentPacManCanvasRow) {
-        if (currentPacManCanvasRow % Dimensions.CANVAS_CELL_SIZE_PIXELS != 0) {
-            return currentPacManCanvasRow + Dimensions.CANVAS_CELL_SIZE_PIXELS;
+    public boolean isAboutToCollide(Coordinate pacManCanvasTopLeftCorner) {
+        if (isPacManGoingOutOfCanvas(pacManCanvasTopLeftCorner)) {
+            return true;
         }
-        return currentPacManCanvasRow;
+
+        final List<Coordinate> pacManRect4Corners = RectUtils.get4Corners(pacManCanvasTopLeftCorner, Dimensions.PAC_MAN_DIAMETER_PIXELS, Dimensions.PAC_MAN_DIAMETER_PIXELS);
+        return pacManRect4Corners.stream()
+                .map(pacManCanvasRectCorner -> RectUtils.getTopLeftCornerOfRectContainingPoint(Dimensions.CANVAS_CELL_SIZE_PIXELS, Dimensions.CANVAS_CELL_SIZE_PIXELS, pacManCanvasRectCorner))
+                .anyMatch(this::isPacManCollidingWithAWall);
     }
 
-    private double getNextCellCanvasCol(double currentPacManCanvasCol) {
-        if (currentPacManCanvasCol % Dimensions.CANVAS_CELL_SIZE_PIXELS != 0) {
-            return currentPacManCanvasCol + Dimensions.CANVAS_CELL_SIZE_PIXELS;
-        }
-        return currentPacManCanvasCol;
+    private boolean isPacManGoingOutOfCanvas(Coordinate pacManCanvasTopLeftCorner) {
+        return pacManCanvasTopLeftCorner.getRow() < 0 || pacManCanvasTopLeftCorner.getRow() >= Dimensions.CANVAS_HEIGHT_PIXELS - Dimensions.PAC_MAN_DIAMETER_PIXELS ||
+                pacManCanvasTopLeftCorner.getCol() < 0 || pacManCanvasTopLeftCorner.getCol() >= Dimensions.CANVAS_WIDTH_PIXELS - Dimensions.PAC_MAN_DIAMETER_PIXELS;
+    }
+
+    private boolean isPacManCollidingWithAWall(Coordinate wallCanvasTopLeftCorner) {
+        final Coordinate wallMazeCord = MazeCanvasCoordinateMapping.canvasCordToMazeCordFloored(wallCanvasTopLeftCorner);
+        return maze[(int) wallMazeCord.getRow()][(int) wallMazeCord.getCol()] == MazeCellContentE.WALL;
     }
 }
