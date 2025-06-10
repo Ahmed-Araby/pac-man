@@ -12,32 +12,12 @@ public class PacManToWallCollisionDetection {
         this.maze = maze;
     }
 
-    public boolean isAboutToCollide(Coordinate pacManTopLeftCorner, DirectionsE direction) {
-        Coordinate nextCellTopLeftCorner;
+    public boolean isAboutToCollide(Coordinate pacManCanvasCord, DirectionsE direction) {
+        return isPacManGoingOutOfCanvas(pacManCanvasCord);
+    }
 
-        switch (direction) {
-            case UP:
-                nextCellTopLeftCorner = new Coordinate(pacManTopLeftCorner.getRow() - Dimensions.CANVAS_CELL_SIZE_PIXELS, pacManTopLeftCorner.getCol());
-                break;
-            case DOWN:
-                nextCellTopLeftCorner = new Coordinate(pacManTopLeftCorner.getRow() + Dimensions.CANVAS_CELL_SIZE_PIXELS, pacManTopLeftCorner.getCol());
-                break;
-            case RIGHT:
-                nextCellTopLeftCorner = new Coordinate(pacManTopLeftCorner.getRow(), pacManTopLeftCorner.getCol() + 1);
-                break;
-            case LEFT:
-                nextCellTopLeftCorner = new Coordinate(pacManTopLeftCorner.getRow(), pacManTopLeftCorner.getCol() - 1);
-                break;
-            default:
-                nextCellTopLeftCorner = pacManTopLeftCorner;
-        }
-
-        final int abstractMazeRow = (int) Math.ceil(nextCellTopLeftCorner.getRow() / Dimensions.CANVAS_CELL_SIZE_PIXELS);
-        final int abstractMazeCol = (int) Math.ceil(nextCellTopLeftCorner.getCol() / Dimensions.CANVAS_CELL_SIZE_PIXELS);
-        if (abstractMazeRow < 0 || abstractMazeCol > maze.length || abstractMazeCol < 0 || abstractMazeCol > maze[0].length) {
-            return false;
-        } else {
-            return maze[abstractMazeRow][abstractMazeCol] == MazeCellContentE.WALL;
-        }
+    private boolean isPacManGoingOutOfCanvas(Coordinate pacManCanvasCord) {
+        return pacManCanvasCord.getRow() < 0 || pacManCanvasCord.getRow() >= Dimensions.CANVAS_HEIGHT_PIXELS - Dimensions.PAC_MAN_DIAMETER ||
+                pacManCanvasCord.getCol() < 0 || pacManCanvasCord.getCol() >= Dimensions.CANVAS_WIDTH_PIXELS - Dimensions.PAC_MAN_DIAMETER;
     }
 }
