@@ -58,7 +58,7 @@ public class GamePlayGameScene implements GameScene {
         maze.render(canvas);
 
         context.setFill(Color.GRAY);
-        context.fillOval(0, 0, Dimensions.PAC_MAN_DIAMETER, Dimensions.PAC_MAN_DIAMETER);
+        context.fillOval(0, 0, Dimensions.PAC_MAN_DIAMETER_PIXELS, Dimensions.PAC_MAN_DIAMETER_PIXELS);
 
         pacMan.render(canvas);
 

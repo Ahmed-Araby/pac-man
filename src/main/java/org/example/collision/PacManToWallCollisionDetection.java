@@ -17,7 +17,7 @@ public class PacManToWallCollisionDetection {
     }
 
     private boolean isPacManGoingOutOfCanvas(Coordinate pacManCanvasCord) {
-        return pacManCanvasCord.getRow() < 0 || pacManCanvasCord.getRow() >= Dimensions.CANVAS_HEIGHT_PIXELS - Dimensions.PAC_MAN_DIAMETER ||
-                pacManCanvasCord.getCol() < 0 || pacManCanvasCord.getCol() >= Dimensions.CANVAS_WIDTH_PIXELS - Dimensions.PAC_MAN_DIAMETER;
+        return pacManCanvasCord.getRow() < 0 || pacManCanvasCord.getRow() >= Dimensions.CANVAS_HEIGHT_PIXELS - Dimensions.PAC_MAN_DIAMETER_PIXELS ||
+                pacManCanvasCord.getCol() < 0 || pacManCanvasCord.getCol() >= Dimensions.CANVAS_WIDTH_PIXELS - Dimensions.PAC_MAN_DIAMETER_PIXELS;
     }
 }
