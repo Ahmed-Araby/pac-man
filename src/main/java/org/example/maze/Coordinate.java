@@ -6,5 +6,5 @@ import lombok.Getter;
 @AllArgsConstructor
 @Getter
 public class Coordinate {
-    private int row, col;
+    private double row, col;
 }

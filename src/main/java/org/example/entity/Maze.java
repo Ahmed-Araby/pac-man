@@ -4,31 +4,29 @@ import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.paint.Color;
+import lombok.Getter;
+import org.example.constant.ColorConstants;
 import org.example.constant.Dimensions;
 import org.example.constant.MazeCellContentE;
 import org.example.maze.Coordinate;
 import org.example.maze.MazeGenerator;
 import org.example.maze.RecursiveDivisionMazeGenerator;
+import org.example.util.MazeCanvasCoordinateMapping;
 
 public class Maze implements Sprite {
-    private MazeCellContentE[][] maze;
+    @Getter
+    private MazeCellContentE[][] gameMaze;
 
     public Maze() {
-        final int mazeGridHeight = (int) (Dimensions.CANVAS_HEIGHT / Dimensions.MAZE_CELL_SIZE);
-        final int mazeGridWidth = (int) (Dimensions.CANVAS_WIDTH / Dimensions.MAZE_CELL_SIZE);
-
-        final int mazeGridMinHeight = (int) (Dimensions.MAZE_CHAMBER_MIN_HEIGHT / Dimensions.MAZE_CELL_SIZE);
-        final int mazeGridMinWidth = (int) (Dimensions.MAZE_CHAMBER_MIN_WIDTH / Dimensions.MAZE_CELL_SIZE);
-
         final MazeGenerator recursiveDivisionMazeGen = new RecursiveDivisionMazeGenerator();
-        final boolean[][] booleanMaze = recursiveDivisionMazeGen.generateMaze(mazeGridHeight, mazeGridWidth, mazeGridMinWidth, mazeGridMinHeight);
-        maze = new MazeCellContentE[mazeGridHeight][mazeGridWidth];
-        for(int i=0; i<mazeGridHeight; i++) {
-            for(int j=0; j<mazeGridWidth; j++) {
-                if (booleanMaze[i][j]) {
-                    maze[i][j] = MazeCellContentE.WALL;
+        final boolean[][] booleanMaze = recursiveDivisionMazeGen.generateMaze(Dimensions.MAZE_HEIGHT, Dimensions.MAZE_WIDTH, Dimensions.MAZE_CHAMBER_MIN_WIDTH, Dimensions.MAZE_CHAMBER_MIN_HEIGHT);
+        gameMaze = new MazeCellContentE[Dimensions.MAZE_HEIGHT][Dimensions.MAZE_WIDTH];
+        for(int mazeRow=0; mazeRow<Dimensions.MAZE_HEIGHT; mazeRow++) {
+            for(int mazeCol=0; mazeCol<Dimensions.MAZE_WIDTH; mazeCol++) {
+                if (booleanMaze[mazeRow][mazeCol]) {
+                    gameMaze[mazeRow][mazeCol] = MazeCellContentE.WALL;
                 } else {
-                    maze[i][j] = MazeCellContentE.EMPTY;
+                    gameMaze[mazeRow][mazeCol] = MazeCellContentE.EMPTY;
                 }
             }
         }
@@ -37,15 +35,14 @@ public class Maze implements Sprite {
     @Override
     public void render(Canvas canvas) {
         final GraphicsContext con = canvas.getGraphicsContext2D();
-        con.setFill(Color.BLUE);
+        con.setFill(ColorConstants.CANVAS_WALL_COLOR);
 
-        for (int row=0; row<maze.length; row++) {
-            for(int col=0; col<maze[0].length; col++) {
-                if (maze[row][col] == MazeCellContentE.WALL) {
+        for (int mazeRow = 0; mazeRow< gameMaze.length; mazeRow++) {
+            for(int mazeCol = 0; mazeCol< gameMaze[0].length; mazeCol++) {
+                if (gameMaze[mazeRow][mazeCol] == MazeCellContentE.WALL) {
                     // map from the abstract maze scale to the graphical maze scale
-                    int canvasCol = (int) (col * Dimensions.MAZE_CELL_SIZE);
-                    int canvasRow = (int) (row * Dimensions.MAZE_CELL_SIZE);
-                    con.fillRect(canvasCol, canvasRow, Dimensions.MAZE_CELL_SIZE, Dimensions.MAZE_CELL_SIZE);
+                    final Coordinate canvasCord = MazeCanvasCoordinateMapping.mazeCordToCanvasCord(mazeRow, mazeCol);
+                    con.fillRect(canvasCord.getCol(), canvasCord.getRow(), Dimensions.CANVAS_CELL_SIZE_PIXELS, Dimensions.CANVAS_CELL_SIZE_PIXELS);
                 }
             }
         }
@@ -56,11 +53,11 @@ public class Maze implements Sprite {
         throw new UnsupportedOperationException();
     }
 
-    public Coordinate getEmptyPosition() {
-        for (int i=0; i<maze.length; i++) {
-            for (int j=0; j<maze[0].length; j++) {
-                if (maze[i][j] == MazeCellContentE.EMPTY) {
-                    return new Coordinate(i, j);
+    public Coordinate getEmptyMazePosition() {
+        for (int mazeRow = 0; mazeRow< gameMaze.length; mazeRow++) {
+            for (int mazeCol = 0; mazeCol< gameMaze[0].length; mazeCol++) {
+                if (gameMaze[mazeRow][mazeCol] == MazeCellContentE.EMPTY) {
+                    return new Coordinate(mazeRow, mazeCol);
                 }
             }
         }
