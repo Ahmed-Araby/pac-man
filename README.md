@@ -18,6 +18,7 @@ pac man game using javaFX.
 - [ ] create the starting menu screen.
 - [ ] generate mazes using different maze generation algorithms, and allow player to choose maze pattern (as each algorithm has its own maze pattern characteristics).
 - [ ] look for performance enhancements using multithreading.
+- [ ] extract generic stuff into a simple game engine or just helper libraries.
 - [ ] write extensive documentation on the implementation details.
 - [ ] make the game multi player.
   - [ ] game server.
