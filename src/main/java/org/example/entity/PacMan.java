@@ -37,19 +37,19 @@ public class PacMan implements Sprite{
         con.setFill(ColorConstants.PAC_MAN_COLOR);
         switch (direction) {
             case RIGHT:
-                move(new KeyEvent(null, null, null, KeyCode.RIGHT, false, false, false, false));
+                move(createDummyKeyEvent(KeyCode.RIGHT));
                 drawRightOpenMousePacMan(con);
                 break;
             case UP:
-                move(new KeyEvent(null, null, null, KeyCode.UP, false, false, false, false));
+                move(createDummyKeyEvent(KeyCode.UP));
                 drawUpOpenMousePacMan(con);
                 break;
             case LEFT:
-                move(new KeyEvent(null, null, null, KeyCode.LEFT, false, false, false, false));
+                move(createDummyKeyEvent(KeyCode.LEFT));
                 drawLeftOpenMousePacMan(con);
                 break;
             case DOWN:
-                move(new KeyEvent(null, null, null, KeyCode.DOWN, false, false, false, false));
+                move(createDummyKeyEvent(KeyCode.DOWN));
                 drawDownOpenMousePacMan(con);
                 break;
             case STILL:
@@ -123,5 +123,9 @@ public class PacMan implements Sprite{
     private void drawDownOpenMousePacMan(GraphicsContext con) {
         con.fillArc(canvasCol, canvasRow, Dimensions.PAC_MAN_DIAMETER_PIXELS, Dimensions.PAC_MAN_DIAMETER_PIXELS,
                 Dimensions.PAC_MAN_DOWN_OPEN_MOUSE_START_ANGLE_IN_DEGREES, Dimensions.PAC_MAN_OPEN_MOUSE_ARC_EXTENT_IN_DEGREES, ArcType.ROUND);
+    }
+
+    private KeyEvent createDummyKeyEvent(KeyCode code) {
+        return new KeyEvent(null, null, null, code, false, false, false, false);
     }
 }
