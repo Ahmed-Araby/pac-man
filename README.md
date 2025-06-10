@@ -11,7 +11,7 @@ pac man game using javaFX.
 - [X] render pac man and mouse open/close animations using simple circle/arc math.
 - [X] implement collision detection and prevention between pac man and the walls
 - [X] make it easy for the player to move pac man in sharp/tight turns (when pac man size is close to the canvas maze cell size, it is more likely for pac man to get blocked to avoid collision with walls).
-- [ ] enhance package names and class names
+- [X] enhance package names and class names
 - [ ] put suger for pac man to eat.
 - [ ] put ghosts.
 - [ ] track score, move to next level and game over.
