@@ -15,7 +15,7 @@ public class Dimensions {
     public static int MAZE_CHAMBER_MIN_HEIGHT = 2; // min number of cells can't be less than 2
 
     // pac man
-    public static double PAC_MAN_DIAMETER_PIXELS = (double) 8 /10 * CANVAS_CELL_SIZE_PIXELS; // Pac-Man should fill a complete cell.
+    public static double PAC_MAN_DIAMETER_PIXELS = CANVAS_CELL_SIZE_PIXELS; // Pac-Man should fill a complete cell.
     public static double PAC_MAN_STRIDE_PIXELS = CANVAS_CELL_SIZE_PIXELS; // Pac-Man should move one cell at a time.
 
     public static double PAC_MAN_OPEN_MOUSE_ARC_EXTENT_IN_DEGREES = 270;

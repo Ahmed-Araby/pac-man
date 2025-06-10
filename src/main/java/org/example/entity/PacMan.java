@@ -35,35 +35,21 @@ public class PacMan implements Sprite{
     public void render(Canvas canvas) {
         final GraphicsContext con = canvas.getGraphicsContext2D();
         con.setFill(ColorConstants.PAC_MAN_COLOR);
-        double newCanvasCol, newCanvasRow;
-
         switch (direction) {
             case RIGHT:
-                newCanvasCol = canvasCol + Dimensions.PAC_MAN_STRIDE_PIXELS / 60;
-                if (!pacManToWallCollisionDetection.isAboutToCollide(new Coordinate(canvasRow, newCanvasCol), DirectionsE.RIGHT)){
-                    canvasCol = newCanvasCol;
-                }
+                move(new KeyEvent(null, null, null, KeyCode.RIGHT, false, false, false, false));
                 drawRightOpenMousePacMan(con);
                 break;
             case UP:
-                newCanvasRow = canvasRow - Dimensions.PAC_MAN_STRIDE_PIXELS / 60;
-                if (!pacManToWallCollisionDetection.isAboutToCollide(new Coordinate(newCanvasRow, canvasCol), DirectionsE.UP)) {
-                    canvasRow = newCanvasRow;
-                }
+                move(new KeyEvent(null, null, null, KeyCode.UP, false, false, false, false));
                 drawUpOpenMousePacMan(con);
                 break;
             case LEFT:
-                newCanvasCol = canvasCol - Dimensions.PAC_MAN_STRIDE_PIXELS / 60;
-                if (!pacManToWallCollisionDetection.isAboutToCollide(new Coordinate(canvasRow, newCanvasCol), DirectionsE.LEFT)) {
-                    canvasCol = newCanvasCol;
-                }
+                move(new KeyEvent(null, null, null, KeyCode.LEFT, false, false, false, false));
                 drawLeftOpenMousePacMan(con);
                 break;
             case DOWN:
-                newCanvasRow = canvasRow + Dimensions.PAC_MAN_STRIDE_PIXELS / 60;
-                if (!pacManToWallCollisionDetection.isAboutToCollide(new Coordinate(newCanvasRow, canvasCol), DirectionsE.DOWN)) {
-                    canvasRow = newCanvasRow;
-                }
+                move(new KeyEvent(null, null, null, KeyCode.DOWN, false, false, false, false));
                 drawDownOpenMousePacMan(con);
                 break;
             case STILL:
@@ -77,18 +63,36 @@ public class PacMan implements Sprite{
     @Override
     public void move(KeyEvent event) {
         final KeyCode code = event.getCode();
+        double newCanvasCol, newCanvasRow;
+
         switch (code) {
             case RIGHT:
-                direction = DirectionsE.RIGHT;
+                newCanvasCol = canvasCol + Dimensions.PAC_MAN_STRIDE_PIXELS / 60;
+                if (!pacManToWallCollisionDetection.isAboutToCollide(new Coordinate(canvasRow, newCanvasCol), DirectionsE.RIGHT)){
+                    direction = DirectionsE.RIGHT;
+                    canvasCol = newCanvasCol;
+                }
                 break;
             case UP:
-                direction = DirectionsE.UP;
+                newCanvasRow = canvasRow - Dimensions.PAC_MAN_STRIDE_PIXELS / 60;
+                if (!pacManToWallCollisionDetection.isAboutToCollide(new Coordinate(newCanvasRow, canvasCol), DirectionsE.UP)) {
+                    direction = DirectionsE.UP;
+                    canvasRow = newCanvasRow;
+                }
                 break;
             case LEFT:
-                direction = DirectionsE.LEFT;
+                newCanvasCol = canvasCol - Dimensions.PAC_MAN_STRIDE_PIXELS / 60;
+                if (!pacManToWallCollisionDetection.isAboutToCollide(new Coordinate(canvasRow, newCanvasCol), DirectionsE.LEFT)) {
+                    direction = DirectionsE.LEFT;
+                    canvasCol = newCanvasCol;
+                }
                 break;
             case DOWN:
-                direction = DirectionsE.DOWN;
+                newCanvasRow = canvasRow + Dimensions.PAC_MAN_STRIDE_PIXELS / 60;
+                if (!pacManToWallCollisionDetection.isAboutToCollide(new Coordinate(newCanvasRow, canvasCol), DirectionsE.DOWN)) {
+                    direction = DirectionsE.DOWN;
+                    canvasRow = newCanvasRow;
+                }
                 break;
             case SPACE:
                 direction = DirectionsE.STILL;
