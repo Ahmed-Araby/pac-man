@@ -4,9 +4,11 @@ import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
+import javafx.scene.paint.Color;
 import javafx.scene.shape.ArcType;
 import org.example.collision.PacManToWallCollisionDetection;
 import org.example.constant.ColorConstants;
+import org.example.constant.Configs;
 import org.example.constant.Dimensions;
 import org.example.constant.DirectionsE;
 import org.example.maze.Coordinate;
@@ -67,28 +69,28 @@ public class PacMan implements Sprite{
 
         switch (code) {
             case RIGHT:
-                newCanvasCol = canvasCol + Dimensions.PAC_MAN_STRIDE_PIXELS / 60;
+                newCanvasCol = canvasCol + Dimensions.PAC_MAN_STRIDE_PIXELS / Configs.FRAMES_PER_SEC;
                 if (!pacManToWallCollisionDetection.isAboutToCollide(new Coordinate(canvasRow, newCanvasCol), DirectionsE.RIGHT)){
                     direction = DirectionsE.RIGHT;
                     canvasCol = newCanvasCol;
                 }
                 break;
             case UP:
-                newCanvasRow = canvasRow - Dimensions.PAC_MAN_STRIDE_PIXELS / 60;
+                newCanvasRow = canvasRow - Dimensions.PAC_MAN_STRIDE_PIXELS / Configs.FRAMES_PER_SEC;
                 if (!pacManToWallCollisionDetection.isAboutToCollide(new Coordinate(newCanvasRow, canvasCol), DirectionsE.UP)) {
                     direction = DirectionsE.UP;
                     canvasRow = newCanvasRow;
                 }
                 break;
             case LEFT:
-                newCanvasCol = canvasCol - Dimensions.PAC_MAN_STRIDE_PIXELS / 60;
+                newCanvasCol = canvasCol - Dimensions.PAC_MAN_STRIDE_PIXELS / Configs.FRAMES_PER_SEC;
                 if (!pacManToWallCollisionDetection.isAboutToCollide(new Coordinate(canvasRow, newCanvasCol), DirectionsE.LEFT)) {
                     direction = DirectionsE.LEFT;
                     canvasCol = newCanvasCol;
                 }
                 break;
             case DOWN:
-                newCanvasRow = canvasRow + Dimensions.PAC_MAN_STRIDE_PIXELS / 60;
+                newCanvasRow = canvasRow + Dimensions.PAC_MAN_STRIDE_PIXELS / Configs.FRAMES_PER_SEC;
                 if (!pacManToWallCollisionDetection.isAboutToCollide(new Coordinate(newCanvasRow, canvasCol), DirectionsE.DOWN)) {
                     direction = DirectionsE.DOWN;
                     canvasRow = newCanvasRow;
@@ -103,26 +105,41 @@ public class PacMan implements Sprite{
     private void drawClosedMousePacMan(GraphicsContext con) {
         con.fillArc(canvasCol, canvasRow, Dimensions.PAC_MAN_DIAMETER_PIXELS, Dimensions.PAC_MAN_DIAMETER_PIXELS,
                 Dimensions.PAC_MAN_CLOSED_MOUSE_START_ANGLE_IN_DEGREES, Dimensions.PAC_MAN_CLOSED_MOUSE_ARC_EXTENT_IN_DEGREES, ArcType.ROUND);
+        // debug mode
+        con.setStroke(Color.GREEN);
+        con.strokeRect(canvasCol, canvasRow, Dimensions.PAC_MAN_DIAMETER_PIXELS, Dimensions.PAC_MAN_DIAMETER_PIXELS);
     }
 
     private void drawRightOpenMousePacMan(GraphicsContext con) {
         con.fillArc(canvasCol, canvasRow, Dimensions.PAC_MAN_DIAMETER_PIXELS, Dimensions.PAC_MAN_DIAMETER_PIXELS,
                 Dimensions.PAC_MAN_RIGHT_OPEN_MOUSE_START_ANGLE_IN_DEGREES, Dimensions.PAC_MAN_OPEN_MOUSE_ARC_EXTENT_IN_DEGREES, ArcType.ROUND);
+        // debug mode
+        con.setStroke(Color.GREEN);
+        con.strokeRect(canvasCol, canvasRow, Dimensions.PAC_MAN_DIAMETER_PIXELS, Dimensions.PAC_MAN_DIAMETER_PIXELS);
     }
 
     private void drawUpOpenMousePacMan(GraphicsContext con) {
         con.fillArc(canvasCol, canvasRow, Dimensions.PAC_MAN_DIAMETER_PIXELS, Dimensions.PAC_MAN_DIAMETER_PIXELS,
                 Dimensions.PAC_MAN_UP_OPEN_MOUSE_START_ANGLE_IN_DEGREES, Dimensions.PAC_MAN_OPEN_MOUSE_ARC_EXTENT_IN_DEGREES, ArcType.ROUND);
+        // debug mode
+        con.setStroke(Color.GREEN);
+        con.strokeRect(canvasCol, canvasRow, Dimensions.PAC_MAN_DIAMETER_PIXELS, Dimensions.PAC_MAN_DIAMETER_PIXELS);
     }
 
     private void drawLeftOpenMousePacMan(GraphicsContext con) {
         con.fillArc(canvasCol, canvasRow, Dimensions.PAC_MAN_DIAMETER_PIXELS, Dimensions.PAC_MAN_DIAMETER_PIXELS,
                 Dimensions.PAC_MAN_LEFT_OPEN_MOUSE_START_ANGLE_IN_DEGREES, Dimensions.PAC_MAN_OPEN_MOUSE_ARC_EXTENT_IN_DEGREES, ArcType.ROUND);
+        // debug mode
+        con.setStroke(Color.GREEN);
+        con.strokeRect(canvasCol, canvasRow, Dimensions.PAC_MAN_DIAMETER_PIXELS, Dimensions.PAC_MAN_DIAMETER_PIXELS);
     }
 
     private void drawDownOpenMousePacMan(GraphicsContext con) {
         con.fillArc(canvasCol, canvasRow, Dimensions.PAC_MAN_DIAMETER_PIXELS, Dimensions.PAC_MAN_DIAMETER_PIXELS,
                 Dimensions.PAC_MAN_DOWN_OPEN_MOUSE_START_ANGLE_IN_DEGREES, Dimensions.PAC_MAN_OPEN_MOUSE_ARC_EXTENT_IN_DEGREES, ArcType.ROUND);
+        // debug mode
+        con.setStroke(Color.GREEN);
+        con.strokeRect(canvasCol, canvasRow, Dimensions.PAC_MAN_DIAMETER_PIXELS, Dimensions.PAC_MAN_DIAMETER_PIXELS);
     }
 
     private KeyEvent createDummyKeyEvent(KeyCode code) {

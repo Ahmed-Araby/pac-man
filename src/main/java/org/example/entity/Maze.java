@@ -42,7 +42,15 @@ public class Maze implements Sprite {
                 if (gameMaze[mazeRow][mazeCol] == MazeCellContentE.WALL) {
                     // map from the abstract maze scale to the graphical maze scale
                     final Coordinate canvasCord = MazeCanvasCoordinateMapping.mazeCordToCanvasCord(mazeRow, mazeCol);
+                    con.setFill(ColorConstants.CANVAS_WALL_COLOR);
                     con.fillRect(canvasCord.getCol(), canvasCord.getRow(), Dimensions.CANVAS_CELL_SIZE_PIXELS, Dimensions.CANVAS_CELL_SIZE_PIXELS);
+                    con.setStroke(Color.RED);
+                    con.strokeRect(canvasCord.getCol(), canvasCord.getRow(), Dimensions.CANVAS_CELL_SIZE_PIXELS, Dimensions.CANVAS_CELL_SIZE_PIXELS);
+                } else {
+                    // debug mode
+                    final Coordinate canvasCord = MazeCanvasCoordinateMapping.mazeCordToCanvasCord(mazeRow, mazeCol);
+                    con.setStroke(Color.YELLOW);
+                    con.strokeRect(canvasCord.getCol(), canvasCord.getRow(), Dimensions.CANVAS_CELL_SIZE_PIXELS, Dimensions.CANVAS_CELL_SIZE_PIXELS);
                 }
             }
         }
