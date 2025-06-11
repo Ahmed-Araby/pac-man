@@ -1,4 +1,4 @@
-package org.example.util;
+package org.example.util.pacman;
 
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.paint.Color;

@@ -10,7 +10,7 @@ import org.example.constant.Configs;
 import org.example.constant.Dimensions;
 import org.example.constant.DirectionsE;
 import org.example.maze.Coordinate;
-import org.example.util.PacManGraphicsUtil;
+import org.example.util.pacman.PacManGraphicsUtil;
 import org.example.util.movement.TurnBuffer;
 
 public class PacMan implements Sprite{
