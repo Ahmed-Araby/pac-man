@@ -11,7 +11,7 @@ import org.example.util.RectUtils;
 @Setter
 public class TurnBuffer {
 
-    private DirectionsE bufferedTurn;
+    private DirectionsE bufferedDirection;
     private Coordinate pacManCanvasCoordAtBufferingTime;
 
     public boolean isBlockedTurn(boolean collisionDetected, DirectionsE currentPacManDirection, DirectionsE requestedDirection) {
@@ -19,11 +19,11 @@ public class TurnBuffer {
     }
 
     public boolean isThereBufferedTurn(Coordinate currPacManCanvasCoord, DirectionsE currentPacManDirection, double canvasCellWidth, double canvasCellHeight) {
-        if (bufferedTurn == null) {
+        if (bufferedDirection == null) {
             return false;
         }
 
-        if (bufferedTurn == currentPacManDirection || // without this condition, we get accelerated movement,
+        if (bufferedDirection == currentPacManDirection || // without this condition, we get accelerated movement,
                 // because on the turn cell, pac man didn't move beyond the next cell yet, and this cause the automatic movement and buffered turn to execute at the same time
                 hasPacManMovedBeyondTheNextCell(currPacManCanvasCoord, currentPacManDirection, canvasCellWidth, canvasCellHeight)) {
             discardTurnBuffer();
@@ -35,16 +35,16 @@ public class TurnBuffer {
 
     public KeyEvent getBufferedTurnKeyEvent() {
         // handle situations where there is no buffered turn, we shouldn't trust the client code.
-        return new KeyEvent(this, null, null, null, null, bufferedTurn.toKeyCode(), false, false, false, false);
+        return new KeyEvent(this, null, null, null, null, bufferedDirection.toKeyCode(), false, false, false, false);
     }
 
     public void bufferTurn(DirectionsE bufferedTurn, Coordinate pacManCanvasCoordAtBufferingTime) {
-        this.bufferedTurn = bufferedTurn;
+        this.bufferedDirection = bufferedTurn;
         this.pacManCanvasCoordAtBufferingTime = pacManCanvasCoordAtBufferingTime;
     }
 
     public void discardTurnBuffer() {
-        bufferedTurn = null;
+        bufferedDirection = null;
         pacManCanvasCoordAtBufferingTime = null;
     }
 
