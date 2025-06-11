@@ -1,5 +1,6 @@
 package org.example.sprite;
 
+import javafx.scene.Scene;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.input.KeyCode;
@@ -35,6 +36,7 @@ public class PacMan implements Sprite{
 
     @Override
     public void render(Canvas canvas) {
+        System.out.println("pac man row = " + canvasRow+ ", pac man col " + canvasCol);
         final GraphicsContext con = canvas.getGraphicsContext2D();
         con.setFill(ColorConstants.PAC_MAN_COLOR);
         switch (direction) {
@@ -62,44 +64,95 @@ public class PacMan implements Sprite{
 
     @Override
     public void move(KeyEvent event) {
-        System.out.println("Event Source  = " + event.getSource());
+        if (event.getSource() instanceof PacMan) {
+            pacManAutomatedStraightMove(event);
+        } else if (event.getSource() instanceof Scene){
+            userInputMove(event);
+        }
+    }
 
-        final KeyCode code = event.getCode();
+    public void pacManAutomatedStraightMove(KeyEvent event) {
+        final DirectionsE requestedDirection = DirectionsE.from(event.getCode());
         double newCanvasCol, newCanvasRow;
 
-        switch (code) {
+        switch (requestedDirection) {
             case RIGHT:
                 newCanvasCol = canvasCol + Dimensions.PAC_MAN_STRIDE_PIXELS / Configs.FRAMES_PER_SEC;
                 if (!pacManToWallCollisionDetection.isAboutToCollide(new Coordinate(canvasRow, newCanvasCol))){
-                    direction = DirectionsE.RIGHT;
                     canvasCol = newCanvasCol;
                 }
                 break;
             case UP:
                 newCanvasRow = canvasRow - Dimensions.PAC_MAN_STRIDE_PIXELS / Configs.FRAMES_PER_SEC;
                 if (!pacManToWallCollisionDetection.isAboutToCollide(new Coordinate(newCanvasRow, canvasCol))) {
-                    direction = DirectionsE.UP;
                     canvasRow = newCanvasRow;
                 }
                 break;
             case LEFT:
                 newCanvasCol = canvasCol - Dimensions.PAC_MAN_STRIDE_PIXELS / Configs.FRAMES_PER_SEC;
                 if (!pacManToWallCollisionDetection.isAboutToCollide(new Coordinate(canvasRow, newCanvasCol))) {
-                    direction = DirectionsE.LEFT;
                     canvasCol = newCanvasCol;
                 }
                 break;
             case DOWN:
                 newCanvasRow = canvasRow + Dimensions.PAC_MAN_STRIDE_PIXELS / Configs.FRAMES_PER_SEC;
                 if (!pacManToWallCollisionDetection.isAboutToCollide(new Coordinate(newCanvasRow, canvasCol))) {
-                    direction = DirectionsE.DOWN;
                     canvasRow = newCanvasRow;
                 }
                 break;
-            case SPACE:
-                direction = DirectionsE.STILL;
+            case STILL:
                 break;
         }
+    }
+
+    public void userInputMove(KeyEvent event) {
+
+        final DirectionsE requestedDirection = DirectionsE.from(event.getCode());
+        double newCanvasCol, newCanvasRow;
+        boolean detectedCollision = true;
+
+        switch (requestedDirection) {
+            case RIGHT:
+                newCanvasCol = canvasCol + Dimensions.PAC_MAN_STRIDE_PIXELS / Configs.FRAMES_PER_SEC;
+                if (!pacManToWallCollisionDetection.isAboutToCollide(new Coordinate(canvasRow, newCanvasCol))){
+                    detectedCollision = false;
+                    direction = requestedDirection;
+                    canvasCol = newCanvasCol;
+                }
+                break;
+            case UP:
+                newCanvasRow = canvasRow - Dimensions.PAC_MAN_STRIDE_PIXELS / Configs.FRAMES_PER_SEC;
+                if (!pacManToWallCollisionDetection.isAboutToCollide(new Coordinate(newCanvasRow, canvasCol))) {
+                    detectedCollision = false;
+                    direction = requestedDirection;
+                    canvasRow = newCanvasRow;
+                }
+                break;
+            case LEFT:
+                newCanvasCol = canvasCol - Dimensions.PAC_MAN_STRIDE_PIXELS / Configs.FRAMES_PER_SEC;
+                if (!pacManToWallCollisionDetection.isAboutToCollide(new Coordinate(canvasRow, newCanvasCol))) {
+                    detectedCollision = false;
+                    direction = requestedDirection;
+                    canvasCol = newCanvasCol;
+                }
+                break;
+            case DOWN:
+                newCanvasRow = canvasRow + Dimensions.PAC_MAN_STRIDE_PIXELS / Configs.FRAMES_PER_SEC;
+                if (!pacManToWallCollisionDetection.isAboutToCollide(new Coordinate(newCanvasRow, canvasCol))) {
+                    detectedCollision = false;
+                    direction = requestedDirection;
+                    canvasRow = newCanvasRow;
+                }
+                break;
+            case STILL:
+                detectedCollision = false;
+                direction = requestedDirection;
+                break;
+        }
+    }
+
+    private KeyEvent createDummyKeyEvent(KeyCode code) {
+        return new KeyEvent(this, null, null, null, null, code, false, false, false, false);
     }
 
     private void drawClosedMousePacMan(GraphicsContext con) {
@@ -140,9 +193,5 @@ public class PacMan implements Sprite{
         // debug mode
         con.setStroke(Color.GREEN);
         con.strokeRect(canvasCol, canvasRow, Dimensions.PAC_MAN_DIAMETER_PIXELS, Dimensions.PAC_MAN_DIAMETER_PIXELS);
-    }
-
-    private KeyEvent createDummyKeyEvent(KeyCode code) {
-        return new KeyEvent(this, null, null, null, null, code, false, false, false, false);
     }
 }
