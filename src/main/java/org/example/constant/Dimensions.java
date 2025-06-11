@@ -4,9 +4,9 @@ public class Dimensions {
 
     // measurements are in pixels, otherwise it will be explicitly specified.
     // canvas
-    public static double CANVAS_WIDTH_PIXELS = 600;
-    public static double CANVAS_HEIGHT_PIXELS = 600;
-    public static double CANVAS_CELL_SIZE_PIXELS = 30;
+    public static double CANVAS_WIDTH_PIXELS = 1000;
+    public static double CANVAS_HEIGHT_PIXELS = 1000;
+    public static double CANVAS_CELL_SIZE_PIXELS = 50;
 
     // maze
     public static int MAZE_WIDTH = (int) (CANVAS_WIDTH_PIXELS / CANVAS_CELL_SIZE_PIXELS);
