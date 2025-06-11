@@ -62,6 +62,8 @@ public class PacMan implements Sprite{
 
     @Override
     public void move(KeyEvent event) {
+        System.out.println("Event Source  = " + event.getSource());
+
         final KeyCode code = event.getCode();
         double newCanvasCol, newCanvasRow;
 
@@ -141,6 +143,6 @@ public class PacMan implements Sprite{
     }
 
     private KeyEvent createDummyKeyEvent(KeyCode code) {
-        return new KeyEvent(null, null, null, code, false, false, false, false);
+        return new KeyEvent(this, null, null, null, null, code, false, false, false, false);
     }
 }
