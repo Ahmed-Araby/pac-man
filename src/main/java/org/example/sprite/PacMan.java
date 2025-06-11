@@ -71,6 +71,7 @@ public class PacMan implements Sprite{
         }
 
         if (turnBuffer.isThereBufferedTurn(new Coordinate(canvasRow, canvasCol), direction, Dimensions.CANVAS_CELL_SIZE_PIXELS, Dimensions.CANVAS_CELL_SIZE_PIXELS)) {
+            System.out.println("there is a buffered turn *************");
             final KeyEvent bufferedTurnKeyEvent = turnBuffer.getBufferedTurnKeyEvent();
             automatedMove(bufferedTurnKeyEvent);
         }
