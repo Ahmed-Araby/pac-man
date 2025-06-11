@@ -13,6 +13,7 @@ import org.example.constant.Configs;
 import org.example.constant.Dimensions;
 import org.example.constant.DirectionsE;
 import org.example.maze.Coordinate;
+import org.example.util.movement.TurnBuffer;
 
 public class PacMan implements Sprite{
 
@@ -21,17 +22,14 @@ public class PacMan implements Sprite{
     private DirectionsE direction;
     private PacManToWallCollisionDetection pacManToWallCollisionDetection;
 
+    private TurnBuffer turnBuffer;
+
     public PacMan(double canvasCol, double canvasRow, PacManToWallCollisionDetection pacManToWallCollisionDetection) {
         this.canvasCol = canvasCol;
         this.canvasRow = canvasRow;
         this.direction = DirectionsE.STILL;
         this.pacManToWallCollisionDetection = pacManToWallCollisionDetection;
-    }
-
-    public PacMan() {
-        this.canvasCol = Dimensions.CANVAS_WIDTH_PIXELS - Dimensions.PAC_MAN_DIAMETER_PIXELS;
-        this.canvasRow = Dimensions.CANVAS_HEIGHT_PIXELS - Dimensions.PAC_MAN_DIAMETER_PIXELS;
-        this.direction = DirectionsE.STILL;
+        this.turnBuffer = new TurnBuffer();
     }
 
     @Override
@@ -64,14 +62,21 @@ public class PacMan implements Sprite{
 
     @Override
     public void move(KeyEvent event) {
-        if (event.getSource() instanceof PacMan) {
-            pacManAutomatedStraightMove(event);
-        } else if (event.getSource() instanceof Scene){
+
+        if (event.getSource() instanceof Scene){
             userInputMove(event);
+            return;
+        } else if (event.getSource() instanceof PacMan) {
+            automatedMove(event);
+        }
+
+        if (turnBuffer.isThereBufferedTurn(new Coordinate(canvasRow, canvasCol), direction, Dimensions.CANVAS_CELL_SIZE_PIXELS, Dimensions.CANVAS_CELL_SIZE_PIXELS)) {
+            final KeyEvent bufferedTurnKeyEvent = turnBuffer.getBufferedTurnKeyEvent();
+            automatedMove(bufferedTurnKeyEvent);
         }
     }
 
-    public void pacManAutomatedStraightMove(KeyEvent event) {
+    public void automatedMove(KeyEvent event) {
         final DirectionsE requestedDirection = DirectionsE.from(event.getCode());
         double newCanvasCol, newCanvasRow;
 
@@ -79,28 +84,33 @@ public class PacMan implements Sprite{
             case RIGHT:
                 newCanvasCol = canvasCol + Dimensions.PAC_MAN_STRIDE_PIXELS / Configs.FRAMES_PER_SEC;
                 if (!pacManToWallCollisionDetection.isAboutToCollide(new Coordinate(canvasRow, newCanvasCol))){
+                    direction = requestedDirection;
                     canvasCol = newCanvasCol;
                 }
                 break;
             case UP:
                 newCanvasRow = canvasRow - Dimensions.PAC_MAN_STRIDE_PIXELS / Configs.FRAMES_PER_SEC;
                 if (!pacManToWallCollisionDetection.isAboutToCollide(new Coordinate(newCanvasRow, canvasCol))) {
+                    direction = requestedDirection;
                     canvasRow = newCanvasRow;
                 }
                 break;
             case LEFT:
                 newCanvasCol = canvasCol - Dimensions.PAC_MAN_STRIDE_PIXELS / Configs.FRAMES_PER_SEC;
                 if (!pacManToWallCollisionDetection.isAboutToCollide(new Coordinate(canvasRow, newCanvasCol))) {
+                    direction = requestedDirection;
                     canvasCol = newCanvasCol;
                 }
                 break;
             case DOWN:
                 newCanvasRow = canvasRow + Dimensions.PAC_MAN_STRIDE_PIXELS / Configs.FRAMES_PER_SEC;
                 if (!pacManToWallCollisionDetection.isAboutToCollide(new Coordinate(newCanvasRow, canvasCol))) {
+                    direction = requestedDirection;
                     canvasRow = newCanvasRow;
                 }
                 break;
             case STILL:
+                direction = requestedDirection;
                 break;
         }
     }
@@ -148,6 +158,12 @@ public class PacMan implements Sprite{
                 detectedCollision = false;
                 direction = requestedDirection;
                 break;
+        }
+
+        if (turnBuffer.isBlockedTurn(detectedCollision, direction, requestedDirection)) {
+            turnBuffer.bufferTurn(requestedDirection, new Coordinate(canvasRow, canvasCol));
+        } else {
+            turnBuffer.discardTurnBuffer();
         }
     }
 

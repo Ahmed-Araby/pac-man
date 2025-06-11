@@ -25,4 +25,21 @@ public enum DirectionsE {
                 throw new IllegalStateException();
         }
     }
+
+    public KeyCode toKeyCode() {
+        switch (this) {
+            case RIGHT:
+                return KeyCode.RIGHT;
+            case UP:
+                return KeyCode.UP;
+            case DOWN:
+                return KeyCode.DOWN;
+            case LEFT:
+                return KeyCode.LEFT;
+            case STILL:
+                return KeyCode.SPACE;
+            default:
+                throw new IllegalStateException();
+        }
+    }
 }
