@@ -11,7 +11,7 @@ import org.example.constant.Dimensions;
 import org.example.constant.DirectionsE;
 import org.example.entity.Coordinate;
 import org.example.util.pacman.PacManGraphicsUtil;
-import org.example.util.movement.TurnBuffer;
+import org.example.util.pacman.TurnBuffer;
 
 public class PacMan implements Sprite{
 

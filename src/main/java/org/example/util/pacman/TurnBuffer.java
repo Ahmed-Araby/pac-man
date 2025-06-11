@@ -1,4 +1,4 @@
-package org.example.util.movement;
+package org.example.util.pacman;
 
 import javafx.scene.input.KeyEvent;
 import lombok.NoArgsConstructor;
