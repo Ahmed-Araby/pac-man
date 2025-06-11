@@ -1,7 +1,7 @@
 package org.example.util;
 
 import org.example.constant.Dimensions;
-import org.example.maze.Coordinate;
+import org.example.entity.Coordinate;
 
 public class MazeCanvasCoordinateMapping {
 

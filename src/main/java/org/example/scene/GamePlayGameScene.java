@@ -10,7 +10,7 @@ import org.example.constant.ColorConstants;
 import org.example.constant.Dimensions;
 import org.example.sprite.Maze;
 import org.example.sprite.PacMan;
-import org.example.maze.Coordinate;
+import org.example.entity.Coordinate;
 
 public class GamePlayGameScene implements GameScene {
     final PacMan pacMan;

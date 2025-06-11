@@ -8,7 +8,7 @@ import lombok.Getter;
 import org.example.constant.ColorConstants;
 import org.example.constant.Dimensions;
 import org.example.constant.MazeCellContentE;
-import org.example.maze.Coordinate;
+import org.example.entity.Coordinate;
 import org.example.maze.MazeGenerator;
 import org.example.maze.RecursiveDivisionMazeGenerator;
 import org.example.util.MazeCanvasCoordinateMapping;

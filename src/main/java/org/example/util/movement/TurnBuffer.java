@@ -4,7 +4,7 @@ import javafx.scene.input.KeyEvent;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.example.constant.DirectionsE;
-import org.example.maze.Coordinate;
+import org.example.entity.Coordinate;
 
 @NoArgsConstructor
 @Setter

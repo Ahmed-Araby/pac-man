@@ -1,6 +1,6 @@
 package org.example.util;
 
-import org.example.maze.Coordinate;
+import org.example.entity.Coordinate;
 import java.util.List;
 
 public class RectUtils {

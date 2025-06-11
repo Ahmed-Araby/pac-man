@@ -9,7 +9,7 @@ import org.example.collision.PacManToWallCollisionDetection;
 import org.example.constant.Configs;
 import org.example.constant.Dimensions;
 import org.example.constant.DirectionsE;
-import org.example.maze.Coordinate;
+import org.example.entity.Coordinate;
 import org.example.util.pacman.PacManGraphicsUtil;
 import org.example.util.movement.TurnBuffer;
 

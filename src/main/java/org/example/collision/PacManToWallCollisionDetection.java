@@ -2,7 +2,7 @@ package org.example.collision;
 
 import org.example.constant.Dimensions;
 import org.example.constant.MazeCellContentE;
-import org.example.maze.Coordinate;
+import org.example.entity.Coordinate;
 import org.example.util.MazeCanvasCoordinateMapping;
 import org.example.util.RectUtils;
 
