@@ -25,4 +25,10 @@ public class Dimensions {
     public static double PAC_MAN_UP_OPEN_MOUSE_START_ANGLE_IN_DEGREES = 135;
     public static double PAC_MAN_LEFT_OPEN_MOUSE_START_ANGLE_IN_DEGREES = 225;
     public static double PAC_MAN_DOWN_OPEN_MOUSE_START_ANGLE_IN_DEGREES = 315;
+
+
+    // sugar
+    public static double SUGAR_DIAMETER_PIXELS = 0.2 * CANVAS_CELL_SIZE_PIXELS;
+    public static double SUPER_SUGAR_DIAMETER_PIXELS = 0.6 * CANVAS_CELL_SIZE_PIXELS;
+
 }

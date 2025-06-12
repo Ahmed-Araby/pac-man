@@ -65,6 +65,7 @@ public class Maze implements Sprite {
         for (int mazeRow = 0; mazeRow< gameMaze.length; mazeRow++) {
             for (int mazeCol = 0; mazeCol< gameMaze[0].length; mazeCol++) {
                 if (gameMaze[mazeRow][mazeCol] == MazeCellContentE.EMPTY) {
+                    gameMaze[mazeRow][mazeCol] = MazeCellContentE.PAC_MAN;
                     return new Coordinate(mazeRow, mazeCol);
                 }
             }

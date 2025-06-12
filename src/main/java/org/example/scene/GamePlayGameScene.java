@@ -11,10 +11,12 @@ import org.example.constant.Dimensions;
 import org.example.sprite.Maze;
 import org.example.sprite.PacMan;
 import org.example.entity.Coordinate;
+import org.example.sprite.Sugar;
 
 public class GamePlayGameScene implements GameScene {
     final PacMan pacMan;
     final Maze maze;
+    final Sugar sugar;
 
     final Pane pane;
     final Canvas canvas;
@@ -25,8 +27,10 @@ public class GamePlayGameScene implements GameScene {
         final Coordinate emptyCellPos = maze.getEmptyMazePosition();
 
         final PacManToWallCollisionDetection pacManToWallCollisionDetection = new PacManToWallCollisionDetection(maze.getGameMaze());
-
         pacMan = new PacMan(emptyCellPos.getCol(), emptyCellPos.getRow(), pacManToWallCollisionDetection);
+
+        sugar = new Sugar(maze.getGameMaze());
+
 
         canvas = new Canvas(Dimensions.CANVAS_WIDTH_PIXELS, Dimensions.CANVAS_HEIGHT_PIXELS);
         final GraphicsContext context = canvas.getGraphicsContext2D();
@@ -56,11 +60,12 @@ public class GamePlayGameScene implements GameScene {
 
 
         maze.render(canvas);
-
+        sugar.render(canvas);
         context.setFill(Color.GRAY);
         context.fillOval(0, 0, Dimensions.PAC_MAN_DIAMETER_PIXELS, Dimensions.PAC_MAN_DIAMETER_PIXELS);
 
         pacMan.render(canvas);
+
 
 
 
