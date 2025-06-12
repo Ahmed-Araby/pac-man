@@ -17,6 +17,7 @@ public class Dimensions {
     // pac man
     public static double PAC_MAN_DIAMETER_PIXELS = CANVAS_CELL_SIZE_PIXELS; // Pac-Man should fill a complete cell.
     public static double PAC_MAN_STRIDE_PIXELS = CANVAS_CELL_SIZE_PIXELS; // Pac-Man should move one cell at a time.
+    public static double PAC_MAN_CLOSED_MOUSE_DISTANCE_PIXELS = 0.5 * PAC_MAN_STRIDE_PIXELS;
 
     public static double PAC_MAN_OPEN_MOUSE_ARC_EXTENT_IN_DEGREES = 270;
     public static double PAC_MAN_CLOSED_MOUSE_ARC_EXTENT_IN_DEGREES = 360;

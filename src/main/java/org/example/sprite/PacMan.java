@@ -12,6 +12,7 @@ import org.example.constant.Dimensions;
 import org.example.constant.DirectionsE;
 import org.example.entity.Coordinate;
 import org.example.util.pacman.PacManGraphicsUtil;
+import org.example.util.pacman.PixelStrideTracker;
 import org.example.util.pacman.TurnBuffer;
 
 public class PacMan implements Sprite{
@@ -22,8 +23,9 @@ public class PacMan implements Sprite{
 
     private final PacManToWallCollisionDetection pacManToWallCollisionDetection;
     private final PacManToSugarCollisionDetection pacManToSugarCollisionDetection;
-
     private final TurnBuffer turnBuffer;
+    private final PixelStrideTracker closedMousePixelStrideTracker;
+    private boolean isPacManEating = false;
 
     public PacMan(double canvasCol, double canvasRow, PacManToWallCollisionDetection pacManToWallCollisionDetection, PacManToSugarCollisionDetection pacManToSugarCollisionDetection) {
         this.canvasCol = canvasCol;
@@ -33,6 +35,7 @@ public class PacMan implements Sprite{
         this.pacManToWallCollisionDetection = pacManToWallCollisionDetection;
         this.pacManToSugarCollisionDetection = pacManToSugarCollisionDetection;
         this.turnBuffer = new TurnBuffer();
+        this.closedMousePixelStrideTracker = new PixelStrideTracker(Dimensions.PAC_MAN_CLOSED_MOUSE_DISTANCE_PIXELS, Dimensions.PAC_MAN_STRIDE_PIXELS);
     }
 
     @Override
@@ -63,8 +66,17 @@ public class PacMan implements Sprite{
                 break;
         }
 
-        if(pacManToSugarCollisionDetection.isEatingSugar(new Coordinate(canvasRow, canvasCol))) {
+        closedMousePixelStrideTracker.stride(Dimensions.PAC_MAN_STRIDE_PIXELS, Configs.FRAMES_PER_SEC);
+
+        if (!closedMousePixelStrideTracker.isDesiredPixelStrideAchieved()) {
+            PacManGraphicsUtil.removePacMan(con, canvasCol, canvasRow);
             PacManGraphicsUtil.drawClosedMousePacMan(con, canvasCol, canvasRow);
+        } else if (closedMousePixelStrideTracker.isRestPixelStrideAchieved()) {
+            closedMousePixelStrideTracker.reset();
+        }
+
+        if(pacManToSugarCollisionDetection.isEatingSugar(new Coordinate(canvasRow, canvasCol))) {
+            System.out.println("eating sugar ******************");
         }
     }
 
