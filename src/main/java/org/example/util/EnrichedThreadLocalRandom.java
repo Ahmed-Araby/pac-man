@@ -4,6 +4,9 @@ import java.util.concurrent.ThreadLocalRandom;
 
 public class EnrichedThreadLocalRandom {
 
+    public double nextPercentage() {
+        return ThreadLocalRandom.current().nextInt(101);
+    }
     public int nextIntStartInclEndIncl(int start, int end) {
         return ThreadLocalRandom.current().nextInt(end - start + 1) + start;
     }

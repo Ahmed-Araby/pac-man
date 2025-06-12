@@ -10,4 +10,11 @@ public class SugarUtil {
         final double sugarTopLeftCornerCol =  (Dimensions.CANVAS_CELL_SIZE_PIXELS - Dimensions.SUGAR_DIAMETER_PIXELS) / 2 + cellTopLeftCornerCanvas.getCol();
         return new Coordinate(sugarTopLeftCornerRow, sugarTopLeftCornerCol);
     }
+
+
+    public static Coordinate getSuperSugarTopLeftCornerCanvas(Coordinate cellTopLeftCornerCanvas) {
+        final double sugarTopLeftCornerRow = (Dimensions.CANVAS_CELL_SIZE_PIXELS - Dimensions.SUPER_SUGAR_DIAMETER_PIXELS) / 2 + cellTopLeftCornerCanvas.getRow();
+        final double sugarTopLeftCornerCol =  (Dimensions.CANVAS_CELL_SIZE_PIXELS - Dimensions.SUPER_SUGAR_DIAMETER_PIXELS) / 2 + cellTopLeftCornerCanvas.getCol();
+        return new Coordinate(sugarTopLeftCornerRow, sugarTopLeftCornerCol);
+    }
 }
