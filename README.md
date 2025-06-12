@@ -18,6 +18,7 @@ pac man game using javaFX.
   - [ ] make consistent use of the concepts Rect (Rectangle), Coordinate of the top left corner, and Canvas Cell
   - [ ] make consistent naming convention for variables
   - [ ] try to make use of PixelStrideTracker class as a mechanism for TurnBuffer to simplfy TurnBuffer implementation
+- [ ] write documenntation and turotial for the work completed so far.
 - [ ] put ghosts.
 - [ ] track score, move to next level and game over.
 - [ ] create the starting menu screen.
