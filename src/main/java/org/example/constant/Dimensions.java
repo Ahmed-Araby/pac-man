@@ -28,7 +28,7 @@ public class Dimensions {
 
 
     // sugar
-    public static double SUGAR_DIAMETER_PIXELS = 0.2 * CANVAS_CELL_SIZE_PIXELS;
+    public static double SUGAR_CELL_SIZE_PIXELS = 0.15 * CANVAS_CELL_SIZE_PIXELS;
     public static double SUPER_SUGAR_DIAMETER_PIXELS = 0.6 * CANVAS_CELL_SIZE_PIXELS;
 
 }

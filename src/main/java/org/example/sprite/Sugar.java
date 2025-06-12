@@ -44,7 +44,7 @@ public class Sugar implements Sprite {
                 if (maze[row][col] == MazeCellContentE.SUGAR) {
                     final Coordinate cellTopLeftCornerCanvas = MazeCanvasCoordinateMapping.mazeCordToCanvasCord(row, col);
                     final Coordinate sugarCellTopLeftCornerCanvas = SugarUtil.getSugarTopLeftCornerCanvas(cellTopLeftCornerCanvas);
-                    con.fillOval(sugarCellTopLeftCornerCanvas.getCol(), sugarCellTopLeftCornerCanvas.getRow(), Dimensions.SUGAR_DIAMETER_PIXELS, Dimensions.SUGAR_DIAMETER_PIXELS);
+                    con.fillRect(sugarCellTopLeftCornerCanvas.getCol(), sugarCellTopLeftCornerCanvas.getRow(), Dimensions.SUGAR_CELL_SIZE_PIXELS, Dimensions.SUGAR_CELL_SIZE_PIXELS);
                 } else if (maze[row][col] == MazeCellContentE.SUPER_SUGAR) {
                     final Coordinate cellTopLeftCornerCanvas = MazeCanvasCoordinateMapping.mazeCordToCanvasCord(row, col);
                     final Coordinate sugarCellTopLeftCornerCanvas = SugarUtil.getSuperSugarTopLeftCornerCanvas(cellTopLeftCornerCanvas);
