@@ -11,7 +11,8 @@ target/
 *.iws
 *.iml
 *.ipr
-
+/src/main/resources/assets/Arcade - Pac-Man - Sound Effects.zip
+/src/main/resources/assets/Arcade - Pac-Man - Sound Effects
 ### Eclipse ###
 .apt_generated
 .classpath

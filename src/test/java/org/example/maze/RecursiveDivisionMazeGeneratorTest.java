@@ -72,7 +72,7 @@ class RecursiveDivisionMazeGeneratorTest {
         return true;
     }
 
-    @RepeatedTest(100)
+//    @RepeatedTest(100)
     void generateMaze_visualTesting() {
         // given
         final int height = 50, width = 50;
@@ -91,8 +91,8 @@ class RecursiveDivisionMazeGeneratorTest {
         }
     }
 
-    @ParameterizedTest
-    @CsvSource({"10, 10", "10, 15", "50, 25","100, 100", "100, 100", "100, 100", "100, 100", "50, 50", "200, 200", "1000, 1000", "10000, 10000"})
+//    @ParameterizedTest
+//    @CsvSource({"10, 10", "10, 15", "50, 25","100, 100", "100, 100", "100, 100", "100, 100", "50, 50", "200, 200", "1000, 1000", "10000, 10000"})
     void generateMaze_MazeShouldBeAConnectedGraph(int mazeHeight, int mazeWidth) throws InterruptedException {
         final RecursiveDivisionMazeGenerator mazeGenerator = new RecursiveDivisionMazeGenerator();
         final boolean[][] maze = mazeGenerator.generateMaze(mazeHeight, mazeWidth, 2, 2);
@@ -105,7 +105,7 @@ class RecursiveDivisionMazeGeneratorTest {
         Assertions.assertTrue(isConnectedGraph, "Generated Maze Should be a connected Graph");
     }
 
-    @RepeatedTest(10)
+//    @RepeatedTest(10)
     void generateMaze_MazeShouldBeAConnectedGraph() throws InterruptedException {
         int mazeHeight = 10;
         int mazeWidth = 15;

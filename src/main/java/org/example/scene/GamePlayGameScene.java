@@ -9,6 +9,9 @@ import org.example.collision.PacManToSugarCollisionDetection;
 import org.example.collision.PacManToWallCollisionDetection;
 import org.example.constant.ColorConstants;
 import org.example.constant.Dimensions;
+import org.example.event.EventManager;
+import org.example.event.EventType;
+import org.example.sound.SoundPlayer;
 import org.example.sprite.Maze;
 import org.example.sprite.PacMan;
 import org.example.entity.Coordinate;
@@ -23,16 +26,23 @@ public class GamePlayGameScene implements GameScene {
     final Canvas canvas;
     final Scene scene;
 
+    final EventManager eventManager;
+    final SoundPlayer soundPlayer;
+
     public GamePlayGameScene() {
         maze = new Maze();
+        eventManager = new EventManager();
+
         final Coordinate emptyCellPos = maze.getEmptyMazePosition();
 
         final PacManToWallCollisionDetection pacManToWallCollisionDetection = new PacManToWallCollisionDetection(maze.getGameMaze());
-        final PacManToSugarCollisionDetection pacManToSugarCollisionDetection = new PacManToSugarCollisionDetection(maze.getGameMaze());
+        final PacManToSugarCollisionDetection pacManToSugarCollisionDetection = new PacManToSugarCollisionDetection(maze.getGameMaze(), eventManager);
         pacMan = new PacMan(emptyCellPos.getCol(), emptyCellPos.getRow(), pacManToWallCollisionDetection, pacManToSugarCollisionDetection);
 
         sugar = new Sugar(maze.getGameMaze());
 
+        soundPlayer = new SoundPlayer();
+        eventManager.subscribe(EventType.PAC_MAN_SUGAR_COLLISION, this.soundPlayer);
 
         canvas = new Canvas(Dimensions.CANVAS_WIDTH_PIXELS, Dimensions.CANVAS_HEIGHT_PIXELS);
         final GraphicsContext context = canvas.getGraphicsContext2D();
@@ -41,7 +51,6 @@ public class GamePlayGameScene implements GameScene {
 
         pane = new Pane(canvas);
         scene = new Scene(pane);
-
 
         scene.setOnKeyPressed((event) -> {
             pacMan.move(event);
@@ -67,10 +76,5 @@ public class GamePlayGameScene implements GameScene {
         context.fillOval(0, 0, Dimensions.PAC_MAN_DIAMETER_PIXELS, Dimensions.PAC_MAN_DIAMETER_PIXELS);
 
         pacMan.render(canvas);
-
-
-
-
-
     }
 }
