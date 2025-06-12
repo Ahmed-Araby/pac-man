@@ -12,7 +12,12 @@ pac man game using javaFX.
 - [X] implement collision detection and prevention between pac man and the walls
 - [X] enhance package names and class names
 - [X] make it easy for the player to move pac man in sharp/tight turns (currently, when pac man size is close to the canvas maze cell size, it is more likely for pac man to get blocked to avoid collision with walls).
-- [ ] put suger for pac man to eat.
+- [X] put suger for pac man to eat.
+- [X] play sound when pac man eat sugar, use the observer design pattern for SoundPlayer class to get notified about detected collisions between pac man and sugar
+- [ ] code refactor
+  - [ ] make consistent use of the concepts Rect (Rectangle), Coordinate of the top left corner, and Canvas Cell
+  - [ ] make consistent naming convention for variables
+  - [ ] try to make use of PixelStrideTracker class as a mechanism for TurnBuffer to simplfy TurnBuffer implementation
 - [ ] put ghosts.
 - [ ] track score, move to next level and game over.
 - [ ] create the starting menu screen.
