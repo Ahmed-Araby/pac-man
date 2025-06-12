@@ -11,8 +11,8 @@ public class PixelStrideTracker {
         this.accumulatedPixelStride = 0;
     }
 
-    public void stride(double pixelStride, double framePerSec) {
-        accumulatedPixelStride += pixelStride / framePerSec;
+    public void stride(double stride) {
+        accumulatedPixelStride += stride;
     }
 
     public boolean isDesiredPixelStrideAchieved() {

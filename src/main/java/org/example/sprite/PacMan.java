@@ -66,7 +66,7 @@ public class PacMan implements Sprite{
                 break;
         }
 
-        closedMousePixelStrideTracker.stride(Dimensions.PAC_MAN_STRIDE_PIXELS, Configs.FRAMES_PER_SEC);
+        closedMousePixelStrideTracker.stride(Dimensions.PAC_MAN_STRIDE_PIXELS / Configs.FRAMES_PER_SEC);
 
         if (!closedMousePixelStrideTracker.isDesiredPixelStrideAchieved()) {
             PacManGraphicsUtil.removePacMan(con, canvasCol, canvasRow);
