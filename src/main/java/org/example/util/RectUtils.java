@@ -33,6 +33,19 @@ public class RectUtils {
         return new Coordinate(topLeftCornerRow, topLeftCornerCol);
     }
 
+    public static boolean isRectContainsPoint(Coordinate parentRectTopLeftCorner, double parentRectWidth, double parentRectHeight, Coordinate point) {
+        final Coordinate parentRectBottomRightCorner = getBottomRightCorner(parentRectTopLeftCorner, parentRectWidth, parentRectHeight);
+        return point.getCol() >= parentRectTopLeftCorner.getCol() &&
+                point.getCol() <= parentRectBottomRightCorner.getCol() &&
+                point.getRow() >= parentRectTopLeftCorner.getRow() &&
+                point.getRow() <= parentRectBottomRightCorner.getRow();
+    }
+    public static boolean isRectContainsRect(Coordinate parentRectTopLeftCorner, double parentRectWidth, double parentRectHeight,
+                                             Coordinate childRectTopLeftCorner, double childRectWidth, double childRectHeight) {
+        final Coordinate childRectBottomRightCorner = getBottomRightCorner(childRectTopLeftCorner, childRectWidth, childRectHeight);
+        return isRectContainsPoint(parentRectTopLeftCorner, parentRectWidth, parentRectHeight, childRectTopLeftCorner) && isRectContainsPoint(parentRectTopLeftCorner, parentRectWidth, parentRectHeight, childRectBottomRightCorner);
+    }
+
     public static Coordinate getTopLeftCornerOfNextRect(Coordinate currRectTopLeftCorner, double canvasCellWidth, double canvasCellHeight, DirectionsE movementDirection) {
         double nextCanvasCellCol;
         double nextCanvasCellRow;

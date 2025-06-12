@@ -5,6 +5,7 @@ import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
+import org.example.collision.PacManToSugarCollisionDetection;
 import org.example.collision.PacManToWallCollisionDetection;
 import org.example.constant.Configs;
 import org.example.constant.Dimensions;
@@ -19,15 +20,18 @@ public class PacMan implements Sprite{
     private double canvasRow;
     private DirectionsE direction;
 
-    private PacManToWallCollisionDetection pacManToWallCollisionDetection;
-    private TurnBuffer turnBuffer;
+    private final PacManToWallCollisionDetection pacManToWallCollisionDetection;
+    private final PacManToSugarCollisionDetection pacManToSugarCollisionDetection;
 
-    public PacMan(double canvasCol, double canvasRow, PacManToWallCollisionDetection pacManToWallCollisionDetection) {
+    private final TurnBuffer turnBuffer;
+
+    public PacMan(double canvasCol, double canvasRow, PacManToWallCollisionDetection pacManToWallCollisionDetection, PacManToSugarCollisionDetection pacManToSugarCollisionDetection) {
         this.canvasCol = canvasCol;
         this.canvasRow = canvasRow;
         this.direction = DirectionsE.STILL;
 
         this.pacManToWallCollisionDetection = pacManToWallCollisionDetection;
+        this.pacManToSugarCollisionDetection = pacManToSugarCollisionDetection;
         this.turnBuffer = new TurnBuffer();
     }
 
@@ -57,6 +61,10 @@ public class PacMan implements Sprite{
             case STILL:
                 PacManGraphicsUtil.drawClosedMousePacMan(con, canvasCol, canvasRow);
                 break;
+        }
+
+        if(pacManToSugarCollisionDetection.isEatingSugar(new Coordinate(canvasRow, canvasCol))) {
+            PacManGraphicsUtil.drawClosedMousePacMan(con, canvasCol, canvasRow);
         }
     }
 
