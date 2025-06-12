@@ -35,7 +35,9 @@ public class PacMan implements Sprite{
         this.pacManToWallCollisionDetection = pacManToWallCollisionDetection;
         this.pacManToSugarCollisionDetection = pacManToSugarCollisionDetection;
         this.turnBuffer = new TurnBuffer();
-        this.closedMousePixelStrideTracker = new PixelStrideTracker(Dimensions.PAC_MAN_CLOSED_MOUSE_DISTANCE_PIXELS, Dimensions.PAC_MAN_STRIDE_PIXELS);
+        this.closedMousePixelStrideTracker = new PixelStrideTracker(Dimensions.PAC_MAN_CLOSED_MOUSE_DISTANCE_PIXELS,
+                Dimensions.PAC_MAN_CLOSED_MOUSE_DISTANCE_PIXELS + Dimensions.PAC_MAN_OPEN_MOUSE_DISTANCE_PIXELS // just the same as Dimensions.PAC_MAN_COMPLETE_MOUSE_MOVEMENT_DISTANCE_PIXELS
+        );
     }
 
     @Override
@@ -66,7 +68,7 @@ public class PacMan implements Sprite{
                 break;
         }
 
-        closedMousePixelStrideTracker.stride(Dimensions.PAC_MAN_STRIDE_PIXELS / Configs.FRAMES_PER_SEC);
+        closedMousePixelStrideTracker.stride(Dimensions.PAC_MAN_COMPLETE_MOUSE_MOVEMENT_DISTANCE_PIXELS / Configs.FRAMES_PER_SEC_FOR_PAC_MAN_MOUSE_OPEN_CLOSED_ANIMATION);
 
         if (!closedMousePixelStrideTracker.isDesiredPixelStrideAchieved()) {
             PacManGraphicsUtil.removePacMan(con, canvasCol, canvasRow);
@@ -103,28 +105,28 @@ public class PacMan implements Sprite{
 
         switch (requestedDirection) {
             case RIGHT:
-                newCanvasCol = canvasCol + Dimensions.PAC_MAN_STRIDE_PIXELS / Configs.FRAMES_PER_SEC;
+                newCanvasCol = canvasCol + Dimensions.PAC_MAN_STRIDE_PIXELS / Configs.FRAMES_PER_SEC_FOR_PAC_MAN_STRIDE;
                 if (!pacManToWallCollisionDetection.isAboutToCollide(new Coordinate(canvasRow, newCanvasCol))){
                     direction = requestedDirection;
                     canvasCol = newCanvasCol;
                 }
                 break;
             case UP:
-                newCanvasRow = canvasRow - Dimensions.PAC_MAN_STRIDE_PIXELS / Configs.FRAMES_PER_SEC;
+                newCanvasRow = canvasRow - Dimensions.PAC_MAN_STRIDE_PIXELS / Configs.FRAMES_PER_SEC_FOR_PAC_MAN_STRIDE;
                 if (!pacManToWallCollisionDetection.isAboutToCollide(new Coordinate(newCanvasRow, canvasCol))) {
                     direction = requestedDirection;
                     canvasRow = newCanvasRow;
                 }
                 break;
             case LEFT:
-                newCanvasCol = canvasCol - Dimensions.PAC_MAN_STRIDE_PIXELS / Configs.FRAMES_PER_SEC;
+                newCanvasCol = canvasCol - Dimensions.PAC_MAN_STRIDE_PIXELS / Configs.FRAMES_PER_SEC_FOR_PAC_MAN_STRIDE;
                 if (!pacManToWallCollisionDetection.isAboutToCollide(new Coordinate(canvasRow, newCanvasCol))) {
                     direction = requestedDirection;
                     canvasCol = newCanvasCol;
                 }
                 break;
             case DOWN:
-                newCanvasRow = canvasRow + Dimensions.PAC_MAN_STRIDE_PIXELS / Configs.FRAMES_PER_SEC;
+                newCanvasRow = canvasRow + Dimensions.PAC_MAN_STRIDE_PIXELS / Configs.FRAMES_PER_SEC_FOR_PAC_MAN_STRIDE;
                 if (!pacManToWallCollisionDetection.isAboutToCollide(new Coordinate(newCanvasRow, canvasCol))) {
                     direction = requestedDirection;
                     canvasRow = newCanvasRow;
@@ -144,7 +146,7 @@ public class PacMan implements Sprite{
 
         switch (requestedDirection) {
             case RIGHT:
-                newCanvasCol = canvasCol + Dimensions.PAC_MAN_STRIDE_PIXELS / Configs.FRAMES_PER_SEC;
+                newCanvasCol = canvasCol + Dimensions.PAC_MAN_STRIDE_PIXELS / Configs.FRAMES_PER_SEC_FOR_PAC_MAN_STRIDE;
                 if (!pacManToWallCollisionDetection.isAboutToCollide(new Coordinate(canvasRow, newCanvasCol))){
                     detectedCollision = false;
                     direction = requestedDirection;
@@ -152,7 +154,7 @@ public class PacMan implements Sprite{
                 }
                 break;
             case UP:
-                newCanvasRow = canvasRow - Dimensions.PAC_MAN_STRIDE_PIXELS / Configs.FRAMES_PER_SEC;
+                newCanvasRow = canvasRow - Dimensions.PAC_MAN_STRIDE_PIXELS / Configs.FRAMES_PER_SEC_FOR_PAC_MAN_STRIDE;
                 if (!pacManToWallCollisionDetection.isAboutToCollide(new Coordinate(newCanvasRow, canvasCol))) {
                     detectedCollision = false;
                     direction = requestedDirection;
@@ -160,7 +162,7 @@ public class PacMan implements Sprite{
                 }
                 break;
             case LEFT:
-                newCanvasCol = canvasCol - Dimensions.PAC_MAN_STRIDE_PIXELS / Configs.FRAMES_PER_SEC;
+                newCanvasCol = canvasCol - Dimensions.PAC_MAN_STRIDE_PIXELS / Configs.FRAMES_PER_SEC_FOR_PAC_MAN_STRIDE;
                 if (!pacManToWallCollisionDetection.isAboutToCollide(new Coordinate(canvasRow, newCanvasCol))) {
                     detectedCollision = false;
                     direction = requestedDirection;
@@ -168,7 +170,7 @@ public class PacMan implements Sprite{
                 }
                 break;
             case DOWN:
-                newCanvasRow = canvasRow + Dimensions.PAC_MAN_STRIDE_PIXELS / Configs.FRAMES_PER_SEC;
+                newCanvasRow = canvasRow + Dimensions.PAC_MAN_STRIDE_PIXELS / Configs.FRAMES_PER_SEC_FOR_PAC_MAN_STRIDE;
                 if (!pacManToWallCollisionDetection.isAboutToCollide(new Coordinate(newCanvasRow, canvasCol))) {
                     detectedCollision = false;
                     direction = requestedDirection;
