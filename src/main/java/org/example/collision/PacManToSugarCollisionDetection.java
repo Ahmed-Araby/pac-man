@@ -26,11 +26,10 @@ public class PacManToSugarCollisionDetection {
 
         final List<Coordinate> pacManRect4Corners = RectUtils.get4Corners(pacManCanvasTopLeftCorner, Dimensions.PAC_MAN_DIAMETER_PIXELS, Dimensions.PAC_MAN_DIAMETER_PIXELS);
         final List<Coordinate> canvasSugarToBeEaten = pacManRect4Corners.stream()
-                .map(pacManCanvasRectCorner -> RectUtils.getTopLeftCornerOfRectContainingPoint(Dimensions.CANVAS_CELL_SIZE_PIXELS, Dimensions.CANVAS_CELL_SIZE_PIXELS, pacManCanvasRectCorner))
+                .map(this::toTopLeftCornerOfRectContainingPoint)
                 .filter(rectTopLeftCornerCanvas -> SugarUtil.isCanvasCellHasSugar(maze, rectTopLeftCornerCanvas))
                 .map(SugarUtil::getSugarTopLeftCornerCanvas)
-                .filter(sugarCanvasRectTopLeftCorner -> RectUtils.isRectContainsRect(pacManCanvasTopLeftCorner, Dimensions.PAC_MAN_DIAMETER_PIXELS, Dimensions.PAC_MAN_DIAMETER_PIXELS,
-                        sugarCanvasRectTopLeftCorner, Dimensions.SUGAR_CELL_SIZE_PIXELS, Dimensions.SUGAR_CELL_SIZE_PIXELS))
+                .filter(sugarCanvasRectTopLeftCorner -> isPacManRectContainsSugarRect(pacManCanvasTopLeftCorner, sugarCanvasRectTopLeftCorner))
                 .collect(Collectors.toUnmodifiableList());
 
         System.out.println("Canvas Sugar To Be Eaten " + canvasSugarToBeEaten);
@@ -45,5 +44,14 @@ public class PacManToSugarCollisionDetection {
         }
 
         return !canvasSugarToBeEaten.isEmpty();
+    }
+
+    private Coordinate toTopLeftCornerOfRectContainingPoint(Coordinate point) {
+        return RectUtils.getTopLeftCornerOfRectContainingPoint(Dimensions.CANVAS_CELL_SIZE_PIXELS, Dimensions.CANVAS_CELL_SIZE_PIXELS, point);
+    }
+
+    private boolean isPacManRectContainsSugarRect(Coordinate pacManCanvasRectTopLeftCorner, Coordinate sugarCanvasRectTopLeftCorner) {
+        return RectUtils.isRectContainsRect(pacManCanvasRectTopLeftCorner, Dimensions.PAC_MAN_DIAMETER_PIXELS, Dimensions.PAC_MAN_DIAMETER_PIXELS,
+                sugarCanvasRectTopLeftCorner, Dimensions.SUGAR_CELL_SIZE_PIXELS, Dimensions.SUGAR_CELL_SIZE_PIXELS);
     }
 }
