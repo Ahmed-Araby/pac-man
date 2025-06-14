@@ -7,7 +7,7 @@ import javafx.scene.paint.Color;
 import lombok.Getter;
 import org.example.constant.ColorConstants;
 import org.example.constant.Dimensions;
-import org.example.constant.MazeCellContentE;
+import org.example.constant.SpriteE;
 import org.example.entity.Coordinate;
 import org.example.maze.MazeGenerator;
 import org.example.maze.RecursiveDivisionMazeGenerator;
@@ -15,18 +15,18 @@ import org.example.util.MazeCanvasCoordinateMapping;
 
 public class Maze implements Sprite {
     @Getter
-    private MazeCellContentE[][] gameMaze;
+    private SpriteE[][] gameMaze;
 
     public Maze() {
         final MazeGenerator recursiveDivisionMazeGen = new RecursiveDivisionMazeGenerator();
         final boolean[][] booleanMaze = recursiveDivisionMazeGen.generateMaze(Dimensions.MAZE_HEIGHT, Dimensions.MAZE_WIDTH, Dimensions.MAZE_CHAMBER_MIN_WIDTH, Dimensions.MAZE_CHAMBER_MIN_HEIGHT);
-        gameMaze = new MazeCellContentE[Dimensions.MAZE_HEIGHT][Dimensions.MAZE_WIDTH];
+        gameMaze = new SpriteE[Dimensions.MAZE_HEIGHT][Dimensions.MAZE_WIDTH];
         for(int mazeRow=0; mazeRow<Dimensions.MAZE_HEIGHT; mazeRow++) {
             for(int mazeCol=0; mazeCol<Dimensions.MAZE_WIDTH; mazeCol++) {
                 if (booleanMaze[mazeRow][mazeCol]) {
-                    gameMaze[mazeRow][mazeCol] = MazeCellContentE.WALL;
+                    gameMaze[mazeRow][mazeCol] = SpriteE.WALL;
                 } else {
-                    gameMaze[mazeRow][mazeCol] = MazeCellContentE.EMPTY;
+                    gameMaze[mazeRow][mazeCol] = SpriteE.EMPTY;
                 }
             }
         }
@@ -39,7 +39,7 @@ public class Maze implements Sprite {
 
         for (int mazeRow = 0; mazeRow< gameMaze.length; mazeRow++) {
             for(int mazeCol = 0; mazeCol< gameMaze[0].length; mazeCol++) {
-                if (gameMaze[mazeRow][mazeCol] == MazeCellContentE.WALL) {
+                if (gameMaze[mazeRow][mazeCol] == SpriteE.WALL) {
                     // map from the abstract maze scale to the graphical maze scale
                     final Coordinate canvasCord = MazeCanvasCoordinateMapping.mazeCordToCanvasCord(mazeRow, mazeCol);
                     con.setFill(ColorConstants.CANVAS_WALL_COLOR);
@@ -64,8 +64,8 @@ public class Maze implements Sprite {
     public Coordinate getEmptyMazePosition() {
         for (int mazeRow = 0; mazeRow< gameMaze.length; mazeRow++) {
             for (int mazeCol = 0; mazeCol< gameMaze[0].length; mazeCol++) {
-                if (gameMaze[mazeRow][mazeCol] == MazeCellContentE.EMPTY) {
-                    gameMaze[mazeRow][mazeCol] = MazeCellContentE.PAC_MAN;
+                if (gameMaze[mazeRow][mazeCol] == SpriteE.EMPTY) {
+                    gameMaze[mazeRow][mazeCol] = SpriteE.PAC_MAN;
                     return new Coordinate(mazeRow, mazeCol);
                 }
             }

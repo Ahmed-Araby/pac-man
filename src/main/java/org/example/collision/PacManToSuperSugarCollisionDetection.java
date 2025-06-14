@@ -1,7 +1,7 @@
 package org.example.collision;
 
 import org.example.constant.Dimensions;
-import org.example.constant.MazeCellContentE;
+import org.example.constant.SpriteE;
 import org.example.entity.Coordinate;
 import org.example.event.EventManager;
 import org.example.event.EventType;
@@ -13,10 +13,10 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 public class PacManToSuperSugarCollisionDetection {
-    private MazeCellContentE[][] maze;
+    private SpriteE[][] maze;
     private EventManager eventManager;
 
-    public PacManToSuperSugarCollisionDetection(MazeCellContentE[][] maze, EventManager eventManager) {
+    public PacManToSuperSugarCollisionDetection(SpriteE[][] maze, EventManager eventManager) {
         this.maze = maze;
         this.eventManager = eventManager;
     }

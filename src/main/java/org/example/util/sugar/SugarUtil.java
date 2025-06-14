@@ -1,7 +1,7 @@
 package org.example.util.sugar;
 
 import org.example.constant.Dimensions;
-import org.example.constant.MazeCellContentE;
+import org.example.constant.SpriteE;
 import org.example.entity.Coordinate;
 import org.example.util.MazeCanvasCoordinateMapping;
 
@@ -20,13 +20,13 @@ public class SugarUtil {
         return new Coordinate(sugarTopLeftCornerRow, sugarTopLeftCornerCol);
     }
 
-    public static boolean isCanvasCellHasSugar(MazeCellContentE[][] maze, Coordinate cellTopLeftCornerCanvas) {
+    public static boolean isCanvasCellHasSugar(SpriteE[][] maze, Coordinate cellTopLeftCornerCanvas) {
         final Coordinate mazeIndex = MazeCanvasCoordinateMapping.canvasCordToMazeCordFloored(cellTopLeftCornerCanvas);
-        return maze[(int) mazeIndex.getRow()][(int) mazeIndex.getCol()] == MazeCellContentE.SUGAR;
+        return maze[(int) mazeIndex.getRow()][(int) mazeIndex.getCol()] == SpriteE.SUGAR;
     }
 
-    public static boolean isCanvasCellHasSuperSugar(MazeCellContentE[][] maze, Coordinate cellTopLeftCornerCanvas) {
+    public static boolean isCanvasCellHasSuperSugar(SpriteE[][] maze, Coordinate cellTopLeftCornerCanvas) {
         final Coordinate mazeIndex = MazeCanvasCoordinateMapping.canvasCordToMazeCordFloored(cellTopLeftCornerCanvas);
-        return maze[(int) mazeIndex.getRow()][(int) mazeIndex.getCol()] == MazeCellContentE.SUPER_SUGAR;
+        return maze[(int) mazeIndex.getRow()][(int) mazeIndex.getCol()] == SpriteE.SUPER_SUGAR;
     }
 }

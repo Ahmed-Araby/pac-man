@@ -1,7 +1,7 @@
 package org.example.collision;
 
 import org.example.constant.Dimensions;
-import org.example.constant.MazeCellContentE;
+import org.example.constant.SpriteE;
 import org.example.entity.Coordinate;
 import org.example.util.MazeCanvasCoordinateMapping;
 import org.example.util.RectUtils;
@@ -9,9 +9,9 @@ import org.example.util.RectUtils;
 import java.util.List;
 
 public class PacManToWallCollisionDetection {
-    private MazeCellContentE[][] maze;
+    private SpriteE[][] maze;
 
-    public PacManToWallCollisionDetection(MazeCellContentE[][] maze) {
+    public PacManToWallCollisionDetection(SpriteE[][] maze) {
         this.maze = maze;
     }
 
@@ -33,6 +33,6 @@ public class PacManToWallCollisionDetection {
 
     private boolean isPacManCollidingWithAWall(Coordinate wallCanvasTopLeftCorner) {
         final Coordinate wallMazeCord = MazeCanvasCoordinateMapping.canvasCordToMazeCordFloored(wallCanvasTopLeftCorner);
-        return maze[(int) wallMazeCord.getRow()][(int) wallMazeCord.getCol()] == MazeCellContentE.WALL;
+        return maze[(int) wallMazeCord.getRow()][(int) wallMazeCord.getCol()] == SpriteE.WALL;
     }
 }

@@ -1,6 +1,6 @@
 package org.example.constant;
 
-public enum MazeCellContentE {
+public enum SpriteE {
     EMPTY,
     WALL,
     SUGAR,
