@@ -16,11 +16,15 @@ public class SoundPlayer implements Subscriber {
     }
 
     public void playPacManSugarCollisionSound() {
-        eatSugar.play();
+        if(!eatSugar.isPlaying()) {
+            eatSugar.play();
+        }
     }
 
     public void playPacManSuperSugarCollisionSound() {
-        eatSugar.play();
+        if(!eatSugar.isPlaying()) {
+            eatSugar.play();
+        }
     }
 
     @Override
@@ -30,7 +34,7 @@ public class SoundPlayer implements Subscriber {
                 playPacManSugarCollisionSound();
                 break;
             case PAC_MAN_SUPER_SUGAR_COLLISION:
-                playPacManSugarCollisionSound();
+                playPacManSuperSugarCollisionSound();
                 break;
             default:
                 throw new IllegalArgumentException();
