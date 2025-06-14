@@ -18,6 +18,7 @@ pac man game using javaFX.
   - [X] use events (observer pattern) for the interactions between the different game components (i.e. collision detection and side effects of this collisions in maze, sounds, pac man mouse animation, etc....)
   - [ ] make consistent use of the concepts Rect (Rectangle), Coordinate of the top left corner, and Canvas Cell
   - [ ] make consistent naming convention for variables
+  - [ ] use deceorator/Adapter design pattern to abstract the creation of game ready maze, as the maze generator generate a generic boolean maze where 0 is empty cell and 1 is a cell with a wall.
 - [ ] write documenntation and turotial for the work completed so far.
 - [ ] put ghosts.
 - [ ] track score, move to next level and game over.
