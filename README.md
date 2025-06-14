@@ -15,7 +15,7 @@ pac man game using javaFX.
 - [X] put suger for pac man to eat.
 - [X] play sound when pac man eat sugar, use the observer design pattern for SoundPlayer class to get notified about detected collisions between pac man and sugar
 - [ ] code refactor
-  - [ ] use events (observer pattern) for the interactions between the different game components (i.e. collision detection and side effects of this collisions in maze, sounds, pac man mouse animation, etc....)
+  - [X] use events (observer pattern) for the interactions between the different game components (i.e. collision detection and side effects of this collisions in maze, sounds, pac man mouse animation, etc....)
   - [ ] make consistent use of the concepts Rect (Rectangle), Coordinate of the top left corner, and Canvas Cell
   - [ ] make consistent naming convention for variables
   - [ ] try to make use of PixelStrideTracker class as a mechanism for TurnBuffer to simplfy TurnBuffer implementation
