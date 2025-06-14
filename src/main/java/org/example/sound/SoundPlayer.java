@@ -19,10 +19,17 @@ public class SoundPlayer implements Subscriber {
         eatSugar.play();
     }
 
+    public void playPacManSuperSugarCollisionSound() {
+        eatSugar.play();
+    }
+
     @Override
     public void update(Event event) {
         switch (event.getType()) {
             case PAC_MAN_SUGAR_COLLISION:
+                playPacManSugarCollisionSound();
+                break;
+            case PAC_MAN_SUPER_SUGAR_COLLISION:
                 playPacManSugarCollisionSound();
                 break;
             default:

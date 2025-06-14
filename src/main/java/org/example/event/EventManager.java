@@ -5,9 +5,11 @@ import java.util.List;
 
 public class EventManager implements Publisher{
     List<Subscriber> pacManSugarCollisionEventSubscribers;
+    List<Subscriber> pacManSuperSugarCollisionSubscribers;
 
     public EventManager() {
         pacManSugarCollisionEventSubscribers = new ArrayList<>();
+        pacManSuperSugarCollisionSubscribers = new ArrayList<>();
     }
 
     @Override
@@ -15,6 +17,9 @@ public class EventManager implements Publisher{
         switch (type) {
             case PAC_MAN_SUGAR_COLLISION:
                 pacManSugarCollisionEventSubscribers.add(subscriber);
+                break;
+            case PAC_MAN_SUPER_SUGAR_COLLISION:
+                pacManSuperSugarCollisionSubscribers.add(subscriber);
                 break;
             default:
                 throw new IllegalArgumentException();
@@ -27,6 +32,9 @@ public class EventManager implements Publisher{
             case PAC_MAN_SUGAR_COLLISION:
                 pacManSugarCollisionEventSubscribers.remove(subscriber);
                 break;
+            case PAC_MAN_SUPER_SUGAR_COLLISION:
+                pacManSuperSugarCollisionSubscribers.remove(subscriber);
+                break;
             default:
                 throw new IllegalArgumentException();
         }
@@ -37,6 +45,9 @@ public class EventManager implements Publisher{
         switch (event.getType()) {
             case PAC_MAN_SUGAR_COLLISION:
                 pacManSugarCollisionEventSubscribers.stream().forEach(sub -> sub.update(event));
+                break;
+            case PAC_MAN_SUPER_SUGAR_COLLISION:
+                pacManSuperSugarCollisionSubscribers.stream().forEach(sub -> sub.update(event));
                 break;
             default:
                 throw new IllegalArgumentException();

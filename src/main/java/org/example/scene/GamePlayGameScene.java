@@ -6,6 +6,7 @@ import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import org.example.collision.PacManToSugarCollisionDetection;
+import org.example.collision.PacManToSuperSugarCollisionDetection;
 import org.example.collision.PacManToWallCollisionDetection;
 import org.example.constant.ColorConstants;
 import org.example.constant.Dimensions;
@@ -37,12 +38,14 @@ public class GamePlayGameScene implements GameScene {
 
         final PacManToWallCollisionDetection pacManToWallCollisionDetection = new PacManToWallCollisionDetection(maze.getGameMaze());
         final PacManToSugarCollisionDetection pacManToSugarCollisionDetection = new PacManToSugarCollisionDetection(maze.getGameMaze(), eventManager);
-        pacMan = new PacMan(emptyCellPos.getCol(), emptyCellPos.getRow(), pacManToWallCollisionDetection, pacManToSugarCollisionDetection);
+        final PacManToSuperSugarCollisionDetection pacManToSuperSugarCollisionDetection = new PacManToSuperSugarCollisionDetection(maze.getGameMaze(), eventManager);
+        pacMan = new PacMan(emptyCellPos.getCol(), emptyCellPos.getRow(), pacManToWallCollisionDetection, pacManToSugarCollisionDetection, pacManToSuperSugarCollisionDetection);
 
         sugar = new Sugar(maze.getGameMaze());
 
         soundPlayer = new SoundPlayer();
         eventManager.subscribe(EventType.PAC_MAN_SUGAR_COLLISION, this.soundPlayer);
+        eventManager.subscribe(EventType.PAC_MAN_SUPER_SUGAR_COLLISION, this.soundPlayer);
 
         canvas = new Canvas(Dimensions.CANVAS_WIDTH_PIXELS, Dimensions.CANVAS_HEIGHT_PIXELS);
         final GraphicsContext context = canvas.getGraphicsContext2D();

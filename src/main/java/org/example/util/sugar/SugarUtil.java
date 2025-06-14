@@ -24,4 +24,9 @@ public class SugarUtil {
         final Coordinate mazeIndex = MazeCanvasCoordinateMapping.canvasCordToMazeCordFloored(cellTopLeftCornerCanvas);
         return maze[(int) mazeIndex.getRow()][(int) mazeIndex.getCol()] == MazeCellContentE.SUGAR;
     }
+
+    public static boolean isCanvasCellHasSuperSugar(MazeCellContentE[][] maze, Coordinate cellTopLeftCornerCanvas) {
+        final Coordinate mazeIndex = MazeCanvasCoordinateMapping.canvasCordToMazeCordFloored(cellTopLeftCornerCanvas);
+        return maze[(int) mazeIndex.getRow()][(int) mazeIndex.getCol()] == MazeCellContentE.SUPER_SUGAR;
+    }
 }

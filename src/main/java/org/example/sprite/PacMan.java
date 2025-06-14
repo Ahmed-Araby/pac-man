@@ -6,6 +6,7 @@ import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import org.example.collision.PacManToSugarCollisionDetection;
+import org.example.collision.PacManToSuperSugarCollisionDetection;
 import org.example.collision.PacManToWallCollisionDetection;
 import org.example.constant.Configs;
 import org.example.constant.Dimensions;
@@ -23,17 +24,19 @@ public class PacMan implements Sprite{
 
     private final PacManToWallCollisionDetection pacManToWallCollisionDetection;
     private final PacManToSugarCollisionDetection pacManToSugarCollisionDetection;
+    private final PacManToSuperSugarCollisionDetection pacManToSuperSugarCollisionDetection;
     private final TurnBuffer turnBuffer;
     private final PixelStrideTracker closedMousePixelStrideTracker;
     private boolean isPacManEating = false;
 
-    public PacMan(double canvasCol, double canvasRow, PacManToWallCollisionDetection pacManToWallCollisionDetection, PacManToSugarCollisionDetection pacManToSugarCollisionDetection) {
+    public PacMan(double canvasCol, double canvasRow, PacManToWallCollisionDetection pacManToWallCollisionDetection, PacManToSugarCollisionDetection pacManToSugarCollisionDetection, PacManToSuperSugarCollisionDetection pacManToSuperSugarCollisionDetection) {
         this.canvasCol = canvasCol;
         this.canvasRow = canvasRow;
         this.direction = DirectionsE.STILL;
 
         this.pacManToWallCollisionDetection = pacManToWallCollisionDetection;
         this.pacManToSugarCollisionDetection = pacManToSugarCollisionDetection;
+        this.pacManToSuperSugarCollisionDetection = pacManToSuperSugarCollisionDetection;
         this.turnBuffer = new TurnBuffer();
         this.closedMousePixelStrideTracker = new PixelStrideTracker(Dimensions.PAC_MAN_CLOSED_MOUSE_DISTANCE_PIXELS,
                 Dimensions.PAC_MAN_CLOSED_MOUSE_DISTANCE_PIXELS + Dimensions.PAC_MAN_OPEN_MOUSE_DISTANCE_PIXELS // just the same as Dimensions.PAC_MAN_COMPLETE_MOUSE_MOVEMENT_DISTANCE_PIXELS
@@ -79,6 +82,11 @@ public class PacMan implements Sprite{
 
         if(pacManToSugarCollisionDetection.isEatingSugar(new Coordinate(canvasRow, canvasCol))) {
             System.out.println("eating sugar ******************");
+        }
+
+
+        if(pacManToSuperSugarCollisionDetection.isEatingSuperSugar(new Coordinate(canvasRow, canvasCol))) {
+            System.out.println("eating super sugar ******************");
         }
     }
 
