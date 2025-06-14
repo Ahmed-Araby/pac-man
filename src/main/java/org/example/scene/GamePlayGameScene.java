@@ -42,10 +42,14 @@ public class GamePlayGameScene implements GameScene {
         pacMan = new PacMan(emptyCellPos.getCol(), emptyCellPos.getRow(), pacManToWallCollisionDetection, pacManToSugarCollisionDetection, pacManToSuperSugarCollisionDetection);
 
         sugar = new Sugar(maze.getGameMaze());
-
         soundPlayer = new SoundPlayer();
-        eventManager.subscribe(EventType.PAC_MAN_SUGAR_COLLISION, this.soundPlayer);
-        eventManager.subscribe(EventType.PAC_MAN_SUPER_SUGAR_COLLISION, this.soundPlayer);
+
+        // event subscription
+        eventManager.subscribe(EventType.PAC_MAN_SUGAR_COLLISION, soundPlayer);
+        eventManager.subscribe(EventType.PAC_MAN_SUGAR_COLLISION, sugar);
+
+        eventManager.subscribe(EventType.PAC_MAN_SUPER_SUGAR_COLLISION, soundPlayer);
+        eventManager.subscribe(EventType.PAC_MAN_SUPER_SUGAR_COLLISION, sugar);
 
         canvas = new Canvas(Dimensions.CANVAS_WIDTH_PIXELS, Dimensions.CANVAS_HEIGHT_PIXELS);
         final GraphicsContext context = canvas.getGraphicsContext2D();

@@ -1,13 +1,13 @@
 package org.example.event;
 
-import lombok.Setter;
+import lombok.Getter;
 import org.example.entity.Coordinate;
 
 import java.util.List;
 
-@Setter
 public class PacManSugarCollisionEvent extends Event {
 
+    @Getter
     private final List<Coordinate> eatenSugarCanvasRect;
 
     public PacManSugarCollisionEvent(EventType type, List<Coordinate> eatenSugarCanvasRect) {

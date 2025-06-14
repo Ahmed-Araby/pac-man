@@ -9,11 +9,14 @@ import org.example.constant.Configs;
 import org.example.constant.Dimensions;
 import org.example.constant.MazeCellContentE;
 import org.example.entity.Coordinate;
+import org.example.event.Event;
+import org.example.event.PacManSugarCollisionEvent;
+import org.example.event.Subscriber;
 import org.example.util.EnrichedThreadLocalRandom;
 import org.example.util.MazeCanvasCoordinateMapping;
 import org.example.util.sugar.SugarUtil;
 
-public class Sugar implements Sprite {
+public class Sugar implements Sprite, Subscriber {
     private final MazeCellContentE[][] maze;
     private final EnrichedThreadLocalRandom enrichedRandom = new EnrichedThreadLocalRandom();
 
@@ -62,5 +65,22 @@ public class Sugar implements Sprite {
     @Override
     public void move(KeyEvent event) {
         throw new UnsupportedOperationException();
+    }
+
+
+    @Override
+    public void update(Event event) {
+        switch (event.getType()) {
+            case PAC_MAN_SUGAR_COLLISION, PAC_MAN_SUPER_SUGAR_COLLISION:
+                ((PacManSugarCollisionEvent)event).getEatenSugarCanvasRect().forEach(this::removeSugar);
+                break;
+            default:
+                throw new UnsupportedOperationException();
+        }
+    }
+
+    public void removeSugar(Coordinate sugarRectCanvasTopLeftCoordinate) {
+        final Coordinate sugarCellMazeTopLeftCornerCoordinate = MazeCanvasCoordinateMapping.canvasCordToMazeCordFloored(sugarRectCanvasTopLeftCoordinate);
+        maze[(int) sugarCellMazeTopLeftCornerCoordinate.getRow()][(int) sugarCellMazeTopLeftCornerCoordinate.getCol()] = MazeCellContentE.EMPTY;
     }
 }
