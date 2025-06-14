@@ -6,7 +6,6 @@ import org.example.entity.Coordinate;
 import org.example.event.EventManager;
 import org.example.event.EventType;
 import org.example.event.PacManSugarCollisionEvent;
-import org.example.util.MazeCanvasCoordinateMapping;
 import org.example.util.RectUtils;
 import org.example.util.sugar.SugarUtil;
 
@@ -31,13 +30,6 @@ public class PacManToSuperSugarCollisionDetection {
                 .map(SugarUtil::getSuperSugarTopLeftCornerCanvas)
                 .filter(superSugarCanvasRectTopLeftCorner -> isPacManRectContainsSuperSugarRect(pacManCanvasRectTopLeftCorner, superSugarCanvasRectTopLeftCorner))
                 .collect(Collectors.toUnmodifiableList());
-
-        System.out.println("Canvas Super Sugar To Be Eaten " + canvasSuperSugarToBeEaten);
-        canvasSuperSugarToBeEaten.stream()
-                .map(MazeCanvasCoordinateMapping::canvasCordToMazeCordFloored)
-                .forEach(mazeIndex -> {
-                    maze[(int) mazeIndex.getRow()][(int) mazeIndex.getCol()] = MazeCellContentE.EMPTY;
-                });
 
         if (!canvasSuperSugarToBeEaten.isEmpty()) {
             eventManager.notifySubscribers(new PacManSugarCollisionEvent(EventType.PAC_MAN_SUPER_SUGAR_COLLISION, canvasSuperSugarToBeEaten));
