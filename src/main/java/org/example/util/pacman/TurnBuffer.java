@@ -13,7 +13,7 @@ public class TurnBuffer {
 
     private DirectionsE bufferedDirection;
     private Coordinate pacManCanvasCoordAtBufferingTime;
-
+    // we can simplify the turn buffer using PixelStrideTracker, however I think the current approach is more accurate
     public boolean isBlockedTurn(boolean collisionDetected, DirectionsE currentPacManDirection, DirectionsE requestedDirection) {
         return collisionDetected && currentPacManDirection != requestedDirection;
     }
