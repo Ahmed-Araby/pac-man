@@ -80,7 +80,7 @@ public class GamePlayGameScene implements GameScene {
         eventManager.subscribe(EventType.PAC_MAN_SUPER_SUGAR_COLLISION, soundPlayer);
         eventManager.subscribe(EventType.PAC_MAN_SUPER_SUGAR_COLLISION, sugar);
 
-        eventManager.subscribe(EventType.PAC_MAN_MOVEMENT, pacMan);
+        eventManager.subscribe(EventType.PAC_MAN_MOVEMENT_ATTEMPT, pacMan);
     }
 
     @Override

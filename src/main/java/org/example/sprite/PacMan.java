@@ -11,7 +11,7 @@ import org.example.constant.Dimensions;
 import org.example.constant.DirectionsE;
 import org.example.entity.Coordinate;
 import org.example.event.Event;
-import org.example.event.PacManMovementEvent;
+import org.example.event.PacManMovementAttemptEvent;
 import org.example.event.Subscriber;
 import org.example.util.pacman.PacManGraphicsUtil;
 import org.example.util.pacman.PixelStrideTracker;
@@ -93,10 +93,10 @@ public class PacMan implements Sprite, Subscriber {
 
     @Override
     public void move(Event event) {
-        move(((PacManMovementEvent)event));
+        move(((PacManMovementAttemptEvent)event));
     }
 
-    public void move(PacManMovementEvent event) {
+    public void move(PacManMovementAttemptEvent event) {
 
         if (event.getSource() instanceof Scene){
             userInputMove(event);
@@ -107,12 +107,12 @@ public class PacMan implements Sprite, Subscriber {
 
         if (turnBuffer.isThereBufferedTurn(new Coordinate(canvasRow, canvasCol), direction, Dimensions.CANVAS_CELL_SIZE_PIXELS, Dimensions.CANVAS_CELL_SIZE_PIXELS)) {
             System.out.println("there is a buffered turn *************");
-            final PacManMovementEvent bufferedPacManMovementEvent = turnBuffer.getBufferedTurnKeyEvent();
-            automatedMove(bufferedPacManMovementEvent);
+            final PacManMovementAttemptEvent bufferedPacManMovementAttemptEvent = turnBuffer.getBufferedTurnKeyEvent();
+            automatedMove(bufferedPacManMovementAttemptEvent);
         }
     }
 
-    public void automatedMove(PacManMovementEvent event) {
+    public void automatedMove(PacManMovementAttemptEvent event) {
         double newCanvasCol, newCanvasRow;
 
         switch (event.getDirectionsE()) {
@@ -150,7 +150,7 @@ public class PacMan implements Sprite, Subscriber {
         }
     }
 
-    public void userInputMove(PacManMovementEvent event) {
+    public void userInputMove(PacManMovementAttemptEvent event) {
 
         double newCanvasCol, newCanvasRow;
         boolean detectedCollision = true;
@@ -201,14 +201,14 @@ public class PacMan implements Sprite, Subscriber {
         }
     }
 
-    private PacManMovementEvent createAutomaticPacManMovementEvent(DirectionsE direction) {
-        return new PacManMovementEvent(direction, this);
+    private PacManMovementAttemptEvent createAutomaticPacManMovementEvent(DirectionsE direction) {
+        return new PacManMovementAttemptEvent(direction, this);
     }
 
     @Override
     public void update(Event event) {
         switch (event.getType()) {
-            case PAC_MAN_MOVEMENT:
+            case PAC_MAN_MOVEMENT_ATTEMPT:
                 move(event);
                 break;
             default:

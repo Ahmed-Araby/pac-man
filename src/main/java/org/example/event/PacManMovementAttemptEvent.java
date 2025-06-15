@@ -4,18 +4,18 @@ import lombok.Getter;
 import org.example.constant.DirectionsE;
 
 @Getter
-public class PacManMovementEvent extends Event{
+public class PacManMovementAttemptEvent extends Event{
     private final DirectionsE directionsE;
     private final Object source;
 
-    public PacManMovementEvent(EventType type, DirectionsE directionsE, Object source) {
+    public PacManMovementAttemptEvent(EventType type, DirectionsE directionsE, Object source) {
         super(type);
         this.directionsE = directionsE;
         this.source = source;
     }
 
-    public PacManMovementEvent(DirectionsE directionsE, Object source) {
-        super(EventType.PAC_MAN_MOVEMENT);
+    public PacManMovementAttemptEvent(DirectionsE directionsE, Object source) {
+        super(EventType.PAC_MAN_MOVEMENT_ATTEMPT);
         this.directionsE = directionsE;
         this.source = source;
     }

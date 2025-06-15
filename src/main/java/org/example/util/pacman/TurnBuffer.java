@@ -1,12 +1,11 @@
 package org.example.util.pacman;
 
-import javafx.scene.input.KeyEvent;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.example.constant.DirectionsE;
 import org.example.entity.Coordinate;
 import org.example.event.EventType;
-import org.example.event.PacManMovementEvent;
+import org.example.event.PacManMovementAttemptEvent;
 import org.example.util.RectUtils;
 
 @NoArgsConstructor
@@ -35,9 +34,9 @@ public class TurnBuffer {
         return true;
     }
 
-    public PacManMovementEvent getBufferedTurnKeyEvent() {
+    public PacManMovementAttemptEvent getBufferedTurnKeyEvent() {
         // handle situations where there is no buffered turn, we shouldn't trust the client code.
-        return new PacManMovementEvent(EventType.PAC_MAN_MOVEMENT, bufferedDirection, this);
+        return new PacManMovementAttemptEvent(EventType.PAC_MAN_MOVEMENT_ATTEMPT, bufferedDirection, this);
     }
 
     public void bufferTurn(DirectionsE bufferedTurn, Coordinate pacManCanvasCoordAtBufferingTime) {
