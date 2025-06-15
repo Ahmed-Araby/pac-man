@@ -102,7 +102,7 @@ public class PacMan implements Sprite, Subscriber {
             }
         }
 
-        if (event.getSource() instanceof PacMan) { // if we reached this line, it will always be ture, but I leave the condition here for documentation purpose
+        if (event.getSource() instanceof PacMan) { // if we reached this line, it will always be ture, but I will leave the condition here as a documentation.
             automatedMove(event);
         }
     }
