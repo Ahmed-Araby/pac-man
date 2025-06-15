@@ -63,7 +63,7 @@ public class Sugar implements Sprite, Subscriber {
     }
 
     @Override
-    public void move(KeyEvent event) {
+    public void move(Event event) {
         throw new UnsupportedOperationException();
     }
 

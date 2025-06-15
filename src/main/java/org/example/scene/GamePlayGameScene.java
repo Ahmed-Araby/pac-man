@@ -3,6 +3,7 @@ package org.example.scene;
 import javafx.scene.Scene;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
+import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import org.example.collision.PacManToSugarCollisionDetection;
@@ -10,8 +11,10 @@ import org.example.collision.PacManToSuperSugarCollisionDetection;
 import org.example.collision.PacManToWallCollisionDetection;
 import org.example.constant.ColorConstants;
 import org.example.constant.Dimensions;
+import org.example.constant.DirectionsE;
 import org.example.event.EventManager;
 import org.example.event.EventType;
+import org.example.event.PacManMovementEvent;
 import org.example.sound.SoundPlayer;
 import org.example.sprite.Maze;
 import org.example.sprite.PacMan;
@@ -51,6 +54,8 @@ public class GamePlayGameScene implements GameScene {
         eventManager.subscribe(EventType.PAC_MAN_SUPER_SUGAR_COLLISION, soundPlayer);
         eventManager.subscribe(EventType.PAC_MAN_SUPER_SUGAR_COLLISION, sugar);
 
+        eventManager.subscribe(EventType.PAC_MAN_MOVEMENT, pacMan);
+
         canvas = new Canvas(Dimensions.CANVAS_WIDTH_PIXELS, Dimensions.CANVAS_HEIGHT_PIXELS);
         final GraphicsContext context = canvas.getGraphicsContext2D();
         context.setFill(ColorConstants.CANVAS_COLOR);
@@ -60,8 +65,17 @@ public class GamePlayGameScene implements GameScene {
         scene = new Scene(pane);
 
         scene.setOnKeyPressed((event) -> {
-            pacMan.move(event);
+            publishEvent(event);
         });
+    }
+
+    private void publishEvent(KeyEvent keyEvent) {
+        try {
+            final PacManMovementEvent event = new PacManMovementEvent(EventType.PAC_MAN_MOVEMENT, DirectionsE.from(keyEvent.getCode()), keyEvent.getSource());
+            eventManager.notifySubscribers(event);
+        } catch (Exception exc) {
+            System.out.println("user input is not a valid pac man movement input");
+        }
     }
 
 

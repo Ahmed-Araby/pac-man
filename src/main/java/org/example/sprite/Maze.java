@@ -9,6 +9,7 @@ import org.example.constant.ColorConstants;
 import org.example.constant.Dimensions;
 import org.example.constant.SpriteE;
 import org.example.entity.Coordinate;
+import org.example.event.Event;
 import org.example.maze.MazeGenerator;
 import org.example.maze.RecursiveDivisionMazeGenerator;
 import org.example.util.MazeCanvasCoordinateMapping;
@@ -57,7 +58,7 @@ public class Maze implements Sprite {
     }
 
     @Override
-    public void move(KeyEvent event) {
+    public void move(Event event) {
         throw new UnsupportedOperationException();
     }
 

@@ -1,11 +1,11 @@
 package org.example.sprite;
 
 import javafx.scene.canvas.Canvas;
-import javafx.scene.input.KeyEvent;
+import org.example.event.Event;
 
 
 public interface Sprite {
 
     void render(Canvas canvas);
-    void move(KeyEvent event);
+    void move(Event event);
 }
