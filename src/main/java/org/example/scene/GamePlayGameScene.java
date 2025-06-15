@@ -3,7 +3,6 @@ package org.example.scene;
 import javafx.scene.Scene;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
-import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import org.example.collision.PacManToSugarCollisionDetection;
@@ -11,10 +10,10 @@ import org.example.collision.PacManToSuperSugarCollisionDetection;
 import org.example.collision.PacManToWallCollisionDetection;
 import org.example.constant.ColorConstants;
 import org.example.constant.Dimensions;
-import org.example.constant.DirectionsE;
 import org.example.event.EventManager;
 import org.example.event.EventType;
-import org.example.event.PacManMovementEvent;
+import org.example.input.JavaFXInputHandler;
+import org.example.input.JavaFXUserInputHandler;
 import org.example.sound.SoundPlayer;
 import org.example.sprite.Maze;
 import org.example.sprite.PacMan;
@@ -32,10 +31,13 @@ public class GamePlayGameScene implements GameScene {
 
     final EventManager eventManager;
     final SoundPlayer soundPlayer;
+    final JavaFXInputHandler javaFXInputHandler;
 
     public GamePlayGameScene() {
         maze = new Maze();
         eventManager = new EventManager();
+        soundPlayer = new SoundPlayer();
+        javaFXInputHandler = new JavaFXUserInputHandler(eventManager);
 
         final Coordinate emptyCellPos = maze.getEmptyMazePosition();
 
@@ -45,7 +47,7 @@ public class GamePlayGameScene implements GameScene {
         pacMan = new PacMan(emptyCellPos.getCol(), emptyCellPos.getRow(), pacManToWallCollisionDetection, pacManToSugarCollisionDetection, pacManToSuperSugarCollisionDetection);
 
         sugar = new Sugar(maze.getGameMaze());
-        soundPlayer = new SoundPlayer();
+
 
         // event subscription
         eventManager.subscribe(EventType.PAC_MAN_SUGAR_COLLISION, soundPlayer);
@@ -65,19 +67,9 @@ public class GamePlayGameScene implements GameScene {
         scene = new Scene(pane);
 
         scene.setOnKeyPressed((event) -> {
-            publishEvent(event);
+            javaFXInputHandler.handleKeyPressedEvent(event);
         });
     }
-
-    private void publishEvent(KeyEvent keyEvent) {
-        try {
-            final PacManMovementEvent event = new PacManMovementEvent(EventType.PAC_MAN_MOVEMENT, DirectionsE.from(keyEvent.getCode()), keyEvent.getSource());
-            eventManager.notifySubscribers(event);
-        } catch (Exception exc) {
-            System.out.println("user input is not a valid pac man movement input");
-        }
-    }
-
 
     @Override
     public Scene getScene() {
