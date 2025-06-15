@@ -49,14 +49,6 @@ public class GamePlayGameScene implements GameScene {
         sugar = new Sugar(maze.getGameMaze());
 
 
-        // event subscription
-        eventManager.subscribe(EventType.PAC_MAN_SUGAR_COLLISION, soundPlayer);
-        eventManager.subscribe(EventType.PAC_MAN_SUGAR_COLLISION, sugar);
-
-        eventManager.subscribe(EventType.PAC_MAN_SUPER_SUGAR_COLLISION, soundPlayer);
-        eventManager.subscribe(EventType.PAC_MAN_SUPER_SUGAR_COLLISION, sugar);
-
-        eventManager.subscribe(EventType.PAC_MAN_MOVEMENT, pacMan);
 
         canvas = new Canvas(Dimensions.CANVAS_WIDTH_PIXELS, Dimensions.CANVAS_HEIGHT_PIXELS);
         final GraphicsContext context = canvas.getGraphicsContext2D();
@@ -66,9 +58,26 @@ public class GamePlayGameScene implements GameScene {
         pane = new Pane(canvas);
         scene = new Scene(pane);
 
+
+        // game engine
+        registerEventSubscribers();
         scene.setOnKeyPressed((event) -> {
             javaFXInputHandler.handleKeyPressedEvent(event);
         });
+    }
+
+    private void registerEventSubscribers() {
+        if (soundPlayer == null || sugar == null || pacMan == null) {
+            throw new IllegalStateException("can't register null sprite for event subscription, SoundPlayer, Sugar and PacMan sprites must be defined");
+        }
+
+        eventManager.subscribe(EventType.PAC_MAN_SUGAR_COLLISION, soundPlayer);
+        eventManager.subscribe(EventType.PAC_MAN_SUGAR_COLLISION, sugar);
+
+        eventManager.subscribe(EventType.PAC_MAN_SUPER_SUGAR_COLLISION, soundPlayer);
+        eventManager.subscribe(EventType.PAC_MAN_SUPER_SUGAR_COLLISION, sugar);
+
+        eventManager.subscribe(EventType.PAC_MAN_MOVEMENT, pacMan);
     }
 
     @Override
