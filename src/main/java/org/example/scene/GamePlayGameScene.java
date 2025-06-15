@@ -51,10 +51,6 @@ public class GamePlayGameScene implements GameScene {
 
 
         canvas = new Canvas(Dimensions.CANVAS_WIDTH_PIXELS, Dimensions.CANVAS_HEIGHT_PIXELS);
-        final GraphicsContext context = canvas.getGraphicsContext2D();
-        context.setFill(ColorConstants.CANVAS_COLOR);
-        context.fillRect(0, 0, Dimensions.CANVAS_WIDTH_PIXELS, Dimensions.CANVAS_HEIGHT_PIXELS);
-
         pane = new Pane(canvas);
         scene = new Scene(pane);
 

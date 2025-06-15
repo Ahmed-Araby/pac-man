@@ -36,8 +36,13 @@ public class Maze implements Sprite {
     @Override
     public void render(Canvas canvas) {
         final GraphicsContext con = canvas.getGraphicsContext2D();
-        con.setFill(ColorConstants.CANVAS_WALL_COLOR);
 
+        // set the maze background
+        con.setFill(ColorConstants.CANVAS_COLOR);
+        con.fillRect(0, 0, Dimensions.CANVAS_WIDTH_PIXELS, Dimensions.CANVAS_HEIGHT_PIXELS);
+
+        // set the maze walls
+        con.setFill(ColorConstants.CANVAS_WALL_COLOR);
         for (int mazeRow = 0; mazeRow< gameMaze.length; mazeRow++) {
             for(int mazeCol = 0; mazeCol< gameMaze[0].length; mazeCol++) {
                 if (gameMaze[mazeRow][mazeCol] == SpriteE.WALL) {
