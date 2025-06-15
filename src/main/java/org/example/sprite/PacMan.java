@@ -3,8 +3,6 @@ package org.example.sprite;
 import javafx.scene.Scene;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
-import org.example.collision.PacManToSugarCollisionDetection;
-import org.example.collision.PacManToSuperSugarCollisionDetection;
 import org.example.collision.PacManToWallCollisionDetection;
 import org.example.constant.Configs;
 import org.example.constant.Dimensions;
@@ -89,21 +87,27 @@ public class PacMan implements Sprite, Subscriber {
 
     public void move(PacManMovementAttemptEvent event) {
 
+        // a user movement attempt should be executed alone, because it overrides or discard the turn buffer, and of course it is no an automated movement
         if (event.getSource() instanceof Scene){
             userInputMove(event);
             return;
-        } else if (event.getSource() instanceof PacMan) {
-            automatedMove(event);
         }
+
 
         if (turnBuffer.isThereBufferedTurn(new Coordinate(canvasRow, canvasCol), direction, Dimensions.CANVAS_CELL_SIZE_PIXELS, Dimensions.CANVAS_CELL_SIZE_PIXELS)) {
             System.out.println("there is a buffered turn *************");
             final PacManMovementAttemptEvent bufferedPacManMovementAttemptEvent = turnBuffer.getBufferedTurnKeyEvent();
-            automatedMove(bufferedPacManMovementAttemptEvent);
+            if (automatedMove(bufferedPacManMovementAttemptEvent)) {
+                return;
+            }
+        }
+
+        if (event.getSource() instanceof PacMan) { // if we reached this line, it will always be ture, but I leave the condition here for documentation purpose
+            automatedMove(event);
         }
     }
 
-    public void automatedMove(PacManMovementAttemptEvent event) {
+    public boolean automatedMove(PacManMovementAttemptEvent event) {
         double newCanvasCol, newCanvasRow;
 
         switch (event.getDirectionsE()) {
@@ -112,6 +116,7 @@ public class PacMan implements Sprite, Subscriber {
                 if (!pacManToWallCollisionDetection.isAboutToCollide(new Coordinate(canvasRow, newCanvasCol))){
                     direction = event.getDirectionsE();
                     canvasCol = newCanvasCol;
+                    return true;
                 }
                 break;
             case UP:
@@ -119,6 +124,7 @@ public class PacMan implements Sprite, Subscriber {
                 if (!pacManToWallCollisionDetection.isAboutToCollide(new Coordinate(newCanvasRow, canvasCol))) {
                     direction = event.getDirectionsE();
                     canvasRow = newCanvasRow;
+                    return true;
                 }
                 break;
             case LEFT:
@@ -126,6 +132,7 @@ public class PacMan implements Sprite, Subscriber {
                 if (!pacManToWallCollisionDetection.isAboutToCollide(new Coordinate(canvasRow, newCanvasCol))) {
                     direction = event.getDirectionsE();
                     canvasCol = newCanvasCol;
+                    return true;
                 }
                 break;
             case DOWN:
@@ -133,15 +140,18 @@ public class PacMan implements Sprite, Subscriber {
                 if (!pacManToWallCollisionDetection.isAboutToCollide(new Coordinate(newCanvasRow, canvasCol))) {
                     direction = event.getDirectionsE();
                     canvasRow = newCanvasRow;
+                    return true;
                 }
                 break;
             case STILL:
                 direction = event.getDirectionsE();
-                break;
+                return false;
         }
+
+        return false;
     }
 
-    public void userInputMove(PacManMovementAttemptEvent event) {
+    public boolean userInputMove(PacManMovementAttemptEvent event) {
 
         double newCanvasCol, newCanvasRow;
         boolean detectedCollision = true;
@@ -190,6 +200,8 @@ public class PacMan implements Sprite, Subscriber {
         } else {
             turnBuffer.discardTurnBuffer();
         }
+
+        return !detectedCollision && event.getDirectionsE() != DirectionsE.STILL;
     }
 
     private PacManMovementAttemptEvent createAutomaticPacManMovementEvent(DirectionsE direction) {
