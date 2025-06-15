@@ -3,16 +3,14 @@ package org.example.collision;
 import org.example.constant.Dimensions;
 import org.example.constant.SpriteE;
 import org.example.entity.Coordinate;
-import org.example.event.EventManager;
-import org.example.event.EventType;
-import org.example.event.PacManSugarCollisionEvent;
+import org.example.event.*;
 import org.example.util.RectUtils;
 import org.example.util.sugar.SugarUtil;
 
 import java.util.List;
 import java.util.stream.Collectors;
 
-public class PacManToSuperSugarCollisionDetection {
+public class PacManToSuperSugarCollisionDetection implements Subscriber {
     private SpriteE[][] maze;
     private EventManager eventManager;
 
@@ -45,5 +43,13 @@ public class PacManToSuperSugarCollisionDetection {
     private boolean isPacManRectContainsSuperSugarRect(Coordinate pacManCanvasRectTopLeftCorner, Coordinate sugarCanvasRectTopLeftCorner) {
         return RectUtils.isRectContainsRect(pacManCanvasRectTopLeftCorner, Dimensions.PAC_MAN_DIAMETER_PIXELS, Dimensions.PAC_MAN_DIAMETER_PIXELS,
                 sugarCanvasRectTopLeftCorner, Dimensions.SUGAR_CELL_SIZE_PIXELS, Dimensions.SUGAR_CELL_SIZE_PIXELS);
+    }
+
+    @Override
+    public void update(Event event) {
+        switch (event.getType()) {
+            case PAC_MAN_MOVEMENT -> isEatingSuperSugar(((PacManMovementEvent)event).getPacManCanvasRectTopLeftCorner());
+            default -> throw new IllegalArgumentException();
+        }
     }
 }

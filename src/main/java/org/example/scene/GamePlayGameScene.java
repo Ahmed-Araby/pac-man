@@ -35,8 +35,10 @@ public class GamePlayGameScene implements GameScene {
     final EventManager eventManager;
     final SoundPlayer soundPlayer;
     final JavaFXInputHandler javaFXInputHandler;
+
     // collision detection
     private final PacManToSugarCollisionDetection pacManToSugarCollisionDetection;
+    private final PacManToSuperSugarCollisionDetection pacManToSuperSugarCollisionDetection;
 
     public GamePlayGameScene() {
         // game engine
@@ -51,11 +53,10 @@ public class GamePlayGameScene implements GameScene {
         // collision detection
         final PacManToWallCollisionDetection pacManToWallCollisionDetection = new PacManToWallCollisionDetection(maze.getGameMaze());
         pacManToSugarCollisionDetection = new PacManToSugarCollisionDetection(maze.getGameMaze(), eventManager);
-
-        final PacManToSuperSugarCollisionDetection pacManToSuperSugarCollisionDetection = new PacManToSuperSugarCollisionDetection(maze.getGameMaze(), eventManager);
+        pacManToSuperSugarCollisionDetection = new PacManToSuperSugarCollisionDetection(maze.getGameMaze(), eventManager);
 
         // sprites
-        pacMan = new PacMan(emptyCellPos.getCol(), emptyCellPos.getRow(), pacManToWallCollisionDetection, pacManToSuperSugarCollisionDetection, eventManager);
+        pacMan = new PacMan(emptyCellPos.getCol(), emptyCellPos.getRow(), pacManToWallCollisionDetection, eventManager);
         sugar = new Sugar(maze.getGameMaze());
 
 
@@ -85,7 +86,9 @@ public class GamePlayGameScene implements GameScene {
 
         eventManager.subscribe(EventType.PAC_MAN_MOVEMENT_ATTEMPT, pacMan);
 
+        // register collision detectors
         eventManager.subscribe(EventType.PAC_MAN_MOVEMENT, pacManToSugarCollisionDetection);
+        eventManager.subscribe(EventType.PAC_MAN_MOVEMENT, pacManToSuperSugarCollisionDetection);
     }
 
     @Override

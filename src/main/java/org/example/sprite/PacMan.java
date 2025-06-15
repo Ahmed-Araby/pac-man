@@ -22,19 +22,17 @@ public class PacMan implements Sprite, Subscriber {
     private DirectionsE direction;
 
     private final PacManToWallCollisionDetection pacManToWallCollisionDetection;
-    private final PacManToSuperSugarCollisionDetection pacManToSuperSugarCollisionDetection;
     private final TurnBuffer turnBuffer;
     private final PixelStrideTracker closedMousePixelStrideTracker;
 
     private final EventManager eventManager;
 
-    public PacMan(double canvasCol, double canvasRow, PacManToWallCollisionDetection pacManToWallCollisionDetection, PacManToSuperSugarCollisionDetection pacManToSuperSugarCollisionDetection, EventManager eventManager) {
+    public PacMan(double canvasCol, double canvasRow, PacManToWallCollisionDetection pacManToWallCollisionDetection, EventManager eventManager) {
         this.canvasCol = canvasCol;
         this.canvasRow = canvasRow;
         this.direction = DirectionsE.STILL;
 
         this.pacManToWallCollisionDetection = pacManToWallCollisionDetection;
-        this.pacManToSuperSugarCollisionDetection = pacManToSuperSugarCollisionDetection;
         this.turnBuffer = new TurnBuffer();
         this.closedMousePixelStrideTracker = new PixelStrideTracker(Dimensions.PAC_MAN_CLOSED_MOUSE_DISTANCE_PIXELS,
                 Dimensions.PAC_MAN_CLOSED_MOUSE_DISTANCE_PIXELS + Dimensions.PAC_MAN_OPEN_MOUSE_DISTANCE_PIXELS // just the same as Dimensions.PAC_MAN_COMPLETE_MOUSE_MOVEMENT_DISTANCE_PIXELS
@@ -81,10 +79,6 @@ public class PacMan implements Sprite, Subscriber {
         }
 
         this.eventManager.notifySubscribers(new PacManMovementEvent(new Coordinate(canvasRow, canvasCol), direction, this));
-
-        if(pacManToSuperSugarCollisionDetection.isEatingSuperSugar(new Coordinate(canvasRow, canvasCol))) {
-            System.out.println("eating super sugar ******************");
-        }
     }
 
 
