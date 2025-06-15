@@ -21,45 +21,52 @@ import org.example.entity.Coordinate;
 import org.example.sprite.Sugar;
 
 public class GamePlayGameScene implements GameScene {
+    // sprites
     final PacMan pacMan;
     final Maze maze;
     final Sugar sugar;
 
+    // javaFX
     final Pane pane;
     final Canvas canvas;
     final Scene scene;
 
+    // game engine
     final EventManager eventManager;
     final SoundPlayer soundPlayer;
     final JavaFXInputHandler javaFXInputHandler;
 
     public GamePlayGameScene() {
-        maze = new Maze();
+        // game engine
         eventManager = new EventManager();
         soundPlayer = new SoundPlayer();
         javaFXInputHandler = new JavaFXUserInputHandler(eventManager);
 
+        // sprites
+        maze = new Maze();
         final Coordinate emptyCellPos = maze.getEmptyMazePosition();
 
+        // collision detection
         final PacManToWallCollisionDetection pacManToWallCollisionDetection = new PacManToWallCollisionDetection(maze.getGameMaze());
         final PacManToSugarCollisionDetection pacManToSugarCollisionDetection = new PacManToSugarCollisionDetection(maze.getGameMaze(), eventManager);
         final PacManToSuperSugarCollisionDetection pacManToSuperSugarCollisionDetection = new PacManToSuperSugarCollisionDetection(maze.getGameMaze(), eventManager);
-        pacMan = new PacMan(emptyCellPos.getCol(), emptyCellPos.getRow(), pacManToWallCollisionDetection, pacManToSugarCollisionDetection, pacManToSuperSugarCollisionDetection);
 
+        // sprites
+        pacMan = new PacMan(emptyCellPos.getCol(), emptyCellPos.getRow(), pacManToWallCollisionDetection, pacManToSugarCollisionDetection, pacManToSuperSugarCollisionDetection);
         sugar = new Sugar(maze.getGameMaze());
 
 
 
+        // javaFX setup
         canvas = new Canvas(Dimensions.CANVAS_WIDTH_PIXELS, Dimensions.CANVAS_HEIGHT_PIXELS);
         pane = new Pane(canvas);
         scene = new Scene(pane);
-
-
-        // game engine
-        registerEventSubscribers();
         scene.setOnKeyPressed((event) -> {
             javaFXInputHandler.handleKeyPressedEvent(event);
         });
+
+        // game engine
+        registerEventSubscribers();
     }
 
     private void registerEventSubscribers() {
