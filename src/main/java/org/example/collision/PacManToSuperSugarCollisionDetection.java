@@ -48,7 +48,7 @@ public class PacManToSuperSugarCollisionDetection implements Subscriber {
     @Override
     public void update(Event event) {
         switch (event.getType()) {
-            case PAC_MAN_MOVEMENT -> isEatingSuperSugar(((PacManMovementEvent)event).getPacManCanvasRectTopLeftCorner());
+            case PAC_MAN_CURRENT_LOCATION -> isEatingSuperSugar(((PacManCurrentLocationEvent)event).getPacManCanvasRectTopLeftCorner());
             default -> throw new IllegalArgumentException();
         }
     }

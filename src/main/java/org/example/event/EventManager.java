@@ -7,13 +7,13 @@ public class EventManager implements Publisher {
     List<Subscriber> pacManSugarCollisionEventSubscribers;
     List<Subscriber> pacManSuperSugarCollisionSubscribers;
     List<Subscriber> pacManMovementAttemptEventSubscribers;
-    List<Subscriber> pacManMovementEventSubscribers;
+    List<Subscriber> pacManCurrentLocationEventSubscribers;
 
     public EventManager() {
         pacManSugarCollisionEventSubscribers = new ArrayList<>();
         pacManSuperSugarCollisionSubscribers = new ArrayList<>();
         pacManMovementAttemptEventSubscribers = new ArrayList<>();
-        this.pacManMovementEventSubscribers = new ArrayList<>();
+        this.pacManCurrentLocationEventSubscribers = new ArrayList<>();
     }
 
     @Override
@@ -28,8 +28,8 @@ public class EventManager implements Publisher {
             case PAC_MAN_MOVEMENT_ATTEMPT:
                 pacManMovementAttemptEventSubscribers.add(subscriber);
                 break;
-            case PAC_MAN_MOVEMENT:
-                pacManMovementEventSubscribers.add(subscriber);
+            case PAC_MAN_CURRENT_LOCATION:
+                pacManCurrentLocationEventSubscribers.add(subscriber);
                 break;
             default:
                 throw new IllegalArgumentException();
@@ -48,8 +48,8 @@ public class EventManager implements Publisher {
             case PAC_MAN_MOVEMENT_ATTEMPT:
                 pacManMovementAttemptEventSubscribers.remove(subscriber);
                 break;
-            case PAC_MAN_MOVEMENT:
-                pacManMovementEventSubscribers.remove(subscriber);
+            case PAC_MAN_CURRENT_LOCATION:
+                pacManCurrentLocationEventSubscribers.remove(subscriber);
                 break;
             default:
                 throw new IllegalArgumentException();
@@ -68,8 +68,8 @@ public class EventManager implements Publisher {
             case PAC_MAN_MOVEMENT_ATTEMPT:
                 pacManMovementAttemptEventSubscribers.forEach(sub -> sub.update(event));
                 break;
-            case PAC_MAN_MOVEMENT:
-                pacManMovementEventSubscribers.forEach(sub -> sub.update(event));
+            case PAC_MAN_CURRENT_LOCATION:
+                pacManCurrentLocationEventSubscribers.forEach(sub -> sub.update(event));
                 break;
             default:
                 throw new IllegalArgumentException();

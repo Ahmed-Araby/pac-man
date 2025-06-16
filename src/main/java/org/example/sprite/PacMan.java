@@ -76,7 +76,7 @@ public class PacMan implements Sprite, Subscriber {
             closedMousePixelStrideTracker.reset();
         }
 
-        this.eventManager.notifySubscribers(new PacManMovementEvent(new Coordinate(canvasRow, canvasCol), direction, this));
+        this.eventManager.notifySubscribers(new PacManCurrentLocationEvent(new Coordinate(canvasRow, canvasCol), direction, this));
     }
 
 

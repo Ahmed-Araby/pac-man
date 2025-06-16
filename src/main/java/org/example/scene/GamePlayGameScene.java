@@ -87,8 +87,8 @@ public class GamePlayGameScene implements GameScene {
         eventManager.subscribe(EventType.PAC_MAN_MOVEMENT_ATTEMPT, pacMan);
 
         // register collision detectors
-        eventManager.subscribe(EventType.PAC_MAN_MOVEMENT, pacManToSugarCollisionDetection);
-        eventManager.subscribe(EventType.PAC_MAN_MOVEMENT, pacManToSuperSugarCollisionDetection);
+        eventManager.subscribe(EventType.PAC_MAN_CURRENT_LOCATION, pacManToSugarCollisionDetection);
+        eventManager.subscribe(EventType.PAC_MAN_CURRENT_LOCATION, pacManToSuperSugarCollisionDetection);
     }
 
     @Override
