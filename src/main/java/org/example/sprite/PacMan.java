@@ -7,6 +7,7 @@ import org.example.collision.PacManToWallCollisionDetection;
 import org.example.constant.Configs;
 import org.example.constant.Dimensions;
 import org.example.constant.DirectionsE;
+import org.example.constant.PacManAutomatedMovementTypeE;
 import org.example.entity.Coordinate;
 import org.example.event.*;
 import org.example.util.pacman.PacManGraphicsUtil;
@@ -18,6 +19,7 @@ public class PacMan implements Sprite, Subscriber {
     private double canvasCol;
     private double canvasRow;
     private DirectionsE direction;
+    private PacManAutomatedMovementTypeE nextAutomatedMove;
 
     private final PacManToWallCollisionDetection pacManToWallCollisionDetection;
     private final TurnBuffer turnBuffer;
@@ -29,6 +31,7 @@ public class PacMan implements Sprite, Subscriber {
         this.canvasCol = canvasCol;
         this.canvasRow = canvasRow;
         this.direction = DirectionsE.STILL;
+        this.nextAutomatedMove = PacManAutomatedMovementTypeE.TURN_BUFFER;
 
         this.pacManToWallCollisionDetection = pacManToWallCollisionDetection;
         this.turnBuffer = new TurnBuffer();
@@ -47,19 +50,19 @@ public class PacMan implements Sprite, Subscriber {
 
         switch (direction) {
             case RIGHT:
-                move(createAutomaticPacManMovementEvent(DirectionsE.RIGHT));
+                createAutomaticPacManMovement(DirectionsE.RIGHT);
                 PacManGraphicsUtil.drawRightOpenMousePacMan(con, canvasCol, canvasRow);
                 break;
             case UP:
-                move(createAutomaticPacManMovementEvent(DirectionsE.UP));
+                createAutomaticPacManMovement(DirectionsE.UP);
                 PacManGraphicsUtil.drawUpOpenMousePacMan(con, canvasCol, canvasRow);
                 break;
             case LEFT:
-                move(createAutomaticPacManMovementEvent(DirectionsE.LEFT));
+                createAutomaticPacManMovement(DirectionsE.LEFT);
                 PacManGraphicsUtil.drawLeftOpenMousePacMan(con, canvasCol, canvasRow);
                 break;
             case DOWN:
-                move(createAutomaticPacManMovementEvent(DirectionsE.DOWN));
+                createAutomaticPacManMovement(DirectionsE.DOWN);
                 PacManGraphicsUtil.drawDownOpenMousePacMan(con, canvasCol, canvasRow);
                 break;
             case STILL:
@@ -82,31 +85,8 @@ public class PacMan implements Sprite, Subscriber {
 
     @Override
     public void move(Event event) {
-        move(((PacManMovementAttemptEvent)event));
+        userInputMove(((PacManMovementAttemptEvent)event));
     }
-
-    public void move(PacManMovementAttemptEvent event) {
-
-        // a user movement attempt should be executed alone, because it overrides or discard the turn buffer, and of course it is no an automated movement
-        if (event.getSource() instanceof Scene){
-            userInputMove(event);
-            return;
-        }
-
-
-        if (turnBuffer.isThereBufferedTurn(new Coordinate(canvasRow, canvasCol), direction, Dimensions.CANVAS_CELL_SIZE_PIXELS, Dimensions.CANVAS_CELL_SIZE_PIXELS)) {
-            System.out.println("there is a buffered turn *************");
-            final PacManMovementAttemptEvent bufferedPacManMovementAttemptEvent = turnBuffer.getBufferedTurnKeyEvent();
-            if (automatedMove(bufferedPacManMovementAttemptEvent)) {
-                return;
-            }
-        }
-
-        if (event.getSource() instanceof PacMan) { // if we reached this line, it will always be ture, but I will leave the condition here as a documentation.
-            automatedMove(event);
-        }
-    }
-
     public boolean automatedMove(PacManMovementAttemptEvent event) {
         double newCanvasCol, newCanvasRow;
 
@@ -197,15 +177,35 @@ public class PacMan implements Sprite, Subscriber {
 
         if (turnBuffer.isBlockedTurn(detectedCollision, direction, event.getDirectionsE())) {
             turnBuffer.bufferTurn(event.getDirectionsE(), new Coordinate(canvasRow, canvasCol));
+            nextAutomatedMove = PacManAutomatedMovementTypeE.TURN_BUFFER;
         } else {
             turnBuffer.discardTurnBuffer();
+            nextAutomatedMove = PacManAutomatedMovementTypeE.STRAIGHT_LINE;
         }
 
         return !detectedCollision && event.getDirectionsE() != DirectionsE.STILL;
     }
 
-    private PacManMovementAttemptEvent createAutomaticPacManMovementEvent(DirectionsE direction) {
-        return new PacManMovementAttemptEvent(direction, this);
+    private void createAutomaticPacManMovement(DirectionsE direction) {
+        // this code is ugly I know
+        if (nextAutomatedMove == PacManAutomatedMovementTypeE.TURN_BUFFER && isThereBufferedTurn()) {
+            final PacManMovementAttemptEvent bufferedPacManMovementAttemptEvent = turnBuffer.getBufferedTurnKeyEvent();
+            if (automatedMove(bufferedPacManMovementAttemptEvent)) {
+                nextAutomatedMove = PacManAutomatedMovementTypeE.STRAIGHT_LINE;
+            } else {
+                // don't waste the frame
+                final PacManMovementAttemptEvent straightLinePacManMovementAttemptEvent = new PacManMovementAttemptEvent(direction, this);
+                automatedMove(straightLinePacManMovementAttemptEvent);
+            }
+        } else {
+            final PacManMovementAttemptEvent straightLinePacManMovementAttemptEvent = new PacManMovementAttemptEvent(direction, this);
+            automatedMove(straightLinePacManMovementAttemptEvent);
+            nextAutomatedMove = nextAutomatedMove == PacManAutomatedMovementTypeE.TURN_BUFFER ? PacManAutomatedMovementTypeE.STRAIGHT_LINE : PacManAutomatedMovementTypeE.TURN_BUFFER;
+        }
+    }
+
+    private boolean isThereBufferedTurn() {
+        return turnBuffer.isThereBufferedTurn(new Coordinate(canvasRow, canvasCol), direction, Dimensions.CANVAS_CELL_SIZE_PIXELS, Dimensions.CANVAS_CELL_SIZE_PIXELS);
     }
 
     @Override
