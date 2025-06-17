@@ -84,7 +84,7 @@ public class GamePlayGameScene implements GameScene {
         eventManager.subscribe(EventType.PAC_MAN_SUPER_SUGAR_COLLISION, soundPlayer);
         eventManager.subscribe(EventType.PAC_MAN_SUPER_SUGAR_COLLISION, sugar);
 
-        eventManager.subscribe(EventType.PAC_MAN_MOVEMENT_ATTEMPT, pacMan);
+        eventManager.subscribe(EventType.PAC_MAN_MOVEMENT_REQUEST, pacMan);
 
         // register collision detectors
         eventManager.subscribe(EventType.PAC_MAN_CURRENT_LOCATION, pacManToSugarCollisionDetection);

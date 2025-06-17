@@ -1,6 +1,5 @@
 package org.example.sprite;
 
-import javafx.scene.Scene;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import org.example.collision.PacManToWallCollisionDetection;
@@ -50,19 +49,19 @@ public class PacMan implements Sprite, Subscriber {
 
         switch (direction) {
             case RIGHT:
-                createAutomaticPacManMovement(DirectionsE.RIGHT);
+                createAutomaticPacManMovementRequest(DirectionsE.RIGHT);
                 PacManGraphicsUtil.drawRightOpenMousePacMan(con, canvasCol, canvasRow);
                 break;
             case UP:
-                createAutomaticPacManMovement(DirectionsE.UP);
+                createAutomaticPacManMovementRequest(DirectionsE.UP);
                 PacManGraphicsUtil.drawUpOpenMousePacMan(con, canvasCol, canvasRow);
                 break;
             case LEFT:
-                createAutomaticPacManMovement(DirectionsE.LEFT);
+                createAutomaticPacManMovementRequest(DirectionsE.LEFT);
                 PacManGraphicsUtil.drawLeftOpenMousePacMan(con, canvasCol, canvasRow);
                 break;
             case DOWN:
-                createAutomaticPacManMovement(DirectionsE.DOWN);
+                createAutomaticPacManMovementRequest(DirectionsE.DOWN);
                 PacManGraphicsUtil.drawDownOpenMousePacMan(con, canvasCol, canvasRow);
                 break;
             case STILL:
@@ -85,9 +84,10 @@ public class PacMan implements Sprite, Subscriber {
 
     @Override
     public void move(Event event) {
-        userInputMove(((PacManMovementAttemptEvent)event));
+        throw new RuntimeException();
     }
-    public boolean automatedMove(PacManMovementAttemptEvent event) {
+
+    public boolean attemptAutomatedMovement(PacManMovementRequestEvent event) {
         double newCanvasCol, newCanvasRow;
 
         switch (event.getDirectionsE()) {
@@ -131,8 +131,7 @@ public class PacMan implements Sprite, Subscriber {
         return false;
     }
 
-    public boolean userInputMove(PacManMovementAttemptEvent event) {
-
+    public boolean attemptUserInputMovement(PacManMovementRequestEvent event) {
         double newCanvasCol, newCanvasRow;
         boolean detectedCollision = true;
 
@@ -186,20 +185,20 @@ public class PacMan implements Sprite, Subscriber {
         return !detectedCollision && event.getDirectionsE() != DirectionsE.STILL;
     }
 
-    private void createAutomaticPacManMovement(DirectionsE direction) {
+    private void createAutomaticPacManMovementRequest(DirectionsE direction) {
         // this code is ugly I know
         if (nextAutomatedMove == PacManAutomatedMovementTypeE.TURN_BUFFER && isThereBufferedTurn()) {
-            final PacManMovementAttemptEvent bufferedPacManMovementAttemptEvent = turnBuffer.getBufferedTurnKeyEvent();
-            if (automatedMove(bufferedPacManMovementAttemptEvent)) {
+            final PacManMovementRequestEvent bufferedPacManMovementRequestEvent = turnBuffer.getBufferedTurnKeyEvent();
+            if (attemptAutomatedMovement(bufferedPacManMovementRequestEvent)) {
                 nextAutomatedMove = PacManAutomatedMovementTypeE.STRAIGHT_LINE;
             } else {
                 // don't waste the frame
-                final PacManMovementAttemptEvent straightLinePacManMovementAttemptEvent = new PacManMovementAttemptEvent(direction, this);
-                automatedMove(straightLinePacManMovementAttemptEvent);
+                final PacManMovementRequestEvent straightLinePacManMovementRequestEvent = new PacManMovementRequestEvent(direction, this);
+                attemptAutomatedMovement(straightLinePacManMovementRequestEvent);
             }
         } else {
-            final PacManMovementAttemptEvent straightLinePacManMovementAttemptEvent = new PacManMovementAttemptEvent(direction, this);
-            automatedMove(straightLinePacManMovementAttemptEvent);
+            final PacManMovementRequestEvent straightLinePacManMovementRequestEvent = new PacManMovementRequestEvent(direction, this);
+            attemptAutomatedMovement(straightLinePacManMovementRequestEvent);
             nextAutomatedMove = nextAutomatedMove == PacManAutomatedMovementTypeE.TURN_BUFFER ? PacManAutomatedMovementTypeE.STRAIGHT_LINE : PacManAutomatedMovementTypeE.TURN_BUFFER;
         }
     }
@@ -211,8 +210,8 @@ public class PacMan implements Sprite, Subscriber {
     @Override
     public void update(Event event) {
         switch (event.getType()) {
-            case PAC_MAN_MOVEMENT_ATTEMPT:
-                move(event);
+            case PAC_MAN_MOVEMENT_REQUEST:
+                attemptUserInputMovement(((PacManMovementRequestEvent)event));
                 break;
             default:
                 throw new UnsupportedOperationException();

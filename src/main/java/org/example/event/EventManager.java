@@ -6,14 +6,14 @@ import java.util.List;
 public class EventManager implements Publisher {
     List<Subscriber> pacManSugarCollisionEventSubscribers;
     List<Subscriber> pacManSuperSugarCollisionSubscribers;
-    List<Subscriber> pacManMovementAttemptEventSubscribers;
+    List<Subscriber> pacManMovementRequestEventSubscribers;
     List<Subscriber> pacManCurrentLocationEventSubscribers;
 
     public EventManager() {
         pacManSugarCollisionEventSubscribers = new ArrayList<>();
         pacManSuperSugarCollisionSubscribers = new ArrayList<>();
-        pacManMovementAttemptEventSubscribers = new ArrayList<>();
-        this.pacManCurrentLocationEventSubscribers = new ArrayList<>();
+        pacManMovementRequestEventSubscribers = new ArrayList<>();
+        pacManCurrentLocationEventSubscribers = new ArrayList<>();
     }
 
     @Override
@@ -25,8 +25,8 @@ public class EventManager implements Publisher {
             case PAC_MAN_SUPER_SUGAR_COLLISION:
                 pacManSuperSugarCollisionSubscribers.add(subscriber);
                 break;
-            case PAC_MAN_MOVEMENT_ATTEMPT:
-                pacManMovementAttemptEventSubscribers.add(subscriber);
+            case PAC_MAN_MOVEMENT_REQUEST:
+                pacManMovementRequestEventSubscribers.add(subscriber);
                 break;
             case PAC_MAN_CURRENT_LOCATION:
                 pacManCurrentLocationEventSubscribers.add(subscriber);
@@ -45,8 +45,8 @@ public class EventManager implements Publisher {
             case PAC_MAN_SUPER_SUGAR_COLLISION:
                 pacManSuperSugarCollisionSubscribers.remove(subscriber);
                 break;
-            case PAC_MAN_MOVEMENT_ATTEMPT:
-                pacManMovementAttemptEventSubscribers.remove(subscriber);
+            case PAC_MAN_MOVEMENT_REQUEST:
+                pacManMovementRequestEventSubscribers.remove(subscriber);
                 break;
             case PAC_MAN_CURRENT_LOCATION:
                 pacManCurrentLocationEventSubscribers.remove(subscriber);
@@ -65,8 +65,8 @@ public class EventManager implements Publisher {
             case PAC_MAN_SUPER_SUGAR_COLLISION:
                 pacManSuperSugarCollisionSubscribers.stream().forEach(sub -> sub.update(event));
                 break;
-            case PAC_MAN_MOVEMENT_ATTEMPT:
-                pacManMovementAttemptEventSubscribers.forEach(sub -> sub.update(event));
+            case PAC_MAN_MOVEMENT_REQUEST:
+                pacManMovementRequestEventSubscribers.forEach(sub -> sub.update(event));
                 break;
             case PAC_MAN_CURRENT_LOCATION:
                 pacManCurrentLocationEventSubscribers.forEach(sub -> sub.update(event));

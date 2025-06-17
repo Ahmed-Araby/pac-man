@@ -5,7 +5,7 @@ import lombok.Setter;
 import org.example.constant.DirectionsE;
 import org.example.entity.Coordinate;
 import org.example.event.EventType;
-import org.example.event.PacManMovementAttemptEvent;
+import org.example.event.PacManMovementRequestEvent;
 import org.example.util.RectUtils;
 
 @NoArgsConstructor
@@ -34,9 +34,9 @@ public class TurnBuffer {
         return true;
     }
 
-    public PacManMovementAttemptEvent getBufferedTurnKeyEvent() {
+    public PacManMovementRequestEvent getBufferedTurnKeyEvent() {
         // handle situations where there is no buffered turn, we shouldn't trust the client code.
-        return new PacManMovementAttemptEvent(EventType.PAC_MAN_MOVEMENT_ATTEMPT, bufferedDirection, this);
+        return new PacManMovementRequestEvent(EventType.PAC_MAN_MOVEMENT_REQUEST, bufferedDirection, this);
     }
 
     public void bufferTurn(DirectionsE bufferedTurn, Coordinate pacManCanvasCoordAtBufferingTime) {
