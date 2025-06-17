@@ -30,11 +30,18 @@ public class RectUtils {
     }
 
     public static Coordinate getTopLeftCornerOfRectContainingPoint(double rectWidth, double rectHeight, Coordinate point) {
+        return getRectContainingPoint(rectWidth, rectHeight, point).getTopLeftCorner();
+    }
+    public static Rect getRectContainingPoint(double rectWidth, double rectHeight, Coordinate point) {
         final double topLeftCornerRow = point.getRow() - point.getRow() % rectHeight;
         final double topLeftCornerCol = point.getCol() - point.getCol() % rectWidth;
-        return new Coordinate(topLeftCornerRow, topLeftCornerCol);
+        return new Rect(new Coordinate(topLeftCornerRow, topLeftCornerCol), rectWidth, rectHeight);
     }
 
+    public static boolean isRectContainsRect(Rect parentRect, Rect childRect) {
+        final Coordinate childRectBottomRightCorner = getBottomRightCorner(childRect);
+        return isRectContainsPoint(parentRect, childRect.getTopLeftCorner()) && isRectContainsPoint(parentRect, childRectBottomRightCorner);
+    }
     public static boolean isRectContainsPoint(Rect rect, Coordinate point) {
         final Coordinate rectBottomRightCorner = getBottomRightCorner(rect);
         return point.getCol() >= rect.getTopLeftCorner().getCol() &&
@@ -42,31 +49,30 @@ public class RectUtils {
                 point.getRow() >= rect.getTopLeftCorner().getRow() &&
                 point.getRow() <= rectBottomRightCorner.getRow();
     }
-    public static boolean isRectContainsRect(Rect parentRect, Rect childRect) {
-        final Coordinate childRectBottomRightCorner = getBottomRightCorner(childRect);
-        return isRectContainsPoint(parentRect, childRect.getTopLeftCorner()) && isRectContainsPoint(parentRect, childRectBottomRightCorner);
-    }
+
 
     public static Coordinate getTopLeftCornerOfNextRect(Rect rect, DirectionsE movementDirection) {
-
+        return getNextRect(rect, movementDirection).getTopLeftCorner();
+    }
+    public static Rect getNextRect(Rect rect, DirectionsE movementDirection) {
         double nextCanvasCellCol;
         double nextCanvasCellRow;
 
         switch (movementDirection) {
             case RIGHT:
                 nextCanvasCellCol = getTopLeftCornerColOfNextRect(rect);
-                return new Coordinate(rect.getTopLeftCorner().getRow(), nextCanvasCellCol);
+                return new Rect(new Coordinate(rect.getTopLeftCorner().getRow(), nextCanvasCellCol), rect.getWidth(), rect.getHeight());
             case UP:
                 nextCanvasCellRow = getTopLeftCornerRowOfPrevRect(rect);
-                return new Coordinate(nextCanvasCellRow, rect.getTopLeftCorner().getCol());
+                return new Rect(new Coordinate(nextCanvasCellRow, rect.getTopLeftCorner().getCol()), rect.getWidth(), rect.getHeight());
             case DOWN:
                 nextCanvasCellRow = getTopLeftCornerRowOfNextRect(rect);
-                return new Coordinate(nextCanvasCellRow, rect.getTopLeftCorner().getCol());
+                return new Rect(new Coordinate(nextCanvasCellRow, rect.getTopLeftCorner().getCol()), rect.getWidth(), rect.getHeight());
             case LEFT:
                 nextCanvasCellCol = getTopLeftCornerColOfPrevRect(rect);
-                return new Coordinate(rect.getTopLeftCorner().getRow(), nextCanvasCellCol);
+                return new Rect(new Coordinate(rect.getTopLeftCorner().getRow(), nextCanvasCellCol), rect.getWidth(), rect.getHeight());
             case STILL:
-                return new Coordinate(rect.getTopLeftCorner().getRow(), rect.getTopLeftCorner().getCol());
+                return new Rect(new Coordinate(rect.getTopLeftCorner().getRow(), rect.getTopLeftCorner().getCol()), rect.getWidth(), rect.getHeight());
             default:
                 throw new IllegalStateException();
         }

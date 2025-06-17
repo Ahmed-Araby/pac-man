@@ -33,13 +33,17 @@ public class PacManToWallCollisionDetection implements Subscriber {
         final Rect pacManCanvasRect = new Rect(event.getRequestedPacManCanvasRectTopLeftCorner(), Dimensions.PAC_MAN_DIAMETER_PIXELS, Dimensions.PAC_MAN_DIAMETER_PIXELS);
         final List<Coordinate> pacManRect4Corners = RectUtils.get4Corners(pacManCanvasRect);
         final boolean isCollidingWithWall = pacManRect4Corners.stream()
-                .map(pacManCanvasRectCorner -> RectUtils.getTopLeftCornerOfRectContainingPoint(Dimensions.CANVAS_CELL_SIZE_PIXELS, Dimensions.CANVAS_CELL_SIZE_PIXELS, pacManCanvasRectCorner))
+                .map(this::toTopLeftCornerOfRectContainingPoint)
                 .anyMatch(this::isPacManCollidingWithAWall);
         if (isCollidingWithWall) {
             publishMovementDenial(event);
         } else {
             publishMovementApproval(event);
         }
+    }
+
+    private Coordinate toTopLeftCornerOfRectContainingPoint(Coordinate point) {
+        return RectUtils.getTopLeftCornerOfRectContainingPoint(Dimensions.CANVAS_CELL_SIZE_PIXELS, Dimensions.CANVAS_CELL_SIZE_PIXELS, point);
     }
 
     private boolean isPacManGoingOutOfCanvas(Coordinate pacManCanvasTopLeftCorner) {
