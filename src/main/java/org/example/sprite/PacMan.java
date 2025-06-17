@@ -130,7 +130,7 @@ public class PacMan implements Sprite, Subscriber {
             this.turnBuffer.discardTurnBuffer();
         } else if (event.getMovementAttemptSource() instanceof PacMan) {
             // automated straight line movement
-            if (turnBuffer.isThereBufferedTurn(event.getRequestedPacManCanvasRectTopLeftCorner(), event.getRequestedDirection(), Dimensions.CANVAS_WIDTH_PIXELS, Dimensions.CANVAS_HEIGHT_PIXELS)) {
+            if (turnBuffer.isThereBufferedTurn(event.getRequestedPacManCanvasRectTopLeftCorner(), event.getRequestedDirection(), Dimensions.CANVAS_CELL_SIZE_PIXELS, Dimensions.CANVAS_CELL_SIZE_PIXELS)) {
                 attemptMovement(turnBuffer.getBufferedPacManAutomatedMovementRequest());
             }
         }
