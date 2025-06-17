@@ -4,8 +4,9 @@ import org.example.constant.Dimensions;
 import org.example.constant.SpriteE;
 import org.example.entity.Coordinate;
 import org.example.entity.Rect;
-import org.example.event.EventManager;
+import org.example.event.manager.EventManager;
 import org.example.event.Event;
+import org.example.event.manager.SyncEventManager;
 import org.example.event.movement.PacManMovementAttemptApprovedEvent;
 import org.example.event.movement.PacManMovementAttemptDeniedEvent;
 import org.example.event.movement.PacManMovementAttemptEvent;
@@ -17,11 +18,11 @@ import java.util.List;
 
 public class PacManToWallCollisionDetection implements Subscriber {
     private SpriteE[][] maze;
-    private EventManager eventManager;
+    private SyncEventManager syncEventManager;
 
-    public PacManToWallCollisionDetection(SpriteE[][] maze, EventManager eventManager) {
+    public PacManToWallCollisionDetection(SpriteE[][] maze, SyncEventManager syncEventManager) {
         this.maze = maze;
-        this.eventManager = eventManager;
+        this.syncEventManager = syncEventManager;
     }
 
     public void checkCollision(PacManMovementAttemptEvent event) {
@@ -57,11 +58,11 @@ public class PacManToWallCollisionDetection implements Subscriber {
     }
 
     private void publishMovementApproval(PacManMovementAttemptEvent event) {
-        eventManager.notifySubscribers(new PacManMovementAttemptApprovedEvent(event.getCurrentPacManCanvasRectTopLeftCorner(), event.getRequestedPacManCanvasRectTopLeftCorner(), event.getRequestedDirection(), event.getSource()));
+        syncEventManager.notifySubscribers(new PacManMovementAttemptApprovedEvent(event.getCurrentPacManCanvasRectTopLeftCorner(), event.getRequestedPacManCanvasRectTopLeftCorner(), event.getRequestedDirection(), event.getSource()));
     }
 
     private void publishMovementDenial(PacManMovementAttemptEvent event) {
-        eventManager.notifySubscribers(new PacManMovementAttemptDeniedEvent(event.getRequestedPacManCanvasRectTopLeftCorner(), event.getRequestedDirection(), event.getSource()));
+        syncEventManager.notifySubscribers(new PacManMovementAttemptDeniedEvent(event.getRequestedPacManCanvasRectTopLeftCorner(), event.getRequestedDirection(), event.getSource()));
     }
 
     @Override

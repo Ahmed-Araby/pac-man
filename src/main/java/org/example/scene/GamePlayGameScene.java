@@ -10,8 +10,9 @@ import org.example.collision.PacManToSuperSugarCollisionDetection;
 import org.example.collision.PacManToWallCollisionDetection;
 import org.example.constant.ColorConstants;
 import org.example.constant.Dimensions;
-import org.example.event.EventManager;
+import org.example.event.manager.EventManager;
 import org.example.event.EventType;
+import org.example.event.manager.SyncEventManager;
 import org.example.input.JavaFXInputHandler;
 import org.example.input.JavaFXUserInputHandler;
 import org.example.sound.SoundPlayer;
@@ -33,6 +34,8 @@ public class GamePlayGameScene implements GameScene {
 
     // game engine
     final EventManager eventManager;
+    final SyncEventManager syncEventManager;
+
     final SoundPlayer soundPlayer;
     final JavaFXInputHandler javaFXInputHandler;
 
@@ -44,17 +47,18 @@ public class GamePlayGameScene implements GameScene {
     public GamePlayGameScene() {
         // game engine
         eventManager = new EventManager();
+        syncEventManager = new SyncEventManager();
         soundPlayer = new SoundPlayer();
-        javaFXInputHandler = new JavaFXUserInputHandler(eventManager);
+        javaFXInputHandler = new JavaFXUserInputHandler(syncEventManager);
 
         // sprites
         maze = new Maze();
         final Coordinate emptyCellPos = maze.getEmptyMazePosition();
-        pacMan = new PacMan(emptyCellPos.getCol(), emptyCellPos.getRow(), eventManager);
+        pacMan = new PacMan(emptyCellPos.getCol(), emptyCellPos.getRow(), eventManager, syncEventManager);
         sugar = new Sugar(maze.getGameMaze());
 
         // collision detection
-        pacManToWallCollisionDetection = new PacManToWallCollisionDetection(maze.getGameMaze(), eventManager);
+        pacManToWallCollisionDetection = new PacManToWallCollisionDetection(maze.getGameMaze(), syncEventManager);
         pacManToSugarCollisionDetection = new PacManToSugarCollisionDetection(maze.getGameMaze(), eventManager);
         pacManToSuperSugarCollisionDetection = new PacManToSuperSugarCollisionDetection(maze.getGameMaze(), eventManager);
 
@@ -69,6 +73,7 @@ public class GamePlayGameScene implements GameScene {
 
         // game engine
         registerEventSubscribers();
+        registerSubscribersForSyncEvents();
     }
 
     private void registerEventSubscribers() {
@@ -82,14 +87,19 @@ public class GamePlayGameScene implements GameScene {
         eventManager.subscribe(EventType.PAC_MAN_SUPER_SUGAR_COLLISION, soundPlayer);
         eventManager.subscribe(EventType.PAC_MAN_SUPER_SUGAR_COLLISION, sugar);
 
-        eventManager.subscribe(EventType.PAC_MAN_MOVEMENT_REQUEST, pacMan);
-
-        // register collision detectors
-        eventManager.subscribe(EventType.PAC_MAN_MOVEMENT_ATTEMPT, pacManToWallCollisionDetection);
         eventManager.subscribe(EventType.PAC_MAN_CURRENT_LOCATION, pacManToSugarCollisionDetection);
         eventManager.subscribe(EventType.PAC_MAN_CURRENT_LOCATION, pacManToSuperSugarCollisionDetection);
-        eventManager.subscribe(EventType.PAC_MAN_MOVEMENT_ATTEMPT_APPROVED, pacMan);
-        eventManager.subscribe(EventType.PAC_MAN_MOVEMENT_ATTEMPT_DENIED, pacMan);
+    }
+
+    private void registerSubscribersForSyncEvents() {
+        if (pacMan == null || pacManToWallCollisionDetection == null) {
+            throw new IllegalStateException("can't register null objects for sync event subscription, PacMan, and pacManToWallCollisionDetection must be defined");
+
+        }
+        syncEventManager.subscribe(EventType.PAC_MAN_MOVEMENT_REQUEST, pacMan);
+        syncEventManager.subscribe(EventType.PAC_MAN_MOVEMENT_ATTEMPT, pacManToWallCollisionDetection);
+        syncEventManager.subscribe(EventType.PAC_MAN_MOVEMENT_ATTEMPT_APPROVED, pacMan);
+        syncEventManager.subscribe(EventType.PAC_MAN_MOVEMENT_ATTEMPT_DENIED, pacMan);
     }
 
     @Override

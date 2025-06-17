@@ -9,6 +9,7 @@ import org.example.event.Event;
 import org.example.event.EventType;
 import org.example.event.PacManCurrentLocationEvent;
 import org.example.event.PacManSugarCollisionEvent;
+import org.example.event.manager.EventManager;
 import org.example.util.RectUtils;
 import org.example.util.sugar.SugarUtil;
 

@@ -9,6 +9,8 @@ import org.example.constant.DirectionsE;
 import org.example.entity.Coordinate;
 import org.example.entity.Rect;
 import org.example.event.*;
+import org.example.event.manager.EventManager;
+import org.example.event.manager.SyncEventManager;
 import org.example.event.movement.PacManMovementAttemptApprovedEvent;
 import org.example.event.movement.PacManMovementAttemptDeniedEvent;
 import org.example.event.movement.PacManMovementAttemptEvent;
@@ -31,8 +33,10 @@ public class PacMan implements Sprite, Subscriber {
     private final PixelStrideTracker closedMousePixelStrideTracker;
 
     private final EventManager eventManager;
+    // this synchronous event manager is concerned with pac man movement and collision detection with walls and turn buffer.
+    private final SyncEventManager syncEventManager;
 
-    public PacMan(double canvasCol, double canvasRow, EventManager eventManager) {
+    public PacMan(double canvasCol, double canvasRow, EventManager eventManager, SyncEventManager syncEventManager) {
         this.canvasCol = canvasCol;
         this.canvasRow = canvasRow;
         this.direction = DirectionsE.STILL;
@@ -43,6 +47,7 @@ public class PacMan implements Sprite, Subscriber {
         );
 
         this.eventManager = eventManager;
+        this.syncEventManager = syncEventManager;
     }
 
     @Override
@@ -117,7 +122,7 @@ public class PacMan implements Sprite, Subscriber {
         }
     }
     private void publishPacManMovementAttemptEvent(double newCanvasRow, double newCanvasCol, DirectionsE desiredDirection, Object source) {
-        eventManager.notifySubscribers(new PacManMovementAttemptEvent(new Coordinate(canvasRow, canvasCol), new Coordinate(newCanvasRow, newCanvasCol), desiredDirection, source));
+        syncEventManager.notifySubscribers(new PacManMovementAttemptEvent(new Coordinate(canvasRow, canvasCol), new Coordinate(newCanvasRow, newCanvasCol), desiredDirection, source));
     }
 
     private void handleApprovedMovementAttempt(PacManMovementAttemptApprovedEvent event) {
