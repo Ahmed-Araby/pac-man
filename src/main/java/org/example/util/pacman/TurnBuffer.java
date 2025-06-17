@@ -4,8 +4,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.example.constant.DirectionsE;
 import org.example.entity.Coordinate;
-import org.example.event.EventType;
-import org.example.event.PacManMovementRequestEvent;
+import org.example.event.movement.PacManMovementRequestEvent;
 import org.example.util.RectUtils;
 
 @NoArgsConstructor
@@ -15,8 +14,8 @@ public class TurnBuffer {
     private DirectionsE bufferedDirection;
     private Coordinate pacManCanvasCoordAtBufferingTime;
     // we can simplify the turn buffer using PixelStrideTracker, however I think the current approach is more accurate
-    public boolean isBlockedTurn(boolean collisionDetected, DirectionsE currentPacManDirection, DirectionsE requestedDirection) {
-        return collisionDetected && currentPacManDirection != requestedDirection;
+    public boolean isBlockedTurn(DirectionsE currentPacManDirection, DirectionsE requestedDirection) {
+        return currentPacManDirection != requestedDirection;
     }
 
     public boolean isThereBufferedTurn(Coordinate currPacManCanvasCoord, DirectionsE currentPacManDirection, double canvasCellWidth, double canvasCellHeight) {
@@ -34,9 +33,9 @@ public class TurnBuffer {
         return true;
     }
 
-    public PacManMovementRequestEvent getBufferedTurnKeyEvent() {
+    public PacManMovementRequestEvent getBufferedPacManAutomatedMovementRequest() {
         // handle situations where there is no buffered turn, we shouldn't trust the client code.
-        return new PacManMovementRequestEvent(EventType.PAC_MAN_MOVEMENT_REQUEST, bufferedDirection, this);
+        return new PacManMovementRequestEvent(bufferedDirection, this);
     }
 
     public void bufferTurn(DirectionsE bufferedTurn, Coordinate pacManCanvasCoordAtBufferingTime) {

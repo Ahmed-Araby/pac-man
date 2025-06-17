@@ -39,6 +39,7 @@ public class GamePlayGameScene implements GameScene {
     // collision detection
     private final PacManToSugarCollisionDetection pacManToSugarCollisionDetection;
     private final PacManToSuperSugarCollisionDetection pacManToSuperSugarCollisionDetection;
+    private final PacManToWallCollisionDetection pacManToWallCollisionDetection;
 
     public GamePlayGameScene() {
         // game engine
@@ -49,16 +50,13 @@ public class GamePlayGameScene implements GameScene {
         // sprites
         maze = new Maze();
         final Coordinate emptyCellPos = maze.getEmptyMazePosition();
-
-        // collision detection
-        final PacManToWallCollisionDetection pacManToWallCollisionDetection = new PacManToWallCollisionDetection(maze.getGameMaze());
-        pacManToSugarCollisionDetection = new PacManToSugarCollisionDetection(maze.getGameMaze(), eventManager);
-        pacManToSuperSugarCollisionDetection = new PacManToSuperSugarCollisionDetection(maze.getGameMaze(), eventManager);
-
-        // sprites
-        pacMan = new PacMan(emptyCellPos.getCol(), emptyCellPos.getRow(), pacManToWallCollisionDetection, eventManager);
+        pacMan = new PacMan(emptyCellPos.getCol(), emptyCellPos.getRow(), eventManager);
         sugar = new Sugar(maze.getGameMaze());
 
+        // collision detection
+        pacManToWallCollisionDetection = new PacManToWallCollisionDetection(maze.getGameMaze(), eventManager);
+        pacManToSugarCollisionDetection = new PacManToSugarCollisionDetection(maze.getGameMaze(), eventManager);
+        pacManToSuperSugarCollisionDetection = new PacManToSuperSugarCollisionDetection(maze.getGameMaze(), eventManager);
 
 
         // javaFX setup
@@ -87,8 +85,11 @@ public class GamePlayGameScene implements GameScene {
         eventManager.subscribe(EventType.PAC_MAN_MOVEMENT_REQUEST, pacMan);
 
         // register collision detectors
+        eventManager.subscribe(EventType.PAC_MAN_MOVEMENT_ATTEMPT, pacManToWallCollisionDetection);
         eventManager.subscribe(EventType.PAC_MAN_CURRENT_LOCATION, pacManToSugarCollisionDetection);
         eventManager.subscribe(EventType.PAC_MAN_CURRENT_LOCATION, pacManToSuperSugarCollisionDetection);
+        eventManager.subscribe(EventType.PAC_MAN_MOVEMENT_ATTEMPT_APPROVED, pacMan);
+        eventManager.subscribe(EventType.PAC_MAN_MOVEMENT_ATTEMPT_DENIED, pacMan);
     }
 
     @Override

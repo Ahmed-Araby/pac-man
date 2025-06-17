@@ -8,12 +8,20 @@ public class EventManager implements Publisher {
     List<Subscriber> pacManSuperSugarCollisionSubscribers;
     List<Subscriber> pacManMovementRequestEventSubscribers;
     List<Subscriber> pacManCurrentLocationEventSubscribers;
+    List<Subscriber> pacManMovementAttemptEventSubscribers;
+
+    List<Subscriber> pacManMovementAttemptApprovedEventSubscribers;
+    List<Subscriber> pacManMovementAttemptDeniedEventSubscribers;
 
     public EventManager() {
         pacManSugarCollisionEventSubscribers = new ArrayList<>();
         pacManSuperSugarCollisionSubscribers = new ArrayList<>();
         pacManMovementRequestEventSubscribers = new ArrayList<>();
         pacManCurrentLocationEventSubscribers = new ArrayList<>();
+        pacManMovementAttemptEventSubscribers = new ArrayList<>();
+
+        pacManMovementAttemptApprovedEventSubscribers = new ArrayList<>();
+        pacManMovementAttemptDeniedEventSubscribers = new ArrayList<>();
     }
 
     @Override
@@ -30,6 +38,15 @@ public class EventManager implements Publisher {
                 break;
             case PAC_MAN_CURRENT_LOCATION:
                 pacManCurrentLocationEventSubscribers.add(subscriber);
+                break;
+            case PAC_MAN_MOVEMENT_ATTEMPT:
+                pacManMovementAttemptEventSubscribers.add(subscriber);
+                break;
+            case PAC_MAN_MOVEMENT_ATTEMPT_APPROVED:
+                pacManMovementAttemptApprovedEventSubscribers.add(subscriber);
+                break;
+            case PAC_MAN_MOVEMENT_ATTEMPT_DENIED:
+                pacManMovementAttemptDeniedEventSubscribers.add(subscriber);
                 break;
             default:
                 throw new IllegalArgumentException();
@@ -51,6 +68,15 @@ public class EventManager implements Publisher {
             case PAC_MAN_CURRENT_LOCATION:
                 pacManCurrentLocationEventSubscribers.remove(subscriber);
                 break;
+            case PAC_MAN_MOVEMENT_ATTEMPT:
+                pacManMovementAttemptEventSubscribers.remove(subscriber);
+                break;
+            case PAC_MAN_MOVEMENT_ATTEMPT_APPROVED:
+                pacManMovementAttemptApprovedEventSubscribers.remove(subscriber);
+                break;
+            case PAC_MAN_MOVEMENT_ATTEMPT_DENIED:
+                pacManMovementAttemptDeniedEventSubscribers.remove(subscriber);
+                break;
             default:
                 throw new IllegalArgumentException();
         }
@@ -70,6 +96,15 @@ public class EventManager implements Publisher {
                 break;
             case PAC_MAN_CURRENT_LOCATION:
                 pacManCurrentLocationEventSubscribers.forEach(sub -> sub.update(event));
+                break;
+            case PAC_MAN_MOVEMENT_ATTEMPT:
+                pacManMovementAttemptEventSubscribers.forEach(sub -> sub.update(event));
+                break;
+            case PAC_MAN_MOVEMENT_ATTEMPT_APPROVED:
+                pacManMovementAttemptApprovedEventSubscribers.forEach(sub -> sub.update(event));
+                break;
+            case PAC_MAN_MOVEMENT_ATTEMPT_DENIED:
+                pacManMovementAttemptDeniedEventSubscribers.forEach(sub -> sub.update(event));
                 break;
             default:
                 throw new IllegalArgumentException();

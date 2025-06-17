@@ -1,38 +1,41 @@
 package org.example.sprite;
 
+import javafx.scene.Scene;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
-import org.example.collision.PacManToWallCollisionDetection;
 import org.example.constant.Configs;
 import org.example.constant.Dimensions;
 import org.example.constant.DirectionsE;
-import org.example.constant.PacManAutomatedMovementTypeE;
 import org.example.entity.Coordinate;
 import org.example.event.*;
+import org.example.event.movement.PacManMovementAttemptApprovedEvent;
+import org.example.event.movement.PacManMovementAttemptDeniedEvent;
+import org.example.event.movement.PacManMovementAttemptEvent;
+import org.example.event.movement.PacManMovementRequestEvent;
 import org.example.util.pacman.PacManGraphicsUtil;
 import org.example.util.pacman.PixelStrideTracker;
 import org.example.util.pacman.TurnBuffer;
 
+/**
+ * notes:
+ * - PacManMovementAttemptEvents has to be processed sequentially, otherwise some user inputs or buffered turns can be lost
+ */
 public class PacMan implements Sprite, Subscriber {
 
     private double canvasCol;
     private double canvasRow;
     private DirectionsE direction;
-    private PacManAutomatedMovementTypeE nextAutomatedMove;
 
-    private final PacManToWallCollisionDetection pacManToWallCollisionDetection;
     private final TurnBuffer turnBuffer;
     private final PixelStrideTracker closedMousePixelStrideTracker;
 
     private final EventManager eventManager;
 
-    public PacMan(double canvasCol, double canvasRow, PacManToWallCollisionDetection pacManToWallCollisionDetection, EventManager eventManager) {
+    public PacMan(double canvasCol, double canvasRow, EventManager eventManager) {
         this.canvasCol = canvasCol;
         this.canvasRow = canvasRow;
         this.direction = DirectionsE.STILL;
-        this.nextAutomatedMove = PacManAutomatedMovementTypeE.TURN_BUFFER;
 
-        this.pacManToWallCollisionDetection = pacManToWallCollisionDetection;
         this.turnBuffer = new TurnBuffer();
         this.closedMousePixelStrideTracker = new PixelStrideTracker(Dimensions.PAC_MAN_CLOSED_MOUSE_DISTANCE_PIXELS,
                 Dimensions.PAC_MAN_CLOSED_MOUSE_DISTANCE_PIXELS + Dimensions.PAC_MAN_OPEN_MOUSE_DISTANCE_PIXELS // just the same as Dimensions.PAC_MAN_COMPLETE_MOUSE_MOVEMENT_DISTANCE_PIXELS
@@ -43,175 +46,117 @@ public class PacMan implements Sprite, Subscriber {
 
     @Override
     public void render(Canvas canvas) {
-        System.out.println("pac man row = " + canvasRow+ ", pac man col " + canvasCol);
+        System.out.println("pac man row = " + canvasRow+ ", pac man col " + canvasCol + ", direction = " + direction);
 
         final GraphicsContext con = canvas.getGraphicsContext2D();
 
         switch (direction) {
             case RIGHT:
-                createAutomaticPacManMovementRequest(DirectionsE.RIGHT);
                 PacManGraphicsUtil.drawRightOpenMousePacMan(con, canvasCol, canvasRow);
+                attemptMovement(new PacManMovementRequestEvent(DirectionsE.RIGHT, this));
                 break;
             case UP:
-                createAutomaticPacManMovementRequest(DirectionsE.UP);
                 PacManGraphicsUtil.drawUpOpenMousePacMan(con, canvasCol, canvasRow);
+                attemptMovement(new PacManMovementRequestEvent(DirectionsE.UP, this));
                 break;
             case LEFT:
-                createAutomaticPacManMovementRequest(DirectionsE.LEFT);
                 PacManGraphicsUtil.drawLeftOpenMousePacMan(con, canvasCol, canvasRow);
+                attemptMovement(new PacManMovementRequestEvent(DirectionsE.LEFT, this));
                 break;
             case DOWN:
-                createAutomaticPacManMovementRequest(DirectionsE.DOWN);
                 PacManGraphicsUtil.drawDownOpenMousePacMan(con, canvasCol, canvasRow);
+                attemptMovement(new PacManMovementRequestEvent(DirectionsE.DOWN, this));
                 break;
             case STILL:
                 PacManGraphicsUtil.drawClosedMousePacMan(con, canvasCol, canvasRow);
                 break;
         }
 
+        // close pac man mouse
         closedMousePixelStrideTracker.stride(Dimensions.PAC_MAN_COMPLETE_MOUSE_MOVEMENT_DISTANCE_PIXELS / Configs.FRAMES_PER_SEC_FOR_PAC_MAN_MOUSE_OPEN_CLOSED_ANIMATION);
-
         if (!closedMousePixelStrideTracker.isDesiredPixelStrideAchieved()) {
             PacManGraphicsUtil.removePacMan(con, canvasCol, canvasRow);
             PacManGraphicsUtil.drawClosedMousePacMan(con, canvasCol, canvasRow);
         } else if (closedMousePixelStrideTracker.isRestPixelStrideAchieved()) {
             closedMousePixelStrideTracker.reset();
         }
-
-        this.eventManager.notifySubscribers(new PacManCurrentLocationEvent(new Coordinate(canvasRow, canvasCol), direction, this));
     }
 
 
     @Override
     public void move(Event event) {
-        throw new RuntimeException();
+        switch (event.getType()) {
+            case PAC_MAN_MOVEMENT_ATTEMPT_APPROVED -> handleApprovedMovementAttempt((PacManMovementAttemptApprovedEvent) event);
+            case PAC_MAN_MOVEMENT_ATTEMPT_DENIED -> handleDeniedMovementAttempt((PacManMovementAttemptDeniedEvent) event);
+            default -> throw new IllegalArgumentException();
+        }
     }
 
-    public boolean attemptAutomatedMovement(PacManMovementRequestEvent event) {
+    private void attemptMovement(PacManMovementRequestEvent event) {
         double newCanvasCol, newCanvasRow;
-
         switch (event.getDirectionsE()) {
             case RIGHT:
                 newCanvasCol = canvasCol + Dimensions.PAC_MAN_STRIDE_PIXELS / Configs.FRAMES_PER_SEC_FOR_PAC_MAN_STRIDE;
-                if (!pacManToWallCollisionDetection.isAboutToCollide(new Coordinate(canvasRow, newCanvasCol))){
-                    direction = event.getDirectionsE();
-                    canvasCol = newCanvasCol;
-                    return true;
-                }
+                publishPacManMovementAttemptEvent(canvasRow, newCanvasCol, DirectionsE.RIGHT, event.getSource());
                 break;
             case UP:
                 newCanvasRow = canvasRow - Dimensions.PAC_MAN_STRIDE_PIXELS / Configs.FRAMES_PER_SEC_FOR_PAC_MAN_STRIDE;
-                if (!pacManToWallCollisionDetection.isAboutToCollide(new Coordinate(newCanvasRow, canvasCol))) {
-                    direction = event.getDirectionsE();
-                    canvasRow = newCanvasRow;
-                    return true;
-                }
+                publishPacManMovementAttemptEvent(newCanvasRow, canvasCol, DirectionsE.UP, event.getSource());
                 break;
             case LEFT:
                 newCanvasCol = canvasCol - Dimensions.PAC_MAN_STRIDE_PIXELS / Configs.FRAMES_PER_SEC_FOR_PAC_MAN_STRIDE;
-                if (!pacManToWallCollisionDetection.isAboutToCollide(new Coordinate(canvasRow, newCanvasCol))) {
-                    direction = event.getDirectionsE();
-                    canvasCol = newCanvasCol;
-                    return true;
-                }
+                publishPacManMovementAttemptEvent(canvasRow, newCanvasCol, DirectionsE.LEFT, event.getSource());
                 break;
             case DOWN:
                 newCanvasRow = canvasRow + Dimensions.PAC_MAN_STRIDE_PIXELS / Configs.FRAMES_PER_SEC_FOR_PAC_MAN_STRIDE;
-                if (!pacManToWallCollisionDetection.isAboutToCollide(new Coordinate(newCanvasRow, canvasCol))) {
-                    direction = event.getDirectionsE();
-                    canvasRow = newCanvasRow;
-                    return true;
-                }
+                publishPacManMovementAttemptEvent(newCanvasRow, canvasCol, DirectionsE.DOWN, event.getSource());
                 break;
             case STILL:
                 direction = event.getDirectionsE();
-                return false;
         }
-
-        return false;
+    }
+    private void publishPacManMovementAttemptEvent(double newCanvasRow, double newCanvasCol, DirectionsE desiredDirection, Object source) {
+        eventManager.notifySubscribers(new PacManMovementAttemptEvent(new Coordinate(canvasRow, canvasCol), new Coordinate(newCanvasRow, newCanvasCol), desiredDirection, source));
     }
 
-    public boolean attemptUserInputMovement(PacManMovementRequestEvent event) {
-        double newCanvasCol, newCanvasRow;
-        boolean detectedCollision = true;
+    private void handleApprovedMovementAttempt(PacManMovementAttemptApprovedEvent event) {
+        System.out.println("approved move");
+        canvasRow = event.getRequestedPacManCanvasRectTopLeftCorner().getRow();
+        canvasCol = event.getRequestedPacManCanvasRectTopLeftCorner().getCol();
+        direction = event.getRequestedDirection();
 
-        switch (event.getDirectionsE()) {
-            case RIGHT:
-                newCanvasCol = canvasCol + Dimensions.PAC_MAN_STRIDE_PIXELS / Configs.FRAMES_PER_SEC_FOR_PAC_MAN_STRIDE;
-                if (!pacManToWallCollisionDetection.isAboutToCollide(new Coordinate(canvasRow, newCanvasCol))){
-                    detectedCollision = false;
-                    direction = event.getDirectionsE();
-                    canvasCol = newCanvasCol;
-                }
-                break;
-            case UP:
-                newCanvasRow = canvasRow - Dimensions.PAC_MAN_STRIDE_PIXELS / Configs.FRAMES_PER_SEC_FOR_PAC_MAN_STRIDE;
-                if (!pacManToWallCollisionDetection.isAboutToCollide(new Coordinate(newCanvasRow, canvasCol))) {
-                    detectedCollision = false;
-                    direction = event.getDirectionsE();
-                    canvasRow = newCanvasRow;
-                }
-                break;
-            case LEFT:
-                newCanvasCol = canvasCol - Dimensions.PAC_MAN_STRIDE_PIXELS / Configs.FRAMES_PER_SEC_FOR_PAC_MAN_STRIDE;
-                if (!pacManToWallCollisionDetection.isAboutToCollide(new Coordinate(canvasRow, newCanvasCol))) {
-                    detectedCollision = false;
-                    direction = event.getDirectionsE();
-                    canvasCol = newCanvasCol;
-                }
-                break;
-            case DOWN:
-                newCanvasRow = canvasRow + Dimensions.PAC_MAN_STRIDE_PIXELS / Configs.FRAMES_PER_SEC_FOR_PAC_MAN_STRIDE;
-                if (!pacManToWallCollisionDetection.isAboutToCollide(new Coordinate(newCanvasRow, canvasCol))) {
-                    detectedCollision = false;
-                    direction = event.getDirectionsE();
-                    canvasRow = newCanvasRow;
-                }
-                break;
-            case STILL:
-                detectedCollision = false;
-                direction = event.getDirectionsE();
-                break;
-        }
-
-        if (turnBuffer.isBlockedTurn(detectedCollision, direction, event.getDirectionsE())) {
-            turnBuffer.bufferTurn(event.getDirectionsE(), new Coordinate(canvasRow, canvasCol));
-            nextAutomatedMove = PacManAutomatedMovementTypeE.TURN_BUFFER;
-        } else {
-            turnBuffer.discardTurnBuffer();
-            nextAutomatedMove = PacManAutomatedMovementTypeE.STRAIGHT_LINE;
-        }
-
-        return !detectedCollision && event.getDirectionsE() != DirectionsE.STILL;
-    }
-
-    private void createAutomaticPacManMovementRequest(DirectionsE direction) {
-        // this code is ugly I know
-        if (nextAutomatedMove == PacManAutomatedMovementTypeE.TURN_BUFFER && isThereBufferedTurn()) {
-            final PacManMovementRequestEvent bufferedPacManMovementRequestEvent = turnBuffer.getBufferedTurnKeyEvent();
-            if (attemptAutomatedMovement(bufferedPacManMovementRequestEvent)) {
-                nextAutomatedMove = PacManAutomatedMovementTypeE.STRAIGHT_LINE;
-            } else {
-                // don't waste the frame
-                final PacManMovementRequestEvent straightLinePacManMovementRequestEvent = new PacManMovementRequestEvent(direction, this);
-                attemptAutomatedMovement(straightLinePacManMovementRequestEvent);
+        if (event.getMovementAttemptSource() instanceof Scene || event.getMovementAttemptSource() instanceof TurnBuffer) {
+            // user input or turn buffer automated move
+            this.turnBuffer.discardTurnBuffer();
+        } else if (event.getMovementAttemptSource() instanceof PacMan) {
+            // automated straight line movement
+            if (turnBuffer.isThereBufferedTurn(event.getRequestedPacManCanvasRectTopLeftCorner(), event.getRequestedDirection(), Dimensions.CANVAS_WIDTH_PIXELS, Dimensions.CANVAS_HEIGHT_PIXELS)) {
+                attemptMovement(turnBuffer.getBufferedPacManAutomatedMovementRequest());
             }
-        } else {
-            final PacManMovementRequestEvent straightLinePacManMovementRequestEvent = new PacManMovementRequestEvent(direction, this);
-            attemptAutomatedMovement(straightLinePacManMovementRequestEvent);
-            nextAutomatedMove = nextAutomatedMove == PacManAutomatedMovementTypeE.TURN_BUFFER ? PacManAutomatedMovementTypeE.STRAIGHT_LINE : PacManAutomatedMovementTypeE.TURN_BUFFER;
         }
+
+        this.eventManager.notifySubscribers(new PacManCurrentLocationEvent(new Coordinate(canvasRow, canvasCol), direction, this));
     }
 
-    private boolean isThereBufferedTurn() {
-        return turnBuffer.isThereBufferedTurn(new Coordinate(canvasRow, canvasCol), direction, Dimensions.CANVAS_CELL_SIZE_PIXELS, Dimensions.CANVAS_CELL_SIZE_PIXELS);
+    private void handleDeniedMovementAttempt(PacManMovementAttemptDeniedEvent event) {
+        System.out.println("denied move");
+        if (event.getMovementAttemptSource() instanceof Scene) {
+            // user input
+            if(turnBuffer.isBlockedTurn(direction, event.getRequestedDirection())) {
+                turnBuffer.bufferTurn(event.getRequestedDirection(), new Coordinate(canvasRow, canvasCol));
+            }
+        }
+        // do nothing for denied automated movements
     }
 
     @Override
     public void update(Event event) {
         switch (event.getType()) {
             case PAC_MAN_MOVEMENT_REQUEST:
-                attemptUserInputMovement(((PacManMovementRequestEvent)event));
+                attemptMovement(((PacManMovementRequestEvent)event));
+                break;
+            case PAC_MAN_MOVEMENT_ATTEMPT_APPROVED, PAC_MAN_MOVEMENT_ATTEMPT_DENIED:
+                move(event);
                 break;
             default:
                 throw new UnsupportedOperationException();

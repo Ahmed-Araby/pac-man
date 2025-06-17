@@ -2,8 +2,7 @@ package org.example.input;
 
 import org.example.constant.DirectionsE;
 import org.example.event.EventManager;
-import org.example.event.EventType;
-import org.example.event.PacManMovementRequestEvent;
+import org.example.event.movement.PacManMovementRequestEvent;
 import javafx.scene.input.KeyEvent;
 
 
@@ -19,7 +18,7 @@ public class JavaFXUserInputHandler implements JavaFXInputHandler{
     @Override
     public void handleKeyPressedEvent(KeyEvent keyEvent) {
         try {
-            final PacManMovementRequestEvent event = new PacManMovementRequestEvent(EventType.PAC_MAN_MOVEMENT_REQUEST, DirectionsE.from(keyEvent.getCode()), keyEvent.getSource());
+            final PacManMovementRequestEvent event = new PacManMovementRequestEvent(DirectionsE.from(keyEvent.getCode()), keyEvent.getSource());
             eventManager.notifySubscribers(event);
         } catch (Exception exc) {
             System.out.println("user input is not a valid pac man movement input");

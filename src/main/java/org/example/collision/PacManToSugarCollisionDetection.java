@@ -4,6 +4,10 @@ import org.example.constant.Dimensions;
 import org.example.constant.SpriteE;
 import org.example.entity.Coordinate;
 import org.example.event.*;
+import org.example.event.Event;
+import org.example.event.EventType;
+import org.example.event.PacManCurrentLocationEvent;
+import org.example.event.PacManSugarCollisionEvent;
 import org.example.util.RectUtils;
 import org.example.util.sugar.SugarUtil;
 
