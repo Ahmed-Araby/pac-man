@@ -7,6 +7,7 @@ import org.example.constant.Configs;
 import org.example.constant.Dimensions;
 import org.example.constant.DirectionsE;
 import org.example.entity.Coordinate;
+import org.example.entity.Rect;
 import org.example.event.*;
 import org.example.event.movement.PacManMovementAttemptApprovedEvent;
 import org.example.event.movement.PacManMovementAttemptDeniedEvent;
@@ -130,7 +131,8 @@ public class PacMan implements Sprite, Subscriber {
             this.turnBuffer.discardTurnBuffer();
         } else if (event.getMovementAttemptSource() instanceof PacMan) {
             // automated straight line movement
-            if (turnBuffer.isThereBufferedTurn(event.getRequestedPacManCanvasRectTopLeftCorner(), event.getRequestedDirection(), Dimensions.CANVAS_CELL_SIZE_PIXELS, Dimensions.CANVAS_CELL_SIZE_PIXELS)) {
+            final Rect pacManCanvasRect = new Rect(event.getRequestedPacManCanvasRectTopLeftCorner(), Dimensions.CANVAS_CELL_SIZE_PIXELS, Dimensions.CANVAS_CELL_SIZE_PIXELS);
+            if (turnBuffer.isThereBufferedTurn(pacManCanvasRect, event.getRequestedDirection())) {
                 attemptMovement(turnBuffer.getBufferedPacManAutomatedMovementRequest());
             }
         }
@@ -143,7 +145,8 @@ public class PacMan implements Sprite, Subscriber {
         if (event.getMovementAttemptSource() instanceof Scene) {
             // user input
             if(turnBuffer.isBlockedTurn(direction, event.getRequestedDirection())) {
-                turnBuffer.bufferTurn(event.getRequestedDirection(), new Coordinate(canvasRow, canvasCol));
+                final Rect pacManCanvasRect = new Rect(new Coordinate(canvasRow, canvasCol), Dimensions.CANVAS_CELL_SIZE_PIXELS, Dimensions.CANVAS_CELL_SIZE_PIXELS);
+                turnBuffer.bufferTurn(event.getRequestedDirection(), pacManCanvasRect);
             }
         }
         // do nothing for denied automated movements

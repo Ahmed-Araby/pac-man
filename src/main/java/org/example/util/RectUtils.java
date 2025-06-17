@@ -47,45 +47,46 @@ public class RectUtils {
         return isRectContainsPoint(parentRect, childRect.getTopLeftCorner()) && isRectContainsPoint(parentRect, childRectBottomRightCorner);
     }
 
-    public static Coordinate getTopLeftCornerOfNextRect(Coordinate currRectTopLeftCorner, double canvasCellWidth, double canvasCellHeight, DirectionsE movementDirection) {
+    public static Coordinate getTopLeftCornerOfNextRect(Rect rect, DirectionsE movementDirection) {
+
         double nextCanvasCellCol;
         double nextCanvasCellRow;
 
         switch (movementDirection) {
             case RIGHT:
-                nextCanvasCellCol = getTopLeftCornerColOfNextRect(currRectTopLeftCorner.getCol(), canvasCellWidth);
-                return new Coordinate(currRectTopLeftCorner.getRow(), nextCanvasCellCol);
+                nextCanvasCellCol = getTopLeftCornerColOfNextRect(rect);
+                return new Coordinate(rect.getTopLeftCorner().getRow(), nextCanvasCellCol);
             case UP:
-                nextCanvasCellRow = getTopLeftCornerRowOfPrevRect(currRectTopLeftCorner.getRow(), canvasCellHeight);
-                return new Coordinate(nextCanvasCellRow, currRectTopLeftCorner.getCol());
+                nextCanvasCellRow = getTopLeftCornerRowOfPrevRect(rect);
+                return new Coordinate(nextCanvasCellRow, rect.getTopLeftCorner().getCol());
             case DOWN:
-                nextCanvasCellRow = getTopLeftCornerRowOfNextRect(currRectTopLeftCorner.getRow(), canvasCellHeight);
-                return new Coordinate(nextCanvasCellRow, currRectTopLeftCorner.getCol());
+                nextCanvasCellRow = getTopLeftCornerRowOfNextRect(rect);
+                return new Coordinate(nextCanvasCellRow, rect.getTopLeftCorner().getCol());
             case LEFT:
-                nextCanvasCellCol = getTopLeftCornerColOfPrevRect(currRectTopLeftCorner.getCol(), canvasCellWidth);
-                return new Coordinate(currRectTopLeftCorner.getRow(), nextCanvasCellCol);
+                nextCanvasCellCol = getTopLeftCornerColOfPrevRect(rect);
+                return new Coordinate(rect.getTopLeftCorner().getRow(), nextCanvasCellCol);
             case STILL:
-                return new Coordinate(currRectTopLeftCorner.getRow(), currRectTopLeftCorner.getCol());
+                return new Coordinate(rect.getTopLeftCorner().getRow(), rect.getTopLeftCorner().getCol());
             default:
                 throw new IllegalStateException();
         }
     }
 
-    public static double getTopLeftCornerColOfNextRect(double colWithinCurrRect, double cellWidth) {
-        return colWithinCurrRect + cellWidth - colWithinCurrRect % cellWidth;
+    public static double getTopLeftCornerColOfNextRect(Rect rect) {
+        return rect.getTopLeftCorner().getCol() + rect.getWidth() - rect.getTopLeftCorner().getCol() % rect.getWidth();
     }
 
-    public static double getTopLeftCornerColOfPrevRect(double colWithinCurrRect, double cellWidth) {
-        double topLeftCornerColOfPrevCell = colWithinCurrRect - cellWidth - colWithinCurrRect % cellWidth;
+    public static double getTopLeftCornerColOfPrevRect(Rect rect) {
+        double topLeftCornerColOfPrevCell = rect.getTopLeftCorner().getCol() - rect.getWidth() - rect.getTopLeftCorner().getCol() % rect.getWidth();
         return Math.max(0, topLeftCornerColOfPrevCell);
     }
 
-    public static double getTopLeftCornerRowOfNextRect(double rowWithinCurrRect, double cellHeight) {
-        return rowWithinCurrRect + cellHeight - rowWithinCurrRect % cellHeight;
+    public static double getTopLeftCornerRowOfNextRect(Rect rect) {
+        return rect.getTopLeftCorner().getRow() + rect.getHeight() - rect.getTopLeftCorner().getRow() % rect.getHeight();
     }
 
-    public static double getTopLeftCornerRowOfPrevRect(double rowWithinCurrRect, double cellHeight) {
-        double topLeftCornerRoeOfPrevCell = rowWithinCurrRect - cellHeight - rowWithinCurrRect % cellHeight;
+    public static double getTopLeftCornerRowOfPrevRect(Rect rect) {
+        double topLeftCornerRoeOfPrevCell = rect.getTopLeftCorner().getRow() - rect.getHeight() - rect.getTopLeftCorner().getRow() % rect.getHeight();
         return Math.max(0, topLeftCornerRoeOfPrevCell);
     }
 }
