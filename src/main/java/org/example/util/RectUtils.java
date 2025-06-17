@@ -2,29 +2,31 @@ package org.example.util;
 
 import org.example.constant.DirectionsE;
 import org.example.entity.Coordinate;
+import org.example.entity.Rect;
+
 import java.util.List;
 
 public class RectUtils {
 
-    public static List<Coordinate> get4Corners(Coordinate rectTopLeftCorner, double rectWidth, double rectHeight) {
+    public static List<Coordinate> get4Corners(Rect rect) {
         return List.of(
-                rectTopLeftCorner,
-                getTopRightCorner(rectTopLeftCorner, rectWidth),
-                getBottomRightCorner(rectTopLeftCorner, rectWidth, rectHeight),
-                getBottomLeftCorner(rectTopLeftCorner, rectHeight)
+                rect.getTopLeftCorner(),
+                getTopRightCorner(rect),
+                getBottomRightCorner(rect),
+                getBottomLeftCorner(rect)
         );
     }
 
-    private static Coordinate getTopRightCorner(Coordinate rectTopLeftCorner, double rectWidth) {
-        return new Coordinate(rectTopLeftCorner.getRow(), rectTopLeftCorner.getCol() + rectWidth -1);
+    private static Coordinate getTopRightCorner(Rect rect) {
+        return new Coordinate(rect.getTopLeftCorner().getRow(), rect.getTopLeftCorner().getCol() + rect.getWidth() -1);
     }
 
-    private static Coordinate getBottomRightCorner(Coordinate rectTopLeftCorner, double rectWidth, double rectHeight) {
-        return new Coordinate(rectTopLeftCorner.getRow() + rectHeight -1, rectTopLeftCorner.getCol() + rectWidth -1);
+    private static Coordinate getBottomRightCorner(Rect rect) {
+        return new Coordinate(rect.getTopLeftCorner().getRow() + rect.getHeight() - 1, rect.getTopLeftCorner().getCol() + rect.getWidth() - 1);
     }
 
-    private static Coordinate getBottomLeftCorner(Coordinate rectTopLeftCorner, double rectHeight) {
-        return new Coordinate(rectTopLeftCorner.getRow() + rectHeight - 1, rectTopLeftCorner.getCol());
+    private static Coordinate getBottomLeftCorner(Rect rect) {
+        return new Coordinate(rect.getTopLeftCorner().getRow() + rect.getHeight() - 1, rect.getTopLeftCorner().getCol());
     }
 
     public static Coordinate getTopLeftCornerOfRectContainingPoint(double rectWidth, double rectHeight, Coordinate point) {
@@ -33,17 +35,16 @@ public class RectUtils {
         return new Coordinate(topLeftCornerRow, topLeftCornerCol);
     }
 
-    public static boolean isRectContainsPoint(Coordinate parentRectTopLeftCorner, double parentRectWidth, double parentRectHeight, Coordinate point) {
-        final Coordinate parentRectBottomRightCorner = getBottomRightCorner(parentRectTopLeftCorner, parentRectWidth, parentRectHeight);
-        return point.getCol() >= parentRectTopLeftCorner.getCol() &&
-                point.getCol() <= parentRectBottomRightCorner.getCol() &&
-                point.getRow() >= parentRectTopLeftCorner.getRow() &&
-                point.getRow() <= parentRectBottomRightCorner.getRow();
+    public static boolean isRectContainsPoint(Rect rect, Coordinate point) {
+        final Coordinate rectBottomRightCorner = getBottomRightCorner(rect);
+        return point.getCol() >= rect.getTopLeftCorner().getCol() &&
+                point.getCol() <= rectBottomRightCorner.getCol() &&
+                point.getRow() >= rect.getTopLeftCorner().getRow() &&
+                point.getRow() <= rectBottomRightCorner.getRow();
     }
-    public static boolean isRectContainsRect(Coordinate parentRectTopLeftCorner, double parentRectWidth, double parentRectHeight,
-                                             Coordinate childRectTopLeftCorner, double childRectWidth, double childRectHeight) {
-        final Coordinate childRectBottomRightCorner = getBottomRightCorner(childRectTopLeftCorner, childRectWidth, childRectHeight);
-        return isRectContainsPoint(parentRectTopLeftCorner, parentRectWidth, parentRectHeight, childRectTopLeftCorner) && isRectContainsPoint(parentRectTopLeftCorner, parentRectWidth, parentRectHeight, childRectBottomRightCorner);
+    public static boolean isRectContainsRect(Rect parentRect, Rect childRect) {
+        final Coordinate childRectBottomRightCorner = getBottomRightCorner(childRect);
+        return isRectContainsPoint(parentRect, childRect.getTopLeftCorner()) && isRectContainsPoint(parentRect, childRectBottomRightCorner);
     }
 
     public static Coordinate getTopLeftCornerOfNextRect(Coordinate currRectTopLeftCorner, double canvasCellWidth, double canvasCellHeight, DirectionsE movementDirection) {

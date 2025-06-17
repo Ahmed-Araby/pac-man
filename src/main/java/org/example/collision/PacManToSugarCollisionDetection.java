@@ -3,6 +3,7 @@ package org.example.collision;
 import org.example.constant.Dimensions;
 import org.example.constant.SpriteE;
 import org.example.entity.Coordinate;
+import org.example.entity.Rect;
 import org.example.event.*;
 import org.example.event.Event;
 import org.example.event.EventType;
@@ -24,8 +25,8 @@ public class PacManToSugarCollisionDetection implements Subscriber {
     }
 
     public boolean isEatingSugar(Coordinate pacManCanvasTopLeftCorner) {
-
-        final List<Coordinate> pacManRect4Corners = RectUtils.get4Corners(pacManCanvasTopLeftCorner, Dimensions.PAC_MAN_DIAMETER_PIXELS, Dimensions.PAC_MAN_DIAMETER_PIXELS);
+        final Rect pacManCanvasRect = new Rect(pacManCanvasTopLeftCorner, Dimensions.PAC_MAN_DIAMETER_PIXELS, Dimensions.PAC_MAN_DIAMETER_PIXELS);
+        final List<Coordinate> pacManRect4Corners = RectUtils.get4Corners(pacManCanvasRect);
         final List<Coordinate> canvasSugarToBeEaten = pacManRect4Corners.stream()
                 .map(this::toTopLeftCornerOfRectContainingPoint)
                 .filter(rectTopLeftCornerCanvas -> SugarUtil.isCanvasCellHasSugar(maze, rectTopLeftCornerCanvas))
@@ -45,8 +46,9 @@ public class PacManToSugarCollisionDetection implements Subscriber {
     }
 
     private boolean isPacManRectContainsSugarRect(Coordinate pacManCanvasRectTopLeftCorner, Coordinate sugarCanvasRectTopLeftCorner) {
-        return RectUtils.isRectContainsRect(pacManCanvasRectTopLeftCorner, Dimensions.PAC_MAN_DIAMETER_PIXELS, Dimensions.PAC_MAN_DIAMETER_PIXELS,
-                sugarCanvasRectTopLeftCorner, Dimensions.SUGAR_CELL_SIZE_PIXELS, Dimensions.SUGAR_CELL_SIZE_PIXELS);
+        final Rect pacManCanvasRect = new Rect(pacManCanvasRectTopLeftCorner, Dimensions.PAC_MAN_DIAMETER_PIXELS, Dimensions.PAC_MAN_DIAMETER_PIXELS);
+        final Rect sugarCanvasRect = new Rect(sugarCanvasRectTopLeftCorner, Dimensions.SUGAR_CELL_SIZE_PIXELS, Dimensions.SUGAR_CELL_SIZE_PIXELS);
+        return RectUtils.isRectContainsRect(pacManCanvasRect, sugarCanvasRect);
     }
 
     @Override

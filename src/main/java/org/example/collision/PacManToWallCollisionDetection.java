@@ -3,6 +3,7 @@ package org.example.collision;
 import org.example.constant.Dimensions;
 import org.example.constant.SpriteE;
 import org.example.entity.Coordinate;
+import org.example.entity.Rect;
 import org.example.event.EventManager;
 import org.example.event.Event;
 import org.example.event.movement.PacManMovementAttemptApprovedEvent;
@@ -29,7 +30,8 @@ public class PacManToWallCollisionDetection implements Subscriber {
             return;
         }
 
-        final List<Coordinate> pacManRect4Corners = RectUtils.get4Corners(event.getRequestedPacManCanvasRectTopLeftCorner(), Dimensions.PAC_MAN_DIAMETER_PIXELS, Dimensions.PAC_MAN_DIAMETER_PIXELS);
+        final Rect pacManCanvasRect = new Rect(event.getRequestedPacManCanvasRectTopLeftCorner(), Dimensions.PAC_MAN_DIAMETER_PIXELS, Dimensions.PAC_MAN_DIAMETER_PIXELS);
+        final List<Coordinate> pacManRect4Corners = RectUtils.get4Corners(pacManCanvasRect);
         final boolean isCollidingWithWall = pacManRect4Corners.stream()
                 .map(pacManCanvasRectCorner -> RectUtils.getTopLeftCornerOfRectContainingPoint(Dimensions.CANVAS_CELL_SIZE_PIXELS, Dimensions.CANVAS_CELL_SIZE_PIXELS, pacManCanvasRectCorner))
                 .anyMatch(this::isPacManCollidingWithAWall);
