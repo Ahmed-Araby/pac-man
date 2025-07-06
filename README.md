@@ -12,9 +12,10 @@ pac man game using javaFX.
 - [Generating the Sugar](#generating-the-sugar)
 - [Collision Detection](#collision-detection)
     - [Pac Man to Wall](#pac-man-to-wall)
-    - [Pac Man to sugar](#pac-man-to-sugar) 
+    - [Pac Man to sugar](#pac-man-to-sugar)
+- [Turn Buffer](#turn-buffer)
 - [Features And Fixes](#features-and-fixes)
-  
+
 <br><br>
 ## Drawing Pac Man with open and closed Mouth using simple circle and Arc Math.
 Pac-Man with open mouth is just an Arc on a Circle. an Arc on a Circle is defined by the circle diameter, the start and end angles and drawing direction from the start angle to the end angle.
@@ -29,7 +30,7 @@ Pac-Man with open mouth is just an Arc on a Circle. an Arc on a Circle is define
 ### The following is a diagram illustrating the arguments expected by fillArc method and the final result rendered in the game play.
 ![pac-man_circle-arc_generating_right-open-mouth](https://github.com/Ahmed-Araby/pac-man/blob/main/documentation/imgs/pac-man/pac-man_circle-arc_generating_right-open-mouth.drawio.png)
 
-<br><br>
+
 ### The following are the exact start angle and arc extent in degrees that I have used to draw Pac-Man 4 different open mouth positions and Pac-Man with closed mouth.
 * Pac-Man with mouth open to the right
     * start angle =  45 degree
@@ -52,7 +53,7 @@ Pac-Man with open mouth is just an Arc on a Circle. an Arc on a Circle is define
     * arc extent = 360
     * result: ![pac-man_with_closed-mouth](https://github.com/Ahmed-Araby/pac-man/blob/main/documentation/imgs/pac-man/pac-man_with_closed-mouth.png)
  
-<br><br><br><br>
+<br><br>
 ## Pac Man open and close mouth animation.
 ![pac-man_open-close-mouth-animation](https://github.com/Ahmed-Araby/pac-man/blob/main/documentation/imgs/pac-man/pac-man_open-close-mouth-animation.gif)
 
@@ -65,7 +66,7 @@ once the accumulated amount of pixels exceeds or equal to **PAC_MAN_CLOSED_MOUSE
 ### the following is a diagram illustrating the previous logic
 ![pac-man_open-and-closed-mouth-animation_logic](https://github.com/Ahmed-Araby/pac-man/blob/main/documentation/imgs/pac-man/pac-man_open-and-closed-mouth-animation_logic.png)
 
-<br><br><br><br>
+<br><br>
 ## Generating the Maze Programmatically
 sticking to the main princible of this project, the Maze is programmatically generated instead of using a static asset.
 
@@ -88,7 +89,7 @@ there are different algorithms to generate random mazes. the one I have used cal
 
 **I am planning to implement other algorithms mentioned in Wikipedia page and give the palyer an option to select the algorithm used to generate the maze that he will play in.**
 
-<br><br><br><br>
+<br><br>
 ## Generating the Sugar
 sugar to be eaten by Pac-Man is a small circle generated at the center of an empty maze cell.
 
@@ -109,9 +110,20 @@ however there is a bit of work to identify which Maze Cell / Wall to check for c
 * the 4 cells are identified using the 4 corners.
 * the potentional position is approved to be the actual position of Pac Man if no cell of the 4 cells is a wall and no cell of the 4 cells lies outside the maze boundries.
 * otherwise the potentional position is denied and Pac-Man don't move in the desired direction.
-<br><br>
+
+
 ### Pac Man to Sugar
 it is as simple as checking that the virtual rectangle enclosing the sugar lies completely within the virtual rectangle enclosing Pac-Man.
+
+<br><br>
+## Turn buffer
+it is almost impossible for the player to instruct Pac Man to take a turn manually, the player will always do this at a position such that taking the turn will cause collision between Pac-Man and a Wall. to solve this problem, an Automatic Assistance is provided for the player.
+
+when the player instruct Pac-Man to take a turn and fail, the game remember the intent of the player to take the next turn. then the game will do this automatically for him in a way that sounds very natural.
+
+the way this is implemented is by recording the current position of Pac-Man and the direction of the turn that failed and keep this instruction buffered until Pac-Man reaches the next Cell (in respect to the position recorded when the turn attempt failed). until the next Maze cell is reached by Pac-Man the game keeps trying to take the next turn on behalf of the player, hence it is guaranted that the game will make the turn at the perfect position where taking a turn won't cause coliision with a Wall.
+
+if the turn is still not possible and Pac-Man is now in the next Cell (in respect to the position recorded when the turn attempt failed) then the buffer is erased as it might be the case that the player made instruction to take a right turn but all the cells to the right of Pac-Man are walls, hence it is impossible to make this turn.
 
 ## Features And Fixes
 - [X] generate random maze using recursive division maze generation algorithm
@@ -126,7 +138,7 @@ it is as simple as checking that the virtual rectangle enclosing the sugar lies 
   - [ ] make consistent use of the concepts Rect (Rectangle), Coordinate of the top left corner, and Canvas Cell
   - [ ] make consistent naming convention for variables
   - [ ] use deceorator/Adapter design pattern to abstract the creation of game ready maze, as the maze generator generate a generic boolean maze where 0 is empty cell and 1 is a cell with a wall.
-- [ ] write documenntation and turotial for the work completed so far.
+- [X] write documenntation and turotial for the work completed so far.
 - [ ] put ghosts.
 - [ ] track score, move to next level and game over.
 - [ ] create the starting menu screen.
