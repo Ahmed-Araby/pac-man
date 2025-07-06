@@ -3,6 +3,7 @@ package org.example;
 import javafx.animation.AnimationTimer;
 import javafx.application.Application;
 import javafx.stage.Stage;
+import org.example.config.GameConfig;
 import org.example.scene.GamePlayGameScene;
 
 
@@ -15,11 +16,11 @@ public class Main extends Application
 
     @Override
     public void start(Stage stage) throws Exception {
-        stage.setTitle("Pac Man Game");
+        GameConfig.load();
 
+        stage.setTitle("Pac Man Game");
         GamePlayGameScene gamePlayGameScene = new GamePlayGameScene();
         stage.setScene(gamePlayGameScene.getScene());
-
         stage.show();
 
         final AnimationTimer gameLoop = new AnimationTimer() {

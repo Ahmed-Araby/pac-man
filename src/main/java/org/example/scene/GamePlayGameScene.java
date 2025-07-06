@@ -8,6 +8,7 @@ import javafx.scene.paint.Color;
 import org.example.collision.PacManToSugarCollisionDetection;
 import org.example.collision.PacManToSuperSugarCollisionDetection;
 import org.example.collision.PacManToWallCollisionDetection;
+import org.example.config.GameConfig;
 import org.example.constant.ColorConstants;
 import org.example.constant.Dimensions;
 import org.example.event.manager.EventManager;
@@ -20,6 +21,7 @@ import org.example.sprite.Maze;
 import org.example.sprite.PacMan;
 import org.example.entity.Coordinate;
 import org.example.sprite.Sugar;
+import org.example.util.debug.DebugUtil;
 
 public class GamePlayGameScene implements GameScene {
     // sprites
@@ -116,8 +118,10 @@ public class GamePlayGameScene implements GameScene {
 
         maze.render(canvas);
         sugar.render(canvas);
-        context.setFill(Color.GRAY);
-        context.fillOval(0, 0, Dimensions.PAC_MAN_DIAMETER_PIXELS, Dimensions.PAC_MAN_DIAMETER_PIXELS);
+
+        if(GameConfig.isDebugModeOn()) {
+            DebugUtil.drawDummyPacman(context, 0, 0, Dimensions.PAC_MAN_DIAMETER_PIXELS, Dimensions.PAC_MAN_DIAMETER_PIXELS, Color.GRAY);
+        }
 
         pacMan.render(canvas);
     }

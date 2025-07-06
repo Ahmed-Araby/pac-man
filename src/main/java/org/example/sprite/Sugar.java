@@ -3,6 +3,7 @@ package org.example.sprite;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.paint.Color;
+import org.example.config.GameConfig;
 import org.example.constant.ColorConstants;
 import org.example.constant.Configs;
 import org.example.constant.Dimensions;
@@ -13,6 +14,7 @@ import org.example.event.PacManSugarCollisionEvent;
 import org.example.event.Subscriber;
 import org.example.util.EnrichedThreadLocalRandom;
 import org.example.util.MazeCanvasCoordinateMapping;
+import org.example.util.debug.DebugUtil;
 import org.example.util.sugar.SugarUtil;
 
 public class Sugar implements Sprite, Subscriber {
@@ -48,14 +50,16 @@ public class Sugar implements Sprite, Subscriber {
                     final Coordinate cellTopLeftCornerCanvas = MazeCanvasCoordinateMapping.mazeCordToCanvasCord(row, col);
                     final Coordinate sugarCellTopLeftCornerCanvas = SugarUtil.getSugarTopLeftCornerCanvas(cellTopLeftCornerCanvas);
                     con.fillRect(sugarCellTopLeftCornerCanvas.getCol(), sugarCellTopLeftCornerCanvas.getRow(), Dimensions.SUGAR_CELL_SIZE_PIXELS, Dimensions.SUGAR_CELL_SIZE_PIXELS);
-
-                    con.setStroke(Color.CYAN);
-                    con.strokeRect(sugarCellTopLeftCornerCanvas.getCol(), sugarCellTopLeftCornerCanvas.getRow(), Dimensions.SUGAR_CELL_SIZE_PIXELS, Dimensions.SUGAR_CELL_SIZE_PIXELS);
-
+                    if(GameConfig.isDebugModeOn()) {
+                        DebugUtil.drawVirtualRect(con, sugarCellTopLeftCornerCanvas.getCol(), sugarCellTopLeftCornerCanvas.getRow(), Dimensions.SUGAR_CELL_SIZE_PIXELS, Dimensions.SUGAR_CELL_SIZE_PIXELS, Color.CYAN);
+                    }
                 } else if (maze[row][col] == SpriteE.SUPER_SUGAR) {
                     final Coordinate cellTopLeftCornerCanvas = MazeCanvasCoordinateMapping.mazeCordToCanvasCord(row, col);
                     final Coordinate sugarCellTopLeftCornerCanvas = SugarUtil.getSuperSugarTopLeftCornerCanvas(cellTopLeftCornerCanvas);
                     con.fillOval(sugarCellTopLeftCornerCanvas.getCol(), sugarCellTopLeftCornerCanvas.getRow(), Dimensions.SUPER_SUGAR_DIAMETER_PIXELS, Dimensions.SUPER_SUGAR_DIAMETER_PIXELS);
+                    if(GameConfig.isDebugModeOn()) {
+                        DebugUtil.drawVirtualRect(con, sugarCellTopLeftCornerCanvas.getCol(), sugarCellTopLeftCornerCanvas.getRow(), Dimensions.SUPER_SUGAR_DIAMETER_PIXELS, Dimensions.SUPER_SUGAR_DIAMETER_PIXELS, Color.CYAN);
+                    }
                 }
             }
         }

@@ -4,6 +4,7 @@ import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.paint.Color;
 import lombok.Getter;
+import org.example.config.GameConfig;
 import org.example.constant.ColorConstants;
 import org.example.constant.Dimensions;
 import org.example.constant.SpriteE;
@@ -12,6 +13,7 @@ import org.example.event.Event;
 import org.example.maze.MazeGenerator;
 import org.example.maze.RecursiveDivisionMazeGenerator;
 import org.example.util.MazeCanvasCoordinateMapping;
+import org.example.util.debug.DebugUtil;
 
 public class Maze implements Sprite {
     @Getter
@@ -44,18 +46,19 @@ public class Maze implements Sprite {
         con.setFill(ColorConstants.CANVAS_WALL_COLOR);
         for (int mazeRow = 0; mazeRow< gameMaze.length; mazeRow++) {
             for(int mazeCol = 0; mazeCol< gameMaze[0].length; mazeCol++) {
+                final Coordinate canvasCord = MazeCanvasCoordinateMapping.mazeCordToCanvasCord(mazeRow, mazeCol);
                 if (gameMaze[mazeRow][mazeCol] == SpriteE.WALL) {
                     // map from the abstract maze scale to the graphical maze scale
-                    final Coordinate canvasCord = MazeCanvasCoordinateMapping.mazeCordToCanvasCord(mazeRow, mazeCol);
                     con.setFill(ColorConstants.CANVAS_WALL_COLOR);
                     con.fillRect(canvasCord.getCol(), canvasCord.getRow(), Dimensions.CANVAS_CELL_SIZE_PIXELS, Dimensions.CANVAS_CELL_SIZE_PIXELS);
-                    con.setStroke(Color.RED);
-                    con.strokeRect(canvasCord.getCol(), canvasCord.getRow(), Dimensions.CANVAS_CELL_SIZE_PIXELS, Dimensions.CANVAS_CELL_SIZE_PIXELS);
+                    if (GameConfig.isDebugModeOn()) {
+                        DebugUtil.drawVirtualRect(con, canvasCord.getCol(), canvasCord.getRow(), Dimensions.CANVAS_CELL_SIZE_PIXELS, Dimensions.CANVAS_CELL_SIZE_PIXELS, Color.RED);
+
+                    }
                 } else {
-                    // debug mode
-                    final Coordinate canvasCord = MazeCanvasCoordinateMapping.mazeCordToCanvasCord(mazeRow, mazeCol);
-                    con.setStroke(Color.YELLOW);
-                    con.strokeRect(canvasCord.getCol(), canvasCord.getRow(), Dimensions.CANVAS_CELL_SIZE_PIXELS, Dimensions.CANVAS_CELL_SIZE_PIXELS);
+                    if(GameConfig.isDebugModeOn()) {
+                        DebugUtil.drawVirtualRect(con, canvasCord.getCol(), canvasCord.getRow(), Dimensions.CANVAS_CELL_SIZE_PIXELS, Dimensions.CANVAS_CELL_SIZE_PIXELS, Color.YELLOW);
+                    }
                 }
             }
         }
