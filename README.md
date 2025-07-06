@@ -1,11 +1,49 @@
 # pac-man
 pac man game using javaFX.
 
-### core principle is replace static assets with code generated graphics as much as possible
+# core principle is replace static assets with code generated graphics as much as possible
   - drawing pac man and open/close mouse animations using simple circle and arc math.
   - generate random mazes using maze generation algorithms.
 
+# Table Of Contents
+- [Drawing Pac Man and its open/closed Mouth animation using simple circle and Arc Math].(#drawing-pac-man-and-its-openclosed-mouth-animation-using-simple-circle-and-arc-math)
 
+## Drawing Pac Man and its open/closed Mouth animation using simple circle and Arc Math.
+Pac-Man with open mouth is just an Arc on a Circle. an Arc on a Circle is defined by the circle diameter, the start and end angles and drawing direction from the start angle to the end angle.
+
+JavaFx provide a fillArc method that requires
+* the top left corner row and col of the rectangle that virtually encloses the circle (annotated in the following diagaram as (x, y)
+* the diameter of the circle that the Arc is virtually drawn on its circumference.
+* start angle in degress, where the angle 0 is in the middle of the circle at the right side.
+* arc extent which is the distance in degress between the start angle and the end angle while moving in **counter clock wise direction**.
+* arc type, in our situation it will be closed and this type give the desired output of a filled circle (Pac-Man) with clipped portion (the open mouth).
+
+the following is a diagram illustrating the arguments expected by fillArc method and the final result rendered in the game play.
+![pac-man_circle-arc_generating_right-open-mouth](https://github.com/Ahmed-Araby/pac-man/blob/main/documentation/imgs/pac-man_circle-arc_generating_right-open-mouth.drawio.png)
+
+
+the following are the exact start angle and arc extent in degrees that I have used to draw Pac-Man 4 different open mouth positions and Pac-Man with closed mouth.
+* Pac-Man with mouth open to the right
+    * start angle =  45 degree
+    * arc extent = 270
+    * result: ![pac-man_with_right-open-mouth](https://github.com/Ahmed-Araby/pac-man/blob/main/documentation/imgs/pac-man_with_right-open-mouth.png)
+* Pac-Man with mouth open upward
+    * start angle =  135 degree
+    * arc extent = 270
+    * result: ![pac-man_with_mouth-open-upward](https://github.com/Ahmed-Araby/pac-man/blob/main/documentation/imgs/pac-man_with_mouth-open-upward.png)
+* Pac-Man with mouth open to the left
+    * start angle =  225 degree
+    * arc extent = 270
+    * result: ![pac-man_with_mouth-open-to-the-left](https://github.com/Ahmed-Araby/pac-man/blob/main/documentation/imgs/pac-man_with_mouth-open-to-the-left.png)
+* Pac-Man with mouth open to Down
+    * start angle =  315 degree
+    * arc extent = 270
+    * result: ![pac-man_with_mouth-open-downward](https://github.com/Ahmed-Araby/pac-man/blob/main/documentation/imgs/pac-man_with_mouth-open-downward.png)
+* Pac-Man with closed mouth
+    * start angle =  0 degree
+    * arc extent = 360
+    * result: ![pac-man_with_closed-mouth](https://github.com/Ahmed-Araby/pac-man/blob/main/documentation/imgs/pac-man_with_closed-mouth.png)
+      
 ### Features and fixes
 - [X] generate random maze using recursive division maze generation algorithm
 - [X] render pac man and mouse open/close animations using simple circle/arc math.
