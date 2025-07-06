@@ -100,11 +100,11 @@ Pac Man to wall collision Detection is a simple rectangle to rectangle collision
 however there is a bit of work to identify which Maze Cell / Wall to check for collision with, the following is an illustration of the process:
 * Pac-Man is moving in a straight line to the right, and the player want to move downward
     * <img src="https://github.com/Ahmed-Araby/pac-man/blob/main/documentation/imgs/collision/pac-man_moving-in-straight-line-to-the-right_before-collision.png" width="50%" height="50%"/>
-* assume that Pac Man has moved in the desired direction, now we have the new position of Pac Man but it is not reflected in the game yet. we can call this position a **potentional** position. the following is an illustration of the potentional position (however this won't happen in the real gameplay as it would have been detected as a collision and pac-man would continue to move in straight line to the right instead).
+* assume that Pac Man has moved in the desired direction, now we have the new position of Pac Man but it is not reflected in the game yet. we can call this position a **potentional** position. **the following is an illustration of the potentional position (however this won't happen in the real gameplay as it would have been detected as a collision and pac-man would continue to move in straight line to the right instead).**
     * <img src="https://github.com/Ahmed-Araby/pac-man/blob/main/documentation/imgs/collision/pac-man_to_wall-collision_potentional_position.png" width="50%" height="50%"/>
 * the potentional position as every thing else in this game is identified by the top left corner of the virtual rectangle that encloses the sprite (the sprite here is the programatically generated Pac-Man)
 * using this top left corner, the other 3 corners of the virtual rectangle are calculated.
-* each of the 4 corners of the virtual rectangle enclosing Pac-Man should lie within a maze cell (either empty, wall or out of the maze boundries). here the bottom left and bottom right corners lie within wall cells.
+* each of the 4 corners of the virtual rectangle enclosing Pac-Man should lie within a maze cell (either empty, wall or out of the maze boundries). **here the bottom left and bottom right corners lie within wall cells.**
     * <img src="https://github.com/Ahmed-Araby/pac-man/blob/main/documentation/imgs/collision/pac-man_to_wall-collision_potentional_position.png" width="50%" height="50%"/>
 * the 4 cells are identified using the 4 corners.
 * the potentional position is approved to be the actual position of Pac Man if no cell of the 4 cells is a wall and no cell of the 4 cells lies outside the maze boundries.
