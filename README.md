@@ -9,6 +9,7 @@ pac man game using javaFX.
 - [Drawing Pac Man with open and closed Mouth using simple circle and Arc Math.](#drawing-pac-man-with-open-and-closed-mouth-using-simple-circle-and-arc-math)
 - [Pac Man open and close mouth animation](#pac-man-open-and-close-mouth-animation)
 - [Generating the Maze Programmatically](#generating-the-maze-programmatically)
+- [Generating the Sugar](#generating-the-sugar)
 - [Features And Fixes](#features-and-fixes)
   
 <br><br>
@@ -83,6 +84,10 @@ there are different algorithms to generate random mazes. the one I have used cal
 * now, solve the problem recursively on each of the 4 sub mazes
 
 **I am planning to implement other algorithms mentioned in Wikipedia page and give the palyer an option to select the algorithm used to generate the maze that he will play in.**
+
+<br><br><br><br>
+## Generating the Sugar
+sugar to be eaten by Pac-Man is a small circle generated at the center of an empty maze cell.
 
 ## Features And Fixes
 - [X] generate random maze using recursive division maze generation algorithm
