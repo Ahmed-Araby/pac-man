@@ -11,8 +11,8 @@ pac man game using javaFX.
 - [Generating the Maze Programmatically](#generating-the-maze-programmatically)
 - [Generating the Sugar](#generating-the-sugar)
 - [Collision Detection](#collision-detection)
-    - [Pac Man to Wall](#pacman-to-wall)
-    - [Pac Man to sugar](#pacman-to-sugar) 
+    - [Pac Man to Wall](#pac-man-to-wall)
+    - [Pac Man to sugar](#pac-man-to-sugar) 
 - [Features And Fixes](#features-and-fixes)
   
 <br><br>
