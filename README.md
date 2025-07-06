@@ -6,9 +6,9 @@ pac man game using javaFX.
   - generate random mazes using maze generation algorithms.
 
 # Table Of Contents
-- [Drawing Pac Man and its open/closed Mouth animation using simple circle and Arc Math](#drawing-pac-man-and-its-openclosed-mouth-animation-using-simple-circle-and-arc-math)
-
-## Drawing Pac Man and its open/closed Mouth animation using simple circle and Arc Math.
+- [Drawing Pac Man with open and closed Mouth using simple circle and Arc Math.](#drawing-pac-man-with-open-and-closed-mouth-using-simple-circle-and-arc-math)
+- [Pac Man open and close mouth animation](#pac-man-open-and-close-mouth-animation)
+## Drawing Pac Man with open and closed Mouth using simple circle and Arc Math.
 Pac-Man with open mouth is just an Arc on a Circle. an Arc on a Circle is defined by the circle diameter, the start and end angles and drawing direction from the start angle to the end angle.
 
 ### JavaFx provide a fillArc method that requires
@@ -45,18 +45,16 @@ Pac-Man with open mouth is just an Arc on a Circle. an Arc on a Circle is define
     * result: ![pac-man_with_closed-mouth](https://github.com/Ahmed-Araby/pac-man/blob/main/documentation/imgs/pac-man_with_closed-mouth.png)
  
 
-### Pac Man open and close mouth animation.
+## Pac Man open and close mouth animation.
 ![pac-man_open-close-mouth-animation](https://github.com/Ahmed-Araby/pac-man/blob/main/documentation/imgs/pac-man_open-close-mouth-animation.gif)
 
-to achieve the close mouse effect, there is a defined amount of pixels called **PAC_MAN_CLOSED_MOUSE_DISTANCE_PIXELS** and a helper class called **PixelStrideTracker** is keeping track of the how many pixels pac-man has strided, and as long as this accumulated amount is less than **PAC_MAN_CLOSED_MOUSE_DISTANCE_PIXELS** then pac-man will keep his mouse closed, then after this tresh hold is reached pac-man will open his mouse.
+to achieve the close mouse effect, there is a defined amount of pixels called **PAC_MAN_CLOSED_MOUSE_DISTANCE_PIXELS** and a helper class called **PixelStrideTracker** that keeps track of the amount of pixels that pac-man has strided, and as long as the accumulated amount is less than **PAC_MAN_CLOSED_MOUSE_DISTANCE_PIXELS** then pac-man will keep his mouse closed. after this threshold is reached pac-man will open his mouse.
 
 to achieve the open mouse effect, there is an additional amount of pixels defined called **PAC_MAN_OPEN_MOUSE_DISTANCE_PIXELS**. once after the thresh hold **PAC_MAN_CLOSED_MOUSE_DISTANCE_PIXELS** is exceeded pac-man will keep his mouth open as long as the accumulated amount of pixels is less than **PAC_MAN_CLOSED_MOUSE_DISTANCE_PIXELS** + **PAC_MAN_OPEN_MOUSE_DISTANCE_PIXELS**.
 
-once the accumulated amount of pixels exceeds or equal to **PAC_MAN_CLOSED_MOUSE_DISTANCE_PIXELS** + **PAC_MAN_OPEN_MOUSE_DISTANCE_PIXELS** the **PixelStrideTracker** will rest and start accumulating from the beginning.
+once the accumulated amount of pixels exceeds or equal to **PAC_MAN_CLOSED_MOUSE_DISTANCE_PIXELS** + **PAC_MAN_OPEN_MOUSE_DISTANCE_PIXELS** the **PixelStrideTracker** will rest and start accumulating from the beginning. it's a process that the game repeats indefinitely.
 
-it's a process that the game repeat indefinitely.
-
-the following is a diagram illustrating the previous logic
+### the following is a diagram illustrating the previous logic
 ![pac-man_open-and-closed-mouth-animation_logic](https://github.com/Ahmed-Araby/pac-man/blob/main/documentation/imgs/pac-man_open-and-closed-mouth-animation_logic.png)
 
 ### Features and fixes
