@@ -11,18 +11,18 @@ pac man game using javaFX.
 ## Drawing Pac Man and its open/closed Mouth animation using simple circle and Arc Math.
 Pac-Man with open mouth is just an Arc on a Circle. an Arc on a Circle is defined by the circle diameter, the start and end angles and drawing direction from the start angle to the end angle.
 
-JavaFx provide a fillArc method that requires
+### JavaFx provide a fillArc method that requires
 * the top left corner row and col of the rectangle that virtually encloses the circle (annotated in the following diagaram as (x, y)
 * the diameter of the circle that the Arc is virtually drawn on its circumference.
 * start angle in degress, where the angle 0 is in the middle of the circle at the right side.
 * arc extent which is the distance in degress between the start angle and the end angle while moving in **counter clock wise direction**.
 * arc type, in our situation it will be closed and this type give the desired output of a filled circle (Pac-Man) with clipped portion (the open mouth).
 
-the following is a diagram illustrating the arguments expected by fillArc method and the final result rendered in the game play.
+### The following is a diagram illustrating the arguments expected by fillArc method and the final result rendered in the game play.
 ![pac-man_circle-arc_generating_right-open-mouth](https://github.com/Ahmed-Araby/pac-man/blob/main/documentation/imgs/pac-man_circle-arc_generating_right-open-mouth.drawio.png)
 
 
-the following are the exact start angle and arc extent in degrees that I have used to draw Pac-Man 4 different open mouth positions and Pac-Man with closed mouth.
+### The following are the exact start angle and arc extent in degrees that I have used to draw Pac-Man 4 different open mouth positions and Pac-Man with closed mouth.
 * Pac-Man with mouth open to the right
     * start angle =  45 degree
     * arc extent = 270
@@ -43,7 +43,22 @@ the following are the exact start angle and arc extent in degrees that I have us
     * start angle =  0 degree
     * arc extent = 360
     * result: ![pac-man_with_closed-mouth](https://github.com/Ahmed-Araby/pac-man/blob/main/documentation/imgs/pac-man_with_closed-mouth.png)
-      
+ 
+
+### Pac Man open and close mouth animation.
+![pac-man_open-close-mouth-animation](https://github.com/Ahmed-Araby/pac-man/blob/main/documentation/imgs/pac-man_open-close-mouth-animation.gif)
+
+to achieve the close mouse effect, there is a defined amount of pixels called **PAC_MAN_CLOSED_MOUSE_DISTANCE_PIXELS** and a helper class called **PixelStrideTracker** is keeping track of the how many pixels pac-man has strided, and as long as this accumulated amount is less than **PAC_MAN_CLOSED_MOUSE_DISTANCE_PIXELS** then pac-man will keep his mouse closed, then after this tresh hold is reached pac-man will open his mouse.
+
+to achieve the open mouse effect, there is an additional amount of pixels defined called **PAC_MAN_OPEN_MOUSE_DISTANCE_PIXELS**. once after the thresh hold **PAC_MAN_CLOSED_MOUSE_DISTANCE_PIXELS** is exceeded pac-man will keep his mouth open as long as the accumulated amount of pixels is less than **PAC_MAN_CLOSED_MOUSE_DISTANCE_PIXELS** + **PAC_MAN_OPEN_MOUSE_DISTANCE_PIXELS**.
+
+once the accumulated amount of pixels exceeds or equal to **PAC_MAN_CLOSED_MOUSE_DISTANCE_PIXELS** + **PAC_MAN_OPEN_MOUSE_DISTANCE_PIXELS** the **PixelStrideTracker** will rest and start accumulating from the beginning.
+
+it's a process that the game repeat indefinitely.
+
+the following is a diagram illustrating the previous logic
+![pac-man_open-and-closed-mouth-animation_logic](https://github.com/Ahmed-Araby/pac-man/blob/main/documentation/imgs/pac-man_open-and-closed-mouth-animation_logic.png)
+
 ### Features and fixes
 - [X] generate random maze using recursive division maze generation algorithm
 - [X] render pac man and mouse open/close animations using simple circle/arc math.
