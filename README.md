@@ -8,6 +8,10 @@ pac man game using javaFX.
 # Table Of Contents
 - [Drawing Pac Man with open and closed Mouth using simple circle and Arc Math.](#drawing-pac-man-with-open-and-closed-mouth-using-simple-circle-and-arc-math)
 - [Pac Man open and close mouth animation](#pac-man-open-and-close-mouth-animation)
+- [Generating the Maze Programmatically](#generating-the-maze-programmatically)
+- [Features And Fixes](#features-and-fixes)
+  
+<br><br>
 ## Drawing Pac Man with open and closed Mouth using simple circle and Arc Math.
 Pac-Man with open mouth is just an Arc on a Circle. an Arc on a Circle is defined by the circle diameter, the start and end angles and drawing direction from the start angle to the end angle.
 
@@ -19,34 +23,34 @@ Pac-Man with open mouth is just an Arc on a Circle. an Arc on a Circle is define
 * arc type, in our situation it will be closed and this type give the desired output of a filled circle (Pac-Man) with clipped portion (the open mouth).
 
 ### The following is a diagram illustrating the arguments expected by fillArc method and the final result rendered in the game play.
-![pac-man_circle-arc_generating_right-open-mouth](https://github.com/Ahmed-Araby/pac-man/blob/main/documentation/imgs/pac-man_circle-arc_generating_right-open-mouth.drawio.png)
+![pac-man_circle-arc_generating_right-open-mouth](https://github.com/Ahmed-Araby/pac-man/blob/main/documentation/imgs/pac-man/pac-man_circle-arc_generating_right-open-mouth.drawio.png)
 
-
+<br><br>
 ### The following are the exact start angle and arc extent in degrees that I have used to draw Pac-Man 4 different open mouth positions and Pac-Man with closed mouth.
 * Pac-Man with mouth open to the right
     * start angle =  45 degree
     * arc extent = 270
-    * result: ![pac-man_with_right-open-mouth](https://github.com/Ahmed-Araby/pac-man/blob/main/documentation/imgs/pac-man_with_right-open-mouth.png)
+    * result: ![pac-man_with_right-open-mouth](https://github.com/Ahmed-Araby/pac-man/blob/main/documentation/imgs/pac-man/pac-man_with_right-open-mouth.png)
 * Pac-Man with mouth open upward
     * start angle =  135 degree
     * arc extent = 270
-    * result: ![pac-man_with_mouth-open-upward](https://github.com/Ahmed-Araby/pac-man/blob/main/documentation/imgs/pac-man_with_mouth-open-upward.png)
+    * result: ![pac-man_with_mouth-open-upward](https://github.com/Ahmed-Araby/pac-man/blob/main/documentation/imgs/pac-man/pac-man_with_mouth-open-upward.png)
 * Pac-Man with mouth open to the left
     * start angle =  225 degree
     * arc extent = 270
-    * result: ![pac-man_with_mouth-open-to-the-left](https://github.com/Ahmed-Araby/pac-man/blob/main/documentation/imgs/pac-man_with_mouth-open-to-the-left.png)
+    * result: ![pac-man_with_mouth-open-to-the-left](https://github.com/Ahmed-Araby/pac-man/blob/main/documentation/imgs/pac-man/pac-man_with_mouth-open-to-the-left.png)
 * Pac-Man with mouth open to Down
     * start angle =  315 degree
     * arc extent = 270
-    * result: ![pac-man_with_mouth-open-downward](https://github.com/Ahmed-Araby/pac-man/blob/main/documentation/imgs/pac-man_with_mouth-open-downward.png)
+    * result: ![pac-man_with_mouth-open-downward](https://github.com/Ahmed-Araby/pac-man/blob/main/documentation/imgs/pac-man/pac-man_with_mouth-open-downward.png)
 * Pac-Man with closed mouth
     * start angle =  0 degree
     * arc extent = 360
-    * result: ![pac-man_with_closed-mouth](https://github.com/Ahmed-Araby/pac-man/blob/main/documentation/imgs/pac-man_with_closed-mouth.png)
+    * result: ![pac-man_with_closed-mouth](https://github.com/Ahmed-Araby/pac-man/blob/main/documentation/imgs/pac-man/pac-man_with_closed-mouth.png)
  
-
+<br><br><br><br>
 ## Pac Man open and close mouth animation.
-![pac-man_open-close-mouth-animation](https://github.com/Ahmed-Araby/pac-man/blob/main/documentation/imgs/pac-man_open-close-mouth-animation.gif)
+![pac-man_open-close-mouth-animation](https://github.com/Ahmed-Araby/pac-man/blob/main/documentation/imgs/pac-man/pac-man_open-close-mouth-animation.gif)
 
 to achieve the close mouse effect, there is a defined amount of pixels called **PAC_MAN_CLOSED_MOUSE_DISTANCE_PIXELS** and a helper class called **PixelStrideTracker** that keeps track of the amount of pixels that pac-man has strided, and as long as the accumulated amount is less than **PAC_MAN_CLOSED_MOUSE_DISTANCE_PIXELS** then pac-man will keep his mouse closed. after this threshold is reached pac-man will open his mouse.
 
@@ -55,9 +59,32 @@ to achieve the open mouse effect, there is an additional amount of pixels define
 once the accumulated amount of pixels exceeds or equal to **PAC_MAN_CLOSED_MOUSE_DISTANCE_PIXELS** + **PAC_MAN_OPEN_MOUSE_DISTANCE_PIXELS** the **PixelStrideTracker** will rest and start accumulating from the beginning. it's a process that the game repeats indefinitely.
 
 ### the following is a diagram illustrating the previous logic
-![pac-man_open-and-closed-mouth-animation_logic](https://github.com/Ahmed-Araby/pac-man/blob/main/documentation/imgs/pac-man_open-and-closed-mouth-animation_logic.png)
+![pac-man_open-and-closed-mouth-animation_logic](https://github.com/Ahmed-Araby/pac-man/blob/main/documentation/imgs/pac-man/pac-man_open-and-closed-mouth-animation_logic.png)
 
-### Features and fixes
+<br><br><br><br>
+## Generating the Maze Programmatically
+sticking to the main princible of this project, the Maze is programmatically generated instead of using a static asset.
+
+there are different algorithms to generate random mazes. the one I have used called Recursive Division. 
+
+### Recursice Divisoin for Random Maze generation
+![recursive-division-for-random-maze-generation](https://github.com/Ahmed-Araby/pac-man/blob/main/documentation/imgs/maze/recursive-division-for-random-maze-generation.png)
+*Image Source (Wikipedia): [Maze_generation_algorithm](https://en.wikipedia.org/wiki/Maze_generation_algorithm)*
+<br><br>
+* Chamber = maze
+* a maze is 2D boolean array. a wall is true, a passage is false.
+* start with the maze empty, i.e. the maze is filled with flase.
+* pick a random column that doesn't lie on the borders and fill this column with walls
+* pick a random row that doesn't lie on the borders and fill this row with walls
+* **then you will end up with 4 sub mazes, however they are isolated from each other yet**
+* select 3 random sides around the intersection point of the chosen row and column.
+* make a passage (open a wall) in each of these sides.
+* **now the 4 sub mazes are connected and can reach each other**
+* now, solve the problem recursively on each of the 4 sub mazes
+
+**I am planning to implement other algorithms mentioned in Wikipedia page and give the palyer an option to select the algorithm used to generate the maze that he will play in.**
+
+## Features And Fixes
 - [X] generate random maze using recursive division maze generation algorithm
 - [X] render pac man and mouse open/close animations using simple circle/arc math.
 - [X] implement collision detection and prevention between pac man and the walls
