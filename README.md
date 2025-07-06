@@ -1,7 +1,7 @@
 # pac-man
 pac man game using javaFX.
 
-# core principle is replace static assets with code generated graphics as much as possible
+**core principle is to replace static assets with code generated graphics as much as possible**
   - drawing pac man and open/close mouse animations using simple circle and arc math.
   - generate random mazes using maze generation algorithms.
 
