@@ -109,7 +109,10 @@ however there is a bit of work to identify which Maze Cell / Wall to check for c
 * the 4 cells are identified using the 4 corners.
 * the potentional position is approved to be the actual position of Pac Man if no cell of the 4 cells is a wall and no cell of the 4 cells lies outside the maze boundries.
 * otherwise the potentional position is denied and Pac-Man don't move in the desired direction.
-  
+<br><br>
+### Pac Man to Sugar
+it is as simple as checking that the virtual rectangle enclosing the sugar lies completely within the virtual rectangle enclosing Pac-Man.
+
 ## Features And Fixes
 - [X] generate random maze using recursive division maze generation algorithm
 - [X] render pac man and mouse open/close animations using simple circle/arc math.
