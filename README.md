@@ -6,7 +6,7 @@ pac man game using javaFX.
   - generate random mazes using maze generation algorithms.
 
 # Table Of Contents
-- [Drawing Pac Man and its open/closed Mouth animation using simple circle and Arc Math].(#drawing-pac-man-and-its-openclosed-mouth-animation-using-simple-circle-and-arc-math)
+- [Drawing Pac Man and its open/closed Mouth animation using simple circle and Arc Math](#drawing-pac-man-and-its-openclosed-mouth-animation-using-simple-circle-and-arc-math)
 
 ## Drawing Pac Man and its open/closed Mouth animation using simple circle and Arc Math.
 Pac-Man with open mouth is just an Arc on a Circle. an Arc on a Circle is defined by the circle diameter, the start and end angles and drawing direction from the start angle to the end angle.
