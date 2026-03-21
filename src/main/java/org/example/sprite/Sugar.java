@@ -4,14 +4,13 @@ import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.paint.Color;
 import org.example.config.GameConfig;
-import org.example.constant.ColorConstants;
-import org.example.constant.Configs;
-import org.example.constant.Dimensions;
-import org.example.constant.SpriteE;
+import org.example.constant.*;
 import org.example.entity.Coordinate;
+import org.example.entity.MazeCoordinate;
 import org.example.event.Event;
 import org.example.event.PacManSugarCollisionEvent;
 import org.example.event.Subscriber;
+import org.example.util.CoordinateUtil;
 import org.example.util.EnrichedThreadLocalRandom;
 import org.example.util.MazeCanvasCoordinateMapping;
 import org.example.util.debug.DebugUtil;
@@ -83,7 +82,7 @@ public class Sugar implements Sprite, Subscriber {
     }
 
     public void removeSugar(Coordinate sugarRectCanvasTopLeftCoordinate) {
-        final Coordinate sugarCellMazeTopLeftCornerCoordinate = MazeCanvasCoordinateMapping.canvasCordToMazeCordFloored(sugarRectCanvasTopLeftCoordinate);
-        maze[(int) sugarCellMazeTopLeftCornerCoordinate.getRow()][(int) sugarCellMazeTopLeftCornerCoordinate.getCol()] = SpriteE.EMPTY;
+        final MazeCoordinate sugarCellMazeTopLeftCornerCoordinate = CoordinateUtil.toMazeCoordinate(sugarRectCanvasTopLeftCoordinate, DirectionsE.STILL);
+        maze[sugarCellMazeTopLeftCornerCoordinate.getRow()][sugarCellMazeTopLeftCornerCoordinate.getCol()] = SpriteE.EMPTY;
     }
 }

@@ -1,8 +1,10 @@
 package org.example.collision;
 
 import org.example.constant.Dimensions;
+import org.example.constant.DirectionsE;
 import org.example.constant.SpriteE;
 import org.example.entity.Coordinate;
+import org.example.entity.MazeCoordinate;
 import org.example.entity.Rect;
 import org.example.event.manager.EventManager;
 import org.example.event.Event;
@@ -11,6 +13,7 @@ import org.example.event.movement.PacManMovementAttemptApprovedEvent;
 import org.example.event.movement.PacManMovementAttemptDeniedEvent;
 import org.example.event.movement.PacManMovementAttemptEvent;
 import org.example.event.Subscriber;
+import org.example.util.CoordinateUtil;
 import org.example.util.MazeCanvasCoordinateMapping;
 import org.example.util.RectUtils;
 
@@ -53,8 +56,8 @@ public class PacManToWallCollisionDetection implements Subscriber {
     }
 
     private boolean isPacManCollidingWithAWall(Coordinate wallCanvasTopLeftCorner) {
-        final Coordinate wallMazeCord = MazeCanvasCoordinateMapping.canvasCordToMazeCordFloored(wallCanvasTopLeftCorner);
-        return maze[(int) wallMazeCord.getRow()][(int) wallMazeCord.getCol()] == SpriteE.WALL;
+        final MazeCoordinate wallMazeCord = CoordinateUtil.toMazeCoordinate(wallCanvasTopLeftCorner, DirectionsE.STILL);
+        return maze[wallMazeCord.getRow()][wallMazeCord.getCol()] == SpriteE.WALL;
     }
 
     private void publishMovementApproval(PacManMovementAttemptEvent event) {
