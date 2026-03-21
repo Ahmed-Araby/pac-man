@@ -27,4 +27,19 @@ public class CoordinateUtil {
 
         return ninetyDegMoves;
     }
+
+
+    public static DirectionsE getMovementDir(MazeCoordinate from, MazeCoordinate to) {
+        if(to.getRow() > from.getRow()) {
+            return DirectionsE.DOWN;
+        } else if(to.getRow() < from.getRow()) {
+            return DirectionsE.UP;
+        } else if(to.getCol() > from.getCol()) {
+            return DirectionsE.RIGHT;
+        } else if(to.getCol() < from.getCol()) {
+            return DirectionsE.LEFT;
+        } else {
+            return DirectionsE.STILL;
+        }
+    }
 }
