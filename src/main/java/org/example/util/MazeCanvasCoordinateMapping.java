@@ -2,6 +2,7 @@ package org.example.util;
 
 import org.example.constant.Dimensions;
 import org.example.entity.Coordinate;
+import org.example.entity.MazeCoordinate;
 
 public class MazeCanvasCoordinateMapping {
 
@@ -9,15 +10,8 @@ public class MazeCanvasCoordinateMapping {
         return new Coordinate(mazeRow * Dimensions.CANVAS_CELL_SIZE_PIXELS, mazeCol * Dimensions.CANVAS_CELL_SIZE_PIXELS);
     }
 
-    public static Coordinate mazeCordToCanvasCord(Coordinate mazeCord) {
-        return new Coordinate(mazeCord.getRow() * Dimensions.CANVAS_CELL_SIZE_PIXELS, mazeCord.getCol() * Dimensions.CANVAS_CELL_SIZE_PIXELS);
+    public static MazeCoordinate canvasCordToMazeCordFloored(Coordinate canvasCord) {
+        return new MazeCoordinate((int) Math.floor(canvasCord.getRow() / Dimensions.CANVAS_CELL_SIZE_PIXELS), (int) Math.floor(canvasCord.getCol() / Dimensions.CANVAS_CELL_SIZE_PIXELS));
     }
 
-    public static Coordinate canvasCordToMazeCordCeiled(Coordinate canvasCord) {
-        return new Coordinate(Math.ceil(canvasCord.getRow() / Dimensions.CANVAS_CELL_SIZE_PIXELS), Math.ceil(canvasCord.getCol() / Dimensions.CANVAS_CELL_SIZE_PIXELS));
-    }
-
-    public static Coordinate canvasCordToMazeCordFloored(Coordinate canvasCord) {
-        return new Coordinate(Math.floor(canvasCord.getRow() / Dimensions.CANVAS_CELL_SIZE_PIXELS), Math.floor(canvasCord.getCol() / Dimensions.CANVAS_CELL_SIZE_PIXELS));
-    }
 }
