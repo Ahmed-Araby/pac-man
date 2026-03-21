@@ -54,7 +54,7 @@ public class BfsUtil {
         MazeCoordinate cord = tCord;
         List<MazeCoordinate> path = new ArrayList<>();
         path.add(tCord);
-        while(cord != sCord) {
+        while(!cord.equals(sCord)) {
             final List<MazeCoordinate> ninetyDegMoves = CoordinateUtil.get90DegMoves(cord);
             int minDist = dist[cord.getRow()][cord.getCol()];
 
