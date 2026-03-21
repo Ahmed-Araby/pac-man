@@ -48,7 +48,7 @@ public class BfsUtil {
 
     public static List<MazeCoordinate> constructPath(MazeCoordinate sCord, MazeCoordinate tCord, int[][] dist) {
         if (sCord.equals(tCord)) {
-            List.of(sCord);
+            return List.of(sCord);
         }
 
         MazeCoordinate cord = tCord;
