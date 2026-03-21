@@ -7,6 +7,7 @@ import org.example.constant.Configs;
 import org.example.constant.Dimensions;
 import org.example.constant.DirectionsE;
 import org.example.entity.Coordinate;
+import org.example.entity.MazeCoordinate;
 import org.example.entity.Rect;
 import org.example.event.*;
 import org.example.event.manager.EventManager;
@@ -15,6 +16,7 @@ import org.example.event.movement.PacManMovementAttemptApprovedEvent;
 import org.example.event.movement.PacManMovementAttemptDeniedEvent;
 import org.example.event.movement.PacManMovementAttemptEvent;
 import org.example.event.movement.PacManMovementRequestEvent;
+import org.example.util.CoordinateUtil;
 import org.example.util.pacman.PacManGraphicsUtil;
 import org.example.util.pacman.PixelStrideTracker;
 import org.example.util.pacman.TurnBuffer;
@@ -169,5 +171,11 @@ public class PacMan implements Sprite, Subscriber {
             default:
                 throw new UnsupportedOperationException();
         }
+    }
+
+
+
+    public MazeCoordinate getCurrMazeCord() {
+        return CoordinateUtil.toMazeCoordinate(new Coordinate(canvasRow, canvasCol), direction);
     }
 }

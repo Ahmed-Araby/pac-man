@@ -30,6 +30,9 @@ public class Dimensions {
     public static double PAC_MAN_DOWN_OPEN_MOUSE_START_ANGLE_IN_DEGREES = 315;
 
 
+    // ghosts
+    // blinky
+    public static double BLINKY_STRIDE_PIXELS = CANVAS_CELL_SIZE_PIXELS;
     // sugar
     public static double SUGAR_CELL_SIZE_PIXELS = 0.15 * CANVAS_CELL_SIZE_PIXELS;
     public static double SUPER_SUGAR_DIAMETER_PIXELS = 0.6 * CANVAS_CELL_SIZE_PIXELS;

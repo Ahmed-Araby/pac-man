@@ -1,6 +1,5 @@
 package org.example.util;
 import org.example.constant.SpriteE;
-import org.example.entity.Coordinate;
 import org.example.entity.MazeCoordinate;
 
 import java.util.ArrayList;

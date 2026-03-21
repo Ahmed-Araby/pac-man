@@ -21,6 +21,7 @@ import org.example.sprite.Maze;
 import org.example.sprite.PacMan;
 import org.example.entity.Coordinate;
 import org.example.sprite.Sugar;
+import org.example.sprite.ghost.Blinky;
 import org.example.util.debug.DebugUtil;
 
 public class GamePlayGameScene implements GameScene {
@@ -28,6 +29,8 @@ public class GamePlayGameScene implements GameScene {
     final PacMan pacMan;
     final Maze maze;
     final Sugar sugar;
+    // ghosts
+    private final Blinky blinky;
 
     // javaFX
     final Pane pane;
@@ -58,6 +61,8 @@ public class GamePlayGameScene implements GameScene {
         final Coordinate emptyCellPos = maze.getEmptyMazePosition();
         pacMan = new PacMan(emptyCellPos.getCol(), emptyCellPos.getRow(), eventManager, syncEventManager);
         sugar = new Sugar(maze.getGameMaze());
+        // ghosts
+        blinky = new Blinky(pacMan, maze);
 
         // collision detection
         pacManToWallCollisionDetection = new PacManToWallCollisionDetection(maze.getGameMaze(), syncEventManager);
@@ -124,5 +129,6 @@ public class GamePlayGameScene implements GameScene {
         }
 
         pacMan.render(canvas);
+        blinky.render(canvas);
     }
 }

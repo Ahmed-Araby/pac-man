@@ -6,7 +6,6 @@ import org.example.constant.SpriteE;
 import org.example.entity.Coordinate;
 import org.example.entity.MazeCoordinate;
 import org.example.entity.Rect;
-import org.example.event.manager.EventManager;
 import org.example.event.Event;
 import org.example.event.manager.SyncEventManager;
 import org.example.event.movement.PacManMovementAttemptApprovedEvent;
@@ -14,7 +13,6 @@ import org.example.event.movement.PacManMovementAttemptDeniedEvent;
 import org.example.event.movement.PacManMovementAttemptEvent;
 import org.example.event.Subscriber;
 import org.example.util.CoordinateUtil;
-import org.example.util.MazeCanvasCoordinateMapping;
 import org.example.util.RectUtils;
 
 import java.util.List;
