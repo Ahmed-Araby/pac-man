@@ -1,5 +1,7 @@
 package org.example.util;
 
+import org.example.constant.Dimensions;
+import org.example.constant.DirectionsE;
 import org.example.entity.MazeCoordinate;
 
 import java.util.ArrayList;
@@ -16,7 +18,7 @@ public class CoordinateUtil {
         for(int i=0; i<4; i++) {
             nRow = cord.getRow() + dRow[i];
             nCol = cord.getCol() + dCol[i];
-            if(nRow == -1 || nCol == -1) {
+            if(nRow == -1 || nCol == -1 || nRow == Dimensions.MAZE_HEIGHT || nCol == Dimensions.MAZE_WIDTH) {
                 continue;
             }
             ninetyDegMoves.add(new MazeCoordinate(nRow, nCol));
