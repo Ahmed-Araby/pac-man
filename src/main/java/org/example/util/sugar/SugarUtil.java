@@ -6,7 +6,6 @@ import org.example.constant.SpriteE;
 import org.example.entity.Coordinate;
 import org.example.entity.MazeCoordinate;
 import org.example.util.CoordinateUtil;
-import org.example.util.MazeCanvasCoordinateMapping;
 
 public class SugarUtil {
 

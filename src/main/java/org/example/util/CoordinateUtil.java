@@ -66,4 +66,8 @@ public class CoordinateUtil {
         final int mazeCol = (int) Math.ceil(cord.getCol() / Dimensions.CANVAS_CELL_SIZE_PIXELS);
         return new MazeCoordinate(mazeRow, mazeCol);
     }
+
+    public static Coordinate mazeCordToCanvasCord(int mazeRow, int mazeCol) {
+        return new Coordinate(mazeRow * Dimensions.CANVAS_CELL_SIZE_PIXELS, mazeCol * Dimensions.CANVAS_CELL_SIZE_PIXELS);
+    }
 }
