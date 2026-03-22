@@ -131,4 +131,9 @@ public class GamePlayGameScene implements GameScene {
         pacMan.render(canvas);
         blinky.render(canvas);
     }
+
+    @Override
+    public void update() {
+        blinky.move(null);
+    }
 }

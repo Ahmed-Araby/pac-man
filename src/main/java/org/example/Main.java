@@ -27,6 +27,7 @@ public class Main extends Application
             @Override
             public void handle(long l) {
                 // clear the canvas
+                gamePlayGameScene.update();
                 gamePlayGameScene.render();
             }
         };

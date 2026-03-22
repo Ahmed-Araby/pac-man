@@ -43,6 +43,16 @@ public class Blinky implements Sprite{
     @Override
     public void render(Canvas canvas) {
         System.out.println("blinky: row = " + canvasRow + " , col = " + canvasCol + " , Dir = " + directionsE);
+        canvas.getGraphicsContext2D().drawImage(blinky, canvasCol, canvasRow);
+    }
+
+    @Override
+    public void move(Event event) {
+        final Coordinate ghostCurrCanvasCord = new Coordinate(canvasRow, canvasCol);
+        final MazeCoordinate ghostCurrMazeCord = CoordinateUtil.toMazeCoordinate(ghostCurrCanvasCord, directionsE);
+        final MazeCoordinate ghostNextMazeCord = chaseMode.nextPosition(ghostCurrMazeCord, pacMan.getCurrMazeCord(), maze.getGameMaze());
+        directionsE = chaseMode.nextMoveDirection(ghostCurrMazeCord, ghostNextMazeCord);
+
         switch (directionsE) {
             case RIGHT:
                 canvasCol = canvasCol + Dimensions.BLINKY_STRIDE_PIXELS / Configs.FRAMES_PER_SEC_FOR_GHOST_BLINKY_STRIDE;
@@ -57,14 +67,5 @@ public class Blinky implements Sprite{
                 canvasRow = canvasRow + Dimensions.BLINKY_STRIDE_PIXELS / Configs.FRAMES_PER_SEC_FOR_GHOST_BLINKY_STRIDE;
                 break;
         }
-        canvas.getGraphicsContext2D().drawImage(blinky, canvasCol, canvasRow);
-    }
-
-    @Override
-    public void move(Event event) {
-        final Coordinate ghostCurrCanvasCord = new Coordinate(canvasRow, canvasCol);
-        final MazeCoordinate ghostCurrMazeCord = CoordinateUtil.toMazeCoordinate(ghostCurrCanvasCord, directionsE);
-        final MazeCoordinate ghostNextMazeCord = chaseMode.nextPosition(ghostCurrMazeCord, pacMan.getCurrMazeCord(), maze.getGameMaze());
-        directionsE = chaseMode.nextMoveDirection(ghostCurrMazeCord, ghostNextMazeCord);
     }
 }
