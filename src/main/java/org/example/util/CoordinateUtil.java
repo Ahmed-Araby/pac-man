@@ -17,15 +17,15 @@ public class CoordinateUtil {
 
     public static List<MazeCoordinate> getIntersectingMazeCells(CanvasCoordinate cord) {
         final Rect canvasRect = new Rect(cord, DimensionsC.MAZE_CELL_SIZE_PIXELS, DimensionsC.MAZE_CELL_SIZE_PIXELS);
-        return RectUtils
-                .get4Corners(canvasRect)
+        final List<CanvasCoordinate> rectCorners = RectUtils.get4Corners(canvasRect);
+        return rectCorners
                 .stream()
                 .map(corner -> RectUtils.getTopLeftCornerOfRectContainingPoint(DimensionsC.MAZE_CELL_SIZE_PIXELS, DimensionsC.MAZE_CELL_SIZE_PIXELS, corner))
-                .map(topLeftCorner -> CoordinateUtil.toMazeCoordinate(topLeftCorner, DirectionsE.STILL))
-                .collect(Collectors.toSet()) // remove duplicates
-                .stream()
+                .map(topLeftCorner -> toMazeCoordinate(topLeftCorner, DirectionsE.STILL))
+                .distinct()
                 .toList();
     }
+    
     public static List<MazeCoordinate> get90DegMoves(MazeCoordinate cord) {
         final List<MazeCoordinate> ninetyDegMoves = new ArrayList<>();
         int nRow, nCol;
