@@ -1,6 +1,6 @@
 package org.example.constant;
 
-public class Dimensions {
+public class DimensionsC {
 
     // measurements are in pixels, otherwise it will be explicitly specified.
     // canvas
@@ -33,7 +33,7 @@ public class Dimensions {
     // ghosts
     // blinky
     public static double BLINKY_STRIDE_PIXELS = MAZE_CELL_SIZE_PIXELS;
-    
+
     // sugar
     public static double SUGAR_CELL_SIZE_PIXELS = 0.15 * MAZE_CELL_SIZE_PIXELS;
     public static double SUPER_SUGAR_DIAMETER_PIXELS = 0.6 * MAZE_CELL_SIZE_PIXELS;

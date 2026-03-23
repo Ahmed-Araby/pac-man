@@ -1,6 +1,6 @@
 package org.example.util;
 
-import org.example.constant.Dimensions;
+import org.example.constant.DimensionsC;
 import org.example.constant.DirectionsE;
 import org.example.entity.CanvasCoordinate;
 import org.example.entity.MazeCoordinate;
@@ -17,9 +17,9 @@ public class CoordinateUtil {
 
     public static List<MazeCoordinate> getIntersectingMazeCells(CanvasCoordinate cord) {
         return RectUtils
-                .get4Corners(new Rect(cord, Dimensions.MAZE_CELL_SIZE_PIXELS, Dimensions.MAZE_CELL_SIZE_PIXELS))
+                .get4Corners(new Rect(cord, DimensionsC.MAZE_CELL_SIZE_PIXELS, DimensionsC.MAZE_CELL_SIZE_PIXELS))
                 .stream()
-                .map(corner -> RectUtils.getTopLeftCornerOfRectContainingPoint(Dimensions.MAZE_CELL_SIZE_PIXELS, Dimensions.MAZE_CELL_SIZE_PIXELS, corner))
+                .map(corner -> RectUtils.getTopLeftCornerOfRectContainingPoint(DimensionsC.MAZE_CELL_SIZE_PIXELS, DimensionsC.MAZE_CELL_SIZE_PIXELS, corner))
                 .map(topLeftCorner -> CoordinateUtil.toMazeCoordinate(topLeftCorner, DirectionsE.STILL))
                 .collect(Collectors.toSet()) // remove duplicates
                 .stream()
@@ -31,7 +31,7 @@ public class CoordinateUtil {
         for(int i=0; i<4; i++) {
             nRow = cord.getRow() + dRow[i];
             nCol = cord.getCol() + dCol[i];
-            if(nRow == -1 || nCol == -1 || nRow == Dimensions.MAZE_HEIGHT || nCol == Dimensions.MAZE_WIDTH) {
+            if(nRow == -1 || nCol == -1 || nRow == DimensionsC.MAZE_HEIGHT || nCol == DimensionsC.MAZE_WIDTH) {
                 continue;
             }
             ninetyDegMoves.add(new MazeCoordinate(nRow, nCol));
@@ -69,18 +69,18 @@ public class CoordinateUtil {
     }
 
     private static MazeCoordinate toMazeCoordinateFlooring(CanvasCoordinate cord) {
-        final int mazeRow = (int) Math.floor(cord.getRow() / Dimensions.MAZE_CELL_SIZE_PIXELS);
-        final int mazeCol = (int) Math.floor(cord.getCol() / Dimensions.MAZE_CELL_SIZE_PIXELS);
+        final int mazeRow = (int) Math.floor(cord.getRow() / DimensionsC.MAZE_CELL_SIZE_PIXELS);
+        final int mazeCol = (int) Math.floor(cord.getCol() / DimensionsC.MAZE_CELL_SIZE_PIXELS);
         return new MazeCoordinate(mazeRow, mazeCol);
     }
 
     private static MazeCoordinate toMazeCoordinateCeiling(CanvasCoordinate cord) {
-        final int mazeRow = (int) Math.ceil(cord.getRow() / Dimensions.MAZE_CELL_SIZE_PIXELS);
-        final int mazeCol = (int) Math.ceil(cord.getCol() / Dimensions.MAZE_CELL_SIZE_PIXELS);
+        final int mazeRow = (int) Math.ceil(cord.getRow() / DimensionsC.MAZE_CELL_SIZE_PIXELS);
+        final int mazeCol = (int) Math.ceil(cord.getCol() / DimensionsC.MAZE_CELL_SIZE_PIXELS);
         return new MazeCoordinate(mazeRow, mazeCol);
     }
 
     public static CanvasCoordinate mazeCordToCanvasCord(int mazeRow, int mazeCol) {
-        return new CanvasCoordinate(mazeRow * Dimensions.MAZE_CELL_SIZE_PIXELS, mazeCol * Dimensions.MAZE_CELL_SIZE_PIXELS);
+        return new CanvasCoordinate(mazeRow * DimensionsC.MAZE_CELL_SIZE_PIXELS, mazeCol * DimensionsC.MAZE_CELL_SIZE_PIXELS);
     }
 }

@@ -1,6 +1,6 @@
 package org.example.collision;
 
-import org.example.constant.Dimensions;
+import org.example.constant.DimensionsC;
 import org.example.constant.DirectionsE;
 import org.example.constant.SpriteE;
 import org.example.entity.CanvasCoordinate;
@@ -32,7 +32,7 @@ public class PacManToWallCollisionDetection implements Subscriber {
             return;
         }
 
-        final Rect pacManCanvasRect = new Rect(event.getRequestedPacManCanvasRectTopLeftCorner(), Dimensions.PAC_MAN_DIAMETER_PIXELS, Dimensions.PAC_MAN_DIAMETER_PIXELS);
+        final Rect pacManCanvasRect = new Rect(event.getRequestedPacManCanvasRectTopLeftCorner(), DimensionsC.PAC_MAN_DIAMETER_PIXELS, DimensionsC.PAC_MAN_DIAMETER_PIXELS);
         final List<CanvasCoordinate> pacManRect4Corners = RectUtils.get4Corners(pacManCanvasRect);
         final boolean isCollidingWithWall = pacManRect4Corners.stream()
                 .map(this::toTopLeftCornerOfRectContainingPoint)
@@ -45,12 +45,12 @@ public class PacManToWallCollisionDetection implements Subscriber {
     }
 
     private CanvasCoordinate toTopLeftCornerOfRectContainingPoint(CanvasCoordinate point) {
-        return RectUtils.getTopLeftCornerOfRectContainingPoint(Dimensions.MAZE_CELL_SIZE_PIXELS, Dimensions.MAZE_CELL_SIZE_PIXELS, point);
+        return RectUtils.getTopLeftCornerOfRectContainingPoint(DimensionsC.MAZE_CELL_SIZE_PIXELS, DimensionsC.MAZE_CELL_SIZE_PIXELS, point);
     }
 
     private boolean isPacManGoingOutOfCanvas(CanvasCoordinate pacManCanvasTopLeftCorner) {
-        return pacManCanvasTopLeftCorner.getRow() < 0 || pacManCanvasTopLeftCorner.getRow() > Dimensions.CANVAS_HEIGHT_PIXELS - Dimensions.PAC_MAN_DIAMETER_PIXELS ||
-                pacManCanvasTopLeftCorner.getCol() < 0 || pacManCanvasTopLeftCorner.getCol() > Dimensions.CANVAS_WIDTH_PIXELS - Dimensions.PAC_MAN_DIAMETER_PIXELS;
+        return pacManCanvasTopLeftCorner.getRow() < 0 || pacManCanvasTopLeftCorner.getRow() > DimensionsC.CANVAS_HEIGHT_PIXELS - DimensionsC.PAC_MAN_DIAMETER_PIXELS ||
+                pacManCanvasTopLeftCorner.getCol() < 0 || pacManCanvasTopLeftCorner.getCol() > DimensionsC.CANVAS_WIDTH_PIXELS - DimensionsC.PAC_MAN_DIAMETER_PIXELS;
     }
 
     private boolean isPacManCollidingWithAWall(CanvasCoordinate wallCanvasTopLeftCorner) {

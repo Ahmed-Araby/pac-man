@@ -1,6 +1,6 @@
 package org.example.collision;
 
-import org.example.constant.Dimensions;
+import org.example.constant.DimensionsC;
 import org.example.constant.DirectionsE;
 import org.example.constant.SpriteE;
 import org.example.entity.CanvasCoordinate;
@@ -22,7 +22,7 @@ public class GhostToWallCollisionDetection {
 
     public boolean checkCollision(GhostMovementAttemptEvent event) {
         final CanvasCoordinate nextGhostCord = GhostUtil.move(event);
-        final Rect ghostCanvasRect = new Rect(nextGhostCord, Dimensions.PAC_MAN_DIAMETER_PIXELS, Dimensions.PAC_MAN_DIAMETER_PIXELS);
+        final Rect ghostCanvasRect = new Rect(nextGhostCord, DimensionsC.PAC_MAN_DIAMETER_PIXELS, DimensionsC.PAC_MAN_DIAMETER_PIXELS);
         final List<CanvasCoordinate> ghostRect4Corners = RectUtils.get4Corners(ghostCanvasRect);
         final boolean isCollidingWithWall = ghostRect4Corners.stream()
                 .map(this::toTopLeftCornerOfRectContainingPoint)
@@ -31,7 +31,7 @@ public class GhostToWallCollisionDetection {
     }
 
     private CanvasCoordinate toTopLeftCornerOfRectContainingPoint(CanvasCoordinate point) {
-        return RectUtils.getTopLeftCornerOfRectContainingPoint(Dimensions.MAZE_CELL_SIZE_PIXELS, Dimensions.MAZE_CELL_SIZE_PIXELS, point);
+        return RectUtils.getTopLeftCornerOfRectContainingPoint(DimensionsC.MAZE_CELL_SIZE_PIXELS, DimensionsC.MAZE_CELL_SIZE_PIXELS, point);
     }
 
 

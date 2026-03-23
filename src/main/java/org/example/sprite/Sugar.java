@@ -47,16 +47,16 @@ public class Sugar implements Sprite, Subscriber {
                 if (maze[row][col] == SpriteE.SUGAR) {
                     final CanvasCoordinate cellTopLeftCornerCanvas = CoordinateUtil.mazeCordToCanvasCord(row, col);
                     final CanvasCoordinate sugarCellTopLeftCornerCanvas = SugarUtil.getSugarTopLeftCornerCanvas(cellTopLeftCornerCanvas);
-                    con.fillRect(sugarCellTopLeftCornerCanvas.getCol(), sugarCellTopLeftCornerCanvas.getRow(), Dimensions.SUGAR_CELL_SIZE_PIXELS, Dimensions.SUGAR_CELL_SIZE_PIXELS);
+                    con.fillRect(sugarCellTopLeftCornerCanvas.getCol(), sugarCellTopLeftCornerCanvas.getRow(), DimensionsC.SUGAR_CELL_SIZE_PIXELS, DimensionsC.SUGAR_CELL_SIZE_PIXELS);
                     if(GameConfig.isDebugModeOn()) {
-                        DebugUtil.drawVirtualRect(con, sugarCellTopLeftCornerCanvas.getCol(), sugarCellTopLeftCornerCanvas.getRow(), Dimensions.SUGAR_CELL_SIZE_PIXELS, Dimensions.SUGAR_CELL_SIZE_PIXELS, Color.CYAN);
+                        DebugUtil.drawVirtualRect(con, sugarCellTopLeftCornerCanvas.getCol(), sugarCellTopLeftCornerCanvas.getRow(), DimensionsC.SUGAR_CELL_SIZE_PIXELS, DimensionsC.SUGAR_CELL_SIZE_PIXELS, Color.CYAN);
                     }
                 } else if (maze[row][col] == SpriteE.SUPER_SUGAR) {
                     final CanvasCoordinate cellTopLeftCornerCanvas = CoordinateUtil.mazeCordToCanvasCord(row, col);
                     final CanvasCoordinate sugarCellTopLeftCornerCanvas = SugarUtil.getSuperSugarTopLeftCornerCanvas(cellTopLeftCornerCanvas);
-                    con.fillOval(sugarCellTopLeftCornerCanvas.getCol(), sugarCellTopLeftCornerCanvas.getRow(), Dimensions.SUPER_SUGAR_DIAMETER_PIXELS, Dimensions.SUPER_SUGAR_DIAMETER_PIXELS);
+                    con.fillOval(sugarCellTopLeftCornerCanvas.getCol(), sugarCellTopLeftCornerCanvas.getRow(), DimensionsC.SUPER_SUGAR_DIAMETER_PIXELS, DimensionsC.SUPER_SUGAR_DIAMETER_PIXELS);
                     if(GameConfig.isDebugModeOn()) {
-                        DebugUtil.drawVirtualRect(con, sugarCellTopLeftCornerCanvas.getCol(), sugarCellTopLeftCornerCanvas.getRow(), Dimensions.SUPER_SUGAR_DIAMETER_PIXELS, Dimensions.SUPER_SUGAR_DIAMETER_PIXELS, Color.CYAN);
+                        DebugUtil.drawVirtualRect(con, sugarCellTopLeftCornerCanvas.getCol(), sugarCellTopLeftCornerCanvas.getRow(), DimensionsC.SUPER_SUGAR_DIAMETER_PIXELS, DimensionsC.SUPER_SUGAR_DIAMETER_PIXELS, Color.CYAN);
                     }
                 }
             }

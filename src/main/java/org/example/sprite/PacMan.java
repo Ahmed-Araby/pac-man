@@ -4,7 +4,7 @@ import javafx.scene.Scene;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import org.example.constant.Configs;
-import org.example.constant.Dimensions;
+import org.example.constant.DimensionsC;
 import org.example.constant.DirectionsE;
 import org.example.entity.CanvasCoordinate;
 import org.example.entity.MazeCoordinate;
@@ -44,8 +44,8 @@ public class PacMan implements Sprite, Subscriber {
         this.direction = DirectionsE.STILL;
 
         this.turnBuffer = new TurnBuffer();
-        this.closedMousePixelStrideTracker = new PixelStrideTracker(Dimensions.PAC_MAN_CLOSED_MOUSE_DISTANCE_PIXELS,
-                Dimensions.PAC_MAN_CLOSED_MOUSE_DISTANCE_PIXELS + Dimensions.PAC_MAN_OPEN_MOUSE_DISTANCE_PIXELS // just the same as Dimensions.PAC_MAN_COMPLETE_MOUSE_MOVEMENT_DISTANCE_PIXELS
+        this.closedMousePixelStrideTracker = new PixelStrideTracker(DimensionsC.PAC_MAN_CLOSED_MOUSE_DISTANCE_PIXELS,
+                DimensionsC.PAC_MAN_CLOSED_MOUSE_DISTANCE_PIXELS + DimensionsC.PAC_MAN_OPEN_MOUSE_DISTANCE_PIXELS // just the same as DimensionsC.PAC_MAN_COMPLETE_MOUSE_MOVEMENT_DISTANCE_PIXELS
         );
 
         this.eventManager = eventManager;
@@ -81,7 +81,7 @@ public class PacMan implements Sprite, Subscriber {
         }
 
         // close pac man mouse
-        closedMousePixelStrideTracker.stride(Dimensions.PAC_MAN_COMPLETE_MOUSE_MOVEMENT_DISTANCE_PIXELS / Configs.FRAMES_PER_SEC_FOR_PAC_MAN_MOUSE_OPEN_CLOSED_ANIMATION);
+        closedMousePixelStrideTracker.stride(DimensionsC.PAC_MAN_COMPLETE_MOUSE_MOVEMENT_DISTANCE_PIXELS / Configs.FRAMES_PER_SEC_FOR_PAC_MAN_MOUSE_OPEN_CLOSED_ANIMATION);
         if (!closedMousePixelStrideTracker.isDesiredPixelStrideAchieved()) {
             PacManGraphicsUtil.removePacMan(con, canvasCol, canvasRow);
             PacManGraphicsUtil.drawClosedMousePacMan(con, canvasCol, canvasRow);
@@ -104,19 +104,19 @@ public class PacMan implements Sprite, Subscriber {
         double newCanvasCol, newCanvasRow;
         switch (event.getDirectionsE()) {
             case RIGHT:
-                newCanvasCol = canvasCol + Dimensions.PAC_MAN_STRIDE_PIXELS / Configs.FRAMES_PER_SEC_FOR_PAC_MAN_STRIDE;
+                newCanvasCol = canvasCol + DimensionsC.PAC_MAN_STRIDE_PIXELS / Configs.FRAMES_PER_SEC_FOR_PAC_MAN_STRIDE;
                 publishPacManMovementAttemptEvent(canvasRow, newCanvasCol, DirectionsE.RIGHT, event.getSource());
                 break;
             case UP:
-                newCanvasRow = canvasRow - Dimensions.PAC_MAN_STRIDE_PIXELS / Configs.FRAMES_PER_SEC_FOR_PAC_MAN_STRIDE;
+                newCanvasRow = canvasRow - DimensionsC.PAC_MAN_STRIDE_PIXELS / Configs.FRAMES_PER_SEC_FOR_PAC_MAN_STRIDE;
                 publishPacManMovementAttemptEvent(newCanvasRow, canvasCol, DirectionsE.UP, event.getSource());
                 break;
             case LEFT:
-                newCanvasCol = canvasCol - Dimensions.PAC_MAN_STRIDE_PIXELS / Configs.FRAMES_PER_SEC_FOR_PAC_MAN_STRIDE;
+                newCanvasCol = canvasCol - DimensionsC.PAC_MAN_STRIDE_PIXELS / Configs.FRAMES_PER_SEC_FOR_PAC_MAN_STRIDE;
                 publishPacManMovementAttemptEvent(canvasRow, newCanvasCol, DirectionsE.LEFT, event.getSource());
                 break;
             case DOWN:
-                newCanvasRow = canvasRow + Dimensions.PAC_MAN_STRIDE_PIXELS / Configs.FRAMES_PER_SEC_FOR_PAC_MAN_STRIDE;
+                newCanvasRow = canvasRow + DimensionsC.PAC_MAN_STRIDE_PIXELS / Configs.FRAMES_PER_SEC_FOR_PAC_MAN_STRIDE;
                 publishPacManMovementAttemptEvent(newCanvasRow, canvasCol, DirectionsE.DOWN, event.getSource());
                 break;
             case STILL:
@@ -138,7 +138,7 @@ public class PacMan implements Sprite, Subscriber {
             this.turnBuffer.discardTurnBuffer();
         } else if (event.getMovementAttemptSource() instanceof PacMan) {
             // automated straight line movement
-            final Rect pacManCanvasRect = new Rect(event.getRequestedPacManCanvasRectTopLeftCorner(), Dimensions.MAZE_CELL_SIZE_PIXELS, Dimensions.MAZE_CELL_SIZE_PIXELS);
+            final Rect pacManCanvasRect = new Rect(event.getRequestedPacManCanvasRectTopLeftCorner(), DimensionsC.MAZE_CELL_SIZE_PIXELS, DimensionsC.MAZE_CELL_SIZE_PIXELS);
             if (turnBuffer.isThereBufferedTurn(pacManCanvasRect, event.getRequestedDirection())) {
                 attemptMovement(turnBuffer.getBufferedPacManAutomatedMovementRequest());
             }
@@ -152,7 +152,7 @@ public class PacMan implements Sprite, Subscriber {
         if (event.getMovementAttemptSource() instanceof Scene) {
             // user input
             if(turnBuffer.isBlockedTurn(direction, event.getRequestedDirection())) {
-                final Rect pacManCanvasRect = new Rect(new CanvasCoordinate(canvasRow, canvasCol), Dimensions.MAZE_CELL_SIZE_PIXELS, Dimensions.MAZE_CELL_SIZE_PIXELS);
+                final Rect pacManCanvasRect = new Rect(new CanvasCoordinate(canvasRow, canvasCol), DimensionsC.MAZE_CELL_SIZE_PIXELS, DimensionsC.MAZE_CELL_SIZE_PIXELS);
                 turnBuffer.bufferTurn(event.getRequestedDirection(), pacManCanvasRect);
             }
         }

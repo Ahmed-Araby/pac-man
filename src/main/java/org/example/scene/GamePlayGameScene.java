@@ -11,7 +11,7 @@ import org.example.collision.PacManToSuperSugarCollisionDetection;
 import org.example.collision.PacManToWallCollisionDetection;
 import org.example.config.GameConfig;
 import org.example.constant.ColorConstants;
-import org.example.constant.Dimensions;
+import org.example.constant.DimensionsC;
 import org.example.event.manager.EventManager;
 import org.example.event.EventType;
 import org.example.event.manager.SyncEventManager;
@@ -73,7 +73,7 @@ public class GamePlayGameScene implements GameScene {
         pacManToSuperSugarCollisionDetection = new PacManToSuperSugarCollisionDetection(maze.getGameMaze(), eventManager);
 
         // javaFX setup
-        canvas = new Canvas(Dimensions.CANVAS_WIDTH_PIXELS, Dimensions.CANVAS_HEIGHT_PIXELS);
+        canvas = new Canvas(DimensionsC.CANVAS_WIDTH_PIXELS, DimensionsC.CANVAS_HEIGHT_PIXELS);
         pane = new Pane(canvas);
         scene = new Scene(pane);
         scene.setOnKeyPressed((event) -> {
@@ -126,14 +126,14 @@ public class GamePlayGameScene implements GameScene {
     public void render() {
         final GraphicsContext context = canvas.getGraphicsContext2D();
         context.setFill(ColorConstants.CANVAS_COLOR);
-        context.fillRect(0, 0, Dimensions.CANVAS_WIDTH_PIXELS, Dimensions.CANVAS_HEIGHT_PIXELS);
+        context.fillRect(0, 0, DimensionsC.CANVAS_WIDTH_PIXELS, DimensionsC.CANVAS_HEIGHT_PIXELS);
 
 
         maze.render(canvas);
         sugar.render(canvas);
 
         if(GameConfig.isDebugModeOn()) {
-            DebugUtil.drawDummyPacman(context, 0, 0, Dimensions.PAC_MAN_DIAMETER_PIXELS, Dimensions.PAC_MAN_DIAMETER_PIXELS, Color.GRAY);
+            DebugUtil.drawDummyPacman(context, 0, 0, DimensionsC.PAC_MAN_DIAMETER_PIXELS, DimensionsC.PAC_MAN_DIAMETER_PIXELS, Color.GRAY);
         }
 
         pacMan.render(canvas);
