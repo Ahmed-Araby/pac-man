@@ -7,5 +7,5 @@ import org.example.entity.MazeCell;
 
 public interface GhostMode {
 
-    DirectionsE nextMoveDirection(CanvasCoordinate ghostCord, MazeCell pacCord, SpriteE[][] maze);
+    DirectionsE nextMoveDirection(CanvasCoordinate ghostCord, CanvasCoordinate pacCord, SpriteE[][] maze);
 }

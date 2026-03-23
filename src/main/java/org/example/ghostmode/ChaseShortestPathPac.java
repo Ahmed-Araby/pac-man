@@ -20,7 +20,7 @@ public class ChaseShortestPathPac implements GhostMode {
 
     private final GhostToWallCollisionDetection ghostToWallCollisionDetection;
 
-    public DirectionsE nextMoveDirection(CanvasCoordinate ghostCord, MazeCell pacCord, SpriteE[][] maze) {
+    public DirectionsE nextMoveDirection(CanvasCoordinate ghostCord, CanvasCoordinate pacCord, SpriteE[][] maze) {
         final List<MazeMove> possibleMoves = nextPositions(ghostCord, pacCord, maze);
         System.out.println("possible Moves = " + possibleMoves);
         return possibleMoves
@@ -37,27 +37,29 @@ public class ChaseShortestPathPac implements GhostMode {
                 .orElse(DirectionsE.STILL);
     }
 
-    private List<MazeMove> nextPositions(CanvasCoordinate ghostCord, MazeCell pacCord, SpriteE[][] maze) {
+    private List<MazeMove> nextPositions(CanvasCoordinate ghostCord, CanvasCoordinate pacCord, SpriteE[][] maze) {
         // this work can be parallelized
-        return CanvasUtil.getIntersectingMazeCells(ghostCord)
+        final MazeCell pacCell = CanvasUtil.toMazeCoordinate(pacCord, DirectionsE.STILL);
+        final List<MazeCell> ghostInterestingMazeCells = CanvasUtil.getIntersectingMazeCells(ghostCord);
+        return ghostInterestingMazeCells
                 .stream()
-                .map(cord -> nextPosition(cord, pacCord, maze))
+                .map(interestingCell -> nextPosition(interestingCell, pacCell, maze))
                 .sorted()
                 .toList();
     }
 
-    private MazeMove nextPosition(MazeCell sourceCord, MazeCell pacCord, SpriteE[][] maze) {
-        if(sourceCord.equals(pacCord)) {
-            return new MazeMove(sourceCord, Integer.MAX_VALUE);
+    private MazeMove nextPosition(MazeCell sourceCell, MazeCell pacCell, SpriteE[][] maze) {
+        if(sourceCell.equals(pacCell)) {
+            return new MazeMove(sourceCell, Integer.MAX_VALUE);
         }
 
-        final int[][] dist = BfsUtil.getDistMat(sourceCord, pacCord, maze);
-        final List<MazeCell> path = BfsUtil.constructPath(sourceCord, pacCord, dist);
+        final int[][] dist = BfsUtil.getDistMat(sourceCell, pacCell, maze);
+        final List<MazeCell> path = BfsUtil.constructPath(sourceCell, pacCell, dist);
 
         if(path.size() < 2) {
-            return new MazeMove(sourceCord, Integer.MAX_VALUE);
+            return new MazeMove(sourceCell, Integer.MAX_VALUE);
         } else {
-            return new MazeMove(path.get(1), dist[pacCord.getRow()][pacCord.getCol()]);
+            return new MazeMove(path.get(1), dist[pacCell.getRow()][pacCell.getCol()]);
         }
     }
 }

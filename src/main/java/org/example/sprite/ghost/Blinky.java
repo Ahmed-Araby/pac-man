@@ -45,7 +45,7 @@ public class Blinky implements Sprite{
     @Override
     public void move(Event event) {
         final CanvasCoordinate ghostCurrCord = new CanvasCoordinate(canvasRow, canvasCol);
-        directionsE = chaseMode.nextMoveDirection(ghostCurrCord, pacMan.getCurrMazeCord(), maze.getGameMaze());
+        directionsE = chaseMode.nextMoveDirection(ghostCurrCord, pacMan.getCurrCanvasCord(), maze.getGameMaze());
         final CanvasCoordinate ghostNewCord = GhostUtil.move(ghostCurrCord, directionsE);
         canvasRow = ghostNewCord.getRow();
         canvasCol = ghostNewCord.getCol();

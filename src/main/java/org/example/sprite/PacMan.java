@@ -175,7 +175,7 @@ public class PacMan implements Sprite, Subscriber {
 
 
 
-    public MazeCell getCurrMazeCord() {
-        return CanvasUtil.toMazeCoordinate(new CanvasCoordinate(canvasRow, canvasCol), direction);
+    public CanvasCoordinate getCurrCanvasCord() {
+        return new CanvasCoordinate(canvasRow, canvasCol);
     }
 }
