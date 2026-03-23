@@ -22,6 +22,9 @@ public class ChaseShortestPathPac implements GhostMode {
     private final GhostToWallCollisionDetection ghostToWallCollisionDetection;
 
     public DirectionsE nextMoveDirection(CanvasCoordinate ghostCord, CanvasCoordinate pacCord, SpriteE[][] maze) {
+        if(ghostCord.equals(pacCord)) {
+            return DirectionsE.STILL;
+        }
         final List<MazeMove> possibleMoves = getCandidateMoves(ghostCord, pacCord, maze);
         System.out.println("possible Moves = " + possibleMoves);
         return possibleMoves
