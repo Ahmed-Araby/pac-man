@@ -3,7 +3,7 @@ package org.example.collision;
 import org.example.constant.DimensionsC;
 import org.example.constant.SpriteE;
 import org.example.entity.CanvasCoordinate;
-import org.example.entity.Rect;
+import org.example.entity.CanvasRect;
 import org.example.event.*;
 import org.example.event.Event;
 import org.example.event.EventType;
@@ -26,8 +26,8 @@ public class PacManToSugarCollisionDetection implements Subscriber {
     }
 
     public boolean isEatingSugar(CanvasCoordinate pacManCanvasTopLeftCorner) {
-        final Rect pacManCanvasRect = new Rect(pacManCanvasTopLeftCorner, DimensionsC.PAC_MAN_DIAMETER_PIXELS, DimensionsC.PAC_MAN_DIAMETER_PIXELS);
-        final List<CanvasCoordinate> pacManRect4Corners = RectUtils.get4Corners(pacManCanvasRect);
+        final CanvasRect pacManCanvasCanvasRect = new CanvasRect(pacManCanvasTopLeftCorner, DimensionsC.PAC_MAN_DIAMETER_PIXELS, DimensionsC.PAC_MAN_DIAMETER_PIXELS);
+        final List<CanvasCoordinate> pacManRect4Corners = RectUtils.get4Corners(pacManCanvasCanvasRect);
         final List<CanvasCoordinate> canvasSugarToBeEaten = pacManRect4Corners.stream()
                 .map(this::toTopLeftCornerOfRectContainingPoint)
                 .filter(rectTopLeftCornerCanvas -> SugarUtil.isCanvasCellHasSugar(maze, rectTopLeftCornerCanvas))
@@ -47,9 +47,9 @@ public class PacManToSugarCollisionDetection implements Subscriber {
     }
 
     private boolean isPacManRectContainsSugarRect(CanvasCoordinate pacManCanvasRectTopLeftCorner, CanvasCoordinate sugarCanvasRectTopLeftCorner) {
-        final Rect pacManCanvasRect = new Rect(pacManCanvasRectTopLeftCorner, DimensionsC.PAC_MAN_DIAMETER_PIXELS, DimensionsC.PAC_MAN_DIAMETER_PIXELS);
-        final Rect sugarCanvasRect = new Rect(sugarCanvasRectTopLeftCorner, DimensionsC.SUGAR_CELL_SIZE_PIXELS, DimensionsC.SUGAR_CELL_SIZE_PIXELS);
-        return RectUtils.isRectContainsRect(pacManCanvasRect, sugarCanvasRect);
+        final CanvasRect pacManCanvasCanvasRect = new CanvasRect(pacManCanvasRectTopLeftCorner, DimensionsC.PAC_MAN_DIAMETER_PIXELS, DimensionsC.PAC_MAN_DIAMETER_PIXELS);
+        final CanvasRect sugarCanvasCanvasRect = new CanvasRect(sugarCanvasRectTopLeftCorner, DimensionsC.SUGAR_CELL_SIZE_PIXELS, DimensionsC.SUGAR_CELL_SIZE_PIXELS);
+        return RectUtils.isRectContainsRect(pacManCanvasCanvasRect, sugarCanvasCanvasRect);
     }
 
     @Override

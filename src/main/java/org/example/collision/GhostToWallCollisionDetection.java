@@ -5,7 +5,7 @@ import org.example.constant.DirectionsE;
 import org.example.constant.SpriteE;
 import org.example.entity.CanvasCoordinate;
 import org.example.entity.MazeCoordinate;
-import org.example.entity.Rect;
+import org.example.entity.CanvasRect;
 import org.example.event.ghost.GhostMovementAttemptEvent;
 import org.example.util.CanvasUtil;
 import org.example.util.GhostUtil;
@@ -22,8 +22,8 @@ public class GhostToWallCollisionDetection {
 
     public boolean checkCollision(GhostMovementAttemptEvent event) {
         final CanvasCoordinate nextGhostCord = GhostUtil.move(event);
-        final Rect ghostCanvasRect = new Rect(nextGhostCord, DimensionsC.PAC_MAN_DIAMETER_PIXELS, DimensionsC.PAC_MAN_DIAMETER_PIXELS);
-        final List<CanvasCoordinate> ghostRect4Corners = RectUtils.get4Corners(ghostCanvasRect);
+        final CanvasRect ghostCanvasCanvasRect = new CanvasRect(nextGhostCord, DimensionsC.PAC_MAN_DIAMETER_PIXELS, DimensionsC.PAC_MAN_DIAMETER_PIXELS);
+        final List<CanvasCoordinate> ghostRect4Corners = RectUtils.get4Corners(ghostCanvasCanvasRect);
         final boolean isCollidingWithWall = ghostRect4Corners.stream()
                 .map(this::toTopLeftCornerOfRectContainingPoint)
                 .anyMatch(this::isWall);

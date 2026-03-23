@@ -8,7 +8,7 @@ import org.example.constant.DimensionsC;
 import org.example.constant.DirectionsE;
 import org.example.entity.CanvasCoordinate;
 import org.example.entity.MazeCoordinate;
-import org.example.entity.Rect;
+import org.example.entity.CanvasRect;
 import org.example.event.*;
 import org.example.event.manager.EventManager;
 import org.example.event.manager.SyncEventManager;
@@ -138,8 +138,8 @@ public class PacMan implements Sprite, Subscriber {
             this.turnBuffer.discardTurnBuffer();
         } else if (event.getMovementAttemptSource() instanceof PacMan) {
             // automated straight line movement
-            final Rect pacManCanvasRect = new Rect(event.getRequestedPacManCanvasRectTopLeftCorner(), DimensionsC.MAZE_CELL_SIZE_PIXELS, DimensionsC.MAZE_CELL_SIZE_PIXELS);
-            if (turnBuffer.isThereBufferedTurn(pacManCanvasRect, event.getRequestedDirection())) {
+            final CanvasRect pacManCanvasCanvasRect = new CanvasRect(event.getRequestedPacManCanvasRectTopLeftCorner(), DimensionsC.MAZE_CELL_SIZE_PIXELS, DimensionsC.MAZE_CELL_SIZE_PIXELS);
+            if (turnBuffer.isThereBufferedTurn(pacManCanvasCanvasRect, event.getRequestedDirection())) {
                 attemptMovement(turnBuffer.getBufferedPacManAutomatedMovementRequest());
             }
         }
@@ -152,8 +152,8 @@ public class PacMan implements Sprite, Subscriber {
         if (event.getMovementAttemptSource() instanceof Scene) {
             // user input
             if(turnBuffer.isBlockedTurn(direction, event.getRequestedDirection())) {
-                final Rect pacManCanvasRect = new Rect(new CanvasCoordinate(canvasRow, canvasCol), DimensionsC.MAZE_CELL_SIZE_PIXELS, DimensionsC.MAZE_CELL_SIZE_PIXELS);
-                turnBuffer.bufferTurn(event.getRequestedDirection(), pacManCanvasRect);
+                final CanvasRect pacManCanvasCanvasRect = new CanvasRect(new CanvasCoordinate(canvasRow, canvasCol), DimensionsC.MAZE_CELL_SIZE_PIXELS, DimensionsC.MAZE_CELL_SIZE_PIXELS);
+                turnBuffer.bufferTurn(event.getRequestedDirection(), pacManCanvasCanvasRect);
             }
         }
         // do nothing for denied automated movements

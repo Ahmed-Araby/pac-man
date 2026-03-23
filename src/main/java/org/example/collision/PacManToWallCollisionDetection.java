@@ -5,7 +5,7 @@ import org.example.constant.DirectionsE;
 import org.example.constant.SpriteE;
 import org.example.entity.CanvasCoordinate;
 import org.example.entity.MazeCoordinate;
-import org.example.entity.Rect;
+import org.example.entity.CanvasRect;
 import org.example.event.Event;
 import org.example.event.manager.SyncEventManager;
 import org.example.event.movement.PacManMovementAttemptApprovedEvent;
@@ -32,8 +32,8 @@ public class PacManToWallCollisionDetection implements Subscriber {
             return;
         }
 
-        final Rect pacManCanvasRect = new Rect(event.getRequestedPacManCanvasRectTopLeftCorner(), DimensionsC.PAC_MAN_DIAMETER_PIXELS, DimensionsC.PAC_MAN_DIAMETER_PIXELS);
-        final List<CanvasCoordinate> pacManRect4Corners = RectUtils.get4Corners(pacManCanvasRect);
+        final CanvasRect pacManCanvasCanvasRect = new CanvasRect(event.getRequestedPacManCanvasRectTopLeftCorner(), DimensionsC.PAC_MAN_DIAMETER_PIXELS, DimensionsC.PAC_MAN_DIAMETER_PIXELS);
+        final List<CanvasCoordinate> pacManRect4Corners = RectUtils.get4Corners(pacManCanvasCanvasRect);
         final boolean isCollidingWithWall = pacManRect4Corners.stream()
                 .map(this::toTopLeftCornerOfRectContainingPoint)
                 .anyMatch(this::isPacManCollidingWithAWall);

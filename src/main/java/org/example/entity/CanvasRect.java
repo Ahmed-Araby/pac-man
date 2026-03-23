@@ -7,7 +7,7 @@ import lombok.ToString;
 @AllArgsConstructor
 @Getter
 @ToString
-public class Rect {
+public class CanvasRect {
     private final CanvasCoordinate topLeftCorner;
     private final double width;
     private final double height;

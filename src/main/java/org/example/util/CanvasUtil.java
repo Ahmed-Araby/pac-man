@@ -4,15 +4,14 @@ import org.example.constant.DimensionsC;
 import org.example.constant.DirectionsE;
 import org.example.entity.CanvasCoordinate;
 import org.example.entity.MazeCoordinate;
-import org.example.entity.Rect;
+import org.example.entity.CanvasRect;
 
 import java.util.List;
 
 public class CanvasUtil {
 
-
     public static List<MazeCoordinate> getIntersectingMazeCells(CanvasCoordinate cord) {
-        final Rect canvasRect = new Rect(cord, DimensionsC.MAZE_CELL_SIZE_PIXELS, DimensionsC.MAZE_CELL_SIZE_PIXELS);
+        final CanvasRect canvasRect = new CanvasRect(cord, DimensionsC.MAZE_CELL_SIZE_PIXELS, DimensionsC.MAZE_CELL_SIZE_PIXELS);
         final List<CanvasCoordinate> rectCorners = RectUtils.get4Corners(canvasRect);
         return rectCorners
                 .stream()
