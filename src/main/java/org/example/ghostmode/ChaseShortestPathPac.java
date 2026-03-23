@@ -29,6 +29,7 @@ public class ChaseShortestPathPac implements GhostMode {
         System.out.println("possible Moves = " + possibleMoves);
         return possibleMoves
                 .stream()
+                .sorted()
                 .filter(move -> move.getDist2Target() < Integer.MAX_VALUE)
                 .map(move -> {
                     final CanvasCoordinate nextCord = MazeUtil.getCanvasCord(move.getSource());
@@ -51,7 +52,6 @@ public class ChaseShortestPathPac implements GhostMode {
                     final int dist = getDistToPacCell(interestingCell, pacCell, maze);
                     return new MazeMove(interestingCell, dist);
                 })
-                .sorted()
                 .toList();
     }
 
