@@ -3,8 +3,12 @@ package org.example.util;
 import org.example.constant.Configs;
 import org.example.constant.DimensionsC;
 import org.example.constant.DirectionsE;
+import org.example.constant.SpriteE;
 import org.example.entity.CanvasCoordinate;
+import org.example.entity.MazeCell;
 import org.example.event.ghost.GhostMovementAttemptEvent;
+
+import java.util.List;
 
 public class GhostUtil
 {
@@ -31,5 +35,19 @@ public class GhostUtil
             default:
                 return cord;
         }
+    }
+
+    public static List<MazeCell> getCandidateNextCells(CanvasCoordinate cord, SpriteE[][] maze) {
+        List<MazeCell> candidateNextCells = null;
+        candidateNextCells = CanvasUtil.getIntersectingMazeCells(cord);
+        System.out.println("interestingMazeCells = " + candidateNextCells);
+        if (candidateNextCells.size() == 1) {
+            // ghost lies completely in a maze cell
+            candidateNextCells = CanvasUtil.get90DegAdjMazeCells(cord);
+        }
+        return candidateNextCells
+                .stream()
+                .filter(cell -> maze[cell.getRow()][cell.getCol()] != SpriteE.WALL)
+                .toList();
     }
 }

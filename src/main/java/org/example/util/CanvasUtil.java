@@ -21,6 +21,11 @@ public class CanvasUtil {
                 .toList();
     }
 
+    public static List<MazeCell> get90DegAdjMazeCells(CanvasCoordinate cord) {
+        final MazeCell mazeCell = CanvasUtil.toMazeCoordinate(cord, DirectionsE.STILL);
+        return MazeUtil.get90DegMoves(mazeCell);
+    }
+
 
 
     public static DirectionsE getMovementDir(CanvasCoordinate from, CanvasCoordinate to) {
