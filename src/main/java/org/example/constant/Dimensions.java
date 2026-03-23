@@ -6,17 +6,17 @@ public class Dimensions {
     // canvas
     public static double CANVAS_WIDTH_PIXELS = 1000;
     public static double CANVAS_HEIGHT_PIXELS = 1000;
-    public static double CANVAS_CELL_SIZE_PIXELS = 50;
 
     // maze
-    public static int MAZE_WIDTH = (int) (CANVAS_WIDTH_PIXELS / CANVAS_CELL_SIZE_PIXELS);
-    public static int MAZE_HEIGHT = (int) (CANVAS_HEIGHT_PIXELS / CANVAS_CELL_SIZE_PIXELS);
+    public static double MAZE_CELL_SIZE_PIXELS = 50;
+    public static int MAZE_WIDTH = (int) (CANVAS_WIDTH_PIXELS / MAZE_CELL_SIZE_PIXELS);
+    public static int MAZE_HEIGHT = (int) (CANVAS_HEIGHT_PIXELS / MAZE_CELL_SIZE_PIXELS);
     public static int MAZE_CHAMBER_MIN_WIDTH = 2; // min number of cells can't be less than 2
     public static int MAZE_CHAMBER_MIN_HEIGHT = 2; // min number of cells can't be less than 2
 
     // pac man
-    public static double PAC_MAN_DIAMETER_PIXELS = CANVAS_CELL_SIZE_PIXELS; // Pac-Man should fill a complete cell.
-    public static double PAC_MAN_STRIDE_PIXELS = CANVAS_CELL_SIZE_PIXELS; // Pac-Man should move one cell at a time.
+    public static double PAC_MAN_DIAMETER_PIXELS = MAZE_CELL_SIZE_PIXELS; // Pac-Man should fill a complete cell.
+    public static double PAC_MAN_STRIDE_PIXELS = MAZE_CELL_SIZE_PIXELS; // Pac-Man should move one cell at a time.
     public static double PAC_MAN_COMPLETE_MOUSE_MOVEMENT_DISTANCE_PIXELS = PAC_MAN_STRIDE_PIXELS;
     public static double PAC_MAN_CLOSED_MOUSE_DISTANCE_PIXELS = 0.5 * PAC_MAN_COMPLETE_MOUSE_MOVEMENT_DISTANCE_PIXELS;
     public static double PAC_MAN_OPEN_MOUSE_DISTANCE_PIXELS = PAC_MAN_COMPLETE_MOUSE_MOVEMENT_DISTANCE_PIXELS - PAC_MAN_CLOSED_MOUSE_DISTANCE_PIXELS;
@@ -32,9 +32,10 @@ public class Dimensions {
 
     // ghosts
     // blinky
-    public static double BLINKY_STRIDE_PIXELS = CANVAS_CELL_SIZE_PIXELS;
+    public static double BLINKY_STRIDE_PIXELS = MAZE_CELL_SIZE_PIXELS;
+    
     // sugar
-    public static double SUGAR_CELL_SIZE_PIXELS = 0.15 * CANVAS_CELL_SIZE_PIXELS;
-    public static double SUPER_SUGAR_DIAMETER_PIXELS = 0.6 * CANVAS_CELL_SIZE_PIXELS;
+    public static double SUGAR_CELL_SIZE_PIXELS = 0.15 * MAZE_CELL_SIZE_PIXELS;
+    public static double SUPER_SUGAR_DIAMETER_PIXELS = 0.6 * MAZE_CELL_SIZE_PIXELS;
 
 }

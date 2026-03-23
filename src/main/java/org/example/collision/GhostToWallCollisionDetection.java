@@ -31,7 +31,7 @@ public class GhostToWallCollisionDetection {
     }
 
     private CanvasCoordinate toTopLeftCornerOfRectContainingPoint(CanvasCoordinate point) {
-        return RectUtils.getTopLeftCornerOfRectContainingPoint(Dimensions.CANVAS_CELL_SIZE_PIXELS, Dimensions.CANVAS_CELL_SIZE_PIXELS, point);
+        return RectUtils.getTopLeftCornerOfRectContainingPoint(Dimensions.MAZE_CELL_SIZE_PIXELS, Dimensions.MAZE_CELL_SIZE_PIXELS, point);
     }
 
 

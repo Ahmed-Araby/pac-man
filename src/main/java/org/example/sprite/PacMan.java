@@ -138,7 +138,7 @@ public class PacMan implements Sprite, Subscriber {
             this.turnBuffer.discardTurnBuffer();
         } else if (event.getMovementAttemptSource() instanceof PacMan) {
             // automated straight line movement
-            final Rect pacManCanvasRect = new Rect(event.getRequestedPacManCanvasRectTopLeftCorner(), Dimensions.CANVAS_CELL_SIZE_PIXELS, Dimensions.CANVAS_CELL_SIZE_PIXELS);
+            final Rect pacManCanvasRect = new Rect(event.getRequestedPacManCanvasRectTopLeftCorner(), Dimensions.MAZE_CELL_SIZE_PIXELS, Dimensions.MAZE_CELL_SIZE_PIXELS);
             if (turnBuffer.isThereBufferedTurn(pacManCanvasRect, event.getRequestedDirection())) {
                 attemptMovement(turnBuffer.getBufferedPacManAutomatedMovementRequest());
             }
@@ -152,7 +152,7 @@ public class PacMan implements Sprite, Subscriber {
         if (event.getMovementAttemptSource() instanceof Scene) {
             // user input
             if(turnBuffer.isBlockedTurn(direction, event.getRequestedDirection())) {
-                final Rect pacManCanvasRect = new Rect(new CanvasCoordinate(canvasRow, canvasCol), Dimensions.CANVAS_CELL_SIZE_PIXELS, Dimensions.CANVAS_CELL_SIZE_PIXELS);
+                final Rect pacManCanvasRect = new Rect(new CanvasCoordinate(canvasRow, canvasCol), Dimensions.MAZE_CELL_SIZE_PIXELS, Dimensions.MAZE_CELL_SIZE_PIXELS);
                 turnBuffer.bufferTurn(event.getRequestedDirection(), pacManCanvasRect);
             }
         }

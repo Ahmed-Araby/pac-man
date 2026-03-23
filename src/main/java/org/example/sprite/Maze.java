@@ -50,14 +50,14 @@ public class Maze implements Sprite {
                 if (gameMaze[mazeRow][mazeCol] == SpriteE.WALL) {
                     // map from the abstract maze scale to the graphical maze scale
                     con.setFill(ColorConstants.CANVAS_WALL_COLOR);
-                    con.fillRect(canvasCord.getCol(), canvasCord.getRow(), Dimensions.CANVAS_CELL_SIZE_PIXELS, Dimensions.CANVAS_CELL_SIZE_PIXELS);
+                    con.fillRect(canvasCord.getCol(), canvasCord.getRow(), Dimensions.MAZE_CELL_SIZE_PIXELS, Dimensions.MAZE_CELL_SIZE_PIXELS);
                     if (GameConfig.isDebugModeOn()) {
-                        DebugUtil.drawVirtualRect(con, canvasCord.getCol(), canvasCord.getRow(), Dimensions.CANVAS_CELL_SIZE_PIXELS, Dimensions.CANVAS_CELL_SIZE_PIXELS, Color.RED);
+                        DebugUtil.drawVirtualRect(con, canvasCord.getCol(), canvasCord.getRow(), Dimensions.MAZE_CELL_SIZE_PIXELS, Dimensions.MAZE_CELL_SIZE_PIXELS, Color.RED);
 
                     }
                 } else {
                     if(GameConfig.isDebugModeOn()) {
-                        DebugUtil.drawVirtualRect(con, canvasCord.getCol(), canvasCord.getRow(), Dimensions.CANVAS_CELL_SIZE_PIXELS, Dimensions.CANVAS_CELL_SIZE_PIXELS, Color.YELLOW);
+                        DebugUtil.drawVirtualRect(con, canvasCord.getCol(), canvasCord.getRow(), Dimensions.MAZE_CELL_SIZE_PIXELS, Dimensions.MAZE_CELL_SIZE_PIXELS, Color.YELLOW);
                     }
                 }
             }
