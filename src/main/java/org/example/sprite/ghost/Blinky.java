@@ -2,7 +2,9 @@ package org.example.sprite.ghost;
 
 import javafx.scene.canvas.Canvas;
 import javafx.scene.image.Image;
+import org.example.animation.BlinkyStrideTracker;
 import org.example.constant.DirectionsE;
+import org.example.constant.GhostSpriteFrameE;
 import org.example.constant.SpriteFileNameC;
 import org.example.entity.CanvasCoordinate;
 import org.example.event.Event;
@@ -17,8 +19,10 @@ public class Blinky implements Sprite{
 
     private double canvasCol, canvasRow;
     private DirectionsE directionsE;
-    private final Image blinky;
+    private Image blinkyFrame1;
+    private Image blinkyFrame2;
     private final ChaseShortestPathPac chaseMode;
+    private final BlinkyStrideTracker blinkyStrideTracker;
 
     // [TODO] find a better way to pass this information
     private final PacMan pacMan;
@@ -28,18 +32,20 @@ public class Blinky implements Sprite{
         canvasCol = 0;
         canvasRow = 0;
         directionsE = DirectionsE.STILL;
-        final String SPRITE_SHEET_FILE_RESOURCE_ABSOLUTE_PATH = getClass().getResource(SpriteFileNameC.SPRITE_SHEET_FILE_RESOURCE_RELATIVE_PATH).toString();
-        blinky = new Image(SPRITE_SHEET_FILE_RESOURCE_ABSOLUTE_PATH);
+
+        loadSprites();
 
         this.pacMan = pacMan;
         this.maze = maze;
         this.chaseMode = chaseMode;
+        this.blinkyStrideTracker = new BlinkyStrideTracker();
     }
 
     @Override
     public void render(Canvas canvas) {
         System.out.println("blinky: row = " + canvasRow + " , col = " + canvasCol + " , Dir = " + directionsE);
-        canvas.getGraphicsContext2D().drawImage(blinky, canvasCol, canvasRow);
+        final Image activeFrame = getActiveFrame();
+        canvas.getGraphicsContext2D().drawImage(activeFrame, canvasCol, canvasRow);
     }
 
     @Override
@@ -49,5 +55,29 @@ public class Blinky implements Sprite{
         final CanvasCoordinate ghostNewCord = GhostUtil.move(ghostCurrCord, directionsE);
         canvasRow = ghostNewCord.getRow();
         canvasCol = ghostNewCord.getCol();
+
+        if(directionsE != DirectionsE.STILL) {
+            blinkyStrideTracker.stride();
+        }
+    }
+
+
+    private void loadSprites() {
+        final String BLINKY_FRAME_1_FILE_RESOURCE_ABSOLUTE_PATH = getClass().getResource(SpriteFileNameC.BLINKY_FRAME_1_FILE_RESOURCE_RELATIVE_PATH).toString();
+        blinkyFrame1 = new Image(BLINKY_FRAME_1_FILE_RESOURCE_ABSOLUTE_PATH);
+
+        final String BLINKY_FRAME_2_FILE_RESOURCE_ABSOLUTE_PATH = getClass().getResource(SpriteFileNameC.BLINKY_FRAME_2_FILE_RESOURCE_RELATIVE_PATH).toString();
+        blinkyFrame2 = new Image(BLINKY_FRAME_2_FILE_RESOURCE_ABSOLUTE_PATH);
+    }
+
+    private Image getActiveFrame() {
+        final GhostSpriteFrameE frame = (GhostSpriteFrameE) blinkyStrideTracker.getState();
+        switch (frame) {
+            case FIRST:
+                return blinkyFrame1;
+            case SECOND:
+                return blinkyFrame2;
+        }
+        return blinkyFrame1;
     }
 }
