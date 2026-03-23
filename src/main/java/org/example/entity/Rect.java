@@ -8,7 +8,7 @@ import lombok.ToString;
 @Getter
 @ToString
 public class Rect {
-    private final Coordinate topLeftCorner;
+    private final CanvasCoordinate topLeftCorner;
     private final double width;
     private final double height;
 }

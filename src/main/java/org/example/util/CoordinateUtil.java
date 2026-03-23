@@ -2,7 +2,7 @@ package org.example.util;
 
 import org.example.constant.Dimensions;
 import org.example.constant.DirectionsE;
-import org.example.entity.Coordinate;
+import org.example.entity.CanvasCoordinate;
 import org.example.entity.MazeCoordinate;
 import org.example.entity.Rect;
 
@@ -15,7 +15,7 @@ public class CoordinateUtil {
     private static final int[] dRow = {-1, 1, 0, 0}; // up, down, don't change, don't change
     private static final int[] dCol = {0, 0, 1, -1}; // don't change, don't change, right, left
 
-    public static List<MazeCoordinate> getIntersectingMazeCells(Coordinate cord) {
+    public static List<MazeCoordinate> getIntersectingMazeCells(CanvasCoordinate cord) {
         return RectUtils
                 .get4Corners(new Rect(cord, Dimensions.CANVAS_CELL_SIZE_PIXELS, Dimensions.CANVAS_CELL_SIZE_PIXELS))
                 .stream()
@@ -40,9 +40,9 @@ public class CoordinateUtil {
 
         return ninetyDegMoves;
     }
-    
-    public static DirectionsE getMovementDir(Coordinate from, MazeCoordinate to) {
-        final Coordinate canvasToCord = mazeCordToCanvasCord(to.getRow(), to.getCol());
+
+    public static DirectionsE getMovementDir(CanvasCoordinate from, MazeCoordinate to) {
+        final CanvasCoordinate canvasToCord = mazeCordToCanvasCord(to.getRow(), to.getCol());
 
         if(canvasToCord.getRow() > from.getRow()) {
             return DirectionsE.DOWN;
@@ -57,7 +57,7 @@ public class CoordinateUtil {
         }
     }
 
-    public static MazeCoordinate toMazeCoordinate(Coordinate cord, DirectionsE dir) {
+    public static MazeCoordinate toMazeCoordinate(CanvasCoordinate cord, DirectionsE dir) {
         switch (dir) {
             case RIGHT, DOWN:
                 return toMazeCoordinateFlooring(cord);
@@ -68,19 +68,19 @@ public class CoordinateUtil {
         }
     }
 
-    private static MazeCoordinate toMazeCoordinateFlooring(Coordinate cord) {
+    private static MazeCoordinate toMazeCoordinateFlooring(CanvasCoordinate cord) {
         final int mazeRow = (int) Math.floor(cord.getRow() / Dimensions.CANVAS_CELL_SIZE_PIXELS);
         final int mazeCol = (int) Math.floor(cord.getCol() / Dimensions.CANVAS_CELL_SIZE_PIXELS);
         return new MazeCoordinate(mazeRow, mazeCol);
     }
 
-    private static MazeCoordinate toMazeCoordinateCeiling(Coordinate cord) {
+    private static MazeCoordinate toMazeCoordinateCeiling(CanvasCoordinate cord) {
         final int mazeRow = (int) Math.ceil(cord.getRow() / Dimensions.CANVAS_CELL_SIZE_PIXELS);
         final int mazeCol = (int) Math.ceil(cord.getCol() / Dimensions.CANVAS_CELL_SIZE_PIXELS);
         return new MazeCoordinate(mazeRow, mazeCol);
     }
 
-    public static Coordinate mazeCordToCanvasCord(int mazeRow, int mazeCol) {
-        return new Coordinate(mazeRow * Dimensions.CANVAS_CELL_SIZE_PIXELS, mazeCol * Dimensions.CANVAS_CELL_SIZE_PIXELS);
+    public static CanvasCoordinate mazeCordToCanvasCord(int mazeRow, int mazeCol) {
+        return new CanvasCoordinate(mazeRow * Dimensions.CANVAS_CELL_SIZE_PIXELS, mazeCol * Dimensions.CANVAS_CELL_SIZE_PIXELS);
     }
 }

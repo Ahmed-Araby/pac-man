@@ -5,7 +5,7 @@ import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.paint.Color;
 import org.example.config.GameConfig;
 import org.example.constant.*;
-import org.example.entity.Coordinate;
+import org.example.entity.CanvasCoordinate;
 import org.example.entity.MazeCoordinate;
 import org.example.event.Event;
 import org.example.event.PacManSugarCollisionEvent;
@@ -45,15 +45,15 @@ public class Sugar implements Sprite, Subscriber {
         for (int row = 0; row < maze.length; row++) {
             for (int col = 0; col < maze[0].length; col++) {
                 if (maze[row][col] == SpriteE.SUGAR) {
-                    final Coordinate cellTopLeftCornerCanvas = CoordinateUtil.mazeCordToCanvasCord(row, col);
-                    final Coordinate sugarCellTopLeftCornerCanvas = SugarUtil.getSugarTopLeftCornerCanvas(cellTopLeftCornerCanvas);
+                    final CanvasCoordinate cellTopLeftCornerCanvas = CoordinateUtil.mazeCordToCanvasCord(row, col);
+                    final CanvasCoordinate sugarCellTopLeftCornerCanvas = SugarUtil.getSugarTopLeftCornerCanvas(cellTopLeftCornerCanvas);
                     con.fillRect(sugarCellTopLeftCornerCanvas.getCol(), sugarCellTopLeftCornerCanvas.getRow(), Dimensions.SUGAR_CELL_SIZE_PIXELS, Dimensions.SUGAR_CELL_SIZE_PIXELS);
                     if(GameConfig.isDebugModeOn()) {
                         DebugUtil.drawVirtualRect(con, sugarCellTopLeftCornerCanvas.getCol(), sugarCellTopLeftCornerCanvas.getRow(), Dimensions.SUGAR_CELL_SIZE_PIXELS, Dimensions.SUGAR_CELL_SIZE_PIXELS, Color.CYAN);
                     }
                 } else if (maze[row][col] == SpriteE.SUPER_SUGAR) {
-                    final Coordinate cellTopLeftCornerCanvas = CoordinateUtil.mazeCordToCanvasCord(row, col);
-                    final Coordinate sugarCellTopLeftCornerCanvas = SugarUtil.getSuperSugarTopLeftCornerCanvas(cellTopLeftCornerCanvas);
+                    final CanvasCoordinate cellTopLeftCornerCanvas = CoordinateUtil.mazeCordToCanvasCord(row, col);
+                    final CanvasCoordinate sugarCellTopLeftCornerCanvas = SugarUtil.getSuperSugarTopLeftCornerCanvas(cellTopLeftCornerCanvas);
                     con.fillOval(sugarCellTopLeftCornerCanvas.getCol(), sugarCellTopLeftCornerCanvas.getRow(), Dimensions.SUPER_SUGAR_DIAMETER_PIXELS, Dimensions.SUPER_SUGAR_DIAMETER_PIXELS);
                     if(GameConfig.isDebugModeOn()) {
                         DebugUtil.drawVirtualRect(con, sugarCellTopLeftCornerCanvas.getCol(), sugarCellTopLeftCornerCanvas.getRow(), Dimensions.SUPER_SUGAR_DIAMETER_PIXELS, Dimensions.SUPER_SUGAR_DIAMETER_PIXELS, Color.CYAN);
@@ -80,8 +80,8 @@ public class Sugar implements Sprite, Subscriber {
         }
     }
 
-    public void removeSugar(Coordinate sugarRectCanvasTopLeftCoordinate) {
-        final MazeCoordinate sugarCellMazeTopLeftCornerCoordinate = CoordinateUtil.toMazeCoordinate(sugarRectCanvasTopLeftCoordinate, DirectionsE.STILL);
+    public void removeSugar(CanvasCoordinate sugarRectCanvasTopLeftCanvasCoordinate) {
+        final MazeCoordinate sugarCellMazeTopLeftCornerCoordinate = CoordinateUtil.toMazeCoordinate(sugarRectCanvasTopLeftCanvasCoordinate, DirectionsE.STILL);
         maze[sugarCellMazeTopLeftCornerCoordinate.getRow()][sugarCellMazeTopLeftCornerCoordinate.getCol()] = SpriteE.EMPTY;
     }
 }

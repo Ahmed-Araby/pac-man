@@ -4,7 +4,7 @@ import lombok.AllArgsConstructor;
 import org.example.collision.GhostToWallCollisionDetection;
 import org.example.constant.DirectionsE;
 import org.example.constant.SpriteE;
-import org.example.entity.Coordinate;
+import org.example.entity.CanvasCoordinate;
 import org.example.entity.MazeCoordinate;
 import org.example.entity.MazeMove;
 import org.example.event.ghost.GhostMovementAttemptEvent;
@@ -19,7 +19,7 @@ public class ChaseShortestPathPac implements GhostMode {
 
     private final GhostToWallCollisionDetection ghostToWallCollisionDetection;
 
-    public DirectionsE nextMoveDirection(Coordinate ghostCord, MazeCoordinate pacCord, SpriteE[][] maze) {
+    public DirectionsE nextMoveDirection(CanvasCoordinate ghostCord, MazeCoordinate pacCord, SpriteE[][] maze) {
         final List<MazeMove> possibleMoves = nextPositions(ghostCord, pacCord, maze);
         System.out.println("possible Moves = " + possibleMoves);
         return possibleMoves
@@ -35,7 +35,7 @@ public class ChaseShortestPathPac implements GhostMode {
                 .orElse(DirectionsE.STILL);
     }
 
-    private List<MazeMove> nextPositions(Coordinate ghostCord, MazeCoordinate pacCord, SpriteE[][] maze) {
+    private List<MazeMove> nextPositions(CanvasCoordinate ghostCord, MazeCoordinate pacCord, SpriteE[][] maze) {
         // this work can be parallelized
         return CoordinateUtil.getIntersectingMazeCells(ghostCord)
                 .stream()

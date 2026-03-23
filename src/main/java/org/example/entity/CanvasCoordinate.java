@@ -7,15 +7,15 @@ import lombok.ToString;
 @AllArgsConstructor
 @Getter
 @ToString
-public class Coordinate {
+public class CanvasCoordinate {
     private double row, col;
 
 
     @Override
     public boolean equals(Object o) {
-        if (o == null || !(o instanceof Coordinate)) {
+        if (o == null || !(o instanceof CanvasCoordinate)) {
             return false;
         }
-        return row == ((Coordinate) o).getRow() && col == ((Coordinate) o).getCol();
+        return row == ((CanvasCoordinate) o).getRow() && col == ((CanvasCoordinate) o).getCol();
     }
 }

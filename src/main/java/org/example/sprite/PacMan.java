@@ -6,7 +6,7 @@ import javafx.scene.canvas.GraphicsContext;
 import org.example.constant.Configs;
 import org.example.constant.Dimensions;
 import org.example.constant.DirectionsE;
-import org.example.entity.Coordinate;
+import org.example.entity.CanvasCoordinate;
 import org.example.entity.MazeCoordinate;
 import org.example.entity.Rect;
 import org.example.event.*;
@@ -124,7 +124,7 @@ public class PacMan implements Sprite, Subscriber {
         }
     }
     private void publishPacManMovementAttemptEvent(double newCanvasRow, double newCanvasCol, DirectionsE desiredDirection, Object source) {
-        syncEventManager.notifySubscribers(new PacManMovementAttemptEvent(new Coordinate(canvasRow, canvasCol), new Coordinate(newCanvasRow, newCanvasCol), desiredDirection, source));
+        syncEventManager.notifySubscribers(new PacManMovementAttemptEvent(new CanvasCoordinate(canvasRow, canvasCol), new CanvasCoordinate(newCanvasRow, newCanvasCol), desiredDirection, source));
     }
 
     private void handleApprovedMovementAttempt(PacManMovementAttemptApprovedEvent event) {
@@ -144,7 +144,7 @@ public class PacMan implements Sprite, Subscriber {
             }
         }
 
-        this.eventManager.notifySubscribers(new PacManCurrentLocationEvent(new Coordinate(canvasRow, canvasCol), direction, this));
+        this.eventManager.notifySubscribers(new PacManCurrentLocationEvent(new CanvasCoordinate(canvasRow, canvasCol), direction, this));
     }
 
     private void handleDeniedMovementAttempt(PacManMovementAttemptDeniedEvent event) {
@@ -152,7 +152,7 @@ public class PacMan implements Sprite, Subscriber {
         if (event.getMovementAttemptSource() instanceof Scene) {
             // user input
             if(turnBuffer.isBlockedTurn(direction, event.getRequestedDirection())) {
-                final Rect pacManCanvasRect = new Rect(new Coordinate(canvasRow, canvasCol), Dimensions.CANVAS_CELL_SIZE_PIXELS, Dimensions.CANVAS_CELL_SIZE_PIXELS);
+                final Rect pacManCanvasRect = new Rect(new CanvasCoordinate(canvasRow, canvasCol), Dimensions.CANVAS_CELL_SIZE_PIXELS, Dimensions.CANVAS_CELL_SIZE_PIXELS);
                 turnBuffer.bufferTurn(event.getRequestedDirection(), pacManCanvasRect);
             }
         }
@@ -176,6 +176,6 @@ public class PacMan implements Sprite, Subscriber {
 
 
     public MazeCoordinate getCurrMazeCord() {
-        return CoordinateUtil.toMazeCoordinate(new Coordinate(canvasRow, canvasCol), direction);
+        return CoordinateUtil.toMazeCoordinate(new CanvasCoordinate(canvasRow, canvasCol), direction);
     }
 }

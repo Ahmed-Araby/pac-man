@@ -8,7 +8,7 @@ import org.example.config.GameConfig;
 import org.example.constant.ColorConstants;
 import org.example.constant.Dimensions;
 import org.example.constant.SpriteE;
-import org.example.entity.Coordinate;
+import org.example.entity.CanvasCoordinate;
 import org.example.event.Event;
 import org.example.maze.MazeGenerator;
 import org.example.maze.RecursiveDivisionMazeGenerator;
@@ -46,7 +46,7 @@ public class Maze implements Sprite {
         con.setFill(ColorConstants.CANVAS_WALL_COLOR);
         for (int mazeRow = 0; mazeRow< gameMaze.length; mazeRow++) {
             for(int mazeCol = 0; mazeCol< gameMaze[0].length; mazeCol++) {
-                final Coordinate canvasCord = CoordinateUtil.mazeCordToCanvasCord(mazeRow, mazeCol);
+                final CanvasCoordinate canvasCord = CoordinateUtil.mazeCordToCanvasCord(mazeRow, mazeCol);
                 if (gameMaze[mazeRow][mazeCol] == SpriteE.WALL) {
                     // map from the abstract maze scale to the graphical maze scale
                     con.setFill(ColorConstants.CANVAS_WALL_COLOR);
@@ -69,12 +69,12 @@ public class Maze implements Sprite {
         throw new UnsupportedOperationException();
     }
 
-    public Coordinate getEmptyMazePosition() {
+    public CanvasCoordinate getEmptyMazePosition() {
         for (int mazeRow = 0; mazeRow< gameMaze.length; mazeRow++) {
             for (int mazeCol = 0; mazeCol< gameMaze[0].length; mazeCol++) {
                 if (gameMaze[mazeRow][mazeCol] == SpriteE.EMPTY) {
                     gameMaze[mazeRow][mazeCol] = SpriteE.PAC_MAN;
-                    return new Coordinate(mazeRow, mazeCol);
+                    return new CanvasCoordinate(mazeRow, mazeCol);
                 }
             }
         }

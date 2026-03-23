@@ -12,7 +12,6 @@ import org.example.collision.PacManToWallCollisionDetection;
 import org.example.config.GameConfig;
 import org.example.constant.ColorConstants;
 import org.example.constant.Dimensions;
-import org.example.constant.SpriteE;
 import org.example.event.manager.EventManager;
 import org.example.event.EventType;
 import org.example.event.manager.SyncEventManager;
@@ -22,8 +21,7 @@ import org.example.input.JavaFXUserInputHandler;
 import org.example.sound.SoundPlayer;
 import org.example.sprite.Maze;
 import org.example.sprite.PacMan;
-import org.example.entity.Coordinate;
-import org.example.sprite.Sprite;
+import org.example.entity.CanvasCoordinate;
 import org.example.sprite.Sugar;
 import org.example.sprite.ghost.Blinky;
 import org.example.util.debug.DebugUtil;
@@ -62,7 +60,7 @@ public class GamePlayGameScene implements GameScene {
 
         // sprites
         maze = new Maze();
-        final Coordinate emptyCellPos = maze.getEmptyMazePosition();
+        final CanvasCoordinate emptyCellPos = maze.getEmptyMazePosition();
         pacMan = new PacMan(emptyCellPos.getCol(), emptyCellPos.getRow(), eventManager, syncEventManager);
         sugar = new Sugar(maze.getGameMaze());
 

@@ -3,7 +3,7 @@ package org.example.collision;
 import org.example.constant.Dimensions;
 import org.example.constant.DirectionsE;
 import org.example.constant.SpriteE;
-import org.example.entity.Coordinate;
+import org.example.entity.CanvasCoordinate;
 import org.example.entity.MazeCoordinate;
 import org.example.entity.Rect;
 import org.example.event.Event;
@@ -33,7 +33,7 @@ public class PacManToWallCollisionDetection implements Subscriber {
         }
 
         final Rect pacManCanvasRect = new Rect(event.getRequestedPacManCanvasRectTopLeftCorner(), Dimensions.PAC_MAN_DIAMETER_PIXELS, Dimensions.PAC_MAN_DIAMETER_PIXELS);
-        final List<Coordinate> pacManRect4Corners = RectUtils.get4Corners(pacManCanvasRect);
+        final List<CanvasCoordinate> pacManRect4Corners = RectUtils.get4Corners(pacManCanvasRect);
         final boolean isCollidingWithWall = pacManRect4Corners.stream()
                 .map(this::toTopLeftCornerOfRectContainingPoint)
                 .anyMatch(this::isPacManCollidingWithAWall);
@@ -44,16 +44,16 @@ public class PacManToWallCollisionDetection implements Subscriber {
         }
     }
 
-    private Coordinate toTopLeftCornerOfRectContainingPoint(Coordinate point) {
+    private CanvasCoordinate toTopLeftCornerOfRectContainingPoint(CanvasCoordinate point) {
         return RectUtils.getTopLeftCornerOfRectContainingPoint(Dimensions.CANVAS_CELL_SIZE_PIXELS, Dimensions.CANVAS_CELL_SIZE_PIXELS, point);
     }
 
-    private boolean isPacManGoingOutOfCanvas(Coordinate pacManCanvasTopLeftCorner) {
+    private boolean isPacManGoingOutOfCanvas(CanvasCoordinate pacManCanvasTopLeftCorner) {
         return pacManCanvasTopLeftCorner.getRow() < 0 || pacManCanvasTopLeftCorner.getRow() > Dimensions.CANVAS_HEIGHT_PIXELS - Dimensions.PAC_MAN_DIAMETER_PIXELS ||
                 pacManCanvasTopLeftCorner.getCol() < 0 || pacManCanvasTopLeftCorner.getCol() > Dimensions.CANVAS_WIDTH_PIXELS - Dimensions.PAC_MAN_DIAMETER_PIXELS;
     }
 
-    private boolean isPacManCollidingWithAWall(Coordinate wallCanvasTopLeftCorner) {
+    private boolean isPacManCollidingWithAWall(CanvasCoordinate wallCanvasTopLeftCorner) {
         final MazeCoordinate wallMazeCord = CoordinateUtil.toMazeCoordinate(wallCanvasTopLeftCorner, DirectionsE.STILL);
         return maze[wallMazeCord.getRow()][wallMazeCord.getCol()] == SpriteE.WALL;
     }

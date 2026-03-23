@@ -4,7 +4,7 @@ import javafx.scene.canvas.Canvas;
 import javafx.scene.image.Image;
 import org.example.constant.DirectionsE;
 import org.example.constant.SpriteFileNameConstants;
-import org.example.entity.Coordinate;
+import org.example.entity.CanvasCoordinate;
 import org.example.event.Event;
 import org.example.ghostmode.ChaseShortestPathPac;
 import org.example.sprite.Maze;
@@ -44,9 +44,9 @@ public class Blinky implements Sprite{
 
     @Override
     public void move(Event event) {
-        final Coordinate ghostCurrCord = new Coordinate(canvasRow, canvasCol);
+        final CanvasCoordinate ghostCurrCord = new CanvasCoordinate(canvasRow, canvasCol);
         directionsE = chaseMode.nextMoveDirection(ghostCurrCord, pacMan.getCurrMazeCord(), maze.getGameMaze());
-        final Coordinate ghostNewCord = GhostUtil.move(ghostCurrCord, directionsE);
+        final CanvasCoordinate ghostNewCord = GhostUtil.move(ghostCurrCord, directionsE);
         canvasRow = ghostNewCord.getRow();
         canvasCol = ghostNewCord.getCol();
     }

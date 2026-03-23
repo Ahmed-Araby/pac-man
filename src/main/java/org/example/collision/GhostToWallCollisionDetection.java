@@ -3,15 +3,10 @@ package org.example.collision;
 import org.example.constant.Dimensions;
 import org.example.constant.DirectionsE;
 import org.example.constant.SpriteE;
-import org.example.entity.Coordinate;
+import org.example.entity.CanvasCoordinate;
 import org.example.entity.MazeCoordinate;
 import org.example.entity.Rect;
-import org.example.event.Event;
-import org.example.event.Subscriber;
 import org.example.event.ghost.GhostMovementAttemptEvent;
-import org.example.event.movement.PacManMovementAttemptApprovedEvent;
-import org.example.event.movement.PacManMovementAttemptDeniedEvent;
-import org.example.event.movement.PacManMovementAttemptEvent;
 import org.example.util.CoordinateUtil;
 import org.example.util.GhostUtil;
 import org.example.util.RectUtils;
@@ -26,21 +21,21 @@ public class GhostToWallCollisionDetection {
     }
 
     public boolean checkCollision(GhostMovementAttemptEvent event) {
-        final Coordinate nextGhostCord = GhostUtil.move(event);
+        final CanvasCoordinate nextGhostCord = GhostUtil.move(event);
         final Rect ghostCanvasRect = new Rect(nextGhostCord, Dimensions.PAC_MAN_DIAMETER_PIXELS, Dimensions.PAC_MAN_DIAMETER_PIXELS);
-        final List<Coordinate> ghostRect4Corners = RectUtils.get4Corners(ghostCanvasRect);
+        final List<CanvasCoordinate> ghostRect4Corners = RectUtils.get4Corners(ghostCanvasRect);
         final boolean isCollidingWithWall = ghostRect4Corners.stream()
                 .map(this::toTopLeftCornerOfRectContainingPoint)
                 .anyMatch(this::isWall);
         return isCollidingWithWall;
     }
 
-    private Coordinate toTopLeftCornerOfRectContainingPoint(Coordinate point) {
+    private CanvasCoordinate toTopLeftCornerOfRectContainingPoint(CanvasCoordinate point) {
         return RectUtils.getTopLeftCornerOfRectContainingPoint(Dimensions.CANVAS_CELL_SIZE_PIXELS, Dimensions.CANVAS_CELL_SIZE_PIXELS, point);
     }
 
 
-    private boolean isWall(Coordinate cord) {
+    private boolean isWall(CanvasCoordinate cord) {
         final MazeCoordinate wallMazeCord = CoordinateUtil.toMazeCoordinate(cord, DirectionsE.STILL);
         return maze[wallMazeCord.getRow()][wallMazeCord.getCol()] == SpriteE.WALL;
     }

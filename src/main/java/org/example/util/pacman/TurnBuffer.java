@@ -3,7 +3,7 @@ package org.example.util.pacman;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.example.constant.DirectionsE;
-import org.example.entity.Coordinate;
+import org.example.entity.CanvasCoordinate;
 import org.example.entity.Rect;
 import org.example.event.movement.PacManMovementRequestEvent;
 import org.example.util.RectUtils;
@@ -51,7 +51,7 @@ public class TurnBuffer {
 
     private boolean hasPacManMovedBeyondTheNextCell(Rect currPacManCanvasRect, DirectionsE currentPacManDirection) {
         // handle out of bounds situations
-        final Coordinate topLeftCornerOfNextRect = RectUtils.getTopLeftCornerOfNextRect(pacManCanvasRectAtBufferingTime, currentPacManDirection);
+        final CanvasCoordinate topLeftCornerOfNextRect = RectUtils.getTopLeftCornerOfNextRect(pacManCanvasRectAtBufferingTime, currentPacManDirection);
 
         if (currentPacManDirection == DirectionsE.RIGHT) {
             return currPacManCanvasRect.getTopLeftCorner().getCol() > topLeftCornerOfNextRect.getCol();
