@@ -2,6 +2,8 @@ package org.example.constant;
 
 public class SoundFileNameC {
 
+    private SoundFileNameC() {}
+
     public static String FORWARD_SLASH = "/";
     public static String SOUND_FILES_DIRECTORY = "assets/sounds";
 

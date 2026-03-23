@@ -2,6 +2,8 @@ package org.example.constant;
 
 public class DimensionsC {
 
+    private DimensionsC() {}
+
     // measurements are in pixels, otherwise it will be explicitly specified.
     // canvas
     public static double CANVAS_WIDTH_PIXELS = 1000;
