@@ -6,7 +6,7 @@ import org.example.entity.CanvasRect;
 
 import java.util.List;
 
-public class RectUtils {
+public class CanvasRectUtils {
 
     public static List<CanvasCoordinate> get4Corners(CanvasRect canvasRect) {
         return List.of(

@@ -10,7 +10,7 @@ import org.example.event.EventType;
 import org.example.event.PacManCurrentLocationEvent;
 import org.example.event.PacManSugarCollisionEvent;
 import org.example.event.manager.EventManager;
-import org.example.util.RectUtils;
+import org.example.util.CanvasRectUtils;
 import org.example.util.sugar.SugarUtil;
 
 import java.util.List;
@@ -27,7 +27,7 @@ public class PacManToSuperSugarCollisionDetection implements Subscriber {
 
     public boolean isEatingSuperSugar(CanvasCoordinate pacManCanvasRectTopLeftCorner) {
         final CanvasRect pacManCanvasCanvasRect = new CanvasRect(pacManCanvasRectTopLeftCorner, DimensionsC.PAC_MAN_DIAMETER_PIXELS, DimensionsC.PAC_MAN_DIAMETER_PIXELS);
-        final List<CanvasCoordinate> pacManRect4Corners = RectUtils.get4Corners(pacManCanvasCanvasRect);
+        final List<CanvasCoordinate> pacManRect4Corners = CanvasRectUtils.get4Corners(pacManCanvasCanvasRect);
         final List<CanvasCoordinate> canvasSuperSugarToBeEaten = pacManRect4Corners.stream()
                 .map(this::toTopLeftCornerOfRectContainingPoint)
                 .filter(rectTopLeftCornerCanvas -> SugarUtil.isCanvasCellHasSuperSugar(maze, rectTopLeftCornerCanvas))
@@ -43,13 +43,13 @@ public class PacManToSuperSugarCollisionDetection implements Subscriber {
     }
 
     private CanvasCoordinate toTopLeftCornerOfRectContainingPoint(CanvasCoordinate point) {
-        return RectUtils.getTopLeftCornerOfRectContainingPoint(DimensionsC.MAZE_CELL_SIZE_PIXELS, DimensionsC.MAZE_CELL_SIZE_PIXELS, point);
+        return CanvasRectUtils.getTopLeftCornerOfRectContainingPoint(DimensionsC.MAZE_CELL_SIZE_PIXELS, DimensionsC.MAZE_CELL_SIZE_PIXELS, point);
     }
 
     private boolean isPacManRectContainsSuperSugarRect(CanvasCoordinate pacManCanvasRectTopLeftCorner, CanvasCoordinate sugarCanvasRectTopLeftCorner) {
         final CanvasRect pacManCanvasCanvasRect = new CanvasRect(pacManCanvasRectTopLeftCorner, DimensionsC.PAC_MAN_DIAMETER_PIXELS, DimensionsC.PAC_MAN_DIAMETER_PIXELS);
         final CanvasRect superSugarCanvasCanvasRect = new CanvasRect(sugarCanvasRectTopLeftCorner, DimensionsC.SUGAR_CELL_SIZE_PIXELS, DimensionsC.SUGAR_CELL_SIZE_PIXELS);
-        return RectUtils.isRectContainsRect(pacManCanvasCanvasRect, superSugarCanvasCanvasRect);
+        return CanvasRectUtils.isRectContainsRect(pacManCanvasCanvasRect, superSugarCanvasCanvasRect);
     }
 
     @Override

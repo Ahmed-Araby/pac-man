@@ -12,10 +12,10 @@ public class CanvasUtil {
 
     public static List<MazeCoordinate> getIntersectingMazeCells(CanvasCoordinate cord) {
         final CanvasRect canvasRect = new CanvasRect(cord, DimensionsC.MAZE_CELL_SIZE_PIXELS, DimensionsC.MAZE_CELL_SIZE_PIXELS);
-        final List<CanvasCoordinate> rectCorners = RectUtils.get4Corners(canvasRect);
+        final List<CanvasCoordinate> rectCorners = CanvasRectUtils.get4Corners(canvasRect);
         return rectCorners
                 .stream()
-                .map(corner -> RectUtils.getTopLeftCornerOfRectContainingPoint(DimensionsC.MAZE_CELL_SIZE_PIXELS, DimensionsC.MAZE_CELL_SIZE_PIXELS, corner))
+                .map(corner -> CanvasRectUtils.getTopLeftCornerOfRectContainingPoint(DimensionsC.MAZE_CELL_SIZE_PIXELS, DimensionsC.MAZE_CELL_SIZE_PIXELS, corner))
                 .map(topLeftCorner -> toMazeCoordinate(topLeftCorner, DirectionsE.STILL))
                 .distinct()
                 .toList();

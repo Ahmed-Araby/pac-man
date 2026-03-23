@@ -9,7 +9,7 @@ import org.example.entity.CanvasRect;
 import org.example.event.ghost.GhostMovementAttemptEvent;
 import org.example.util.CanvasUtil;
 import org.example.util.GhostUtil;
-import org.example.util.RectUtils;
+import org.example.util.CanvasRectUtils;
 
 import java.util.List;
 
@@ -23,7 +23,7 @@ public class GhostToWallCollisionDetection {
     public boolean checkCollision(GhostMovementAttemptEvent event) {
         final CanvasCoordinate nextGhostCord = GhostUtil.move(event);
         final CanvasRect ghostCanvasCanvasRect = new CanvasRect(nextGhostCord, DimensionsC.PAC_MAN_DIAMETER_PIXELS, DimensionsC.PAC_MAN_DIAMETER_PIXELS);
-        final List<CanvasCoordinate> ghostRect4Corners = RectUtils.get4Corners(ghostCanvasCanvasRect);
+        final List<CanvasCoordinate> ghostRect4Corners = CanvasRectUtils.get4Corners(ghostCanvasCanvasRect);
         final boolean isCollidingWithWall = ghostRect4Corners.stream()
                 .map(this::toTopLeftCornerOfRectContainingPoint)
                 .anyMatch(this::isWall);
@@ -31,7 +31,7 @@ public class GhostToWallCollisionDetection {
     }
 
     private CanvasCoordinate toTopLeftCornerOfRectContainingPoint(CanvasCoordinate point) {
-        return RectUtils.getTopLeftCornerOfRectContainingPoint(DimensionsC.MAZE_CELL_SIZE_PIXELS, DimensionsC.MAZE_CELL_SIZE_PIXELS, point);
+        return CanvasRectUtils.getTopLeftCornerOfRectContainingPoint(DimensionsC.MAZE_CELL_SIZE_PIXELS, DimensionsC.MAZE_CELL_SIZE_PIXELS, point);
     }
 
 

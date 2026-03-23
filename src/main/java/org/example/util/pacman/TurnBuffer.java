@@ -6,7 +6,7 @@ import org.example.constant.DirectionsE;
 import org.example.entity.CanvasCoordinate;
 import org.example.entity.CanvasRect;
 import org.example.event.movement.PacManMovementRequestEvent;
-import org.example.util.RectUtils;
+import org.example.util.CanvasRectUtils;
 
 @NoArgsConstructor
 @Setter
@@ -51,7 +51,7 @@ public class TurnBuffer {
 
     private boolean hasPacManMovedBeyondTheNextCell(CanvasRect currPacManCanvasCanvasRect, DirectionsE currentPacManDirection) {
         // handle out of bounds situations
-        final CanvasCoordinate topLeftCornerOfNextRect = RectUtils.getTopLeftCornerOfNextRect(pacManCanvasCanvasRectAtBufferingTime, currentPacManDirection);
+        final CanvasCoordinate topLeftCornerOfNextRect = CanvasRectUtils.getTopLeftCornerOfNextRect(pacManCanvasCanvasRectAtBufferingTime, currentPacManDirection);
 
         if (currentPacManDirection == DirectionsE.RIGHT) {
             return currPacManCanvasCanvasRect.getTopLeftCorner().getCol() > topLeftCornerOfNextRect.getCol();

@@ -13,7 +13,7 @@ import org.example.event.movement.PacManMovementAttemptDeniedEvent;
 import org.example.event.movement.PacManMovementAttemptEvent;
 import org.example.event.Subscriber;
 import org.example.util.CanvasUtil;
-import org.example.util.RectUtils;
+import org.example.util.CanvasRectUtils;
 
 import java.util.List;
 
@@ -33,7 +33,7 @@ public class PacManToWallCollisionDetection implements Subscriber {
         }
 
         final CanvasRect pacManCanvasCanvasRect = new CanvasRect(event.getRequestedPacManCanvasRectTopLeftCorner(), DimensionsC.PAC_MAN_DIAMETER_PIXELS, DimensionsC.PAC_MAN_DIAMETER_PIXELS);
-        final List<CanvasCoordinate> pacManRect4Corners = RectUtils.get4Corners(pacManCanvasCanvasRect);
+        final List<CanvasCoordinate> pacManRect4Corners = CanvasRectUtils.get4Corners(pacManCanvasCanvasRect);
         final boolean isCollidingWithWall = pacManRect4Corners.stream()
                 .map(this::toTopLeftCornerOfRectContainingPoint)
                 .anyMatch(this::isPacManCollidingWithAWall);
@@ -45,7 +45,7 @@ public class PacManToWallCollisionDetection implements Subscriber {
     }
 
     private CanvasCoordinate toTopLeftCornerOfRectContainingPoint(CanvasCoordinate point) {
-        return RectUtils.getTopLeftCornerOfRectContainingPoint(DimensionsC.MAZE_CELL_SIZE_PIXELS, DimensionsC.MAZE_CELL_SIZE_PIXELS, point);
+        return CanvasRectUtils.getTopLeftCornerOfRectContainingPoint(DimensionsC.MAZE_CELL_SIZE_PIXELS, DimensionsC.MAZE_CELL_SIZE_PIXELS, point);
     }
 
     private boolean isPacManGoingOutOfCanvas(CanvasCoordinate pacManCanvasTopLeftCorner) {
