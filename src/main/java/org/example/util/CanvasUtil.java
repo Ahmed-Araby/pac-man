@@ -24,7 +24,7 @@ public class CanvasUtil {
 
 
     public static DirectionsE getMovementDir(CanvasCoordinate from, MazeCoordinate to) {
-        final CanvasCoordinate canvasToCord = MazeUtil.mazeCordToCanvasCord(to.getRow(), to.getCol());
+        final CanvasCoordinate canvasToCord = MazeUtil.getCanvasCord(to.getRow(), to.getCol());
 
         if(canvasToCord.getRow() > from.getRow()) {
             return DirectionsE.DOWN;

@@ -30,7 +30,7 @@ public class MazeUtil {
         return ninetyDegMoves;
     }
 
-    public static CanvasCoordinate mazeCordToCanvasCord(int mazeRow, int mazeCol) {
+    public static CanvasCoordinate getCanvasCord(int mazeRow, int mazeCol) {
         return new CanvasCoordinate(mazeRow * DimensionsC.MAZE_CELL_SIZE_PIXELS, mazeCol * DimensionsC.MAZE_CELL_SIZE_PIXELS);
     }
 }

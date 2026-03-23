@@ -46,7 +46,7 @@ public class Maze implements Sprite {
         con.setFill(ColorConstants.CANVAS_WALL_COLOR);
         for (int mazeRow = 0; mazeRow< gameMaze.length; mazeRow++) {
             for(int mazeCol = 0; mazeCol< gameMaze[0].length; mazeCol++) {
-                final CanvasCoordinate canvasCord = MazeUtil.mazeCordToCanvasCord(mazeRow, mazeCol);
+                final CanvasCoordinate canvasCord = MazeUtil.getCanvasCord(mazeRow, mazeCol);
                 if (gameMaze[mazeRow][mazeCol] == SpriteE.WALL) {
                     // map from the abstract maze scale to the graphical maze scale
                     con.setFill(ColorConstants.CANVAS_WALL_COLOR);
