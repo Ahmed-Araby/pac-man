@@ -4,15 +4,27 @@ import org.example.constant.Dimensions;
 import org.example.constant.DirectionsE;
 import org.example.entity.Coordinate;
 import org.example.entity.MazeCoordinate;
+import org.example.entity.Rect;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class CoordinateUtil {
 
     private static final int[] dRow = {-1, 1, 0, 0}; // up, down, don't change, don't change
     private static final int[] dCol = {0, 0, 1, -1}; // don't change, don't change, right, left
 
+    public static List<MazeCoordinate> getIntersectingMazeCells(Coordinate cord) {
+        return RectUtils
+                .get4Corners(new Rect(cord, Dimensions.CANVAS_CELL_SIZE_PIXELS, Dimensions.CANVAS_CELL_SIZE_PIXELS))
+                .stream()
+                .map(corner -> RectUtils.getTopLeftCornerOfRectContainingPoint(Dimensions.CANVAS_CELL_SIZE_PIXELS, Dimensions.CANVAS_CELL_SIZE_PIXELS, corner))
+                .map(topLeftCorner -> CoordinateUtil.toMazeCoordinate(topLeftCorner, DirectionsE.STILL))
+                .collect(Collectors.toSet()) // remove duplicates
+                .stream()
+                .toList();
+    }
     public static List<MazeCoordinate> get90DegMoves(MazeCoordinate cord) {
         final List<MazeCoordinate> ninetyDegMoves = new ArrayList<>();
         int nRow, nCol;
@@ -28,16 +40,17 @@ public class CoordinateUtil {
 
         return ninetyDegMoves;
     }
+    
+    public static DirectionsE getMovementDir(Coordinate from, MazeCoordinate to) {
+        final Coordinate canvasToCord = mazeCordToCanvasCord(to.getRow(), to.getCol());
 
-
-    public static DirectionsE getMovementDir(MazeCoordinate from, MazeCoordinate to) {
-        if(to.getRow() > from.getRow()) {
+        if(canvasToCord.getRow() > from.getRow()) {
             return DirectionsE.DOWN;
-        } else if(to.getRow() < from.getRow()) {
+        } else if(canvasToCord.getRow() < from.getRow()) {
             return DirectionsE.UP;
-        } else if(to.getCol() > from.getCol()) {
+        } else if(canvasToCord.getCol() > from.getCol()) {
             return DirectionsE.RIGHT;
-        } else if(to.getCol() < from.getCol()) {
+        } else if(canvasToCord.getCol() < from.getCol()) {
             return DirectionsE.LEFT;
         } else {
             return DirectionsE.STILL;

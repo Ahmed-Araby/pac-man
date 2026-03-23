@@ -2,18 +2,15 @@ package org.example.sprite.ghost;
 
 import javafx.scene.canvas.Canvas;
 import javafx.scene.image.Image;
-import org.example.constant.Configs;
-import org.example.constant.Dimensions;
 import org.example.constant.DirectionsE;
 import org.example.constant.SpriteFileNameConstants;
 import org.example.entity.Coordinate;
-import org.example.entity.MazeCoordinate;
 import org.example.event.Event;
 import org.example.ghostmode.ChaseShortestPathPac;
 import org.example.sprite.Maze;
 import org.example.sprite.PacMan;
 import org.example.sprite.Sprite;
-import org.example.util.CoordinateUtil;
+import org.example.util.GhostUtil;
 
 
 public class Blinky implements Sprite{
@@ -27,7 +24,7 @@ public class Blinky implements Sprite{
     private final PacMan pacMan;
     private final Maze maze;
 
-    public Blinky(PacMan pacMan, Maze maze) {
+    public Blinky(PacMan pacMan, Maze maze, ChaseShortestPathPac chaseMode) {
         canvasCol = 0;
         canvasRow = 0;
         directionsE = DirectionsE.STILL;
@@ -36,8 +33,7 @@ public class Blinky implements Sprite{
 
         this.pacMan = pacMan;
         this.maze = maze;
-
-        chaseMode = new ChaseShortestPathPac();
+        this.chaseMode = chaseMode;
     }
 
     @Override
@@ -48,24 +44,10 @@ public class Blinky implements Sprite{
 
     @Override
     public void move(Event event) {
-        final Coordinate ghostCurrCanvasCord = new Coordinate(canvasRow, canvasCol);
-        final MazeCoordinate ghostCurrMazeCord = CoordinateUtil.toMazeCoordinate(ghostCurrCanvasCord, directionsE);
-        final MazeCoordinate ghostNextMazeCord = chaseMode.nextPosition(ghostCurrMazeCord, pacMan.getCurrMazeCord(), maze.getGameMaze());
-        directionsE = chaseMode.nextMoveDirection(ghostCurrMazeCord, ghostNextMazeCord);
-
-        switch (directionsE) {
-            case RIGHT:
-                canvasCol = canvasCol + Dimensions.BLINKY_STRIDE_PIXELS / Configs.FRAMES_PER_SEC_FOR_GHOST_BLINKY_STRIDE;
-                break;
-            case LEFT:
-                canvasCol = canvasCol - Dimensions.BLINKY_STRIDE_PIXELS / Configs.FRAMES_PER_SEC_FOR_GHOST_BLINKY_STRIDE;
-                break;
-            case UP:
-                canvasRow = canvasRow - Dimensions.BLINKY_STRIDE_PIXELS / Configs.FRAMES_PER_SEC_FOR_GHOST_BLINKY_STRIDE;
-                break;
-            case DOWN:
-                canvasRow = canvasRow + Dimensions.BLINKY_STRIDE_PIXELS / Configs.FRAMES_PER_SEC_FOR_GHOST_BLINKY_STRIDE;
-                break;
-        }
+        final Coordinate ghostCurrCord = new Coordinate(canvasRow, canvasCol);
+        directionsE = chaseMode.nextMoveDirection(ghostCurrCord, pacMan.getCurrMazeCord(), maze.getGameMaze());
+        final Coordinate ghostNewCord = GhostUtil.move(ghostCurrCord, directionsE);
+        canvasRow = ghostNewCord.getRow();
+        canvasCol = ghostNewCord.getCol();
     }
 }

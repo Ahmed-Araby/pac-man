@@ -5,21 +5,25 @@ import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
+import org.example.collision.GhostToWallCollisionDetection;
 import org.example.collision.PacManToSugarCollisionDetection;
 import org.example.collision.PacManToSuperSugarCollisionDetection;
 import org.example.collision.PacManToWallCollisionDetection;
 import org.example.config.GameConfig;
 import org.example.constant.ColorConstants;
 import org.example.constant.Dimensions;
+import org.example.constant.SpriteE;
 import org.example.event.manager.EventManager;
 import org.example.event.EventType;
 import org.example.event.manager.SyncEventManager;
+import org.example.ghostmode.ChaseShortestPathPac;
 import org.example.input.JavaFXInputHandler;
 import org.example.input.JavaFXUserInputHandler;
 import org.example.sound.SoundPlayer;
 import org.example.sprite.Maze;
 import org.example.sprite.PacMan;
 import org.example.entity.Coordinate;
+import org.example.sprite.Sprite;
 import org.example.sprite.Sugar;
 import org.example.sprite.ghost.Blinky;
 import org.example.util.debug.DebugUtil;
@@ -30,7 +34,7 @@ public class GamePlayGameScene implements GameScene {
     final Maze maze;
     final Sugar sugar;
     // ghosts
-    private final Blinky blinky;
+    private Blinky blinky;
 
     // javaFX
     final Pane pane;
@@ -61,14 +65,14 @@ public class GamePlayGameScene implements GameScene {
         final Coordinate emptyCellPos = maze.getEmptyMazePosition();
         pacMan = new PacMan(emptyCellPos.getCol(), emptyCellPos.getRow(), eventManager, syncEventManager);
         sugar = new Sugar(maze.getGameMaze());
+
         // ghosts
-        blinky = new Blinky(pacMan, maze);
+        initGhosts(maze);
 
         // collision detection
         pacManToWallCollisionDetection = new PacManToWallCollisionDetection(maze.getGameMaze(), syncEventManager);
         pacManToSugarCollisionDetection = new PacManToSugarCollisionDetection(maze.getGameMaze(), eventManager);
         pacManToSuperSugarCollisionDetection = new PacManToSuperSugarCollisionDetection(maze.getGameMaze(), eventManager);
-
 
         // javaFX setup
         canvas = new Canvas(Dimensions.CANVAS_WIDTH_PIXELS, Dimensions.CANVAS_HEIGHT_PIXELS);
@@ -107,6 +111,12 @@ public class GamePlayGameScene implements GameScene {
         syncEventManager.subscribe(EventType.PAC_MAN_MOVEMENT_ATTEMPT, pacManToWallCollisionDetection);
         syncEventManager.subscribe(EventType.PAC_MAN_MOVEMENT_ATTEMPT_APPROVED, pacMan);
         syncEventManager.subscribe(EventType.PAC_MAN_MOVEMENT_ATTEMPT_DENIED, pacMan);
+    }
+
+    public void initGhosts(Maze maze) {
+        final GhostToWallCollisionDetection ghostToWallCollisionDetection = new GhostToWallCollisionDetection(maze.getGameMaze());
+        final ChaseShortestPathPac chaseShortestPathPac = new ChaseShortestPathPac(ghostToWallCollisionDetection);
+        blinky = new Blinky(pacMan, maze, chaseShortestPathPac);
     }
 
     @Override
