@@ -5,7 +5,7 @@ import org.example.collision.GhostToWallCollisionDetection;
 import org.example.constant.DirectionsE;
 import org.example.constant.SpriteE;
 import org.example.entity.CanvasCoordinate;
-import org.example.entity.MazeCoordinate;
+import org.example.entity.MazeCell;
 import org.example.entity.MazeMove;
 import org.example.event.ghost.GhostMovementAttemptEvent;
 import org.example.util.BfsUtil;
@@ -20,7 +20,7 @@ public class ChaseShortestPathPac implements GhostMode {
 
     private final GhostToWallCollisionDetection ghostToWallCollisionDetection;
 
-    public DirectionsE nextMoveDirection(CanvasCoordinate ghostCord, MazeCoordinate pacCord, SpriteE[][] maze) {
+    public DirectionsE nextMoveDirection(CanvasCoordinate ghostCord, MazeCell pacCord, SpriteE[][] maze) {
         final List<MazeMove> possibleMoves = nextPositions(ghostCord, pacCord, maze);
         System.out.println("possible Moves = " + possibleMoves);
         return possibleMoves
@@ -37,7 +37,7 @@ public class ChaseShortestPathPac implements GhostMode {
                 .orElse(DirectionsE.STILL);
     }
 
-    private List<MazeMove> nextPositions(CanvasCoordinate ghostCord, MazeCoordinate pacCord, SpriteE[][] maze) {
+    private List<MazeMove> nextPositions(CanvasCoordinate ghostCord, MazeCell pacCord, SpriteE[][] maze) {
         // this work can be parallelized
         return CanvasUtil.getIntersectingMazeCells(ghostCord)
                 .stream()
@@ -46,13 +46,13 @@ public class ChaseShortestPathPac implements GhostMode {
                 .toList();
     }
 
-    private MazeMove nextPosition(MazeCoordinate sourceCord, MazeCoordinate pacCord, SpriteE[][] maze) {
+    private MazeMove nextPosition(MazeCell sourceCord, MazeCell pacCord, SpriteE[][] maze) {
         if(sourceCord.equals(pacCord)) {
             return new MazeMove(sourceCord, Integer.MAX_VALUE);
         }
 
         final int[][] dist = BfsUtil.getDistMat(sourceCord, pacCord, maze);
-        final List<MazeCoordinate> path = BfsUtil.constructPath(sourceCord, pacCord, dist);
+        final List<MazeCell> path = BfsUtil.constructPath(sourceCord, pacCord, dist);
 
         if(path.size() < 2) {
             return new MazeMove(sourceCord, Integer.MAX_VALUE);

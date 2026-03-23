@@ -7,7 +7,7 @@ import org.example.constant.Configs;
 import org.example.constant.DimensionsC;
 import org.example.constant.DirectionsE;
 import org.example.entity.CanvasCoordinate;
-import org.example.entity.MazeCoordinate;
+import org.example.entity.MazeCell;
 import org.example.entity.CanvasRect;
 import org.example.event.*;
 import org.example.event.manager.EventManager;
@@ -175,7 +175,7 @@ public class PacMan implements Sprite, Subscriber {
 
 
 
-    public MazeCoordinate getCurrMazeCord() {
+    public MazeCell getCurrMazeCord() {
         return CanvasUtil.toMazeCoordinate(new CanvasCoordinate(canvasRow, canvasCol), direction);
     }
 }

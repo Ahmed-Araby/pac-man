@@ -4,7 +4,7 @@ import org.example.constant.DimensionsC;
 import org.example.constant.DirectionsE;
 import org.example.constant.SpriteE;
 import org.example.entity.CanvasCoordinate;
-import org.example.entity.MazeCoordinate;
+import org.example.entity.MazeCell;
 import org.example.entity.CanvasRect;
 import org.example.event.ghost.GhostMovementAttemptEvent;
 import org.example.util.CanvasUtil;
@@ -36,7 +36,7 @@ public class GhostToWallCollisionDetection {
 
 
     private boolean isWall(CanvasCoordinate cord) {
-        final MazeCoordinate wallMazeCord = CanvasUtil.toMazeCoordinate(cord, DirectionsE.STILL);
+        final MazeCell wallMazeCord = CanvasUtil.toMazeCoordinate(cord, DirectionsE.STILL);
         return maze[wallMazeCord.getRow()][wallMazeCord.getCol()] == SpriteE.WALL;
     }
 

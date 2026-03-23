@@ -6,7 +6,7 @@ import javafx.scene.paint.Color;
 import org.example.config.GameConfig;
 import org.example.constant.*;
 import org.example.entity.CanvasCoordinate;
-import org.example.entity.MazeCoordinate;
+import org.example.entity.MazeCell;
 import org.example.event.Event;
 import org.example.event.PacManSugarCollisionEvent;
 import org.example.event.Subscriber;
@@ -82,7 +82,7 @@ public class Sugar implements Sprite, Subscriber {
     }
 
     public void removeSugar(CanvasCoordinate sugarRectCanvasTopLeftCanvasCoordinate) {
-        final MazeCoordinate sugarCellMazeTopLeftCornerCoordinate = CanvasUtil.toMazeCoordinate(sugarRectCanvasTopLeftCanvasCoordinate, DirectionsE.STILL);
+        final MazeCell sugarCellMazeTopLeftCornerCoordinate = CanvasUtil.toMazeCoordinate(sugarRectCanvasTopLeftCanvasCoordinate, DirectionsE.STILL);
         maze[sugarCellMazeTopLeftCornerCoordinate.getRow()][sugarCellMazeTopLeftCornerCoordinate.getCol()] = SpriteE.EMPTY;
     }
 }

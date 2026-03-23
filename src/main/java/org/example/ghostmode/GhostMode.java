@@ -3,9 +3,9 @@ package org.example.ghostmode;
 import org.example.constant.DirectionsE;
 import org.example.constant.SpriteE;
 import org.example.entity.CanvasCoordinate;
-import org.example.entity.MazeCoordinate;
+import org.example.entity.MazeCell;
 
 public interface GhostMode {
 
-    DirectionsE nextMoveDirection(CanvasCoordinate ghostCord, MazeCoordinate pacCord, SpriteE[][] maze);
+    DirectionsE nextMoveDirection(CanvasCoordinate ghostCord, MazeCell pacCord, SpriteE[][] maze);
 }

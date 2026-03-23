@@ -8,7 +8,7 @@ import lombok.ToString;
 @Getter
 @ToString
 public class MazeMove implements Comparable {
-    private MazeCoordinate nextCell;
+    private MazeCell nextCell;
     private int dist2Target;
 
     @Override

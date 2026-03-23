@@ -4,7 +4,7 @@ import org.example.constant.DimensionsC;
 import org.example.constant.DirectionsE;
 import org.example.constant.SpriteE;
 import org.example.entity.CanvasCoordinate;
-import org.example.entity.MazeCoordinate;
+import org.example.entity.MazeCell;
 import org.example.entity.CanvasRect;
 import org.example.event.Event;
 import org.example.event.manager.SyncEventManager;
@@ -54,7 +54,7 @@ public class PacManToWallCollisionDetection implements Subscriber {
     }
 
     private boolean isPacManCollidingWithAWall(CanvasCoordinate wallCanvasTopLeftCorner) {
-        final MazeCoordinate wallMazeCord = CanvasUtil.toMazeCoordinate(wallCanvasTopLeftCorner, DirectionsE.STILL);
+        final MazeCell wallMazeCord = CanvasUtil.toMazeCoordinate(wallCanvasTopLeftCorner, DirectionsE.STILL);
         return maze[wallMazeCord.getRow()][wallMazeCord.getCol()] == SpriteE.WALL;
     }
 

@@ -1,6 +1,6 @@
 package org.example.util;
 import org.example.constant.SpriteE;
-import org.example.entity.MazeCoordinate;
+import org.example.entity.MazeCell;
 
 import java.util.ArrayList;
 import java.util.LinkedList;
@@ -10,7 +10,7 @@ import java.util.Queue;
 public class BfsUtil {
 
 
-    public static int[][] getDistMat(MazeCoordinate sCord, MazeCoordinate tCord, SpriteE[][] maze) {
+    public static int[][] getDistMat(MazeCell sCord, MazeCell tCord, SpriteE[][] maze) {
         // init
         final int[][] dist = new int[maze.length][maze[0].length];
         for(int r=0; r < dist.length; r++) {
@@ -19,15 +19,15 @@ public class BfsUtil {
             }
         }
 
-        final Queue<MazeCoordinate> cords = new LinkedList<>();
+        final Queue<MazeCell> cords = new LinkedList<>();
         cords.add(sCord);
         dist[sCord.getRow()][sCord.getCol()] = 0;
         boolean targetReached = false;
         while(!cords.isEmpty() && !targetReached) {
-            final MazeCoordinate cCord = cords.poll();
+            final MazeCell cCord = cords.poll();
 
-            final List<MazeCoordinate> ninetyDegMoves = MazeUtil.get90DegMoves(cCord);
-            for (MazeCoordinate nextCord: ninetyDegMoves) {
+            final List<MazeCell> ninetyDegMoves = MazeUtil.get90DegMoves(cCord);
+            for (MazeCell nextCord: ninetyDegMoves) {
                 if(nextCord.equals(tCord)) {
                     dist[nextCord.getRow()][nextCord.getCol()] = Math.min(dist[nextCord.getRow()][nextCord.getCol()],
                             1 + dist[cCord.getRow()][cCord.getCol()]);
@@ -45,19 +45,19 @@ public class BfsUtil {
     }
 
 
-    public static List<MazeCoordinate> constructPath(MazeCoordinate sCord, MazeCoordinate tCord, int[][] dist) {
+    public static List<MazeCell> constructPath(MazeCell sCord, MazeCell tCord, int[][] dist) {
         if (sCord.equals(tCord)) {
             return List.of(sCord);
         }
 
-        MazeCoordinate cord = tCord;
-        List<MazeCoordinate> path = new ArrayList<>();
+        MazeCell cord = tCord;
+        List<MazeCell> path = new ArrayList<>();
         path.add(tCord);
         while(!cord.equals(sCord)) {
-            final List<MazeCoordinate> ninetyDegMoves = MazeUtil.get90DegMoves(cord);
+            final List<MazeCell> ninetyDegMoves = MazeUtil.get90DegMoves(cord);
             int minDist = dist[cord.getRow()][cord.getCol()];
 
-            for(MazeCoordinate nextCord : ninetyDegMoves) {
+            for(MazeCell nextCord : ninetyDegMoves) {
                 if(dist[nextCord.getRow()][nextCord.getCol()] < minDist) {
                     minDist = dist[nextCord.getRow()][nextCord.getCol()];
                     cord = nextCord;
