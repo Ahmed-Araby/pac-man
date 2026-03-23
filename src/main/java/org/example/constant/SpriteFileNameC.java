@@ -1,6 +1,6 @@
 package org.example.constant;
 
-public class SpriteFileNameConstants {
+public class SpriteFileNameC {
     public static String FORWARD_SLASH = "/";
 
     public static final String SPRITE_FILES_DIRECTORY = "assets/sprites";

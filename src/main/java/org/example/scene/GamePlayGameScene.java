@@ -10,7 +10,7 @@ import org.example.collision.PacManToSugarCollisionDetection;
 import org.example.collision.PacManToSuperSugarCollisionDetection;
 import org.example.collision.PacManToWallCollisionDetection;
 import org.example.config.GameConfig;
-import org.example.constant.ColorConstants;
+import org.example.constant.ColorC;
 import org.example.constant.DimensionsC;
 import org.example.event.manager.EventManager;
 import org.example.event.EventType;
@@ -125,7 +125,7 @@ public class GamePlayGameScene implements GameScene {
     @Override
     public void render() {
         final GraphicsContext context = canvas.getGraphicsContext2D();
-        context.setFill(ColorConstants.CANVAS_COLOR);
+        context.setFill(ColorC.CANVAS_COLOR);
         context.fillRect(0, 0, DimensionsC.CANVAS_WIDTH_PIXELS, DimensionsC.CANVAS_HEIGHT_PIXELS);
 
 

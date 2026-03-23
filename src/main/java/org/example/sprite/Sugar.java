@@ -41,7 +41,7 @@ public class Sugar implements Sprite, Subscriber {
     public void render(Canvas canvas) {
         final GraphicsContext con = canvas.getGraphicsContext2D();
 
-        con.setFill(ColorConstants.SUGAR_COLOR);
+        con.setFill(ColorC.SUGAR_COLOR);
 
         for (int row = 0; row < maze.length; row++) {
             for (int col = 0; col < maze[0].length; col++) {

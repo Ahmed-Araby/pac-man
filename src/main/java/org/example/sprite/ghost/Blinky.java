@@ -3,7 +3,7 @@ package org.example.sprite.ghost;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.image.Image;
 import org.example.constant.DirectionsE;
-import org.example.constant.SpriteFileNameConstants;
+import org.example.constant.SpriteFileNameC;
 import org.example.entity.CanvasCoordinate;
 import org.example.event.Event;
 import org.example.ghostmode.ChaseShortestPathPac;
@@ -28,7 +28,7 @@ public class Blinky implements Sprite{
         canvasCol = 0;
         canvasRow = 0;
         directionsE = DirectionsE.STILL;
-        final String SPRITE_SHEET_FILE_RESOURCE_ABSOLUTE_PATH = getClass().getResource(SpriteFileNameConstants.SPRITE_SHEET_FILE_RESOURCE_RELATIVE_PATH).toString();
+        final String SPRITE_SHEET_FILE_RESOURCE_ABSOLUTE_PATH = getClass().getResource(SpriteFileNameC.SPRITE_SHEET_FILE_RESOURCE_RELATIVE_PATH).toString();
         blinky = new Image(SPRITE_SHEET_FILE_RESOURCE_ABSOLUTE_PATH);
 
         this.pacMan = pacMan;
