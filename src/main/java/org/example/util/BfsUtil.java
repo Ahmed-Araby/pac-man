@@ -1,6 +1,7 @@
 package org.example.util;
 import org.example.constant.SpriteE;
 import org.example.entity.MazeCell;
+import org.example.maze.MazeMatrix;
 
 import java.util.ArrayList;
 import java.util.LinkedList;
@@ -10,9 +11,9 @@ import java.util.Queue;
 public class BfsUtil {
 
 
-    public static int[][] getDistMat(MazeCell sCord, MazeCell tCord, SpriteE[][] maze) {
+    public static int[][] getDistMat(MazeCell sCord, MazeCell tCord) {
         // init
-        final int[][] dist = new int[maze.length][maze[0].length];
+        final int[][] dist = new int[MazeMatrix.height()][MazeMatrix.width()];
         for(int r=0; r < dist.length; r++) {
             for(int c=0; c<dist[0].length; c++) {
                 dist[r][c] = Integer.MAX_VALUE;
@@ -27,17 +28,17 @@ public class BfsUtil {
             final MazeCell cCord = cords.poll();
 
             final List<MazeCell> ninetyDegMoves = MazeUtil.get90DegMoves(cCord);
-            for (MazeCell nextCord: ninetyDegMoves) {
-                if(nextCord.equals(tCord)) {
-                    dist[nextCord.getRow()][nextCord.getCol()] = Math.min(dist[nextCord.getRow()][nextCord.getCol()],
+            for (MazeCell nextCell: ninetyDegMoves) {
+                if(nextCell.equals(tCord)) {
+                    dist[nextCell.getRow()][nextCell.getCol()] = Math.min(dist[nextCell.getRow()][nextCell.getCol()],
                             1 + dist[cCord.getRow()][cCord.getCol()]);
                     targetReached = true;
                     break;
                 }
-                else if(maze[nextCord.getRow()][nextCord.getCol()] != SpriteE.WALL) {
-                    dist[nextCord.getRow()][nextCord.getCol()] = Math.min(dist[nextCord.getRow()][nextCord.getCol()],
+                else if(!MazeMatrix.isWall(nextCell)) {
+                    dist[nextCell.getRow()][nextCell.getCol()] = Math.min(dist[nextCell.getRow()][nextCell.getCol()],
                             1 + dist[cCord.getRow()][cCord.getCol()]);
-                    cords.add(nextCord);
+                    cords.add(nextCell);
                 }
             }
         }

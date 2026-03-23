@@ -18,6 +18,7 @@ import org.example.event.manager.SyncEventManager;
 import org.example.ghostmode.ChaseShortestPathPac;
 import org.example.input.JavaFXInputHandler;
 import org.example.input.JavaFXUserInputHandler;
+import org.example.maze.MazeMatrix;
 import org.example.sound.SoundPlayer;
 import org.example.sprite.Maze;
 import org.example.sprite.PacMan;
@@ -52,6 +53,9 @@ public class GamePlayGameScene implements GameScene {
     private final PacManToWallCollisionDetection pacManToWallCollisionDetection;
 
     public GamePlayGameScene() {
+        // init
+        MazeMatrix.init();
+
         // game engine
         eventManager = new EventManager();
         syncEventManager = new SyncEventManager();
@@ -60,17 +64,17 @@ public class GamePlayGameScene implements GameScene {
 
         // sprites
         maze = new Maze();
-        final CanvasCoordinate emptyCellPos = maze.getEmptyMazePosition();
+        final CanvasCoordinate emptyCellPos = MazeMatrix.getEmptyMazePosition();
         pacMan = new PacMan(emptyCellPos.getCol(), emptyCellPos.getRow(), eventManager, syncEventManager);
-        sugar = new Sugar(maze.getGameMaze());
+        sugar = new Sugar();
 
         // ghosts
         initGhosts(maze);
 
         // collision detection
-        pacManToWallCollisionDetection = new PacManToWallCollisionDetection(maze.getGameMaze(), syncEventManager);
-        pacManToSugarCollisionDetection = new PacManToSugarCollisionDetection(maze.getGameMaze(), eventManager);
-        pacManToSuperSugarCollisionDetection = new PacManToSuperSugarCollisionDetection(maze.getGameMaze(), eventManager);
+        pacManToWallCollisionDetection = new PacManToWallCollisionDetection(syncEventManager);
+        pacManToSugarCollisionDetection = new PacManToSugarCollisionDetection(eventManager);
+        pacManToSuperSugarCollisionDetection = new PacManToSuperSugarCollisionDetection(eventManager);
 
         // javaFX setup
         canvas = new Canvas(DimensionsC.CANVAS_WIDTH_PIXELS, DimensionsC.CANVAS_HEIGHT_PIXELS);
@@ -112,7 +116,7 @@ public class GamePlayGameScene implements GameScene {
     }
 
     public void initGhosts(Maze maze) {
-        final GhostToWallCollisionDetection ghostToWallCollisionDetection = new GhostToWallCollisionDetection(maze.getGameMaze());
+        final GhostToWallCollisionDetection ghostToWallCollisionDetection = new GhostToWallCollisionDetection();
         final ChaseShortestPathPac chaseShortestPathPac = new ChaseShortestPathPac(ghostToWallCollisionDetection);
         blinky = new Blinky(pacMan, maze, chaseShortestPathPac);
     }

@@ -17,11 +17,9 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 public class PacManToSugarCollisionDetection implements Subscriber {
-    private SpriteE[][] maze;
     private EventManager eventManager;
 
-    public PacManToSugarCollisionDetection(SpriteE[][] maze, EventManager eventManager) {
-        this.maze = maze;
+    public PacManToSugarCollisionDetection(EventManager eventManager) {
         this.eventManager = eventManager;
     }
 
@@ -30,7 +28,7 @@ public class PacManToSugarCollisionDetection implements Subscriber {
         final List<CanvasCoordinate> pacManRect4Corners = CanvasRectUtils.get4Corners(pacManCanvasCanvasRect);
         final List<CanvasCoordinate> canvasSugarToBeEaten = pacManRect4Corners.stream()
                 .map(this::toTopLeftCornerOfRectContainingPoint)
-                .filter(rectTopLeftCornerCanvas -> SugarUtil.isCanvasCellHasSugar(maze, rectTopLeftCornerCanvas))
+                .filter(rectTopLeftCornerCanvas -> SugarUtil.isCanvasCellHasSugar(rectTopLeftCornerCanvas))
                 .map(SugarUtil::getSugarTopLeftCornerCanvas)
                 .filter(sugarCanvasRectTopLeftCorner -> isPacManRectContainsSugarRect(pacManCanvasTopLeftCorner, sugarCanvasRectTopLeftCorner))
                 .collect(Collectors.toUnmodifiableList());

@@ -7,6 +7,7 @@ import org.example.constant.SpriteE;
 import org.example.entity.CanvasCoordinate;
 import org.example.entity.MazeCell;
 import org.example.event.ghost.GhostMovementAttemptEvent;
+import org.example.maze.MazeMatrix;
 
 import java.util.List;
 
@@ -37,7 +38,7 @@ public class GhostUtil
         }
     }
 
-    public static List<MazeCell> getCandidateNextCells(CanvasCoordinate cord, SpriteE[][] maze) {
+    public static List<MazeCell> getCandidateNextCells(CanvasCoordinate cord) {
         List<MazeCell> candidateNextCells = null;
         candidateNextCells = CanvasUtil.getIntersectingMazeCells(cord);
         System.out.println("interestingMazeCells = " + candidateNextCells);
@@ -47,7 +48,7 @@ public class GhostUtil
         }
         return candidateNextCells
                 .stream()
-                .filter(cell -> maze[cell.getRow()][cell.getCol()] != SpriteE.WALL)
+                .filter(cell -> !MazeMatrix.isWall(cell))
                 .toList();
     }
 }

@@ -21,11 +21,11 @@ public class ChaseShortestPathPac implements GhostMode {
 
     private final GhostToWallCollisionDetection ghostToWallCollisionDetection;
 
-    public DirectionsE nextMoveDirection(CanvasCoordinate ghostCord, CanvasCoordinate pacCord, SpriteE[][] maze) {
+    public DirectionsE nextMoveDirection(CanvasCoordinate ghostCord, CanvasCoordinate pacCord) {
         if(ghostCord.equals(pacCord)) {
             return DirectionsE.STILL;
         }
-        final List<MazeMove> possibleMoves = getCandidateMoves(ghostCord, pacCord, maze);
+        final List<MazeMove> possibleMoves = getCandidateMoves(ghostCord, pacCord);
         System.out.println("possible Moves = " + possibleMoves);
         return possibleMoves
                 .stream()
@@ -42,21 +42,21 @@ public class ChaseShortestPathPac implements GhostMode {
                 .orElse(DirectionsE.STILL);
     }
 
-    private List<MazeMove> getCandidateMoves(CanvasCoordinate ghostCord, CanvasCoordinate pacCord, SpriteE[][] maze) {
+    private List<MazeMove> getCandidateMoves(CanvasCoordinate ghostCord, CanvasCoordinate pacCord) {
         // this work can be parallelized
         final MazeCell pacCell = CanvasUtil.toMazeCoordinate(pacCord, DirectionsE.STILL);
-        final List<MazeCell> candidateNextMazeCell = GhostUtil.getCandidateNextCells(ghostCord, maze);
+        final List<MazeCell> candidateNextMazeCell = GhostUtil.getCandidateNextCells(ghostCord);
         return candidateNextMazeCell
                 .stream()
                 .map(interestingCell -> {
-                    final int dist = getDistToPacCell(interestingCell, pacCell, maze);
+                    final int dist = getDistToPacCell(interestingCell, pacCell);
                     return new MazeMove(interestingCell, dist);
                 })
                 .toList();
     }
 
-    private int getDistToPacCell(MazeCell sourceCell, MazeCell pacCell, SpriteE[][] maze) {
-        final int[][] dist = BfsUtil.getDistMat(sourceCell, pacCell, maze);
+    private int getDistToPacCell(MazeCell sourceCell, MazeCell pacCell) {
+        final int[][] dist = BfsUtil.getDistMat(sourceCell, pacCell);
         return dist[pacCell.getRow()][pacCell.getCol()];
     }
 }

@@ -12,17 +12,16 @@ import org.example.event.movement.PacManMovementAttemptApprovedEvent;
 import org.example.event.movement.PacManMovementAttemptDeniedEvent;
 import org.example.event.movement.PacManMovementAttemptEvent;
 import org.example.event.Subscriber;
+import org.example.maze.MazeMatrix;
 import org.example.util.CanvasUtil;
 import org.example.util.CanvasRectUtils;
 
 import java.util.List;
 
 public class PacManToWallCollisionDetection implements Subscriber {
-    private SpriteE[][] maze;
     private SyncEventManager syncEventManager;
 
-    public PacManToWallCollisionDetection(SpriteE[][] maze, SyncEventManager syncEventManager) {
-        this.maze = maze;
+    public PacManToWallCollisionDetection(SyncEventManager syncEventManager) {
         this.syncEventManager = syncEventManager;
     }
 
@@ -55,7 +54,7 @@ public class PacManToWallCollisionDetection implements Subscriber {
 
     private boolean isPacManCollidingWithAWall(CanvasCoordinate wallCanvasTopLeftCorner) {
         final MazeCell wallMazeCord = CanvasUtil.toMazeCoordinate(wallCanvasTopLeftCorner, DirectionsE.STILL);
-        return maze[wallMazeCord.getRow()][wallMazeCord.getCol()] == SpriteE.WALL;
+        return MazeMatrix.isWall(wallMazeCord.getRow(), wallMazeCord.getCol());
     }
 
     private void publishMovementApproval(PacManMovementAttemptEvent event) {

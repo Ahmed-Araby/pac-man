@@ -7,6 +7,7 @@ import org.example.entity.CanvasCoordinate;
 import org.example.entity.MazeCell;
 import org.example.entity.CanvasRect;
 import org.example.event.ghost.GhostMovementAttemptEvent;
+import org.example.maze.MazeMatrix;
 import org.example.util.CanvasUtil;
 import org.example.util.GhostUtil;
 import org.example.util.CanvasRectUtils;
@@ -14,11 +15,6 @@ import org.example.util.CanvasRectUtils;
 import java.util.List;
 
 public class GhostToWallCollisionDetection {
-    private SpriteE[][] maze;
-
-    public GhostToWallCollisionDetection(SpriteE[][] maze) {
-        this.maze = maze;
-    }
 
     public boolean checkCollision(GhostMovementAttemptEvent event) {
         final CanvasCoordinate nextGhostCord = GhostUtil.move(event);
@@ -36,8 +32,8 @@ public class GhostToWallCollisionDetection {
 
 
     private boolean isWall(CanvasCoordinate cord) {
-        final MazeCell wallMazeCord = CanvasUtil.toMazeCoordinate(cord, DirectionsE.STILL);
-        return maze[wallMazeCord.getRow()][wallMazeCord.getCol()] == SpriteE.WALL;
+        final MazeCell cell = CanvasUtil.toMazeCoordinate(cord, DirectionsE.STILL);
+        return MazeMatrix.isWall(cell);
     }
 
 }
