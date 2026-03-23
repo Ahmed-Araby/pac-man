@@ -14,7 +14,7 @@ import org.example.util.CanvasUtil;
 import org.example.util.EnrichedThreadLocalRandom;
 import org.example.util.MazeUtil;
 import org.example.util.debug.DebugUtil;
-import org.example.util.sugar.SugarUtil;
+import org.example.util.SugarUtil;
 
 public class Sugar implements Sprite, Subscriber {
     private final SpriteE[][] maze;

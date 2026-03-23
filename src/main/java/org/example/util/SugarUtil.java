@@ -1,11 +1,10 @@
-package org.example.util.sugar;
+package org.example.util;
 
 import org.example.constant.DimensionsC;
 import org.example.constant.DirectionsE;
 import org.example.constant.SpriteE;
 import org.example.entity.CanvasCoordinate;
 import org.example.entity.MazeCoordinate;
-import org.example.util.CanvasUtil;
 
 public class SugarUtil {
 

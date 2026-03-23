@@ -11,7 +11,7 @@ import org.example.event.PacManCurrentLocationEvent;
 import org.example.event.PacManSugarCollisionEvent;
 import org.example.event.manager.EventManager;
 import org.example.util.CanvasRectUtils;
-import org.example.util.sugar.SugarUtil;
+import org.example.util.SugarUtil;
 
 import java.util.List;
 import java.util.stream.Collectors;
