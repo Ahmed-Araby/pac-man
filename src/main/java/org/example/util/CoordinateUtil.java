@@ -16,8 +16,9 @@ public class CoordinateUtil {
     private static final int[] dCol = {0, 0, 1, -1}; // don't change, don't change, right, left
 
     public static List<MazeCoordinate> getIntersectingMazeCells(CanvasCoordinate cord) {
+        final Rect canvasRect = new Rect(cord, DimensionsC.MAZE_CELL_SIZE_PIXELS, DimensionsC.MAZE_CELL_SIZE_PIXELS);
         return RectUtils
-                .get4Corners(new Rect(cord, DimensionsC.MAZE_CELL_SIZE_PIXELS, DimensionsC.MAZE_CELL_SIZE_PIXELS))
+                .get4Corners(canvasRect)
                 .stream()
                 .map(corner -> RectUtils.getTopLeftCornerOfRectContainingPoint(DimensionsC.MAZE_CELL_SIZE_PIXELS, DimensionsC.MAZE_CELL_SIZE_PIXELS, corner))
                 .map(topLeftCorner -> CoordinateUtil.toMazeCoordinate(topLeftCorner, DirectionsE.STILL))
