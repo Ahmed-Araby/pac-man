@@ -23,16 +23,14 @@ public class CanvasUtil {
 
 
 
-    public static DirectionsE getMovementDir(CanvasCoordinate from, MazeCoordinate to) {
-        final CanvasCoordinate canvasToCord = MazeUtil.getCanvasCord(to.getRow(), to.getCol());
-
-        if(canvasToCord.getRow() > from.getRow()) {
+    public static DirectionsE getMovementDir(CanvasCoordinate from, CanvasCoordinate to) {
+        if(to.getRow() > from.getRow()) {
             return DirectionsE.DOWN;
-        } else if(canvasToCord.getRow() < from.getRow()) {
+        } else if(to.getRow() < from.getRow()) {
             return DirectionsE.UP;
-        } else if(canvasToCord.getCol() > from.getCol()) {
+        } else if(to.getCol() > from.getCol()) {
             return DirectionsE.RIGHT;
-        } else if(canvasToCord.getCol() < from.getCol()) {
+        } else if(to.getCol() < from.getCol()) {
             return DirectionsE.LEFT;
         } else {
             return DirectionsE.STILL;

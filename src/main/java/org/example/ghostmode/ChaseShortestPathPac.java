@@ -10,6 +10,7 @@ import org.example.entity.MazeMove;
 import org.example.event.ghost.GhostMovementAttemptEvent;
 import org.example.util.BfsUtil;
 import org.example.util.CanvasUtil;
+import org.example.util.MazeUtil;
 
 import java.util.List;
 
@@ -26,7 +27,8 @@ public class ChaseShortestPathPac implements GhostMode {
                 .stream()
                 .filter(move -> move.getDist2Target() < Integer.MAX_VALUE)
                 .map(move -> {
-                    final DirectionsE movementDir = CanvasUtil.getMovementDir(ghostCord, move.getNextCell());
+                    final CanvasCoordinate nextCord = MazeUtil.getCanvasCord(move.getNextCell());
+                    final DirectionsE movementDir = CanvasUtil.getMovementDir(ghostCord, nextCord);
                     return new GhostMovementAttemptEvent(ghostCord, movementDir);
                 })
                 .filter(event -> !ghostToWallCollisionDetection.checkCollision(event))

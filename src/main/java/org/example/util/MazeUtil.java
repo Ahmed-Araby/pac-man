@@ -30,6 +30,10 @@ public class MazeUtil {
         return ninetyDegMoves;
     }
 
+    public static CanvasCoordinate getCanvasCord(MazeCoordinate cord) {
+        return getCanvasCord(cord.getRow(), cord.getCol());
+    }
+
     public static CanvasCoordinate getCanvasCord(int mazeRow, int mazeCol) {
         return new CanvasCoordinate(mazeRow * DimensionsC.MAZE_CELL_SIZE_PIXELS, mazeCol * DimensionsC.MAZE_CELL_SIZE_PIXELS);
     }
