@@ -26,7 +26,7 @@ public class BfsUtil {
         while(!cords.isEmpty() && !targetReached) {
             final MazeCoordinate cCord = cords.poll();
 
-            final List<MazeCoordinate> ninetyDegMoves = CoordinateUtil.get90DegMoves(cCord);
+            final List<MazeCoordinate> ninetyDegMoves = MazeUtil.get90DegMoves(cCord);
             for (MazeCoordinate nextCord: ninetyDegMoves) {
                 if(nextCord.equals(tCord)) {
                     dist[nextCord.getRow()][nextCord.getCol()] = Math.min(dist[nextCord.getRow()][nextCord.getCol()],
@@ -54,7 +54,7 @@ public class BfsUtil {
         List<MazeCoordinate> path = new ArrayList<>();
         path.add(tCord);
         while(!cord.equals(sCord)) {
-            final List<MazeCoordinate> ninetyDegMoves = CoordinateUtil.get90DegMoves(cord);
+            final List<MazeCoordinate> ninetyDegMoves = MazeUtil.get90DegMoves(cord);
             int minDist = dist[cord.getRow()][cord.getCol()];
 
             for(MazeCoordinate nextCord : ninetyDegMoves) {

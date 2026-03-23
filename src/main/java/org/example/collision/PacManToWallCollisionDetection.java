@@ -12,7 +12,7 @@ import org.example.event.movement.PacManMovementAttemptApprovedEvent;
 import org.example.event.movement.PacManMovementAttemptDeniedEvent;
 import org.example.event.movement.PacManMovementAttemptEvent;
 import org.example.event.Subscriber;
-import org.example.util.CoordinateUtil;
+import org.example.util.CanvasUtil;
 import org.example.util.RectUtils;
 
 import java.util.List;
@@ -54,7 +54,7 @@ public class PacManToWallCollisionDetection implements Subscriber {
     }
 
     private boolean isPacManCollidingWithAWall(CanvasCoordinate wallCanvasTopLeftCorner) {
-        final MazeCoordinate wallMazeCord = CoordinateUtil.toMazeCoordinate(wallCanvasTopLeftCorner, DirectionsE.STILL);
+        final MazeCoordinate wallMazeCord = CanvasUtil.toMazeCoordinate(wallCanvasTopLeftCorner, DirectionsE.STILL);
         return maze[wallMazeCord.getRow()][wallMazeCord.getCol()] == SpriteE.WALL;
     }
 

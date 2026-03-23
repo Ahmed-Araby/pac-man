@@ -5,7 +5,7 @@ import org.example.constant.DirectionsE;
 import org.example.constant.SpriteE;
 import org.example.entity.CanvasCoordinate;
 import org.example.entity.MazeCoordinate;
-import org.example.util.CoordinateUtil;
+import org.example.util.CanvasUtil;
 
 public class SugarUtil {
 
@@ -23,12 +23,12 @@ public class SugarUtil {
     }
 
     public static boolean isCanvasCellHasSugar(SpriteE[][] maze, CanvasCoordinate cellTopLeftCornerCanvas) {
-        final MazeCoordinate mazeIndex = CoordinateUtil.toMazeCoordinate(cellTopLeftCornerCanvas, DirectionsE.STILL);
+        final MazeCoordinate mazeIndex = CanvasUtil.toMazeCoordinate(cellTopLeftCornerCanvas, DirectionsE.STILL);
         return maze[mazeIndex.getRow()][mazeIndex.getCol()] == SpriteE.SUGAR;
     }
 
     public static boolean isCanvasCellHasSuperSugar(SpriteE[][] maze, CanvasCoordinate cellTopLeftCornerCanvas) {
-        final MazeCoordinate mazeIndex = CoordinateUtil.toMazeCoordinate(cellTopLeftCornerCanvas, DirectionsE.STILL);
+        final MazeCoordinate mazeIndex = CanvasUtil.toMazeCoordinate(cellTopLeftCornerCanvas, DirectionsE.STILL);
         return maze[mazeIndex.getRow()][mazeIndex.getCol()] == SpriteE.SUPER_SUGAR;
     }
 }

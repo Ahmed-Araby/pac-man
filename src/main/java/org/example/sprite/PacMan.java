@@ -16,7 +16,7 @@ import org.example.event.movement.PacManMovementAttemptApprovedEvent;
 import org.example.event.movement.PacManMovementAttemptDeniedEvent;
 import org.example.event.movement.PacManMovementAttemptEvent;
 import org.example.event.movement.PacManMovementRequestEvent;
-import org.example.util.CoordinateUtil;
+import org.example.util.CanvasUtil;
 import org.example.util.pacman.PacManGraphicsUtil;
 import org.example.util.pacman.PixelStrideTracker;
 import org.example.util.pacman.TurnBuffer;
@@ -176,6 +176,6 @@ public class PacMan implements Sprite, Subscriber {
 
 
     public MazeCoordinate getCurrMazeCord() {
-        return CoordinateUtil.toMazeCoordinate(new CanvasCoordinate(canvasRow, canvasCol), direction);
+        return CanvasUtil.toMazeCoordinate(new CanvasCoordinate(canvasRow, canvasCol), direction);
     }
 }

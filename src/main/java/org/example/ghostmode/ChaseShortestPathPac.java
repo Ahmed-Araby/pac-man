@@ -9,7 +9,7 @@ import org.example.entity.MazeCoordinate;
 import org.example.entity.MazeMove;
 import org.example.event.ghost.GhostMovementAttemptEvent;
 import org.example.util.BfsUtil;
-import org.example.util.CoordinateUtil;
+import org.example.util.CanvasUtil;
 
 import java.util.List;
 
@@ -26,7 +26,7 @@ public class ChaseShortestPathPac implements GhostMode {
                 .stream()
                 .filter(move -> move.getDist2Target() < Integer.MAX_VALUE)
                 .map(move -> {
-                    final DirectionsE movementDir = CoordinateUtil.getMovementDir(ghostCord, move.getNextCell());
+                    final DirectionsE movementDir = CanvasUtil.getMovementDir(ghostCord, move.getNextCell());
                     return new GhostMovementAttemptEvent(ghostCord, movementDir);
                 })
                 .filter(event -> !ghostToWallCollisionDetection.checkCollision(event))
@@ -37,7 +37,7 @@ public class ChaseShortestPathPac implements GhostMode {
 
     private List<MazeMove> nextPositions(CanvasCoordinate ghostCord, MazeCoordinate pacCord, SpriteE[][] maze) {
         // this work can be parallelized
-        return CoordinateUtil.getIntersectingMazeCells(ghostCord)
+        return CanvasUtil.getIntersectingMazeCells(ghostCord)
                 .stream()
                 .map(cord -> nextPosition(cord, pacCord, maze))
                 .sorted()
