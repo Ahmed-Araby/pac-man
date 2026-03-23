@@ -3,6 +3,7 @@ package org.example.sprite;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.paint.Color;
+import org.example.config.Configs;
 import org.example.config.GameConfig;
 import org.example.constant.*;
 import org.example.entity.CanvasCoordinate;

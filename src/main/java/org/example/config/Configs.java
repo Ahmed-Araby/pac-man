@@ -1,4 +1,4 @@
-package org.example.constant;
+package org.example.config;
 
 public class Configs {
 

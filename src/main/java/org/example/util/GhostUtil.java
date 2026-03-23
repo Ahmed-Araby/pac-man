@@ -1,6 +1,6 @@
 package org.example.util;
 
-import org.example.constant.Configs;
+import org.example.config.Configs;
 import org.example.constant.DimensionsC;
 import org.example.constant.DirectionsE;
 import org.example.constant.SpriteE;
