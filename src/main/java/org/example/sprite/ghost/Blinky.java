@@ -8,6 +8,7 @@ import org.example.config.Configs;
 import org.example.constant.*;
 import org.example.entity.CanvasCoordinate;
 import org.example.event.Event;
+import org.example.ghostmode.ChaseScatterTimer;
 import org.example.ghostmode.ShortestPathMode;
 import org.example.sprite.PacMan;
 import org.example.sprite.Sprite;
@@ -28,15 +29,14 @@ public class Blinky implements Sprite{
     private final ChaseScatterTimer chaseScatterTimer;
     private final Animator animator;
 
+    private final CanvasCoordinate topRightCorner = new CanvasCoordinate(
+            0,
+            DimensionsC.CANVAS_WIDTH_PIXELS - 1
+    );
+
     // [TODO] find a better way to pass this information
     private final PacMan pacMan;
 
-    public Blinky(PacMan pacMan, Maze maze, ChaseShortestPathPac chaseMode) {
-        canvasCol = 0;
-        canvasRow = 0;
-        directionsE = DirectionsE.STILL;
-
-        loadSprites();
     public Blinky(PacMan pacMan, ShortestPathMode chaseMode) {
         ghostSprites = loadSprites();
 
@@ -60,6 +60,8 @@ public class Blinky implements Sprite{
     @Override
     public void move(Event event) {
         final CanvasCoordinate ghostCurrCord = new CanvasCoordinate(canvasRow, canvasCol);
+        final CanvasCoordinate targetCord = getTargetCord();
+        directionsE = chaseMode.nextMoveDirection(ghostCurrCord, targetCord);
         final CanvasCoordinate ghostNewCord = GhostUtil.move(ghostCurrCord, directionsE);
         canvasRow = ghostNewCord.getRow();
         canvasCol = ghostNewCord.getCol();
@@ -69,6 +71,14 @@ public class Blinky implements Sprite{
         }
     }
 
+    public CanvasCoordinate getTargetCord() {
+        final GhostModeE mode = chaseScatterTimer.getMode();
+        return switch (mode) {
+            case SCATTERED -> topRightCorner;
+            case CHASE -> pacMan.getCurrCanvasCord();
+            default -> pacMan.getCurrCanvasCord();
+        };
+    }
 
 
     private Map<GhostModeE, Image[]> loadSprites() {
