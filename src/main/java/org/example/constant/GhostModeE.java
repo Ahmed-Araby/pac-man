@@ -1,6 +1,6 @@
 package org.example.constant;
 
-public enum GhostSpriteE {
+public enum GhostModeE {
 
     CHASE,
     SCATTERED,

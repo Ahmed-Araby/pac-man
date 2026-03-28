@@ -15,7 +15,7 @@ import org.example.constant.DimensionsC;
 import org.example.event.manager.EventManager;
 import org.example.event.EventType;
 import org.example.event.manager.SyncEventManager;
-import org.example.ghostmode.ChaseShortestPathPac;
+import org.example.ghostmode.ShortestPathMode;
 import org.example.input.JavaFXInputHandler;
 import org.example.input.JavaFXUserInputHandler;
 import org.example.maze.MazeMatrix;
@@ -69,7 +69,7 @@ public class GamePlayGameScene implements GameScene {
         sugar = new Sugar();
 
         // ghosts
-        initGhosts(maze);
+        initGhosts();
 
         // collision detection
         pacManToWallCollisionDetection = new PacManToWallCollisionDetection(syncEventManager);
@@ -115,10 +115,10 @@ public class GamePlayGameScene implements GameScene {
         syncEventManager.subscribe(EventType.PAC_MAN_MOVEMENT_ATTEMPT_DENIED, pacMan);
     }
 
-    public void initGhosts(Maze maze) {
+    public void initGhosts() {
         final GhostToWallCollisionDetection ghostToWallCollisionDetection = new GhostToWallCollisionDetection();
-        final ChaseShortestPathPac chaseShortestPathPac = new ChaseShortestPathPac(ghostToWallCollisionDetection);
-        blinky = new Blinky(pacMan, maze, chaseShortestPathPac);
+        final ShortestPathMode shortestPathMode = new ShortestPathMode(ghostToWallCollisionDetection);
+        blinky = new Blinky(pacMan, shortestPathMode);
     }
 
     @Override

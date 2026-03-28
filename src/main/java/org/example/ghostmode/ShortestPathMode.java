@@ -3,11 +3,11 @@ package org.example.ghostmode;
 import lombok.AllArgsConstructor;
 import org.example.collision.GhostToWallCollisionDetection;
 import org.example.constant.DirectionsE;
-import org.example.constant.SpriteE;
 import org.example.entity.CanvasCoordinate;
 import org.example.entity.MazeCell;
 import org.example.entity.MazeMove;
 import org.example.event.ghost.GhostMovementAttemptEvent;
+import org.example.maze.MazeMatrix;
 import org.example.util.BfsUtil;
 import org.example.util.CanvasUtil;
 import org.example.util.GhostUtil;
@@ -17,16 +17,15 @@ import java.util.List;
 
 
 @AllArgsConstructor
-public class ChaseShortestPathPac implements GhostMode {
+public class ShortestPathMode implements GhostMode {
 
     private final GhostToWallCollisionDetection ghostToWallCollisionDetection;
 
-    public DirectionsE nextMoveDirection(CanvasCoordinate ghostCord, CanvasCoordinate pacCord) {
-        if(ghostCord.equals(pacCord)) {
+    public DirectionsE nextMoveDirection(CanvasCoordinate ghostCord, CanvasCoordinate targetCord) {
+        if(ghostCord.equals(targetCord)) {
             return DirectionsE.STILL;
         }
-        final List<MazeMove> possibleMoves = getCandidateMoves(ghostCord, pacCord);
-        System.out.println("possible Moves = " + possibleMoves);
+        final List<MazeMove> possibleMoves = getCandidateMoves(ghostCord, targetCord);
         return possibleMoves
                 .stream()
                 .sorted()
@@ -42,21 +41,21 @@ public class ChaseShortestPathPac implements GhostMode {
                 .orElse(DirectionsE.STILL);
     }
 
-    private List<MazeMove> getCandidateMoves(CanvasCoordinate ghostCord, CanvasCoordinate pacCord) {
+    private List<MazeMove> getCandidateMoves(CanvasCoordinate ghostCord, CanvasCoordinate targetCord) {
         // this work can be parallelized
-        final MazeCell pacCell = CanvasUtil.toMazeCoordinate(pacCord, DirectionsE.STILL);
+        final MazeCell targetCell = CanvasUtil.toMazeCoordinate(targetCord, DirectionsE.STILL);
         final List<MazeCell> candidateNextMazeCell = GhostUtil.getCandidateNextCells(ghostCord);
         return candidateNextMazeCell
                 .stream()
                 .map(interestingCell -> {
-                    final int dist = getDistToPacCell(interestingCell, pacCell);
+                    final int dist = getDistToPacCell(interestingCell, targetCell);
                     return new MazeMove(interestingCell, dist);
                 })
                 .toList();
     }
 
-    private int getDistToPacCell(MazeCell sourceCell, MazeCell pacCell) {
-        final int[][] dist = BfsUtil.getDistMat(sourceCell, pacCell);
-        return dist[pacCell.getRow()][pacCell.getCol()];
+    private int getDistToPacCell(MazeCell sourceCell, MazeCell targetCell) {
+        final int[][] dist = BfsUtil.getDistMat(sourceCell, targetCell);
+        return dist[targetCell.getRow()][targetCell.getCol()];
     }
 }
