@@ -25,20 +25,21 @@ public class BfsUtil {
         dist[sCord.getRow()][sCord.getCol()] = 0;
         boolean targetReached = false;
         while(!cords.isEmpty() && !targetReached) {
-            final MazeCell cCord = cords.poll();
+            final MazeCell cCell = cords.poll();
 
-            final List<MazeCell> ninetyDegMoves = MazeUtil.get90DegMoves(cCord);
+            final List<MazeCell> ninetyDegMoves = MazeUtil.get90DegMoves(cCell);
             for (MazeCell nextCell: ninetyDegMoves) {
                 if(nextCell.equals(tCord)) {
                     dist[nextCell.getRow()][nextCell.getCol()] = Math.min(dist[nextCell.getRow()][nextCell.getCol()],
-                            1 + dist[cCord.getRow()][cCord.getCol()]);
+                            1 + dist[cCell.getRow()][cCell.getCol()]);
                     targetReached = true;
                     break;
                 }
                 else if(!MazeMatrix.isWall(nextCell)) {
-                    dist[nextCell.getRow()][nextCell.getCol()] = Math.min(dist[nextCell.getRow()][nextCell.getCol()],
-                            1 + dist[cCord.getRow()][cCord.getCol()]);
-                    cords.add(nextCell);
+                    if (dist[nextCell.getRow()][nextCell.getCol()] > 1 + dist[cCell.getRow()][cCell.getCol()]) {
+                        dist[nextCell.getRow()][nextCell.getCol()] = 1 + dist[cCell.getRow()][cCell.getCol()];
+                        cords.add(nextCell);
+                    }
                 }
             }
         }
