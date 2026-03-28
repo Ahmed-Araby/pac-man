@@ -116,8 +116,7 @@ public class GamePlayGameScene implements GameScene {
     }
 
     public void initGhosts() {
-        final GhostToWallCollisionDetection ghostToWallCollisionDetection = new GhostToWallCollisionDetection();
-        final ShortestPathMode shortestPathMode = new ShortestPathMode(ghostToWallCollisionDetection);
+        final ShortestPathMode shortestPathMode = new ShortestPathMode();
         blinky = new Blinky(pacMan, shortestPathMode);
     }
 

@@ -16,22 +16,24 @@ import java.util.List;
 
 public class GhostToWallCollisionDetection {
 
-    public boolean checkCollision(GhostMovementAttemptEvent event) {
+    private GhostToWallCollisionDetection() {}
+
+    public static boolean checkCollision(GhostMovementAttemptEvent event) {
         final CanvasCoordinate nextGhostCord = GhostUtil.move(event);
-        final CanvasRect ghostCanvasCanvasRect = new CanvasRect(nextGhostCord, DimensionsC.PAC_MAN_DIAMETER_PIXELS, DimensionsC.PAC_MAN_DIAMETER_PIXELS);
+        final CanvasRect ghostCanvasCanvasRect = new CanvasRect(nextGhostCord, DimensionsC.MAZE_CELL_SIZE_PIXELS, DimensionsC.MAZE_CELL_SIZE_PIXELS);
         final List<CanvasCoordinate> ghostRect4Corners = CanvasRectUtils.get4Corners(ghostCanvasCanvasRect);
         final boolean isCollidingWithWall = ghostRect4Corners.stream()
-                .map(this::toTopLeftCornerOfRectContainingPoint)
-                .anyMatch(this::isWall);
+                .map(GhostToWallCollisionDetection::toTopLeftCornerOfRectContainingPoint)
+                .anyMatch(GhostToWallCollisionDetection::isWall);
         return isCollidingWithWall;
     }
 
-    private CanvasCoordinate toTopLeftCornerOfRectContainingPoint(CanvasCoordinate point) {
+    private static CanvasCoordinate toTopLeftCornerOfRectContainingPoint(CanvasCoordinate point) {
         return CanvasRectUtils.getTopLeftCornerOfRectContainingPoint(DimensionsC.MAZE_CELL_SIZE_PIXELS, DimensionsC.MAZE_CELL_SIZE_PIXELS, point);
     }
 
 
-    private boolean isWall(CanvasCoordinate cord) {
+    private static boolean isWall(CanvasCoordinate cord) {
         final MazeCell cell = CanvasUtil.toMazeCoordinate(cord, DirectionsE.STILL);
         return MazeMatrix.isWall(cell);
     }

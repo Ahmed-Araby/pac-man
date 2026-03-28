@@ -7,7 +7,6 @@ import org.example.entity.CanvasCoordinate;
 import org.example.entity.MazeCell;
 import org.example.entity.MazeMove;
 import org.example.event.ghost.GhostMovementAttemptEvent;
-import org.example.maze.MazeMatrix;
 import org.example.util.BfsUtil;
 import org.example.util.CanvasUtil;
 import org.example.util.GhostUtil;
@@ -18,8 +17,6 @@ import java.util.List;
 
 @AllArgsConstructor
 public class ShortestPathMode implements GhostMode {
-
-    private final GhostToWallCollisionDetection ghostToWallCollisionDetection;
 
     public DirectionsE nextMoveDirection(CanvasCoordinate ghostCord, CanvasCoordinate targetCord) {
         if(ghostCord.equals(targetCord)) {
@@ -35,7 +32,7 @@ public class ShortestPathMode implements GhostMode {
                     final DirectionsE movementDir = CanvasUtil.getMovementDir(ghostCord, nextCord);
                     return new GhostMovementAttemptEvent(ghostCord, movementDir);
                 })
-                .filter(event -> !ghostToWallCollisionDetection.checkCollision(event))
+                .filter(event -> !GhostToWallCollisionDetection.checkCollision(event))
                 .map(GhostMovementAttemptEvent::getMovementDir)
                 .findFirst()
                 .orElse(DirectionsE.STILL);
