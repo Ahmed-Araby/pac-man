@@ -5,7 +5,6 @@ import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
-import org.example.collision.GhostToWallCollisionDetection;
 import org.example.collision.PacManToSugarCollisionDetection;
 import org.example.collision.PacManToSuperSugarCollisionDetection;
 import org.example.collision.PacManToWallCollisionDetection;
@@ -15,7 +14,7 @@ import org.example.constant.DimensionsC;
 import org.example.event.manager.EventManager;
 import org.example.event.EventType;
 import org.example.event.manager.SyncEventManager;
-import org.example.ghostmode.ShortestPathMode;
+import org.example.ghostmode.ShortestPathNavigator;
 import org.example.input.JavaFXInputHandler;
 import org.example.input.JavaFXUserInputHandler;
 import org.example.maze.MazeMatrix;
@@ -116,7 +115,7 @@ public class GamePlayGameScene implements GameScene {
     }
 
     public void initGhosts() {
-        final ShortestPathMode shortestPathMode = new ShortestPathMode();
+        final ShortestPathNavigator shortestPathMode = new ShortestPathNavigator();
         blinky = new Blinky(pacMan, shortestPathMode);
     }
 

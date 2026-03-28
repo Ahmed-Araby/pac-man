@@ -9,7 +9,7 @@ import org.example.constant.*;
 import org.example.entity.CanvasCoordinate;
 import org.example.event.Event;
 import org.example.ghostmode.ChaseScatterTimer;
-import org.example.ghostmode.ShortestPathMode;
+import org.example.ghostmode.ShortestPathNavigator;
 import org.example.sprite.PacMan;
 import org.example.sprite.Sprite;
 import org.example.util.GhostUtil;
@@ -24,7 +24,7 @@ public class Blinky implements Sprite{
     private DirectionsE directionsE = DirectionsE.STILL;
     private GhostModeE mode;
 
-    private final ShortestPathMode chaseMode;
+    private final ShortestPathNavigator chaseMode;
     private final Map<GhostModeE, Image[]> ghostSprites;
     private final ChaseScatterTimer chaseScatterTimer;
     private final Animator animator;
@@ -37,7 +37,7 @@ public class Blinky implements Sprite{
     // [TODO] find a better way to pass this information
     private final PacMan pacMan;
 
-    public Blinky(PacMan pacMan, ShortestPathMode chaseMode) {
+    public Blinky(PacMan pacMan, ShortestPathNavigator chaseMode) {
         ghostSprites = loadSprites();
 
         this.pacMan = pacMan;

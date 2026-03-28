@@ -1,11 +1,9 @@
 package org.example.ghostmode;
 
 import org.example.constant.DirectionsE;
-import org.example.constant.SpriteE;
 import org.example.entity.CanvasCoordinate;
-import org.example.entity.MazeCell;
 
-public interface GhostMode {
+public interface GhostNavigator {
 
     DirectionsE nextMoveDirection(CanvasCoordinate ghostCord, CanvasCoordinate pacCord);
 }

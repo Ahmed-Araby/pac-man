@@ -16,7 +16,7 @@ import java.util.List;
 
 
 @AllArgsConstructor
-public class ShortestPathMode implements GhostMode {
+public class ShortestPathNavigator implements GhostNavigator {
 
     public DirectionsE nextMoveDirection(CanvasCoordinate ghostCord, CanvasCoordinate targetCord) {
         if(ghostCord.equals(targetCord)) {
