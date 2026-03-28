@@ -1,4 +1,4 @@
-package org.example.ghostmode;
+package org.example.ghostmode.navigation;
 
 import org.example.constant.DirectionsE;
 import org.example.entity.CanvasCoordinate;

@@ -1,101 +1,75 @@
 package org.example.sprite.ghost;
 
 import javafx.scene.canvas.Canvas;
-import javafx.scene.image.Image;
-import org.example.animation.Animator;
-import org.example.animation.DistanceBasedAnimator;
-import org.example.config.Configs;
+import lombok.Getter;
+import lombok.Setter;
 import org.example.constant.*;
 import org.example.entity.CanvasCoordinate;
 import org.example.event.Event;
-import org.example.ghostmode.ChaseScatterTimer;
-import org.example.ghostmode.ShortestPathNavigator;
+import org.example.ghostmode.*;
+import org.example.ghostmode.blinky.BlinkyChaser;
+import org.example.ghostmode.blinky.BlinkyScattered;
+import org.example.ghostmode.navigation.ShortestPathNavigator;
+import org.example.ghostmode.timer.ChaseScatterTimer;
 import org.example.sprite.PacMan;
 import org.example.sprite.Sprite;
-import org.example.util.GhostUtil;
-
-import java.util.HashMap;
-import java.util.Map;
 
 
-public class Blinky implements Sprite{
+public class Blinky extends Ghost implements Sprite{
 
+    @Getter
+    @Setter
     private double canvasCol = 0, canvasRow = 0;
+
+    @Getter
+    @Setter
     private DirectionsE directionsE = DirectionsE.STILL;
-    private GhostModeE mode;
 
-    private final ShortestPathNavigator chaseMode;
-    private final Map<GhostModeE, Image[]> ghostSprites;
+    // ghost modes
+    private final GhostMode blinkyChaser;
+    private final GhostMode blinkyScattered;
+    private GhostMode activeMode;
+
     private final ChaseScatterTimer chaseScatterTimer;
-    private final Animator animator;
-
-    private final CanvasCoordinate topRightCorner = new CanvasCoordinate(
-            0,
-            DimensionsC.CANVAS_WIDTH_PIXELS - 1
-    );
 
     // [TODO] find a better way to pass this information
     private final PacMan pacMan;
+    @Override
+    public CanvasCoordinate getPacManCanvasCord() {
+        return pacMan.getCurrCanvasCord();
+    }
 
     public Blinky(PacMan pacMan, ShortestPathNavigator chaseMode) {
-        ghostSprites = loadSprites();
-
         this.pacMan = pacMan;
-        this.chaseMode = chaseMode;
         this.chaseScatterTimer = new ChaseScatterTimer();
-        this.mode = chaseScatterTimer.getMode();
-        this.animator = new DistanceBasedAnimator(
-                new double[]{DimensionsC.BLINKY_FIRST_LEG_MOVEMENT_DISTANCE_PIXELS, DimensionsC.BLINKY_SECOND_LEG_MOVEMENT_DISTANCE_PIXELS},
-                ghostSprites.get(mode)
-        );
-        System.out.println("blinky initialized");
+
+        // ghost modes
+        this.blinkyChaser = new BlinkyChaser();
+        this.blinkyScattered = new BlinkyScattered();
+        this.activeMode = blinkyScattered;
     }
 
     @Override
     public void render(Canvas canvas) {
         System.out.println("blinky: row = " + canvasRow + " , col = " + canvasCol + " , Dir = " + directionsE);
-        canvas.getGraphicsContext2D().drawImage(animator.getFrame(), canvasCol, canvasRow);
+        activeMode.render(canvas, this);
     }
 
     @Override
     public void move(Event event) {
-        final CanvasCoordinate ghostCurrCord = new CanvasCoordinate(canvasRow, canvasCol);
-        final CanvasCoordinate targetCord = getTargetCord();
-        directionsE = chaseMode.nextMoveDirection(ghostCurrCord, targetCord);
-        final CanvasCoordinate ghostNewCord = GhostUtil.move(ghostCurrCord, directionsE);
-        canvasRow = ghostNewCord.getRow();
-        canvasCol = ghostNewCord.getCol();
+        transitionMode();
+        activeMode.move(this);
+    }
 
-        if(directionsE != DirectionsE.STILL) {
-            animator.stride(DimensionsC.BLINKY_STRIDE_PIXELS / Configs.FRAMES_PER_SEC_FOR_GHOST_BLINKY_STRIDE);
+    private void transitionMode() {
+        if (activeMode instanceof BlinkyChaser) {
+            if(chaseScatterTimer.up()) {
+                activeMode = blinkyScattered;
+            }
+        } else if(activeMode instanceof BlinkyScattered) {
+            if(chaseScatterTimer.up()){
+                activeMode = blinkyChaser;
+            }
         }
-    }
-
-    public CanvasCoordinate getTargetCord() {
-        final GhostModeE mode = chaseScatterTimer.getMode();
-        return switch (mode) {
-            case SCATTERED -> topRightCorner;
-            case CHASE -> pacMan.getCurrCanvasCord();
-            default -> pacMan.getCurrCanvasCord();
-        };
-    }
-
-
-    private Map<GhostModeE, Image[]> loadSprites() {
-        final Map<GhostModeE, Image[]> ghostSprites = new HashMap<>();
-
-        final String BLINKY_FRAME_1_FILE_RESOURCE_ABSOLUTE_PATH = getClass().getResource(SpriteFileNameC.BLINKY_FRAME_1_FILE_RESOURCE_RELATIVE_PATH).toString();
-
-
-        final String BLINKY_FRAME_2_FILE_RESOURCE_ABSOLUTE_PATH = getClass().getResource(SpriteFileNameC.BLINKY_FRAME_2_FILE_RESOURCE_RELATIVE_PATH).toString();
-        ghostSprites.put(GhostModeE.CHASE, new Image[]{
-                new Image(BLINKY_FRAME_1_FILE_RESOURCE_ABSOLUTE_PATH),
-                new Image(BLINKY_FRAME_2_FILE_RESOURCE_ABSOLUTE_PATH)
-        });
-        ghostSprites.put(GhostModeE.SCATTERED, new Image[]{
-                new Image(BLINKY_FRAME_1_FILE_RESOURCE_ABSOLUTE_PATH),
-                new Image(BLINKY_FRAME_2_FILE_RESOURCE_ABSOLUTE_PATH)
-        });
-        return ghostSprites;
     }
 }

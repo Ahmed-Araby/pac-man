@@ -1,4 +1,4 @@
-package org.example.ghostmode;
+package org.example.ghostmode.navigation;
 
 import lombok.AllArgsConstructor;
 import org.example.collision.GhostToWallCollisionDetection;
