@@ -6,8 +6,11 @@ import lombok.Setter;
 import org.example.constant.*;
 import org.example.entity.CanvasCoordinate;
 import org.example.event.Event;
+import org.example.event.EventType;
+import org.example.event.Subscriber;
 import org.example.ghostmode.*;
 import org.example.ghostmode.blinky.BlinkyChaser;
+import org.example.ghostmode.blinky.BlinkyFrightened;
 import org.example.ghostmode.blinky.BlinkyScattered;
 import org.example.ghostmode.navigation.ShortestPathNavigator;
 import org.example.ghostmode.timer.ChaseScatterTimer;
@@ -15,7 +18,7 @@ import org.example.sprite.PacMan;
 import org.example.sprite.Sprite;
 
 
-public class Blinky extends Ghost implements Sprite{
+public class Blinky extends Ghost implements Sprite, Subscriber {
 
     @Getter
     @Setter
@@ -28,7 +31,9 @@ public class Blinky extends Ghost implements Sprite{
     // ghost modes
     private final GhostMode blinkyChaser;
     private final GhostMode blinkyScattered;
+    private final GhostMode frightened;
     private GhostMode activeMode;
+    private GhostMode previousMode;
 
     private final ChaseScatterTimer chaseScatterTimer;
 
@@ -46,6 +51,7 @@ public class Blinky extends Ghost implements Sprite{
         // ghost modes
         this.blinkyChaser = new BlinkyChaser();
         this.blinkyScattered = new BlinkyScattered();
+        this.frightened = new BlinkyFrightened();
         this.activeMode = blinkyScattered;
     }
 
@@ -57,19 +63,40 @@ public class Blinky extends Ghost implements Sprite{
 
     @Override
     public void move(Event event) {
-        transitionMode();
+        transitionMode(event);
         activeMode.move(this);
     }
 
-    private void transitionMode() {
+    private void transitionMode(Event event) {
         if (activeMode instanceof BlinkyChaser) {
-            if(chaseScatterTimer.up()) {
+            if (event != null && EventType.PAC_MAN_SUPER_SUGAR_COLLISION.equals(event.getType())) {
+                previousMode = activeMode;
+                activeMode = frightened;
+            }
+            else if(chaseScatterTimer.up()) {
                 activeMode = blinkyScattered;
             }
-        } else if(activeMode instanceof BlinkyScattered) {
+        }
+
+        else if(activeMode instanceof BlinkyScattered) {
+            if (event != null && EventType.PAC_MAN_SUPER_SUGAR_COLLISION.equals(event.getType())) {
+                previousMode = activeMode;
+                activeMode = frightened;
+            }
             if(chaseScatterTimer.up()){
                 activeMode = blinkyChaser;
             }
+        }
+
+        else if (activeMode instanceof BlinkyFrightened) {
+            // [TODO] handle transitions from this mode
+        }
+    }
+
+    public void update(Event event) {
+        switch (event.getType()) {
+            case PAC_MAN_SUPER_SUGAR_COLLISION -> transitionMode(event);
+            default -> throw new IllegalArgumentException();
         }
     }
 }
