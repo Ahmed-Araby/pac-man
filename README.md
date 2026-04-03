@@ -14,6 +14,7 @@ pac man game using javaFX.
     - [Pac Man to Wall](#pac-man-to-wall)
     - [Pac Man to sugar](#pac-man-to-sugar)
 - [Turn Buffer](#turn-buffer)
+- [Ghosts](#ghosts)
 - [Features And Fixes](#features-and-fixes)
 
 <br><br>
@@ -124,6 +125,15 @@ when the player instruct Pac-Man to take a turn and fail, the game remember the 
 the way this is implemented is by recording the current position of Pac-Man and the direction of the turn that failed and keep this instruction buffered until Pac-Man reaches the next Cell (in respect to the position recorded when the turn attempt failed). until the next Maze cell is reached by Pac-Man the game keeps trying to take the next turn on behalf of the player, hence it is guaranted that the game will make the turn at the perfect position where taking a turn won't cause coliision with a Wall.
 
 if the turn is still not possible and Pac-Man is now in the next Cell (in respect to the position recorded when the turn attempt failed) then the buffer is erased as it might be the case that the player made instruction to take a right turn but all the cells to the right of Pac-Man are walls, hence it is impossible to make this turn.
+
+## Ghosts
+### $\color{red}{\textsf{Blinky }}$
+| Mode    | Description | Entering Condition  | Initial Behaviour | Movement Strategy | Exit Condition |
+| -------- | ------- |  ------- |  ------- |  ------- |  ------- |
+| Scatter  | -    | - | - | - | - |
+| Chaser   | -    | - | - | - | - |
+| Frightened    | ghosts become food for PacMan, they turn into blue and start to move randomely | PacMan eating power pallet / super suger | turn around | Pick eligable direction at random | time up |
+| Eaten    | -    | - | - | - | - |
 
 ## Features And Fixes
 - [X] generate random maze using recursive division maze generation algorithm
