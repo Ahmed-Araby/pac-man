@@ -1,4 +1,4 @@
-package org.example.util;
+package org.example.util.canvas;
 
 import org.example.constant.DirectionsE;
 import org.example.entity.CanvasCoordinate;

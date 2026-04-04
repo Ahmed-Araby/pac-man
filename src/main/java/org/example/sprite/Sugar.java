@@ -12,7 +12,7 @@ import org.example.event.Event;
 import org.example.event.PacManSugarCollisionEvent;
 import org.example.event.Subscriber;
 import org.example.maze.MazeMatrix;
-import org.example.util.CanvasUtil;
+import org.example.util.canvas.CanvasUtil;
 import org.example.util.EnrichedThreadLocalRandom;
 import org.example.util.MazeUtil;
 import org.example.util.debug.DebugUtil;

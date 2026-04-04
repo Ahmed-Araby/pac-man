@@ -7,9 +7,9 @@ import org.example.entity.MazeCell;
 import org.example.entity.CanvasRect;
 import org.example.event.ghost.GhostMovementAttemptEvent;
 import org.example.maze.MazeMatrix;
-import org.example.util.CanvasUtil;
+import org.example.util.canvas.CanvasUtil;
 import org.example.util.ghost.GhostUtil;
-import org.example.util.CanvasRectUtils;
+import org.example.util.canvas.CanvasRectUtils;
 
 import java.util.List;
 

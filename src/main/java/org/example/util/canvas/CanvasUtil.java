@@ -1,10 +1,11 @@
-package org.example.util;
+package org.example.util.canvas;
 
 import org.example.constant.DimensionsC;
 import org.example.constant.DirectionsE;
 import org.example.entity.CanvasCoordinate;
 import org.example.entity.MazeCell;
 import org.example.entity.CanvasRect;
+import org.example.util.MazeUtil;
 
 import java.util.List;
 

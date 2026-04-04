@@ -8,7 +8,7 @@ import org.example.entity.MazeCell;
 import org.example.entity.MazeMove;
 import org.example.event.ghost.GhostMovementAttemptEvent;
 import org.example.util.BfsUtil;
-import org.example.util.CanvasUtil;
+import org.example.util.canvas.CanvasUtil;
 import org.example.util.ghost.GhostUtil;
 import org.example.util.MazeUtil;
 

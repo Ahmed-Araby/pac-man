@@ -1,7 +1,6 @@
 package org.example.collision;
 
 import org.example.constant.DimensionsC;
-import org.example.constant.SpriteE;
 import org.example.entity.CanvasCoordinate;
 import org.example.entity.CanvasRect;
 import org.example.event.*;
@@ -10,7 +9,7 @@ import org.example.event.EventType;
 import org.example.event.PacManCurrentLocationEvent;
 import org.example.event.PacManSugarCollisionEvent;
 import org.example.event.manager.EventManager;
-import org.example.util.CanvasRectUtils;
+import org.example.util.canvas.CanvasRectUtils;
 import org.example.util.SugarUtil;
 
 import java.util.List;

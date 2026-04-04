@@ -4,7 +4,7 @@ import org.example.entity.CanvasCoordinate;
 import org.example.entity.MazeCell;
 import org.example.entity.Vector;
 import org.example.maze.MazeMatrix;
-import org.example.util.CanvasUtil;
+import org.example.util.canvas.CanvasUtil;
 import org.example.util.VectorUtil;
 
 import java.util.List;

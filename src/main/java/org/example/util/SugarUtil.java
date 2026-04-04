@@ -5,6 +5,7 @@ import org.example.constant.DirectionsE;
 import org.example.entity.CanvasCoordinate;
 import org.example.entity.MazeCell;
 import org.example.maze.MazeMatrix;
+import org.example.util.canvas.CanvasUtil;
 
 public class SugarUtil {
 

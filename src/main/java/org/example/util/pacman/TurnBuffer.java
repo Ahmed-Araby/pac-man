@@ -6,7 +6,7 @@ import org.example.constant.DirectionsE;
 import org.example.entity.CanvasCoordinate;
 import org.example.entity.CanvasRect;
 import org.example.event.movement.PacManMovementRequestEvent;
-import org.example.util.CanvasRectUtils;
+import org.example.util.canvas.CanvasRectUtils;
 
 @NoArgsConstructor
 @Setter
