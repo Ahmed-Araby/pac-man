@@ -6,15 +6,15 @@ public class DimensionsC {
 
     // measurements are in pixels, otherwise it will be explicitly specified.
     // canvas
-    public static double CANVAS_WIDTH_PIXELS = 1000;
-    public static double CANVAS_HEIGHT_PIXELS = 1000;
+    public static double CANVAS_WIDTH_PIXELS = 1050;
+    public static double CANVAS_HEIGHT_PIXELS = 1050;
 
     // maze
     public static double MAZE_CELL_SIZE_PIXELS = 50;
     public static int MAZE_WIDTH = (int) (CANVAS_WIDTH_PIXELS / MAZE_CELL_SIZE_PIXELS);
     public static int MAZE_HEIGHT = (int) (CANVAS_HEIGHT_PIXELS / MAZE_CELL_SIZE_PIXELS);
-    public static int MAZE_CHAMBER_MIN_WIDTH = 2; // min number of cells can't be less than 2
-    public static int MAZE_CHAMBER_MIN_HEIGHT = 2; // min number of cells can't be less than 2
+    public static int MAZE_CHAMBER_MIN_WIDTH = 1; // min number of cells can't be less than 2
+    public static int MAZE_CHAMBER_MIN_HEIGHT = 1; // min number of cells can't be less than 2
 
     // pac man
     public static double PAC_MAN_DIAMETER_PIXELS = MAZE_CELL_SIZE_PIXELS; // Pac-Man should fill a complete cell.
