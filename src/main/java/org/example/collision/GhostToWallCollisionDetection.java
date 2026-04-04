@@ -2,14 +2,13 @@ package org.example.collision;
 
 import org.example.constant.DimensionsC;
 import org.example.constant.DirectionsE;
-import org.example.constant.SpriteE;
 import org.example.entity.CanvasCoordinate;
 import org.example.entity.MazeCell;
 import org.example.entity.CanvasRect;
 import org.example.event.ghost.GhostMovementAttemptEvent;
 import org.example.maze.MazeMatrix;
 import org.example.util.CanvasUtil;
-import org.example.util.GhostUtil;
+import org.example.util.ghost.GhostUtil;
 import org.example.util.CanvasRectUtils;
 
 import java.util.List;

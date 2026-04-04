@@ -1,19 +1,20 @@
-package org.example.util;
+package org.example.util.ghost;
 
 import org.example.config.Configs;
 import org.example.constant.DimensionsC;
 import org.example.constant.DirectionsE;
-import org.example.constant.SpriteE;
 import org.example.entity.CanvasCoordinate;
 import org.example.entity.MazeCell;
+import org.example.entity.Vector;
 import org.example.event.ghost.GhostMovementAttemptEvent;
 import org.example.maze.MazeMatrix;
+import org.example.util.CanvasUtil;
 
 import java.util.List;
 
-public class GhostUtil
-{
-    private GhostUtil() {}
+public class GhostUtil {
+    private GhostUtil() {
+    }
 
     public static CanvasCoordinate move(GhostMovementAttemptEvent event) {
         return move(event.getGhostCurrCord(), event.getMovementDir());
@@ -36,6 +37,12 @@ public class GhostUtil
             default:
                 return cord;
         }
+    }
+
+    public static CanvasCoordinate move(CanvasCoordinate cord, Vector dir) {
+        final double newX = cord.getCol() + dir.getX() * (DimensionsC.BLINKY_STRIDE_PIXELS / Configs.FRAMES_PER_SEC_FOR_GHOST_BLINKY_STRIDE);
+        final double newY = cord.getRow() + dir.getY() * (DimensionsC.BLINKY_STRIDE_PIXELS / Configs.FRAMES_PER_SEC_FOR_GHOST_BLINKY_STRIDE);
+        return new CanvasCoordinate(newY, newX);
     }
 
     public static List<MazeCell> getCandidateNextCells(CanvasCoordinate cord) {

@@ -9,7 +9,7 @@ import org.example.entity.MazeMove;
 import org.example.event.ghost.GhostMovementAttemptEvent;
 import org.example.util.BfsUtil;
 import org.example.util.CanvasUtil;
-import org.example.util.GhostUtil;
+import org.example.util.ghost.GhostUtil;
 import org.example.util.MazeUtil;
 
 import java.util.List;

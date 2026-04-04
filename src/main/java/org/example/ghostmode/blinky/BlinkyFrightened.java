@@ -9,24 +9,26 @@ import org.example.constant.DimensionsC;
 import org.example.constant.DirectionsE;
 import org.example.constant.SpriteFileNameC;
 import org.example.entity.CanvasCoordinate;
+import org.example.entity.Vector;
 import org.example.ghostmode.Ghost;
 import org.example.ghostmode.GhostMode;
-import org.example.ghostmode.navigation.GhostNavigator;
-import org.example.ghostmode.navigation.ShortestPathNavigator;
-import org.example.util.GhostUtil;
+import org.example.util.EnrichedThreadLocalRandom;
+import org.example.util.ghost.GhostUtil;
+import org.example.util.VectorUtil;
+import org.example.util.ghost.FrightenedGhostUtil;
+
+import java.util.List;
 
 
 public class BlinkyFrightened implements GhostMode {
 
     private final Animator animator;
-    private final GhostNavigator navigator;
-    private final CanvasCoordinate bottomRightCorner;
+    private final EnrichedThreadLocalRandom random;
 
     public BlinkyFrightened() {
         Image[] frames = loadSprites();
         this.animator = new DistanceBasedAnimator(new double[]{DimensionsC.BLINKY_FIRST_LEG_MOVEMENT_DISTANCE_PIXELS, DimensionsC.BLINKY_SECOND_LEG_MOVEMENT_DISTANCE_PIXELS}, frames);
-        this.navigator = new ShortestPathNavigator();
-        this.bottomRightCorner = new CanvasCoordinate(DimensionsC.CANVAS_HEIGHT_PIXELS-1, DimensionsC.CANVAS_WIDTH_PIXELS -1);
+        this.random = new EnrichedThreadLocalRandom();
     }
 
     @Override
@@ -37,17 +39,25 @@ public class BlinkyFrightened implements GhostMode {
     @Override
     public void move(Ghost ghost) {
         final CanvasCoordinate sCord = new CanvasCoordinate(ghost.getCanvasRow(), ghost.getCanvasCol());
+        final Vector currDir = VectorUtil.toVector(ghost.getDirectionsE());
 
-        final DirectionsE newDir = this.navigator.nextMoveDirection(sCord, bottomRightCorner);
-        final CanvasCoordinate nCord = GhostUtil.move(sCord, newDir);
+        final List<Vector> eligibleDirections = FrightenedGhostUtil.getEligibleDirections(sCord, currDir);
+        Vector newDirV;
+        if (eligibleDirections.isEmpty()) {
+            newDirV = VectorUtil.getOpposite(currDir);
+        } else {
+            final int randIndex = random.nextIntStartInclEndExcl(0, eligibleDirections.size());
+            newDirV = eligibleDirections.get(randIndex);
+        }
 
-        ghost.setDirectionsE(newDir);
+        final DirectionsE newDirE = VectorUtil.toDirection(newDirV);
+        final CanvasCoordinate nCord = GhostUtil.move(sCord, newDirE);
+
+        ghost.setDirectionsE(newDirE);
         ghost.setCanvasRow(nCord.getRow());
         ghost.setCanvasCol(nCord.getCol());
 
-        if(newDir != DirectionsE.STILL) {
-            animator.stride(DimensionsC.BLINKY_STRIDE_PIXELS / Configs.FRAMES_PER_SEC_FOR_GHOST_BLINKY_STRIDE);
-        }
+        animator.stride(DimensionsC.BLINKY_STRIDE_PIXELS / Configs.FRAMES_PER_SEC_FOR_GHOST_BLINKY_STRIDE);
     }
 
 

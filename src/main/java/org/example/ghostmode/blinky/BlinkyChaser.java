@@ -13,7 +13,7 @@ import org.example.ghostmode.Ghost;
 import org.example.ghostmode.GhostMode;
 import org.example.ghostmode.navigation.GhostNavigator;
 import org.example.ghostmode.navigation.ShortestPathNavigator;
-import org.example.util.GhostUtil;
+import org.example.util.ghost.GhostUtil;
 
 public class BlinkyChaser implements GhostMode {
 

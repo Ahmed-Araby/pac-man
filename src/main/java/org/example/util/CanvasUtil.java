@@ -10,6 +10,10 @@ import java.util.List;
 
 public class CanvasUtil {
 
+    public static boolean inCanvas(CanvasCoordinate cord) {
+        return cord.getCol() >=0 && cord.getCol() < DimensionsC.CANVAS_WIDTH_PIXELS
+                && cord.getRow() >= 0 && cord.getRow() < DimensionsC.CANVAS_HEIGHT_PIXELS;
+    }
     public static List<MazeCell> getIntersectingMazeCells(CanvasCoordinate cord) {
         final CanvasRect canvasRect = new CanvasRect(cord, DimensionsC.MAZE_CELL_SIZE_PIXELS, DimensionsC.MAZE_CELL_SIZE_PIXELS);
         final List<CanvasCoordinate> rectCorners = CanvasRectUtils.get4Corners(canvasRect);
