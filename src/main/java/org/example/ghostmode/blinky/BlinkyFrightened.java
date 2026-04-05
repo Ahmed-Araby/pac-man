@@ -24,11 +24,18 @@ public class BlinkyFrightened implements GhostMode {
 
     private final Animator animator;
     private final EnrichedThreadLocalRandom random;
+    private final float activePeriodSeconds;
 
     public BlinkyFrightened() {
         Image[] frames = loadSprites();
         this.animator = new DistanceBasedAnimator(new double[]{DimensionsC.BLINKY_FIRST_LEG_MOVEMENT_DISTANCE_PIXELS, DimensionsC.BLINKY_SECOND_LEG_MOVEMENT_DISTANCE_PIXELS}, frames);
         this.random = new EnrichedThreadLocalRandom();
+        this.activePeriodSeconds = 9;
+    }
+
+    @Override
+    public float getActivePeriodSeconds() {
+        return activePeriodSeconds;
     }
 
     @Override

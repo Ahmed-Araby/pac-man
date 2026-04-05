@@ -14,6 +14,7 @@ import org.example.ghostmode.blinky.BlinkyFrightened;
 import org.example.ghostmode.blinky.BlinkyScattered;
 import org.example.ghostmode.navigation.ShortestPathNavigator;
 import org.example.ghostmode.timer.ChaseScatterTimer;
+import org.example.ghostmode.timer.RealTimer;
 import org.example.sprite.PacMan;
 import org.example.sprite.Sprite;
 
@@ -36,6 +37,7 @@ public class Blinky extends Ghost implements Sprite, Subscriber {
     private GhostMode previousMode;
 
     private final ChaseScatterTimer chaseScatterTimer;
+    private final RealTimer realTimer;
 
     // [TODO] find a better way to pass this information
     private final PacMan pacMan;
@@ -47,6 +49,7 @@ public class Blinky extends Ghost implements Sprite, Subscriber {
     public Blinky(PacMan pacMan, ShortestPathNavigator chaseMode) {
         this.pacMan = pacMan;
         this.chaseScatterTimer = new ChaseScatterTimer();
+        this.realTimer = new RealTimer();
 
         // ghost modes
         this.blinkyChaser = new BlinkyChaser();
@@ -72,6 +75,8 @@ public class Blinky extends Ghost implements Sprite, Subscriber {
             if (event != null && EventType.PAC_MAN_SUPER_SUGAR_COLLISION.equals(event.getType())) {
                 previousMode = activeMode;
                 activeMode = frightened;
+                final float activePeriodSeconds = activeMode.getActivePeriodSeconds();
+                realTimer.start(activePeriodSeconds);
             }
             else if(chaseScatterTimer.up()) {
                 activeMode = blinkyScattered;
@@ -82,6 +87,8 @@ public class Blinky extends Ghost implements Sprite, Subscriber {
             if (event != null && EventType.PAC_MAN_SUPER_SUGAR_COLLISION.equals(event.getType())) {
                 previousMode = activeMode;
                 activeMode = frightened;
+                final float activePeriodSeconds = activeMode.getActivePeriodSeconds();
+                realTimer.start(activePeriodSeconds);
             }
             if(chaseScatterTimer.up()){
                 activeMode = blinkyChaser;
@@ -89,7 +96,10 @@ public class Blinky extends Ghost implements Sprite, Subscriber {
         }
 
         else if (activeMode instanceof BlinkyFrightened) {
-            // [TODO] handle transitions from this mode
+            if (realTimer.up()) {
+                activeMode = previousMode;
+                previousMode = null;
+            }
         }
     }
 

@@ -32,6 +32,11 @@ public class BlinkyScattered implements GhostMode {
     }
 
     @Override
+    public float getActivePeriodSeconds() {
+        throw new IllegalStateException("Not Implemented");
+    }
+
+    @Override
     public void render(Canvas canvas, Ghost ghost) {
         canvas.getGraphicsContext2D().drawImage(animator.getFrame(), ghost.getCanvasCol(), ghost.getCanvasRow());
     }
