@@ -1,8 +1,11 @@
 package org.example.util.ghost;
 
+import org.example.collision.GhostToWallCollisionDetection;
+import org.example.constant.DirectionsE;
 import org.example.entity.CanvasCoordinate;
 import org.example.entity.MazeCell;
 import org.example.entity.Vector;
+import org.example.event.ghost.GhostMovementAttemptEvent;
 import org.example.maze.MazeMatrix;
 import org.example.util.canvas.CanvasUtil;
 import org.example.util.VectorUtil;
@@ -23,14 +26,9 @@ public class FrightenedGhostUtil {
         return allowedDirections
                 .stream()
                 .filter(allowedDir -> {
-                    final CanvasCoordinate newCord = GhostUtil.move(cord, allowedDir);
-                    if (!CanvasUtil.inCanvas(newCord)) {
-                        return false;
-                    }
-                    final List<MazeCell> interestingMazeCells = CanvasUtil.getIntersectingMazeCells(newCord);
-                    return interestingMazeCells
-                            .stream()
-                            .noneMatch(MazeMatrix::isWall);
+                    final DirectionsE allowedDirectionE = VectorUtil.toDirection(allowedDir);
+                    final GhostMovementAttemptEvent movementAttemptEvent = new GhostMovementAttemptEvent(cord, allowedDirectionE);
+                    return !GhostToWallCollisionDetection.checkCollision(movementAttemptEvent);
                 })
                 .toList();
     }

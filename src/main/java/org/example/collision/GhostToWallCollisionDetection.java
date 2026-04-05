@@ -13,18 +13,28 @@ import org.example.util.canvas.CanvasRectUtils;
 
 import java.util.List;
 
+// [TODO] uniform collision detection classes
 public class GhostToWallCollisionDetection {
 
     private GhostToWallCollisionDetection() {}
 
     public static boolean checkCollision(GhostMovementAttemptEvent event) {
         final CanvasCoordinate nextGhostCord = GhostUtil.move(event);
+        if (isGoingOutOfCanvas(nextGhostCord)) {
+            return true;
+        }
         final CanvasRect ghostCanvasCanvasRect = new CanvasRect(nextGhostCord, DimensionsC.MAZE_CELL_SIZE_PIXELS, DimensionsC.MAZE_CELL_SIZE_PIXELS);
         final List<CanvasCoordinate> ghostRect4Corners = CanvasRectUtils.get4Corners(ghostCanvasCanvasRect);
         final boolean isCollidingWithWall = ghostRect4Corners.stream()
                 .map(GhostToWallCollisionDetection::toTopLeftCornerOfRectContainingPoint)
                 .anyMatch(GhostToWallCollisionDetection::isWall);
         return isCollidingWithWall;
+    }
+
+    // [TODO] move this method because it doesn't fit this class
+    private static boolean isGoingOutOfCanvas(CanvasCoordinate topLeftCorner) {
+        return topLeftCorner.getRow() < 0 || topLeftCorner.getRow() > DimensionsC.CANVAS_HEIGHT_PIXELS - DimensionsC.GHOST_HEIGHT_PIXELS ||
+                topLeftCorner.getCol() < 0 || topLeftCorner.getCol() > DimensionsC.CANVAS_WIDTH_PIXELS - DimensionsC.GHOST_WIDTH_PIXELS;
     }
 
     private static CanvasCoordinate toTopLeftCornerOfRectContainingPoint(CanvasCoordinate point) {

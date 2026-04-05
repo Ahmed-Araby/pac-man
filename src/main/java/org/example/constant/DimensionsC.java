@@ -32,6 +32,9 @@ public class DimensionsC {
     public static double PAC_MAN_DOWN_OPEN_MOUSE_START_ANGLE_IN_DEGREES = 315;
 
     // ghosts
+    public static double GHOST_WIDTH_PIXELS = MAZE_CELL_SIZE_PIXELS; // Pac-Man should fill a complete cell.
+    public static double GHOST_HEIGHT_PIXELS = MAZE_CELL_SIZE_PIXELS; // Pac-Man should fill a complete cell.
+
     // blinky
     public static double BLINKY_STRIDE_PIXELS = MAZE_CELL_SIZE_PIXELS;
     public static double BLINKY_COMPLETE_LEG_MOVEMENT_DISTANCE_PIXELS = BLINKY_STRIDE_PIXELS;
