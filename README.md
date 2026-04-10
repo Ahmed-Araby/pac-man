@@ -135,7 +135,7 @@ if the turn is still not possible and Pac-Man is now in the next Cell (in respec
 | Frightened    | ghosts become food for PacMan, they turn into blue and start to move randomely | PacMan eating power pallet / super suger | turn around | Pick eligable direction at random | time up |
 | Eaten    | -    | - | - | - | - |
 
-## Features And Fixes
+## Backlog
 - [X] generate random maze using recursive division maze generation algorithm
 - [X] render pac man and mouse open/close animations using simple circle/arc math.
 - [X] implement collision detection and prevention between pac man and the walls
@@ -143,22 +143,21 @@ if the turn is still not possible and Pac-Man is now in the next Cell (in respec
 - [X] make it easy for the player to move pac man in sharp/tight turns (currently, when pac man size is close to the canvas maze cell size, it is more likely for pac man to get blocked to avoid collision with walls).
 - [X] put suger for pac man to eat.
 - [X] play sound when pac man eat sugar, use the observer design pattern for SoundPlayer class to get notified about detected collisions between pac man and sugar
-- [ ] code refactor
-  - [X] use events (observer pattern) for the interactions between the different game components (i.e. collision detection and side effects of this collisions in maze, sounds, pac man mouse animation, etc....)
-  - [ ] make consistent use of the concepts Rect (Rectangle), Coordinate of the top left corner, and Canvas Cell
-  - [ ] make consistent naming convention for variables
-  - [ ] use deceorator/Adapter design pattern to abstract the creation of game ready maze, as the maze generator generate a generic boolean maze where 0 is empty cell and 1 is a cell with a wall.
+- [X] code refactor: use events (observer pattern) for the interactions between the different game components (i.e. collision detection and side effects of this collisions in maze, sounds, pac man mouse animation, etc....)
 - [X] write documenntation and turotial for the work completed so far.
-- [ ] put ghosts.
-- [ ] track score, move to next level and game over.
-- [ ] create the starting menu screen.
-- [ ] generate mazes using different maze generation algorithms, and allow player to choose maze pattern (as each algorithm has its own maze pattern characteristics).
-- [ ] look for performance enhancements using multithreading. __[reaching this point is my definition of done for this project, and every thing belllow will be made in a separate project]__
-- [ ] read the game programming patterns book
-- [ ] extract generic stuff into a simple game engine or just helper libraries.
-- [ ] write extensive documentation on the implementation details.
-- [ ] make the game multi player.
-  - [ ] game server.
-  - [ ] adapt game client to communicate with the game server.
-- [ ] update documentation with the multiplayer stuff
-- [ ] lunch the game to the public.
+- [ ] Ghosts
+  - [ ] Blinky
+  - [ ] Inky
+  - [ ] Pinky
+  - [ ] Clyde
+- [ ] Refactoring
+  - [ ] Ghost Utility classes
+  - [ ] maze vs canvas
+- [ ] Dynamic Maze Generation
+  - [ ] Fix Bug: make sure the maze is a connected graph, i.e. Pac Man and Ghosts can reach any place in the maze
+  - [ ] put Ghost house in maze
+  - [ ] implement at least one more dynamic maze generation Algorithm.
+- [ ] Game Levels
+- [ ] Performance Enhancement
+  - [ ] use multi threading in maze generation
+  - [ ] use different threads to execute logic that is not core to the game loop
