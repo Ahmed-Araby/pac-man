@@ -16,6 +16,7 @@ pac man game using javaFX.
 - [Turn Buffer](#turn-buffer)
 - [Ghosts](#ghosts)
 - [Backlog](#backlog)
+- [Resources](#resources)
 
 <br><br>
 ## Drawing Pac Man with open and closed Mouth using simple circle and Arc Math.
@@ -161,3 +162,15 @@ if the turn is still not possible and Pac-Man is now in the next Cell (in respec
 - [ ] Performance Enhancement
   - [ ] use multi threading in maze generation
   - [ ] use different threads to execute logic that is not core to the game loop
+
+## Resources
+- [TAC380 - Pac Man](https://itp380.org/Lab05.html)
+- [Paper, the Pac Man Benchmark](https://cescg.org/wp-content/uploads/2017/03/Smid-The-Pacman-Benchmark-3.pdf)\
+- [Maze Generation, Resurcive division](https://www.cs.columbia.edu/~sedwards/classes/2021/4995-fall/reports/Maze-Solver.pdf)
+- [Maze Generation, Resurcive division](https://weblog.jamisbuck.org/2011/1/12/maze-generation-recursive-division-algorithm)
+- [State Design Pattern, Youtube video](https://www.youtube.com/watch?v=5OzLrbk82zY)
+- [State Design Pattern, Game Programming Patterns Book](https://gameprogrammingpatterns.com/state.html)
+- [State Design Pattern](https://refactoring.guru/design-patterns/state)
+- [BFS](https://cp-algorithms.com/graph/breadth-first-search.html#__tabbed_1_2)
+- [classic Pac Man maze asset](https://github.com/bobeff/pacman/blob/master/assets/maze.txt)
+- [Pac Man, Ghost AI Explained, Youtube video](https://www.youtube.com/watch?v=ataGotQ7ir8)
