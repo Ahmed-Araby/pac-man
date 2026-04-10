@@ -15,7 +15,7 @@ pac man game using javaFX.
     - [Pac Man to sugar](#pac-man-to-sugar)
 - [Turn Buffer](#turn-buffer)
 - [Ghosts](#ghosts)
-- [Features And Fixes](#features-and-fixes)
+- [Backlog](#backlog)
 
 <br><br>
 ## Drawing Pac Man with open and closed Mouth using simple circle and Arc Math.
