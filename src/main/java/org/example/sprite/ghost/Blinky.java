@@ -90,7 +90,7 @@ public class Blinky extends Ghost implements Sprite, Subscriber {
                 final float activePeriodSeconds = activeMode.getActivePeriodSeconds();
                 realTimer.start(activePeriodSeconds);
             }
-            if(chaseScatterTimer.up()){
+            else if(chaseScatterTimer.up()){
                 activeMode = blinkyChaser;
             }
         }
