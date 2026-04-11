@@ -156,6 +156,7 @@ if the turn is still not possible and Pac-Man is now in the next Cell (in respec
   - [ ] Event Structure
   - [ ] Ghost Utility classes
   - [ ] maze vs canvas
+  - [ ] logging
 - [ ] Dynamic Maze Generation
   - [ ] Fix Bug: make sure the maze is a connected graph, i.e. Pac Man and Ghosts can reach any place in the maze
   - [ ] put Ghost house in maze
