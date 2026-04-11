@@ -70,10 +70,10 @@ public class GhostEaten implements GhostMode {
 
     private Map<Vector, Image[]> loadSprites() {
         // [TODO] move sprites loading into a class that provide caching
-        final String GHOST_EATEN_UP_FRAME_FILE_RESOURCE_ABSOLUTE_PATH = getClass().getResource(GhostEatenSpritesFileNameC.GHOST_EATEN_UP_FRAME_FILE_NAME).toString();
-        final String GHOST_EATEN_RIGHT_FRAME_FILE_RESOURCE_ABSOLUTE_PATH = getClass().getResource(GhostEatenSpritesFileNameC.GHOST_EATEN_RIGHT_FRAME_FILE_NAME).toString();
-        final String GHOST_EATEN_DOWN_FRAME_FILE_RESOURCE_ABSOLUTE_PATH = getClass().getResource(GhostEatenSpritesFileNameC.GHOST_EATEN_DOWN_FRAME_FILE_NAME).toString();
-        final String GHOST_EATEN_LEFT_FRAME_FILE_RESOURCE_ABSOLUTE_PATH = getClass().getResource(GhostEatenSpritesFileNameC.GHOST_EATEN_LEFT_FRAME_FILE_NAME).toString();
+        final String GHOST_EATEN_UP_FRAME_FILE_RESOURCE_ABSOLUTE_PATH = getClass().getResource(GhostEatenSpritesFileNameC.GHOST_EATEN_UP_FRAME_FILE_RESOURCE_RELATIVE_PATH).toString();
+        final String GHOST_EATEN_RIGHT_FRAME_FILE_RESOURCE_ABSOLUTE_PATH = getClass().getResource(GhostEatenSpritesFileNameC.GHOST_EATEN_RIGHT_FRAME_FILE_RESOURCE_RELATIVE_PATH).toString();
+        final String GHOST_EATEN_DOWN_FRAME_FILE_RESOURCE_ABSOLUTE_PATH = getClass().getResource(GhostEatenSpritesFileNameC.GHOST_EATEN_DOWN_FRAME_FILE_RESOURCE_RELATIVE_PATH).toString();
+        final String GHOST_EATEN_LEFT_FRAME_FILE_RESOURCE_ABSOLUTE_PATH = getClass().getResource(GhostEatenSpritesFileNameC.GHOST_EATEN_LEFT_FRAME_FILE_RESOURCE_RELATIVE_PATH).toString();
 
         final Image up = new Image(GHOST_EATEN_UP_FRAME_FILE_RESOURCE_ABSOLUTE_PATH);
         final Image right = new Image(GHOST_EATEN_RIGHT_FRAME_FILE_RESOURCE_ABSOLUTE_PATH);

@@ -7,5 +7,6 @@ public enum EventType {
     PAC_MAN_MOVEMENT_ATTEMPT,
     PAC_MAN_MOVEMENT_ATTEMPT_APPROVED,
     PAC_MAN_MOVEMENT_ATTEMPT_DENIED,
-    PAC_MAN_CURRENT_LOCATION; // an event represent the current situation of pac man, i.e. the current coordinates and direction
+    PAC_MAN_CURRENT_LOCATION, // an event represent the current situation of pac man, i.e. the current coordinates and direction
+    PAC_MAN_GHOST_COLLISION;
 }

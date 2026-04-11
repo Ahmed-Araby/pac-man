@@ -33,9 +33,10 @@ public class Blinky extends Ghost implements Sprite, Subscriber {
     private final GhostMode blinkyChaser;
     private final GhostMode blinkyScattered;
     private final GhostMode frightened;
+    private final GhostMode eaten;
+
     private GhostMode activeMode;
     private GhostMode previousMode;
-
     private final ChaseScatterTimer chaseScatterTimer;
     private final RealTimer realTimer;
 
@@ -55,6 +56,7 @@ public class Blinky extends Ghost implements Sprite, Subscriber {
         this.blinkyChaser = new BlinkyChaser();
         this.blinkyScattered = new BlinkyScattered();
         this.frightened = new BlinkyFrightened();
+        this.eaten = new GhostEaten();
         this.activeMode = blinkyScattered;
     }
 
@@ -94,10 +96,14 @@ public class Blinky extends Ghost implements Sprite, Subscriber {
                 nextMode = blinkyChaser;
             }
         } else if (activeMode instanceof BlinkyFrightened) {
-            if (realTimer.up()) {
+            if (event != null && EventType.PAC_MAN_GHOST_COLLISION.equals(event.getType())) {
+                nextMode = eaten;
+            } else if (realTimer.up()) {
                 nextMode = previousMode;
                 previousMode = null;
             }
+        } else if (activeMode instanceof GhostEaten) {
+            // [TODO] transition back from Eaten mode
         }
 
         if(nextMode != null) {
@@ -108,7 +114,7 @@ public class Blinky extends Ghost implements Sprite, Subscriber {
 
     public void update(Event event) {
         switch (event.getType()) {
-            case PAC_MAN_SUPER_SUGAR_COLLISION -> transitionMode(event);
+            case PAC_MAN_SUPER_SUGAR_COLLISION, PAC_MAN_GHOST_COLLISION -> transitionMode(event);
             default -> throw new IllegalArgumentException();
         }
     }

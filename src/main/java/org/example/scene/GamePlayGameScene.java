@@ -5,6 +5,7 @@ import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
+import org.example.collision.PacMan2GhostCollisionDetection;
 import org.example.collision.PacManToSugarCollisionDetection;
 import org.example.collision.PacManToSuperSugarCollisionDetection;
 import org.example.collision.PacManToWallCollisionDetection;
@@ -50,6 +51,7 @@ public class GamePlayGameScene implements GameScene {
     private final PacManToSugarCollisionDetection pacManToSugarCollisionDetection;
     private final PacManToSuperSugarCollisionDetection pacManToSuperSugarCollisionDetection;
     private final PacManToWallCollisionDetection pacManToWallCollisionDetection;
+    private final PacMan2GhostCollisionDetection pacMan2GhostCollisionDetection;
 
     public GamePlayGameScene() {
         // init
@@ -74,6 +76,7 @@ public class GamePlayGameScene implements GameScene {
         pacManToWallCollisionDetection = new PacManToWallCollisionDetection(syncEventManager);
         pacManToSugarCollisionDetection = new PacManToSugarCollisionDetection(eventManager);
         pacManToSuperSugarCollisionDetection = new PacManToSuperSugarCollisionDetection(eventManager);
+        pacMan2GhostCollisionDetection = new PacMan2GhostCollisionDetection(eventManager, blinky);
 
         // javaFX setup
         canvas = new Canvas(DimensionsC.CANVAS_WIDTH_PIXELS, DimensionsC.CANVAS_HEIGHT_PIXELS);
@@ -101,8 +104,11 @@ public class GamePlayGameScene implements GameScene {
 
         eventManager.subscribe(EventType.PAC_MAN_CURRENT_LOCATION, pacManToSugarCollisionDetection);
         eventManager.subscribe(EventType.PAC_MAN_CURRENT_LOCATION, pacManToSuperSugarCollisionDetection);
+        eventManager.subscribe(EventType.PAC_MAN_CURRENT_LOCATION, pacMan2GhostCollisionDetection);
 
         eventManager.subscribe(EventType.PAC_MAN_SUPER_SUGAR_COLLISION, blinky);
+
+        eventManager.subscribe(EventType.PAC_MAN_GHOST_COLLISION, blinky);
     }
 
     private void registerSubscribersForSyncEvents() {
