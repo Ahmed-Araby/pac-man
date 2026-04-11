@@ -3,8 +3,6 @@ package org.example.util;
 import org.example.constant.DirectionsE;
 import org.example.entity.Vector;
 
-import java.util.List;
-
 public class VectorUtil {
 
     private VectorUtil() {}
@@ -35,13 +33,13 @@ public class VectorUtil {
         throw new IllegalStateException("there is no direction enum for the corresponding vector");
     }
 
-    public static Vector getOpposite(Vector v) {
+    public static Vector flip180(Vector v) {
         final double newX = v.getX() == 0 ? 0 : -v.getX();
         final double newY = v.getY() == 0 ? 0 : -v.getY();
         return new Vector(newX, newY);
     }
     public static boolean isOpposite(Vector v1, Vector v2) {
-        return getOpposite(v1).equals(v2);
+        return flip180(v1).equals(v2);
     }
 
 

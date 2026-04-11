@@ -32,6 +32,9 @@ public class BlinkyScattered implements GhostMode {
     }
 
     @Override
+    public void enter(Ghost ghost) {}
+
+    @Override
     public float getActivePeriodSeconds() {
         throw new IllegalStateException("Not Implemented");
     }

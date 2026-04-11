@@ -34,6 +34,11 @@ public class BlinkyFrightened implements GhostMode {
     }
 
     @Override
+    public void enter(Ghost ghost) {
+        turnAround(ghost);
+    }
+
+    @Override
     public float getActivePeriodSeconds() {
         return activePeriodSeconds;
     }
@@ -51,7 +56,7 @@ public class BlinkyFrightened implements GhostMode {
         final List<Vector> eligibleDirections = FrightenedGhostUtil.getEligibleDirections(sCord, currDir);
         Vector newDirV;
         if (eligibleDirections.isEmpty()) {
-            newDirV = VectorUtil.getOpposite(currDir);
+            newDirV = VectorUtil.flip180(currDir);
         } else {
             final int randIndex = random.nextIntStartInclEndExcl(0, eligibleDirections.size());
             newDirV = eligibleDirections.get(randIndex);
@@ -74,5 +79,13 @@ public class BlinkyFrightened implements GhostMode {
         final Image frame1 = new Image(BLINKY_FRIGHTENED_FRAME_1_FILE_RESOURCE_ABSOLUTE_PATH);
         final Image frame2 = new Image(BLINKY_FRIGHTENED_FRAME_2_FILE_RESOURCE_ABSOLUTE_PATH);
         return new Image[]{frame1, frame2};
+    }
+
+    private void turnAround(Ghost ghost) {
+        final DirectionsE currDirE = ghost.getDirectionsE();
+        final Vector dir = VectorUtil.toVector(currDirE);
+        final Vector oppositeDir = VectorUtil.flip180(dir);
+        final DirectionsE oppositeDirE = VectorUtil.toDirection(oppositeDir);
+        ghost.setDirectionsE(oppositeDirE);
     }
 }

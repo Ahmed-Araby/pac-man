@@ -71,35 +71,38 @@ public class Blinky extends Ghost implements Sprite, Subscriber {
     }
 
     private void transitionMode(Event event) {
+        GhostMode nextMode = null;
+
         if (activeMode instanceof BlinkyChaser) {
             if (event != null && EventType.PAC_MAN_SUPER_SUGAR_COLLISION.equals(event.getType())) {
                 previousMode = activeMode;
-                activeMode = frightened;
-                final float activePeriodSeconds = activeMode.getActivePeriodSeconds();
+                nextMode = frightened;
+                final float activePeriodSeconds = nextMode.getActivePeriodSeconds();
                 realTimer.start(activePeriodSeconds);
             }
             else if(chaseScatterTimer.up()) {
-                activeMode = blinkyScattered;
+                nextMode = blinkyScattered;
             }
-        }
-
-        else if(activeMode instanceof BlinkyScattered) {
+        } else if(activeMode instanceof BlinkyScattered) {
             if (event != null && EventType.PAC_MAN_SUPER_SUGAR_COLLISION.equals(event.getType())) {
                 previousMode = activeMode;
-                activeMode = frightened;
-                final float activePeriodSeconds = activeMode.getActivePeriodSeconds();
+                nextMode = frightened;
+                final float activePeriodSeconds = nextMode.getActivePeriodSeconds();
                 realTimer.start(activePeriodSeconds);
             }
             else if(chaseScatterTimer.up()){
-                activeMode = blinkyChaser;
+                nextMode = blinkyChaser;
+            }
+        } else if (activeMode instanceof BlinkyFrightened) {
+            if (realTimer.up()) {
+                nextMode = previousMode;
+                previousMode = null;
             }
         }
 
-        else if (activeMode instanceof BlinkyFrightened) {
-            if (realTimer.up()) {
-                activeMode = previousMode;
-                previousMode = null;
-            }
+        if(nextMode != null) {
+            activeMode = nextMode;
+            activeMode.enter(this);
         }
     }
 
