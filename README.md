@@ -180,3 +180,4 @@ if the turn is still not possible and Pac-Man is now in the next Cell (in respec
 - [BFS](https://cp-algorithms.com/graph/breadth-first-search.html#__tabbed_1_2)
 - [classic Pac Man maze asset](https://github.com/bobeff/pacman/blob/master/assets/maze.txt)
 - [Pac Man, Ghost AI Explained, Youtube video](https://www.youtube.com/watch?v=ataGotQ7ir8)
+- [Building Pac Man, Blog](https://pacmancode.com/)
