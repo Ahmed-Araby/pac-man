@@ -152,6 +152,7 @@ if the turn is still not possible and Pac-Man is now in the next Cell (in respec
   - [ ] Pinky
   - [ ] Clyde
 - [ ] Refactoring
+  - [ ] Collision Detection
   - [ ] Ghost Utility classes
   - [ ] maze vs canvas
 - [ ] Dynamic Maze Generation
