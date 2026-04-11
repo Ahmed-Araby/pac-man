@@ -154,6 +154,7 @@ if the turn is still not possible and Pac-Man is now in the next Cell (in respec
 - [ ] Refactoring
   - [ ] Collision Detection
   - [ ] Event Structure
+  - [ ] pac man movement
   - [ ] Ghost Utility classes
   - [ ] maze vs canvas
   - [ ] logging
