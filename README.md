@@ -153,6 +153,7 @@ if the turn is still not possible and Pac-Man is now in the next Cell (in respec
   - [ ] Clyde
 - [ ] Refactoring
   - [ ] Collision Detection
+  - [ ] combine data with its behaviour when appropriate (tell, don't ask prinsible)
   - [ ] Event Structure
   - [ ] sprite movement in relation to frames and time.
   - [ ] sprite animation in relation to sprite movement.
