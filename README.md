@@ -182,3 +182,4 @@ if the turn is still not possible and Pac-Man is now in the next Cell (in respec
 - [classic Pac Man maze asset](https://github.com/bobeff/pacman/blob/master/assets/maze.txt)
 - [Pac Man, Ghost AI Explained, Youtube video](https://www.youtube.com/watch?v=ataGotQ7ir8)
 - [Building Pac Man, Blog](https://pacmancode.com/)
+- [tell, don't ask OOP design principal](https://martinfowler.com/bliki/TellDontAsk.html)
