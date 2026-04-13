@@ -13,12 +13,13 @@ public class EventManager implements Publisher {
     List<Subscriber> pacManSugarCollisionEventSubscribers;
     List<Subscriber> pacManSuperSugarCollisionSubscribers;
     List<Subscriber> pacManCurrentLocationEventSubscribers;
-
+    List<Subscriber> pacMan2GhostCollisionSubscribers;
 
     public EventManager() {
         pacManSugarCollisionEventSubscribers = new ArrayList<>();
         pacManSuperSugarCollisionSubscribers = new ArrayList<>();
         pacManCurrentLocationEventSubscribers = new ArrayList<>();
+        pacMan2GhostCollisionSubscribers = new ArrayList<>();
     }
 
     @Override
@@ -32,6 +33,9 @@ public class EventManager implements Publisher {
                 break;
             case PAC_MAN_CURRENT_LOCATION:
                 pacManCurrentLocationEventSubscribers.add(subscriber);
+                break;
+            case PAC_MAN_GHOST_COLLISION:
+                pacMan2GhostCollisionSubscribers.add(subscriber);
                 break;
             default:
                 throw new IllegalArgumentException();
@@ -50,6 +54,9 @@ public class EventManager implements Publisher {
             case PAC_MAN_CURRENT_LOCATION:
                 pacManCurrentLocationEventSubscribers.remove(subscriber);
                 break;
+            case PAC_MAN_GHOST_COLLISION:
+                pacMan2GhostCollisionSubscribers.remove(subscriber);
+                break;
             default:
                 throw new IllegalArgumentException();
         }
@@ -66,6 +73,9 @@ public class EventManager implements Publisher {
                 break;
             case PAC_MAN_CURRENT_LOCATION:
                 pacManCurrentLocationEventSubscribers.forEach(sub -> sub.update(event));
+                break;
+            case PAC_MAN_GHOST_COLLISION:
+                pacMan2GhostCollisionSubscribers.forEach(sub -> sub.update(event));
                 break;
             default:
                 throw new IllegalArgumentException();

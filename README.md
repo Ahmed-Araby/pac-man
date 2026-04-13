@@ -14,7 +14,9 @@ pac man game using javaFX.
     - [Pac Man to Wall](#pac-man-to-wall)
     - [Pac Man to sugar](#pac-man-to-sugar)
 - [Turn Buffer](#turn-buffer)
-- [Features And Fixes](#features-and-fixes)
+- [Ghosts](#ghosts)
+- [Backlog](#backlog)
+- [Resources](#resources)
 
 <br><br>
 ## Drawing Pac Man with open and closed Mouth using simple circle and Arc Math.
@@ -125,7 +127,16 @@ the way this is implemented is by recording the current position of Pac-Man and 
 
 if the turn is still not possible and Pac-Man is now in the next Cell (in respect to the position recorded when the turn attempt failed) then the buffer is erased as it might be the case that the player made instruction to take a right turn but all the cells to the right of Pac-Man are walls, hence it is impossible to make this turn.
 
-## Features And Fixes
+## Ghosts
+### $\color{red}{\textsf{Blinky }}$
+| Mode    | Description | Entering Condition  | Initial Behaviour | Movement Strategy | Exit Condition |
+| -------- | ------- |  ------- |  ------- |  ------- |  ------- |
+| Scatter  | -    | - | - | - | - |
+| Chaser   | -    | - | - | - | - |
+| Frightened    | ghosts become food for PacMan, they turn into blue and start to move randomely | PacMan eating power pallet / super suger | turn around | Pick eligable direction at random | time up |
+| Eaten    | -    | - | - | - | - |
+
+## Backlog
 - [X] generate random maze using recursive division maze generation algorithm
 - [X] render pac man and mouse open/close animations using simple circle/arc math.
 - [X] implement collision detection and prevention between pac man and the walls
@@ -133,22 +144,40 @@ if the turn is still not possible and Pac-Man is now in the next Cell (in respec
 - [X] make it easy for the player to move pac man in sharp/tight turns (currently, when pac man size is close to the canvas maze cell size, it is more likely for pac man to get blocked to avoid collision with walls).
 - [X] put suger for pac man to eat.
 - [X] play sound when pac man eat sugar, use the observer design pattern for SoundPlayer class to get notified about detected collisions between pac man and sugar
-- [ ] code refactor
-  - [X] use events (observer pattern) for the interactions between the different game components (i.e. collision detection and side effects of this collisions in maze, sounds, pac man mouse animation, etc....)
-  - [ ] make consistent use of the concepts Rect (Rectangle), Coordinate of the top left corner, and Canvas Cell
-  - [ ] make consistent naming convention for variables
-  - [ ] use deceorator/Adapter design pattern to abstract the creation of game ready maze, as the maze generator generate a generic boolean maze where 0 is empty cell and 1 is a cell with a wall.
+- [X] code refactor: use events (observer pattern) for the interactions between the different game components (i.e. collision detection and side effects of this collisions in maze, sounds, pac man mouse animation, etc....)
 - [X] write documenntation and turotial for the work completed so far.
-- [ ] put ghosts.
-- [ ] track score, move to next level and game over.
-- [ ] create the starting menu screen.
-- [ ] generate mazes using different maze generation algorithms, and allow player to choose maze pattern (as each algorithm has its own maze pattern characteristics).
-- [ ] look for performance enhancements using multithreading. __[reaching this point is my definition of done for this project, and every thing belllow will be made in a separate project]__
-- [ ] read the game programming patterns book
-- [ ] extract generic stuff into a simple game engine or just helper libraries.
-- [ ] write extensive documentation on the implementation details.
-- [ ] make the game multi player.
-  - [ ] game server.
-  - [ ] adapt game client to communicate with the game server.
-- [ ] update documentation with the multiplayer stuff
-- [ ] lunch the game to the public.
+- [ ] Ghosts
+  - [ ] Blinky
+  - [ ] Inky
+  - [ ] Pinky
+  - [ ] Clyde
+- [ ] Refactoring
+  - [ ] Collision Detection
+  - [ ] Event Structure
+  - [ ] sprite movement in relation to frames and time.
+  - [ ] sprite animation in relation to sprite movement.
+  - [ ] pac man movement
+  - [ ] Ghost Utility classes
+  - [ ] maze vs canvas
+  - [ ] logging
+- [ ] Dynamic Maze Generation
+  - [ ] Fix Bug: make sure the maze is a connected graph, i.e. Pac Man and Ghosts can reach any place in the maze
+  - [ ] put Ghost house in maze
+  - [ ] implement at least one more dynamic maze generation Algorithm.
+- [ ] Game Levels
+- [ ] Performance Enhancement
+  - [ ] use multi threading in maze generation
+  - [ ] use different threads to execute logic that is not core to the game loop
+
+## Resources
+- [TAC380 - Pac Man](https://itp380.org/Lab05.html)
+- [Paper, the Pac Man Benchmark](https://cescg.org/wp-content/uploads/2017/03/Smid-The-Pacman-Benchmark-3.pdf)\
+- [Maze Generation, Resurcive division](https://www.cs.columbia.edu/~sedwards/classes/2021/4995-fall/reports/Maze-Solver.pdf)
+- [Maze Generation, Resurcive division](https://weblog.jamisbuck.org/2011/1/12/maze-generation-recursive-division-algorithm)
+- [State Design Pattern, Youtube video](https://www.youtube.com/watch?v=5OzLrbk82zY)
+- [State Design Pattern, Game Programming Patterns Book](https://gameprogrammingpatterns.com/state.html)
+- [State Design Pattern](https://refactoring.guru/design-patterns/state)
+- [BFS](https://cp-algorithms.com/graph/breadth-first-search.html#__tabbed_1_2)
+- [classic Pac Man maze asset](https://github.com/bobeff/pacman/blob/master/assets/maze.txt)
+- [Pac Man, Ghost AI Explained, Youtube video](https://www.youtube.com/watch?v=ataGotQ7ir8)
+- [Building Pac Man, Blog](https://pacmancode.com/)

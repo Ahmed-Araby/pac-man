@@ -1,27 +1,26 @@
 package org.example.collision;
 
-import org.example.constant.Dimensions;
-import org.example.constant.SpriteE;
-import org.example.entity.Coordinate;
-import org.example.entity.Rect;
-import org.example.event.manager.EventManager;
+import org.example.constant.DimensionsC;
+import org.example.constant.DirectionsE;
+import org.example.entity.CanvasCoordinate;
+import org.example.entity.MazeCell;
+import org.example.entity.CanvasRect;
 import org.example.event.Event;
 import org.example.event.manager.SyncEventManager;
 import org.example.event.movement.PacManMovementAttemptApprovedEvent;
 import org.example.event.movement.PacManMovementAttemptDeniedEvent;
 import org.example.event.movement.PacManMovementAttemptEvent;
 import org.example.event.Subscriber;
-import org.example.util.MazeCanvasCoordinateMapping;
-import org.example.util.RectUtils;
+import org.example.maze.MazeMatrix;
+import org.example.util.canvas.CanvasUtil;
+import org.example.util.canvas.CanvasRectUtils;
 
 import java.util.List;
 
 public class PacManToWallCollisionDetection implements Subscriber {
-    private SpriteE[][] maze;
     private SyncEventManager syncEventManager;
 
-    public PacManToWallCollisionDetection(SpriteE[][] maze, SyncEventManager syncEventManager) {
-        this.maze = maze;
+    public PacManToWallCollisionDetection(SyncEventManager syncEventManager) {
         this.syncEventManager = syncEventManager;
     }
 
@@ -31,8 +30,8 @@ public class PacManToWallCollisionDetection implements Subscriber {
             return;
         }
 
-        final Rect pacManCanvasRect = new Rect(event.getRequestedPacManCanvasRectTopLeftCorner(), Dimensions.PAC_MAN_DIAMETER_PIXELS, Dimensions.PAC_MAN_DIAMETER_PIXELS);
-        final List<Coordinate> pacManRect4Corners = RectUtils.get4Corners(pacManCanvasRect);
+        final CanvasRect pacManCanvasCanvasRect = new CanvasRect(event.getRequestedPacManCanvasRectTopLeftCorner(), DimensionsC.PAC_MAN_DIAMETER_PIXELS, DimensionsC.PAC_MAN_DIAMETER_PIXELS);
+        final List<CanvasCoordinate> pacManRect4Corners = CanvasRectUtils.get4Corners(pacManCanvasCanvasRect);
         final boolean isCollidingWithWall = pacManRect4Corners.stream()
                 .map(this::toTopLeftCornerOfRectContainingPoint)
                 .anyMatch(this::isPacManCollidingWithAWall);
@@ -43,18 +42,18 @@ public class PacManToWallCollisionDetection implements Subscriber {
         }
     }
 
-    private Coordinate toTopLeftCornerOfRectContainingPoint(Coordinate point) {
-        return RectUtils.getTopLeftCornerOfRectContainingPoint(Dimensions.CANVAS_CELL_SIZE_PIXELS, Dimensions.CANVAS_CELL_SIZE_PIXELS, point);
+    private CanvasCoordinate toTopLeftCornerOfRectContainingPoint(CanvasCoordinate point) {
+        return CanvasRectUtils.getTopLeftCornerOfRectContainingPoint(DimensionsC.MAZE_CELL_SIZE_PIXELS, DimensionsC.MAZE_CELL_SIZE_PIXELS, point);
     }
 
-    private boolean isPacManGoingOutOfCanvas(Coordinate pacManCanvasTopLeftCorner) {
-        return pacManCanvasTopLeftCorner.getRow() < 0 || pacManCanvasTopLeftCorner.getRow() > Dimensions.CANVAS_HEIGHT_PIXELS - Dimensions.PAC_MAN_DIAMETER_PIXELS ||
-                pacManCanvasTopLeftCorner.getCol() < 0 || pacManCanvasTopLeftCorner.getCol() > Dimensions.CANVAS_WIDTH_PIXELS - Dimensions.PAC_MAN_DIAMETER_PIXELS;
+    private boolean isPacManGoingOutOfCanvas(CanvasCoordinate pacManCanvasTopLeftCorner) {
+        return pacManCanvasTopLeftCorner.getRow() < 0 || pacManCanvasTopLeftCorner.getRow() > DimensionsC.CANVAS_HEIGHT_PIXELS - DimensionsC.PAC_MAN_DIAMETER_PIXELS ||
+                pacManCanvasTopLeftCorner.getCol() < 0 || pacManCanvasTopLeftCorner.getCol() > DimensionsC.CANVAS_WIDTH_PIXELS - DimensionsC.PAC_MAN_DIAMETER_PIXELS;
     }
 
-    private boolean isPacManCollidingWithAWall(Coordinate wallCanvasTopLeftCorner) {
-        final Coordinate wallMazeCord = MazeCanvasCoordinateMapping.canvasCordToMazeCordFloored(wallCanvasTopLeftCorner);
-        return maze[(int) wallMazeCord.getRow()][(int) wallMazeCord.getCol()] == SpriteE.WALL;
+    private boolean isPacManCollidingWithAWall(CanvasCoordinate wallCanvasTopLeftCorner) {
+        final MazeCell wallMazeCord = CanvasUtil.toMazeCoordinate(wallCanvasTopLeftCorner, DirectionsE.STILL);
+        return MazeMatrix.isWall(wallMazeCord.getRow(), wallMazeCord.getCol());
     }
 
     private void publishMovementApproval(PacManMovementAttemptEvent event) {

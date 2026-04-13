@@ -1,9 +1,16 @@
-package org.example.constant;
+package org.example.config;
 
 public class Configs {
 
     // [TODO] I need to find better name than FRAMES, because it is not really related to the number of frames at which javaFX is running.
+    // pac man
     public static int FRAMES_PER_SEC_FOR_PAC_MAN_STRIDE = 25; // define speed of pac man movement
     public static int FRAMES_PER_SEC_FOR_PAC_MAN_MOUSE_OPEN_CLOSED_ANIMATION = 25; // define speed of the opening and closing pac man mouse animation.
+
+    // ghost
+    // blinky
+    public static int FRAMES_PER_SEC_FOR_GHOST_BLINKY_STRIDE = 25;
+
+    // suger
     public static int SUPER_SUGAR_PERCENTAGE = 3;
 }

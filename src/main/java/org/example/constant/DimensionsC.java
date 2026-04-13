@@ -1,0 +1,48 @@
+package org.example.constant;
+
+public class DimensionsC {
+
+    private DimensionsC() {}
+
+    // measurements are in pixels, otherwise it will be explicitly specified.
+    // canvas
+    public static double CANVAS_WIDTH_PIXELS = 1050;
+    public static double CANVAS_HEIGHT_PIXELS = 1050;
+
+    // maze
+    public static double MAZE_CELL_SIZE_PIXELS = 50;
+    public static int MAZE_WIDTH = (int) (CANVAS_WIDTH_PIXELS / MAZE_CELL_SIZE_PIXELS);
+    public static int MAZE_HEIGHT = (int) (CANVAS_HEIGHT_PIXELS / MAZE_CELL_SIZE_PIXELS);
+    public static int MAZE_CHAMBER_MIN_WIDTH = 1; // min number of cells can't be less than 2
+    public static int MAZE_CHAMBER_MIN_HEIGHT = 1; // min number of cells can't be less than 2
+
+    // pac man
+    public static double PAC_MAN_DIAMETER_PIXELS = MAZE_CELL_SIZE_PIXELS; // Pac-Man should fill a complete cell.
+    public static double PAC_MAN_STRIDE_PIXELS = MAZE_CELL_SIZE_PIXELS; // Pac-Man should move one cell at a time.
+    public static double PAC_MAN_COMPLETE_MOUSE_MOVEMENT_DISTANCE_PIXELS = PAC_MAN_STRIDE_PIXELS;
+    public static double PAC_MAN_CLOSED_MOUSE_DISTANCE_PIXELS = 0.5 * PAC_MAN_COMPLETE_MOUSE_MOVEMENT_DISTANCE_PIXELS;
+    public static double PAC_MAN_OPEN_MOUSE_DISTANCE_PIXELS = PAC_MAN_COMPLETE_MOUSE_MOVEMENT_DISTANCE_PIXELS - PAC_MAN_CLOSED_MOUSE_DISTANCE_PIXELS;
+
+    public static double PAC_MAN_OPEN_MOUSE_ARC_EXTENT_IN_DEGREES = 270;
+    public static double PAC_MAN_CLOSED_MOUSE_ARC_EXTENT_IN_DEGREES = 360;
+    public static double PAC_MAN_CLOSED_MOUSE_START_ANGLE_IN_DEGREES = 0;
+    public static double PAC_MAN_RIGHT_OPEN_MOUSE_START_ANGLE_IN_DEGREES = 45;
+    public static double PAC_MAN_UP_OPEN_MOUSE_START_ANGLE_IN_DEGREES = 135;
+    public static double PAC_MAN_LEFT_OPEN_MOUSE_START_ANGLE_IN_DEGREES = 225;
+    public static double PAC_MAN_DOWN_OPEN_MOUSE_START_ANGLE_IN_DEGREES = 315;
+
+    // ghosts
+    public static double GHOST_WIDTH_PIXELS = MAZE_CELL_SIZE_PIXELS; // Pac-Man should fill a complete cell.
+    public static double GHOST_HEIGHT_PIXELS = MAZE_CELL_SIZE_PIXELS; // Pac-Man should fill a complete cell.
+
+    // blinky
+    public static double BLINKY_STRIDE_PIXELS = MAZE_CELL_SIZE_PIXELS;
+    public static double BLINKY_COMPLETE_LEG_MOVEMENT_DISTANCE_PIXELS = BLINKY_STRIDE_PIXELS;
+    public static double BLINKY_FIRST_LEG_MOVEMENT_DISTANCE_PIXELS = 0.5 * BLINKY_COMPLETE_LEG_MOVEMENT_DISTANCE_PIXELS;
+    public static double BLINKY_SECOND_LEG_MOVEMENT_DISTANCE_PIXELS = 0.5 * BLINKY_COMPLETE_LEG_MOVEMENT_DISTANCE_PIXELS;
+
+    // sugar
+    public static double SUGAR_CELL_SIZE_PIXELS = 0.15 * MAZE_CELL_SIZE_PIXELS;
+    public static double SUPER_SUGAR_DIAMETER_PIXELS = 0.6 * MAZE_CELL_SIZE_PIXELS;
+
+}

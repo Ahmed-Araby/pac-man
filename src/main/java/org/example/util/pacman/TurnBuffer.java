@@ -3,30 +3,30 @@ package org.example.util.pacman;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.example.constant.DirectionsE;
-import org.example.entity.Coordinate;
-import org.example.entity.Rect;
+import org.example.entity.CanvasCoordinate;
+import org.example.entity.CanvasRect;
 import org.example.event.movement.PacManMovementRequestEvent;
-import org.example.util.RectUtils;
+import org.example.util.canvas.CanvasRectUtils;
 
 @NoArgsConstructor
 @Setter
 public class TurnBuffer {
 
     private DirectionsE bufferedDirection;
-    private Rect pacManCanvasRectAtBufferingTime;
+    private CanvasRect pacManCanvasCanvasRectAtBufferingTime;
     // we can simplify the turn buffer using PixelStrideTracker, however I think the current approach is more accurate
     public boolean isBlockedTurn(DirectionsE currentPacManDirection, DirectionsE requestedDirection) {
         return currentPacManDirection != requestedDirection;
     }
 
-    public boolean isThereBufferedTurn(Rect currPacManCanvasRect, DirectionsE currentPacManDirection) {
+    public boolean isThereBufferedTurn(CanvasRect currPacManCanvasCanvasRect, DirectionsE currentPacManDirection) {
         if (bufferedDirection == null) {
             return false;
         }
 
         if (bufferedDirection == currentPacManDirection || // without this condition, we get accelerated movement,
                 // because on the turn cell, pac man didn't move beyond the next cell yet, and this cause the automatic movement and buffered turn to execute at the same time
-                hasPacManMovedBeyondTheNextCell(currPacManCanvasRect, currentPacManDirection)) {
+                hasPacManMovedBeyondTheNextCell(currPacManCanvasCanvasRect, currentPacManDirection)) {
             discardTurnBuffer();
             return false;
         }
@@ -39,28 +39,28 @@ public class TurnBuffer {
         return new PacManMovementRequestEvent(bufferedDirection, this);
     }
 
-    public void bufferTurn(DirectionsE bufferedTurn, Rect pacManCanvasRectAtBufferingTime) {
+    public void bufferTurn(DirectionsE bufferedTurn, CanvasRect pacManCanvasCanvasRectAtBufferingTime) {
         this.bufferedDirection = bufferedTurn;
-        this.pacManCanvasRectAtBufferingTime = pacManCanvasRectAtBufferingTime;
+        this.pacManCanvasCanvasRectAtBufferingTime = pacManCanvasCanvasRectAtBufferingTime;
     }
 
     public void discardTurnBuffer() {
         bufferedDirection = null;
-        pacManCanvasRectAtBufferingTime = null;
+        pacManCanvasCanvasRectAtBufferingTime = null;
     }
 
-    private boolean hasPacManMovedBeyondTheNextCell(Rect currPacManCanvasRect, DirectionsE currentPacManDirection) {
+    private boolean hasPacManMovedBeyondTheNextCell(CanvasRect currPacManCanvasCanvasRect, DirectionsE currentPacManDirection) {
         // handle out of bounds situations
-        final Coordinate topLeftCornerOfNextRect = RectUtils.getTopLeftCornerOfNextRect(pacManCanvasRectAtBufferingTime, currentPacManDirection);
+        final CanvasCoordinate topLeftCornerOfNextRect = CanvasRectUtils.getTopLeftCornerOfNextRect(pacManCanvasCanvasRectAtBufferingTime, currentPacManDirection);
 
         if (currentPacManDirection == DirectionsE.RIGHT) {
-            return currPacManCanvasRect.getTopLeftCorner().getCol() > topLeftCornerOfNextRect.getCol();
+            return currPacManCanvasCanvasRect.getTopLeftCorner().getCol() > topLeftCornerOfNextRect.getCol();
         } else if (currentPacManDirection == DirectionsE.UP) {
-            return currPacManCanvasRect.getTopLeftCorner().getRow() < topLeftCornerOfNextRect.getRow();
+            return currPacManCanvasCanvasRect.getTopLeftCorner().getRow() < topLeftCornerOfNextRect.getRow();
         } else if (currentPacManDirection == DirectionsE.DOWN) {
-            return currPacManCanvasRect.getTopLeftCorner().getRow() > topLeftCornerOfNextRect.getRow();
+            return currPacManCanvasCanvasRect.getTopLeftCorner().getRow() > topLeftCornerOfNextRect.getRow();
         } else if (currentPacManDirection == DirectionsE.LEFT) {
-            return currPacManCanvasRect.getTopLeftCorner().getCol() < topLeftCornerOfNextRect.getCol();
+            return currPacManCanvasCanvasRect.getTopLeftCorner().getCol() < topLeftCornerOfNextRect.getCol();
         } else if (currentPacManDirection == DirectionsE.STILL) {
             return true;
         }

@@ -1,0 +1,35 @@
+package org.example.util.ghost;
+
+import org.example.collision.GhostToWallCollisionDetection;
+import org.example.constant.DirectionsE;
+import org.example.entity.CanvasCoordinate;
+import org.example.entity.MazeCell;
+import org.example.entity.Vector;
+import org.example.event.ghost.GhostMovementAttemptEvent;
+import org.example.maze.MazeMatrix;
+import org.example.util.canvas.CanvasUtil;
+import org.example.util.VectorUtil;
+
+import java.util.List;
+
+public class FrightenedGhostUtil {
+
+    public static List<Vector> getAllowedDirections(Vector currDir) {
+        return Vector.fourD
+                .stream()
+                .filter(dir -> !VectorUtil.isOpposite(dir, currDir))
+                .toList();
+    }
+
+    public static List<Vector> getEligibleDirections(CanvasCoordinate cord, Vector dir) {
+        final List<Vector> allowedDirections = getAllowedDirections(dir);
+        return allowedDirections
+                .stream()
+                .filter(allowedDir -> {
+                    final DirectionsE allowedDirectionE = VectorUtil.toDirection(allowedDir);
+                    final GhostMovementAttemptEvent movementAttemptEvent = new GhostMovementAttemptEvent(cord, allowedDirectionE);
+                    return !GhostToWallCollisionDetection.checkCollision(movementAttemptEvent);
+                })
+                .toList();
+    }
+}

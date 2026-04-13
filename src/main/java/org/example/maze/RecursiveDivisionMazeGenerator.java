@@ -53,12 +53,32 @@ public class RecursiveDivisionMazeGenerator implements MazeGenerator {
 
     private int getRandomRowForPlacingWalls(int topLeftCornerRow, int bottomRightCornerRow) {
         // to get 4 sub chambers, we must not place walls on the edges of the current chamber
-        return enrichedRandom.nextIntStartExclEndExcl(topLeftCornerRow, bottomRightCornerRow);
+        try {
+            return getRandomOddIndexInBetweenExclusive(topLeftCornerRow, bottomRightCornerRow);
+        } catch (IllegalStateException exc) {
+            throw new IllegalStateException("there should be an odd row for wall placement");
+        }
     }
 
     private int getRandomColForPlacingWalls(int topLeftCornerCol, int bottomRightCornerCol) {
         // to get 4 sub chambers, we must not place walls on the edges of the current chamber
-        return enrichedRandom.nextIntStartExclEndExcl(topLeftCornerCol, bottomRightCornerCol);
+        try {
+            return getRandomOddIndexInBetweenExclusive(topLeftCornerCol, bottomRightCornerCol);
+        } catch (IllegalStateException exc) {
+            throw new IllegalStateException("there should be an odd column for wall placement");
+        }
+    }
+
+    private int getRandomOddIndexInBetweenExclusive(int start, int end) {
+        final int randNum = enrichedRandom.nextIntStartExclEndExcl(start, end);
+        if ((randNum & 1) == 1) {
+            return randNum;
+        } else if (randNum + 1 < end) {
+            return randNum + 1;
+        } else if (randNum - 1 > start) {
+            return randNum - 1;
+        }
+        throw new IllegalStateException();
     }
 
     // OPEN PASSAGES
