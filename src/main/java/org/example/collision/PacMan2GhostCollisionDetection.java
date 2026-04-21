@@ -1,11 +1,11 @@
 package org.example.collision;
 
+import org.example.constant.DimensionsC;
 import org.example.entity.CanvasCoordinate;
-import org.example.entity.MazeCell;
+import org.example.entity.CanvasRect;
 import org.example.event.*;
 import org.example.event.manager.EventManager;
 import org.example.ghostmode.Ghost;
-import org.example.util.canvas.CanvasUtil;
 
 import java.util.List;
 
@@ -20,10 +20,9 @@ public class PacMan2GhostCollisionDetection implements Subscriber {
     }
 
     public boolean isCollision(CanvasCoordinate pacManCord, CanvasCoordinate ghostCord) {
-        final List<MazeCell> pacManInterctingMazeCells = CanvasUtil.getIntersectingMazeCells(pacManCord);
-        final List<MazeCell> ghostCordInterctingMazeCells = CanvasUtil.getIntersectingMazeCells(ghostCord);
-        return pacManInterctingMazeCells.stream()
-                .anyMatch(cell -> ghostCordInterctingMazeCells.contains(cell));
+        final CanvasRect pacManRect = new CanvasRect(pacManCord, DimensionsC.PAC_MAN_DIAMETER_PIXELS, DimensionsC.PAC_MAN_DIAMETER_PIXELS);
+        final CanvasRect ghostRect = new CanvasRect(ghostCord, DimensionsC.GHOST_WIDTH_PIXELS, DimensionsC.GHOST_HEIGHT_PIXELS);
+        return Rect2RectCollisionDetectorUtil.collide(pacManRect, ghostRect);
     }
 
     private void checkCollision(CanvasCoordinate pacManCord) {

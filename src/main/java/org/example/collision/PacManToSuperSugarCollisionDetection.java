@@ -29,7 +29,7 @@ public class PacManToSuperSugarCollisionDetection implements Subscriber {
                 .map(this::toTopLeftCornerOfRectContainingPoint)
                 .filter(rectTopLeftCornerCanvas -> SugarUtil.isCanvasCellHasSuperSugar(rectTopLeftCornerCanvas))
                 .map(SugarUtil::getSuperSugarTopLeftCornerCanvas)
-                .filter(superSugarCanvasRectTopLeftCorner -> isPacManRectContainsSuperSugarRect(pacManCanvasRectTopLeftCorner, superSugarCanvasRectTopLeftCorner))
+                .filter(superSugarCanvasRectTopLeftCorner -> collide(pacManCanvasRectTopLeftCorner, superSugarCanvasRectTopLeftCorner))
                 .collect(Collectors.toUnmodifiableList());
 
         if (!canvasSuperSugarToBeEaten.isEmpty()) {
@@ -43,11 +43,12 @@ public class PacManToSuperSugarCollisionDetection implements Subscriber {
         return CanvasRectUtils.getTopLeftCornerOfRectContainingPoint(DimensionsC.MAZE_CELL_SIZE_PIXELS, DimensionsC.MAZE_CELL_SIZE_PIXELS, point);
     }
 
-    private boolean isPacManRectContainsSuperSugarRect(CanvasCoordinate pacManCanvasRectTopLeftCorner, CanvasCoordinate sugarCanvasRectTopLeftCorner) {
-        final CanvasRect pacManCanvasCanvasRect = new CanvasRect(pacManCanvasRectTopLeftCorner, DimensionsC.PAC_MAN_DIAMETER_PIXELS, DimensionsC.PAC_MAN_DIAMETER_PIXELS);
-        final CanvasRect superSugarCanvasCanvasRect = new CanvasRect(sugarCanvasRectTopLeftCorner, DimensionsC.SUGAR_CELL_SIZE_PIXELS, DimensionsC.SUGAR_CELL_SIZE_PIXELS);
-        return CanvasRectUtils.isRectContainsRect(pacManCanvasCanvasRect, superSugarCanvasCanvasRect);
+    private boolean collide(CanvasCoordinate pacManTopLeftCorner, CanvasCoordinate superSugerTopLeftCorner) {
+        final CanvasRect pacManCanvasCanvasRect = new CanvasRect(pacManTopLeftCorner, DimensionsC.PAC_MAN_DIAMETER_PIXELS, DimensionsC.PAC_MAN_DIAMETER_PIXELS);
+        final CanvasRect superSugarCanvasCanvasRect = new CanvasRect(superSugerTopLeftCorner, DimensionsC.SUGAR_CELL_SIZE_PIXELS, DimensionsC.SUGAR_CELL_SIZE_PIXELS);
+        return Rect2RectCollisionDetectorUtil.collide(pacManCanvasCanvasRect, superSugarCanvasCanvasRect);
     }
+
 
     @Override
     public void update(Event event) {

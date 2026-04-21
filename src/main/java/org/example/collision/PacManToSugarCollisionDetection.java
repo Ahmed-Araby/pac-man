@@ -29,7 +29,7 @@ public class PacManToSugarCollisionDetection implements Subscriber {
                 .map(this::toTopLeftCornerOfRectContainingPoint)
                 .filter(rectTopLeftCornerCanvas -> SugarUtil.isCanvasCellHasSugar(rectTopLeftCornerCanvas))
                 .map(SugarUtil::getSugarTopLeftCornerCanvas)
-                .filter(sugarCanvasRectTopLeftCorner -> isPacManRectContainsSugarRect(pacManCanvasTopLeftCorner, sugarCanvasRectTopLeftCorner))
+                .filter(sugarCanvasRectTopLeftCorner -> collide(pacManCanvasTopLeftCorner, sugarCanvasRectTopLeftCorner))
                 .collect(Collectors.toUnmodifiableList());
 
         if (!canvasSugarToBeEaten.isEmpty()) {
@@ -43,10 +43,10 @@ public class PacManToSugarCollisionDetection implements Subscriber {
         return CanvasRectUtils.getTopLeftCornerOfRectContainingPoint(DimensionsC.MAZE_CELL_SIZE_PIXELS, DimensionsC.MAZE_CELL_SIZE_PIXELS, point);
     }
 
-    private boolean isPacManRectContainsSugarRect(CanvasCoordinate pacManCanvasRectTopLeftCorner, CanvasCoordinate sugarCanvasRectTopLeftCorner) {
+    private boolean collide(CanvasCoordinate pacManCanvasRectTopLeftCorner, CanvasCoordinate sugarCanvasRectTopLeftCorner) {
         final CanvasRect pacManCanvasCanvasRect = new CanvasRect(pacManCanvasRectTopLeftCorner, DimensionsC.PAC_MAN_DIAMETER_PIXELS, DimensionsC.PAC_MAN_DIAMETER_PIXELS);
         final CanvasRect sugarCanvasCanvasRect = new CanvasRect(sugarCanvasRectTopLeftCorner, DimensionsC.SUGAR_CELL_SIZE_PIXELS, DimensionsC.SUGAR_CELL_SIZE_PIXELS);
-        return CanvasRectUtils.isRectContainsRect(pacManCanvasCanvasRect, sugarCanvasCanvasRect);
+        return Rect2RectCollisionDetectorUtil.collide(pacManCanvasCanvasRect, sugarCanvasCanvasRect);
     }
 
     @Override
