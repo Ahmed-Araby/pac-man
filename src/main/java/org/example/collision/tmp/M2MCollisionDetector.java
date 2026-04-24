@@ -13,5 +13,8 @@ public class M2MCollisionDetector implements CollisionDetector {
 
     private boolean detect(M2MCollisionDetectionEvent event) {
         return false;
+    private boolean outOfCanvas(CanvasRect rect) {
+        return rect.topEdgeRow() < 0 || rect.bottomEdgeRow() >= DimensionsC.CANVAS_HEIGHT_PIXELS
+                || rect.leftEdgeCol() < 0 || rect.rightEdgeCol() >= DimensionsC.CANVAS_WIDTH_PIXELS;
     }
 }

@@ -17,8 +17,6 @@ public class M2SCollisionDetector implements CollisionDetector {
         return false;
     }
 
-    private boolean outOfCanvas(CanvasRect rect) {
-        return rect.topEdgeRow() < 0 || rect.bottomEdgeRow() >= DimensionsC.CANVAS_HEIGHT_PIXELS
-                || rect.leftEdgeCol() < 0 || rect.rightEdgeCol() >= DimensionsC.CANVAS_WIDTH_PIXELS;
+
     }
 }
