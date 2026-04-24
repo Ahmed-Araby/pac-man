@@ -1,4 +1,4 @@
-package org.example.collision;
+package org.example.collision.geometric;
 
 import org.example.entity.CanvasRect;
 

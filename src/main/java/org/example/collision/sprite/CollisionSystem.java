@@ -1,11 +1,10 @@
-package org.example.collision.tmp;
+package org.example.collision.sprite;
 
 import org.example.constant.SpriteE;
 import org.example.entity.CanvasCoordinate;
 import org.example.entity.CanvasRect;
 import org.example.event.EventType;
 import org.example.event.PacManSugarCollisionEvent;
-import org.example.event.collision.CollisionDetectionEvent;
 import org.example.event.collision.M2SCollisionDetectionEvent;
 import org.example.event.manager.EventManager;
 import org.example.model.CollisionReport;
@@ -17,14 +16,14 @@ import java.util.Optional;
 
 public class CollisionSystem {
 
-    private final M2SCollisionDetector m2SCollisionDetector;
-    private final M2MCollisionDetector m2MCollisionDetector;
+    private final M2SSpriteCollisionDetector m2SCollisionDetector;
+    private final M2MSpriteCollisionDetector m2MCollisionDetector;
     private final GameState gameState;
     private final EventManager asyncEventManager;
 
     public CollisionSystem(GameState gameState, EventManager asyncEventManager) {
-        this.m2SCollisionDetector = new M2SCollisionDetector();
-        this.m2MCollisionDetector = new M2MCollisionDetector();
+        this.m2SCollisionDetector = new M2SSpriteCollisionDetector();
+        this.m2MCollisionDetector = new M2MSpriteCollisionDetector();
 
         this.gameState = gameState;
         this.asyncEventManager = asyncEventManager;

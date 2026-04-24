@@ -1,7 +1,7 @@
-package org.example.collision.tmp;
+package org.example.collision.sprite;
 
 
-import org.example.collision.Rect2RectCollisionDetectorUtil;
+import org.example.collision.geometric.Rect2RectCollisionDetectorUtil;
 import org.example.constant.DimensionsC;
 import org.example.constant.SpriteE;
 import org.example.entity.CanvasCoordinate;
@@ -15,7 +15,7 @@ import org.example.util.canvas.CanvasRectUtils;
 import java.util.List;
 import java.util.Optional;
 
-public class M2SCollisionDetector implements CollisionDetector {
+public class M2SSpriteCollisionDetector implements SpriteCollisionDetector {
 
     @Override
     public Optional<CollisionReport> detect(CollisionDetectionEvent event) {

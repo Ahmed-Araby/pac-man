@@ -1,10 +1,10 @@
-package org.example.collision;
+package org.example.collision.geometric;
 
 import org.example.constant.DimensionsC;
 import org.example.entity.CanvasCoordinate;
 import org.example.entity.CanvasRect;
 
-public interface CollisionDetector {
+public interface GeometricCollisionDetector {
 
     boolean collide(CanvasCoordinate topLeftCorner1, CanvasCoordinate topLeftCorner2);
 

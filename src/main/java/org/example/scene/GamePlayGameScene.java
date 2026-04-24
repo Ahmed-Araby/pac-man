@@ -7,7 +7,7 @@ import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import org.example.collision.PacMan2GhostCollisionDetection;
 import org.example.collision.PacManToWallCollisionDetection;
-import org.example.collision.tmp.CollisionSystem;
+import org.example.collision.sprite.CollisionSystem;
 import org.example.config.GameConfig;
 import org.example.constant.ColorC;
 import org.example.constant.DimensionsC;

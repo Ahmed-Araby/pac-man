@@ -1,5 +1,6 @@
 package org.example.collision;
 
+import org.example.collision.geometric.Rect2RectCollisionDetectorUtil;
 import org.example.constant.DimensionsC;
 import org.example.entity.CanvasCoordinate;
 import org.example.entity.CanvasRect;

@@ -1,4 +1,4 @@
-package org.example.collision.tmp;
+package org.example.collision.sprite;
 
 
 import org.example.constant.DimensionsC;
@@ -9,7 +9,7 @@ import org.example.model.CollisionReport;
 
 import java.util.Optional;
 
-public class M2MCollisionDetector implements CollisionDetector {
+public class M2MSpriteCollisionDetector implements SpriteCollisionDetector {
 
     @Override
     public Optional<CollisionReport> detect(CollisionDetectionEvent event) {
