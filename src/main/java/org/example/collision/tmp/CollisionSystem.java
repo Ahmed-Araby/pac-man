@@ -1,22 +1,66 @@
 package org.example.collision.tmp;
 
-import org.example.event.manager.SyncEventManager;
+import org.example.constant.SpriteE;
+import org.example.entity.CanvasCoordinate;
+import org.example.entity.CanvasRect;
+import org.example.event.EventType;
+import org.example.event.PacManSugarCollisionEvent;
+import org.example.event.collision.CollisionDetectionEvent;
+import org.example.event.collision.M2SCollisionDetectionEvent;
+import org.example.event.manager.EventManager;
+import org.example.model.CollisionReport;
+import org.example.model.GameState;
+import org.example.util.SpriteUtil;
+
+import java.util.List;
+import java.util.Optional;
 
 public class CollisionSystem {
 
     private final M2SCollisionDetector m2SCollisionDetector;
     private final M2MCollisionDetector m2MCollisionDetector;
-    private final SyncEventManager syncEventManager;
+    private final GameState gameState;
+    private final EventManager asyncEventManager;
 
-    public CollisionSystem(SyncEventManager syncEventManager) {
+    public CollisionSystem(GameState gameState, EventManager asyncEventManager) {
         this.m2SCollisionDetector = new M2SCollisionDetector();
         this.m2MCollisionDetector = new M2MCollisionDetector();
-        this.syncEventManager = syncEventManager;
+
+        this.gameState = gameState;
+        this.asyncEventManager = asyncEventManager;
     }
 
 
     public void detect() {
+        // [TODO] optimize, collision detection in intersecting area, can happen in one pass regardless of the target sprite
+        detectPacman2SugarCollision();
+        detectPacman2SuperSugarCollision();
+    }
 
+    private void detectPacman2SugarCollision() {
+        final CanvasCoordinate pacmanTopLeftCorner = gameState.getPacMan().getCurrCanvasCord();
+        final CanvasRect pacManRect = SpriteUtil.toRect(pacmanTopLeftCorner, SpriteE.PAC_MAN);
+        final M2SCollisionDetectionEvent event = new M2SCollisionDetectionEvent(pacManRect, SpriteE.SUGAR);
+
+        final Optional<CollisionReport> reportOpt = this.m2SCollisionDetector.detect(event);
+        reportOpt.ifPresent((report) -> {
+            final PacManSugarCollisionEvent collisionEvent = new PacManSugarCollisionEvent(
+                    EventType.PAC_MAN_SUGAR_COLLISION, List.of(report.getCollidingSpriteTopLeftCorner()));
+            asyncEventManager.notifySubscribers(collisionEvent);
+        });
+    }
+
+    private void detectPacman2SuperSugarCollision() {
+        final CanvasCoordinate pacmanTopLeftCorner = gameState.getPacMan().getCurrCanvasCord();
+        final CanvasRect pacManRect = SpriteUtil.toRect(pacmanTopLeftCorner, SpriteE.PAC_MAN);
+        final M2SCollisionDetectionEvent event = new M2SCollisionDetectionEvent(pacManRect, SpriteE.SUPER_SUGAR);
+
+        final Optional<CollisionReport> reportOpt = this.m2SCollisionDetector.detect(event);
+        reportOpt.ifPresent((report) -> {
+            final PacManSugarCollisionEvent collisionEvent = new PacManSugarCollisionEvent(
+                    EventType.PAC_MAN_SUPER_SUGAR_COLLISION, List.of(report.getCollidingSpriteTopLeftCorner()));
+            asyncEventManager.notifySubscribers(collisionEvent);
+        });
     }
 
     public void analyzeMovementAttempt() {

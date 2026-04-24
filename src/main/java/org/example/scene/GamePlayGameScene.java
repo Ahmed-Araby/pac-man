@@ -6,9 +6,8 @@ import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import org.example.collision.PacMan2GhostCollisionDetection;
-import org.example.collision.PacManToSugarCollisionDetection;
-import org.example.collision.PacManToSuperSugarCollisionDetection;
 import org.example.collision.PacManToWallCollisionDetection;
+import org.example.collision.tmp.CollisionSystem;
 import org.example.config.GameConfig;
 import org.example.constant.ColorC;
 import org.example.constant.DimensionsC;
@@ -19,6 +18,7 @@ import org.example.ghostmode.navigation.ShortestPathNavigator;
 import org.example.input.JavaFXInputHandler;
 import org.example.input.JavaFXUserInputHandler;
 import org.example.maze.MazeMatrix;
+import org.example.model.GameState;
 import org.example.sound.SoundPlayer;
 import org.example.sprite.Maze;
 import org.example.sprite.PacMan;
@@ -48,8 +48,7 @@ public class GamePlayGameScene implements GameScene {
     final JavaFXInputHandler javaFXInputHandler;
 
     // collision detection
-    private final PacManToSugarCollisionDetection pacManToSugarCollisionDetection;
-    private final PacManToSuperSugarCollisionDetection pacManToSuperSugarCollisionDetection;
+    private final CollisionSystem collisionSystem;
     private final PacManToWallCollisionDetection pacManToWallCollisionDetection;
     private final PacMan2GhostCollisionDetection pacMan2GhostCollisionDetection;
 
@@ -73,9 +72,10 @@ public class GamePlayGameScene implements GameScene {
         initGhosts();
 
         // collision detection
+        final GameState gameState = new GameState(pacMan);
+        collisionSystem = new CollisionSystem(gameState, eventManager);
+
         pacManToWallCollisionDetection = new PacManToWallCollisionDetection(syncEventManager);
-        pacManToSugarCollisionDetection = new PacManToSugarCollisionDetection(eventManager);
-        pacManToSuperSugarCollisionDetection = new PacManToSuperSugarCollisionDetection(eventManager);
         pacMan2GhostCollisionDetection = new PacMan2GhostCollisionDetection(eventManager, blinky);
 
         // javaFX setup
@@ -102,8 +102,6 @@ public class GamePlayGameScene implements GameScene {
         eventManager.subscribe(EventType.PAC_MAN_SUPER_SUGAR_COLLISION, soundPlayer);
         eventManager.subscribe(EventType.PAC_MAN_SUPER_SUGAR_COLLISION, sugar);
 
-        eventManager.subscribe(EventType.PAC_MAN_CURRENT_LOCATION, pacManToSugarCollisionDetection);
-        eventManager.subscribe(EventType.PAC_MAN_CURRENT_LOCATION, pacManToSuperSugarCollisionDetection);
         eventManager.subscribe(EventType.PAC_MAN_CURRENT_LOCATION, pacMan2GhostCollisionDetection);
 
         eventManager.subscribe(EventType.PAC_MAN_SUPER_SUGAR_COLLISION, blinky);
@@ -153,5 +151,6 @@ public class GamePlayGameScene implements GameScene {
     @Override
     public void update() {
         blinky.move(null);
+        collisionSystem.detect();
     }
 }
