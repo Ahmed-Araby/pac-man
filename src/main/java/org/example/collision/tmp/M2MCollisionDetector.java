@@ -1,18 +1,25 @@
 package org.example.collision.tmp;
 
 
+import org.example.constant.DimensionsC;
+import org.example.entity.CanvasRect;
 import org.example.event.collision.CollisionDetectionEvent;
 import org.example.event.collision.M2MCollisionDetectionEvent;
+import org.example.model.CollisionReport;
+
+import java.util.Optional;
 
 public class M2MCollisionDetector implements CollisionDetector {
 
     @Override
-    public boolean detect(CollisionDetectionEvent event) {
+    public Optional<CollisionReport> detect(CollisionDetectionEvent event) {
         return detect((M2MCollisionDetectionEvent) event);
     }
 
-    private boolean detect(M2MCollisionDetectionEvent event) {
-        return false;
+    private Optional<CollisionReport> detect(M2MCollisionDetectionEvent event) {
+        return Optional.empty();
+    }
+
     private boolean outOfCanvas(CanvasRect rect) {
         return rect.topEdgeRow() < 0 || rect.bottomEdgeRow() >= DimensionsC.CANVAS_HEIGHT_PIXELS
                 || rect.leftEdgeCol() < 0 || rect.rightEdgeCol() >= DimensionsC.CANVAS_WIDTH_PIXELS;
