@@ -5,6 +5,9 @@ import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.ToString;
 import org.example.entity.CanvasCoordinate;
+import org.example.entity.CanvasRect;
+
+import java.util.List;
 
 @AllArgsConstructor
 @Getter
@@ -12,5 +15,6 @@ import org.example.entity.CanvasCoordinate;
 @ToString
 public class CollisionReport {
 
-    private CanvasCoordinate collidingSpriteTopLeftCorner;
+    private final CanvasRect collidingObject;
+    private final List<CanvasRect> collidingObjects;
 }

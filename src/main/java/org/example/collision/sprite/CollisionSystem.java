@@ -43,8 +43,9 @@ public class CollisionSystem {
 
         final Optional<CollisionReport> reportOpt = this.m2SCollisionDetector.detect(event);
         reportOpt.ifPresent((report) -> {
+            final CanvasRect collidingRect = report.getCollidingObjects().getFirst();
             final PacManSugarCollisionEvent collisionEvent = new PacManSugarCollisionEvent(
-                    EventType.PAC_MAN_SUGAR_COLLISION, List.of(report.getCollidingSpriteTopLeftCorner()));
+                    EventType.PAC_MAN_SUGAR_COLLISION, List.of(collidingRect.getTopLeftCorner()));
             asyncEventManager.notifySubscribers(collisionEvent);
         });
     }
@@ -56,8 +57,9 @@ public class CollisionSystem {
 
         final Optional<CollisionReport> reportOpt = this.m2SCollisionDetector.detect(event);
         reportOpt.ifPresent((report) -> {
+            final CanvasRect collidingRect = report.getCollidingObjects().getFirst();
             final PacManSugarCollisionEvent collisionEvent = new PacManSugarCollisionEvent(
-                    EventType.PAC_MAN_SUPER_SUGAR_COLLISION, List.of(report.getCollidingSpriteTopLeftCorner()));
+                    EventType.PAC_MAN_SUPER_SUGAR_COLLISION, List.of(collidingRect.getTopLeftCorner()));
             asyncEventManager.notifySubscribers(collisionEvent);
         });
     }

@@ -32,9 +32,10 @@ public class M2SSpriteCollisionDetector implements SpriteCollisionDetector {
                 .filter(rectB -> Rect2RectCollisionDetectorUtil.collide(rectA, rectB))
                 .findFirst();
 
-        return collidingRect
-                .map(CanvasRect::getTopLeftCorner)
-                .map(CollisionReport::new);
+        if (collidingRect.isPresent()) {
+            return Optional.of(new CollisionReport(rectA, List.of(collidingRect.get())));
+        }
+        return Optional.empty();
     }
 
 
