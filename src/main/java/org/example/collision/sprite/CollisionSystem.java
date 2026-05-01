@@ -6,8 +6,6 @@ import org.example.entity.CanvasRect;
 import org.example.event.EventType;
 import org.example.event.PacMan2GhostCollisionEvent;
 import org.example.event.PacManSugarCollisionEvent;
-import org.example.event.collision.M2MCollisionDetectionEvent;
-import org.example.event.collision.M2SCollisionDetectionEvent;
 import org.example.event.manager.EventManager;
 import org.example.ghostmode.Ghost;
 import org.example.model.CollisionReport;
