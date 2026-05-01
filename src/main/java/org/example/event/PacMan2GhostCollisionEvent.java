@@ -1,6 +1,5 @@
 package org.example.event;
 
-import lombok.AllArgsConstructor;
 import lombok.Getter;
 import org.example.ghostmode.Ghost;
 

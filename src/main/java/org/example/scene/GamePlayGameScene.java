@@ -5,7 +5,6 @@ import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
-import org.example.collision.PacMan2GhostCollisionDetection;
 import org.example.collision.PacManToWallCollisionDetection;
 import org.example.collision.sprite.CollisionSystem;
 import org.example.config.GameConfig;
@@ -26,6 +25,8 @@ import org.example.entity.CanvasCoordinate;
 import org.example.sprite.Sugar;
 import org.example.sprite.ghost.Blinky;
 import org.example.util.debug.DebugUtil;
+
+import java.util.List;
 
 public class GamePlayGameScene implements GameScene {
     // sprites
@@ -50,7 +51,6 @@ public class GamePlayGameScene implements GameScene {
     // collision detection
     private final CollisionSystem collisionSystem;
     private final PacManToWallCollisionDetection pacManToWallCollisionDetection;
-    private final PacMan2GhostCollisionDetection pacMan2GhostCollisionDetection;
 
     public GamePlayGameScene() {
         // init
@@ -72,11 +72,10 @@ public class GamePlayGameScene implements GameScene {
         initGhosts();
 
         // collision detection
-        final GameState gameState = new GameState(pacMan);
+        final GameState gameState = new GameState(pacMan, List.of(blinky));
         collisionSystem = new CollisionSystem(gameState, eventManager);
 
         pacManToWallCollisionDetection = new PacManToWallCollisionDetection(syncEventManager);
-        pacMan2GhostCollisionDetection = new PacMan2GhostCollisionDetection(eventManager, blinky);
 
         // javaFX setup
         canvas = new Canvas(DimensionsC.CANVAS_WIDTH_PIXELS, DimensionsC.CANVAS_HEIGHT_PIXELS);
@@ -101,8 +100,6 @@ public class GamePlayGameScene implements GameScene {
 
         eventManager.subscribe(EventType.PAC_MAN_SUPER_SUGAR_COLLISION, soundPlayer);
         eventManager.subscribe(EventType.PAC_MAN_SUPER_SUGAR_COLLISION, sugar);
-
-        eventManager.subscribe(EventType.PAC_MAN_CURRENT_LOCATION, pacMan2GhostCollisionDetection);
 
         eventManager.subscribe(EventType.PAC_MAN_SUPER_SUGAR_COLLISION, blinky);
 

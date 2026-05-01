@@ -4,9 +4,12 @@ import org.example.constant.SpriteE;
 import org.example.entity.CanvasCoordinate;
 import org.example.entity.CanvasRect;
 import org.example.event.EventType;
+import org.example.event.PacMan2GhostCollisionEvent;
 import org.example.event.PacManSugarCollisionEvent;
+import org.example.event.collision.M2MCollisionDetectionEvent;
 import org.example.event.collision.M2SCollisionDetectionEvent;
 import org.example.event.manager.EventManager;
+import org.example.ghostmode.Ghost;
 import org.example.model.CollisionReport;
 import org.example.model.GameState;
 import org.example.util.SpriteUtil;
@@ -34,6 +37,7 @@ public class CollisionSystem {
         // [TODO] optimize, collision detection in intersecting area, can happen in one pass regardless of the target sprite
         detectPacman2SugarCollision();
         detectPacman2SuperSugarCollision();
+        detectPacman2GhostCollision();
     }
 
     private void detectPacman2SugarCollision() {
@@ -63,6 +67,23 @@ public class CollisionSystem {
             asyncEventManager.notifySubscribers(collisionEvent);
         });
     }
+
+    private void detectPacman2GhostCollision() {
+        final CanvasCoordinate pacManTopLeftCorner = gameState.getPacMan().getCurrCanvasCord();
+        final CanvasRect pacManRect = SpriteUtil.toRect(pacManTopLeftCorner, SpriteE.PAC_MAN);
+
+        for(Ghost ghost: gameState.getGhosts()) {
+            final CanvasRect ghostRect = SpriteUtil.toRect(ghost.getTopLeftCorner(), SpriteE.GHOST);
+            final M2MCollisionDetectionEvent event = new M2MCollisionDetectionEvent(pacManRect, ghostRect);
+            m2MCollisionDetector.detect(event).ifPresent((report)-> {
+                final PacMan2GhostCollisionEvent collisionEvent = new PacMan2GhostCollisionEvent(ghost);
+                asyncEventManager.notifySubscribers(collisionEvent);
+            });
+        }
+
+    }
+
+    // [TODO] implement pacman to ghosts collision detection
 
     public void analyzeMovementAttempt() {
     }

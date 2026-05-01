@@ -21,6 +21,7 @@ import org.example.sprite.Sprite;
 
 public class Blinky extends Ghost implements Sprite, Subscriber {
 
+    // [todo] move the common filed to the Ghost abstract class
     @Getter
     @Setter
     private double canvasCol = 0, canvasRow = 0;
@@ -29,6 +30,7 @@ public class Blinky extends Ghost implements Sprite, Subscriber {
     @Setter
     private DirectionsE directionsE = DirectionsE.STILL;
 
+    // [TODO] rename modes
     // ghost modes
     private final GhostMode blinkyChaser;
     private final GhostMode blinkyScattered;

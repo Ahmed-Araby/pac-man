@@ -14,4 +14,8 @@ public abstract class Ghost {
 
     public abstract DirectionsE getDirectionsE();
     public abstract void setDirectionsE(DirectionsE directionsE);
+
+    public CanvasCoordinate getTopLeftCorner() {
+        return new CanvasCoordinate(getCanvasRow(), getCanvasCol());
+    }
 }

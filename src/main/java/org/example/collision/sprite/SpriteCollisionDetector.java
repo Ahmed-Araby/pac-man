@@ -7,5 +7,6 @@ import java.util.Optional;
 
 public interface SpriteCollisionDetector {
 
+    // [TODO] replace event argument, events should  represent something that already happened
     Optional<CollisionReport> detect(CollisionDetectionEvent event);
 }
