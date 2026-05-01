@@ -43,9 +43,8 @@ public class CollisionSystem {
     private void detectPacman2SugarCollision() {
         final CanvasCoordinate pacmanTopLeftCorner = gameState.getPacMan().getCurrCanvasCord();
         final CanvasRect pacManRect = SpriteUtil.toRect(pacmanTopLeftCorner, SpriteE.PAC_MAN);
-        final M2SCollisionDetectionEvent event = new M2SCollisionDetectionEvent(pacManRect, SpriteE.SUGAR);
 
-        final Optional<CollisionReport> reportOpt = this.m2SCollisionDetector.detect(event);
+        final Optional<CollisionReport> reportOpt = this.m2SCollisionDetector.detect(pacManRect, SpriteE.SUGAR);
         reportOpt.ifPresent((report) -> {
             final CanvasRect collidingRect = report.getCollidingObjects().getFirst();
             final PacManSugarCollisionEvent collisionEvent = new PacManSugarCollisionEvent(
@@ -57,9 +56,8 @@ public class CollisionSystem {
     private void detectPacman2SuperSugarCollision() {
         final CanvasCoordinate pacmanTopLeftCorner = gameState.getPacMan().getCurrCanvasCord();
         final CanvasRect pacManRect = SpriteUtil.toRect(pacmanTopLeftCorner, SpriteE.PAC_MAN);
-        final M2SCollisionDetectionEvent event = new M2SCollisionDetectionEvent(pacManRect, SpriteE.SUPER_SUGAR);
 
-        final Optional<CollisionReport> reportOpt = this.m2SCollisionDetector.detect(event);
+        final Optional<CollisionReport> reportOpt = this.m2SCollisionDetector.detect(pacManRect, SpriteE.SUPER_SUGAR);
         reportOpt.ifPresent((report) -> {
             final CanvasRect collidingRect = report.getCollidingObjects().getFirst();
             final PacManSugarCollisionEvent collisionEvent = new PacManSugarCollisionEvent(
@@ -74,8 +72,7 @@ public class CollisionSystem {
 
         for(Ghost ghost: gameState.getGhosts()) {
             final CanvasRect ghostRect = SpriteUtil.toRect(ghost.getTopLeftCorner(), SpriteE.GHOST);
-            final M2MCollisionDetectionEvent event = new M2MCollisionDetectionEvent(pacManRect, ghostRect);
-            m2MCollisionDetector.detect(event).ifPresent((report)-> {
+            m2MCollisionDetector.detect(pacManRect, ghostRect).ifPresent((report)-> {
                 final PacMan2GhostCollisionEvent collisionEvent = new PacMan2GhostCollisionEvent(ghost);
                 asyncEventManager.notifySubscribers(collisionEvent);
             });

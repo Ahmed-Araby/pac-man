@@ -6,8 +6,6 @@ import org.example.constant.DimensionsC;
 import org.example.constant.SpriteE;
 import org.example.entity.CanvasCoordinate;
 import org.example.entity.CanvasRect;
-import org.example.event.collision.CollisionDetectionEvent;
-import org.example.event.collision.M2SCollisionDetectionEvent;
 import org.example.model.CollisionReport;
 import org.example.util.SpriteUtil;
 import org.example.util.canvas.CanvasRectUtils;
@@ -15,25 +13,19 @@ import org.example.util.canvas.CanvasRectUtils;
 import java.util.List;
 import java.util.Optional;
 
-public class M2SSpriteCollisionDetector implements SpriteCollisionDetector {
+public class M2SSpriteCollisionDetector {
 
-    @Override
-    public Optional<CollisionReport> detect(CollisionDetectionEvent event) {
-        return detect((M2SCollisionDetectionEvent) event);
-    }
-
-    private Optional<CollisionReport> detect(M2SCollisionDetectionEvent event) {
-        final CanvasRect rectA = event.getRectA();
-        final List<CanvasCoordinate> corners = CanvasRectUtils.get4Corners(rectA);
+    public Optional<CollisionReport> detect(CanvasRect rect, SpriteE target) {
+        final List<CanvasCoordinate> corners = CanvasRectUtils.get4Corners(rect);
         final Optional<CanvasRect> collidingRect = corners.stream()
                 .map(this::toTopLeftCornerOfRectContainingPoint)
-                .filter(topLeftCornerCord -> this.isTarget(topLeftCornerCord, event.getTarget()))
-                .map(topLeftCornerCord -> SpriteUtil.toRect(topLeftCornerCord, event.getTarget()))
-                .filter(rectB -> Rect2RectCollisionDetectorUtil.collide(rectA, rectB))
+                .filter(topLeftCornerCord -> this.isTarget(topLeftCornerCord, target))
+                .map(topLeftCornerCord -> SpriteUtil.toRect(topLeftCornerCord, target))
+                .filter(rectB -> Rect2RectCollisionDetectorUtil.collide(rect, rectB))
                 .findFirst();
 
         if (collidingRect.isPresent()) {
-            return Optional.of(new CollisionReport(rectA, List.of(collidingRect.get())));
+            return Optional.of(new CollisionReport(rect, List.of(collidingRect.get())));
         }
         return Optional.empty();
     }
