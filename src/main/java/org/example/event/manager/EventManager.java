@@ -12,13 +12,11 @@ import java.util.List;
 public class EventManager implements Publisher {
     List<Subscriber> pacManSugarCollisionEventSubscribers;
     List<Subscriber> pacManSuperSugarCollisionSubscribers;
-    List<Subscriber> pacManCurrentLocationEventSubscribers;
     List<Subscriber> pacMan2GhostCollisionSubscribers;
 
     public EventManager() {
         pacManSugarCollisionEventSubscribers = new ArrayList<>();
         pacManSuperSugarCollisionSubscribers = new ArrayList<>();
-        pacManCurrentLocationEventSubscribers = new ArrayList<>();
         pacMan2GhostCollisionSubscribers = new ArrayList<>();
     }
 

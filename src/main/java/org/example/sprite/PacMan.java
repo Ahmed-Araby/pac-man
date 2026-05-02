@@ -14,7 +14,6 @@ import org.example.event.manager.EventManager;
 import org.example.event.manager.SyncEventManager;
 import org.example.event.movement.PacManMovementAttemptApprovedEvent;
 import org.example.event.movement.PacManMovementAttemptDeniedEvent;
-import org.example.event.movement.PacManMovementAttemptEvent;
 import org.example.event.movement.PacManMovementRequestEvent;
 import org.example.util.pacman.PacManGraphicsUtil;
 import org.example.util.pacman.PixelStrideTracker;
@@ -87,38 +86,54 @@ public class PacMan extends MovingSprite implements Subscriber {
 
     @Override
     public void move(Event event) {
-        switch (event.getType()) {
-            case PAC_MAN_MOVEMENT_ATTEMPT_APPROVED -> handleApprovedMovementAttempt((PacManMovementAttemptApprovedEvent) event);
-            case PAC_MAN_MOVEMENT_ATTEMPT_DENIED -> handleDeniedMovementAttempt((PacManMovementAttemptDeniedEvent) event);
-            default -> throw new IllegalArgumentException();
-        }
+        throw new IllegalStateException("PacMan.move is not implemented, refactoring is coming in the way");
     }
 
     private void attemptMovement(PacManMovementRequestEvent event) {
-        double newCanvasCol, newCanvasRow;
+        double newCol = col;
+        double newRow = row;
+
         switch (event.getDirectionsE()) {
             case RIGHT:
-                newCanvasCol = col + DimensionsC.PAC_MAN_STRIDE_PIXELS / Configs.FRAMES_PER_SEC_FOR_PAC_MAN_STRIDE;
-                publishPacManMovementAttemptEvent(row, newCanvasCol, DirectionsE.RIGHT, event.getSource());
+                newCol = col + DimensionsC.PAC_MAN_STRIDE_PIXELS / Configs.FRAMES_PER_SEC_FOR_PAC_MAN_STRIDE;
                 break;
             case UP:
-                newCanvasRow = row - DimensionsC.PAC_MAN_STRIDE_PIXELS / Configs.FRAMES_PER_SEC_FOR_PAC_MAN_STRIDE;
-                publishPacManMovementAttemptEvent(newCanvasRow, col, DirectionsE.UP, event.getSource());
+                newRow = row - DimensionsC.PAC_MAN_STRIDE_PIXELS / Configs.FRAMES_PER_SEC_FOR_PAC_MAN_STRIDE;
                 break;
             case LEFT:
-                newCanvasCol = col - DimensionsC.PAC_MAN_STRIDE_PIXELS / Configs.FRAMES_PER_SEC_FOR_PAC_MAN_STRIDE;
-                publishPacManMovementAttemptEvent(row, newCanvasCol, DirectionsE.LEFT, event.getSource());
+                newCol = col - DimensionsC.PAC_MAN_STRIDE_PIXELS / Configs.FRAMES_PER_SEC_FOR_PAC_MAN_STRIDE;
                 break;
             case DOWN:
-                newCanvasRow = row + DimensionsC.PAC_MAN_STRIDE_PIXELS / Configs.FRAMES_PER_SEC_FOR_PAC_MAN_STRIDE;
-                publishPacManMovementAttemptEvent(newCanvasRow, col, DirectionsE.DOWN, event.getSource());
+                newRow = row + DimensionsC.PAC_MAN_STRIDE_PIXELS / Configs.FRAMES_PER_SEC_FOR_PAC_MAN_STRIDE;
                 break;
             case STILL:
                 dir = event.getDirectionsE();
         }
-    }
-    private void publishPacManMovementAttemptEvent(double newCanvasRow, double newCanvasCol, DirectionsE desiredDirection, Object source) {
-        syncEventManager.notifySubscribers(new PacManMovementAttemptEvent(new CanvasCoordinate(row, col), new CanvasCoordinate(newCanvasRow, newCanvasCol), desiredDirection, source));
+
+        if (DirectionsE.STILL == event.getDirectionsE()) {
+            return;
+        }
+
+        final CanvasCoordinate nextCord = new CanvasCoordinate(newRow, newCol);
+        if (isGoingOutOfCanvas(nextCord)) {
+            final PacManMovementAttemptDeniedEvent deniedEvent = new PacManMovementAttemptDeniedEvent(
+                    nextCord, event.getDirectionsE(), event.getSource()
+            );
+            handleDeniedMovementAttempt(deniedEvent);
+            return;
+        }
+
+        if (isCollidingWithWall(nextCord)) {
+            final PacManMovementAttemptDeniedEvent deniedEvent = new PacManMovementAttemptDeniedEvent(
+                    nextCord, event.getDirectionsE(), event.getSource()
+            );
+            handleDeniedMovementAttempt(deniedEvent);
+        } else {
+            final PacManMovementAttemptApprovedEvent approvedEvent = new PacManMovementAttemptApprovedEvent(
+                    getCurrCanvasCord(), nextCord, event.getDirectionsE(), event.getSource()
+            );
+            handleApprovedMovementAttempt(approvedEvent);
+        }
     }
 
     private void handleApprovedMovementAttempt(PacManMovementAttemptApprovedEvent event) {
@@ -156,9 +171,6 @@ public class PacMan extends MovingSprite implements Subscriber {
         switch (event.getType()) {
             case PAC_MAN_MOVEMENT_REQUEST:
                 attemptMovement(((PacManMovementRequestEvent)event));
-                break;
-            case PAC_MAN_MOVEMENT_ATTEMPT_APPROVED, PAC_MAN_MOVEMENT_ATTEMPT_DENIED:
-                move(event);
                 break;
             default:
                 throw new UnsupportedOperationException();

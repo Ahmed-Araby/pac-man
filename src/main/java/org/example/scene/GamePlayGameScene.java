@@ -5,7 +5,6 @@ import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
-import org.example.collision.PacManToWallCollisionDetection;
 import org.example.collision.sprite.CollisionSystem;
 import org.example.config.GameConfig;
 import org.example.constant.ColorC;
@@ -50,7 +49,6 @@ public class GamePlayGameScene implements GameScene {
 
     // collision detection
     private final CollisionSystem collisionSystem;
-    private final PacManToWallCollisionDetection pacManToWallCollisionDetection;
 
     public GamePlayGameScene() {
         // init
@@ -75,7 +73,6 @@ public class GamePlayGameScene implements GameScene {
         final GameState gameState = new GameState(pacMan, List.of(blinky));
         collisionSystem = new CollisionSystem(gameState, eventManager);
 
-        pacManToWallCollisionDetection = new PacManToWallCollisionDetection(syncEventManager);
 
         // javaFX setup
         canvas = new Canvas(DimensionsC.CANVAS_WIDTH_PIXELS, DimensionsC.CANVAS_HEIGHT_PIXELS);
@@ -107,14 +104,11 @@ public class GamePlayGameScene implements GameScene {
     }
 
     private void registerSubscribersForSyncEvents() {
-        if (pacMan == null || pacManToWallCollisionDetection == null) {
+        if (pacMan == null) {
             throw new IllegalStateException("can't register null objects for sync event subscription, PacMan, and pacManToWallCollisionDetection must be defined");
 
         }
         syncEventManager.subscribe(EventType.PAC_MAN_MOVEMENT_REQUEST, pacMan);
-        syncEventManager.subscribe(EventType.PAC_MAN_MOVEMENT_ATTEMPT, pacManToWallCollisionDetection);
-        syncEventManager.subscribe(EventType.PAC_MAN_MOVEMENT_ATTEMPT_APPROVED, pacMan);
-        syncEventManager.subscribe(EventType.PAC_MAN_MOVEMENT_ATTEMPT_DENIED, pacMan);
     }
 
     public void initGhosts() {

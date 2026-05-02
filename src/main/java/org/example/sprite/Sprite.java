@@ -26,8 +26,4 @@ public abstract class Sprite {
     public CanvasCoordinate getTopLeftCorner() {
         return new CanvasCoordinate(row, col);
     }
-
-    public CanvasRect getRect() {
-        return SpriteUtil.toRect(getTopLeftCorner(), type);
-    }
 }
