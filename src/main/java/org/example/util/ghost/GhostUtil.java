@@ -16,6 +16,7 @@ public class GhostUtil {
     private GhostUtil() {
     }
 
+    // [TODO] put this movement behaviour in the Ghost abstract class
     public static CanvasCoordinate move(GhostMovementAttemptEvent event) {
         return move(event.getGhostCurrCord(), event.getMovementDir());
     }

@@ -1,18 +1,24 @@
 package org.example.ghostmode.navigation;
 
+import javafx.scene.control.Spinner;
 import lombok.AllArgsConstructor;
-import org.example.collision.GhostToWallCollisionDetection;
+import org.example.collision.sprite.M2SSpriteCollisionDetector;
 import org.example.constant.DirectionsE;
+import org.example.constant.SpriteE;
 import org.example.entity.CanvasCoordinate;
+import org.example.entity.CanvasRect;
 import org.example.entity.MazeCell;
 import org.example.entity.MazeMove;
 import org.example.event.ghost.GhostMovementAttemptEvent;
+import org.example.model.CollisionReport;
 import org.example.util.BfsUtil;
+import org.example.util.SpriteUtil;
 import org.example.util.canvas.CanvasUtil;
 import org.example.util.ghost.GhostUtil;
 import org.example.util.MazeUtil;
 
 import java.util.List;
+import java.util.Optional;
 
 
 @AllArgsConstructor
@@ -27,13 +33,16 @@ public class ShortestPathNavigator implements GhostNavigator {
                 .stream()
                 .sorted()
                 .filter(move -> move.getDist2Target() < Integer.MAX_VALUE)
-                .map(move -> {
-                    final CanvasCoordinate nextCord = MazeUtil.getCanvasCord(move.getSource());
-                    final DirectionsE movementDir = CanvasUtil.getMovementDir(ghostCord, nextCord);
-                    return new GhostMovementAttemptEvent(ghostCord, movementDir);
+                .filter(move -> {
+                    final CanvasCoordinate candidateNextCord = MazeUtil.getCanvasCord(move.getCell());
+                    final CanvasRect rect = SpriteUtil.toRect(candidateNextCord, SpriteE.GHOST);
+                    final Optional<CollisionReport> collisionReportOpt = M2SSpriteCollisionDetector.detect(rect, SpriteE.WALL);
+                    return collisionReportOpt.isEmpty();
                 })
-                .filter(event -> !GhostToWallCollisionDetection.checkCollision(event))
-                .map(GhostMovementAttemptEvent::getMovementDir)
+                .map(move -> {
+                    final CanvasCoordinate candidateNextCord = MazeUtil.getCanvasCord(move.getCell());
+                    return CanvasUtil.getMovementDir(ghostCord, candidateNextCord);
+                })
                 .findFirst()
                 .orElse(DirectionsE.STILL);
     }

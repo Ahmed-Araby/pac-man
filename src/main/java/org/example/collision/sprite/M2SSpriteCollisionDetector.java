@@ -15,11 +15,11 @@ import java.util.Optional;
 
 public class M2SSpriteCollisionDetector {
 
-    public Optional<CollisionReport> detect(CanvasRect rect, SpriteE target) {
+    public static Optional<CollisionReport> detect(CanvasRect rect, SpriteE target) {
         final List<CanvasCoordinate> corners = CanvasRectUtils.get4Corners(rect);
         final Optional<CanvasRect> collidingRect = corners.stream()
-                .map(this::toTopLeftCornerOfRectContainingPoint)
-                .filter(topLeftCornerCord -> this.isTarget(topLeftCornerCord, target))
+                .map(M2SSpriteCollisionDetector::toTopLeftCornerOfRectContainingPoint)
+                .filter(topLeftCornerCord -> isTarget(topLeftCornerCord, target))
                 .map(topLeftCornerCord -> SpriteUtil.toRect(topLeftCornerCord, target))
                 .filter(rectB -> Rect2RectCollisionDetectorUtil.collide(rect, rectB))
                 .findFirst();
@@ -31,10 +31,10 @@ public class M2SSpriteCollisionDetector {
     }
 
 
-    private CanvasCoordinate toTopLeftCornerOfRectContainingPoint(CanvasCoordinate point) {
+    private static CanvasCoordinate toTopLeftCornerOfRectContainingPoint(CanvasCoordinate point) {
         return CanvasRectUtils.getTopLeftCornerOfRectContainingPoint(DimensionsC.MAZE_CELL_SIZE_PIXELS, DimensionsC.MAZE_CELL_SIZE_PIXELS, point);
     }
-    private boolean isTarget(CanvasCoordinate topLeftCornerCord, SpriteE targetSpriteType) {
+    private static boolean isTarget(CanvasCoordinate topLeftCornerCord, SpriteE targetSpriteType) {
         return SpriteUtil.getSpriteType(topLeftCornerCord).equals(targetSpriteType);
     }
 }

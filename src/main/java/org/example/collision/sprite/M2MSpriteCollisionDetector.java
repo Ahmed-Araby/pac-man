@@ -11,12 +11,13 @@ import java.util.Optional;
 
 public class M2MSpriteCollisionDetector {
 
-    public Optional<CollisionReport> detect(CanvasRect rectA, CanvasRect rectB) {
+    public static Optional<CollisionReport> detect(CanvasRect rectA, CanvasRect rectB) {
         final Boolean collide = Rect2RectCollisionDetectorUtil.collide(rectA, rectB);
         return collide ? Optional.of(new CollisionReport(rectA, List.of(rectB))) : Optional.empty();
     }
 
-    private boolean outOfCanvas(CanvasRect rect) {
+    // [TODO] remove this method
+    private static boolean outOfCanvas(CanvasRect rect) {
         return rect.topEdgeRow() < 0 || rect.bottomEdgeRow() >= DimensionsC.CANVAS_HEIGHT_PIXELS
                 || rect.leftEdgeCol() < 0 || rect.rightEdgeCol() >= DimensionsC.CANVAS_WIDTH_PIXELS;
     }

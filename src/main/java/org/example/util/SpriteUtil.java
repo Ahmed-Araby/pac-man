@@ -20,6 +20,7 @@ public class SpriteUtil {
             case SUPER_SUGAR -> toSuperSugarRect(spriteTopLeftCorner);
             case PAC_MAN -> toPacManRect(spriteTopLeftCorner);
             case GHOST -> toGhostRect(spriteTopLeftCorner);
+            case WALL -> toWallRect(spriteTopLeftCorner);
             default -> throw new IllegalArgumentException(type.toString());
         };
     }
@@ -30,6 +31,7 @@ public class SpriteUtil {
             case SUPER_SUGAR -> c2SuperSugarTopLeftCorner(cord);
             case PAC_MAN -> c2PacmanTopLeftCorner(cord);
             case GHOST -> c2GhostTopLeftCorner(cord);
+            case WALL -> c2WallTopLeftCorner(cord);
             default -> throw new IllegalArgumentException(type.toString());
         };
     }
@@ -56,6 +58,10 @@ public class SpriteUtil {
         return new CanvasRect(topLeftCorner, DimensionsC.GHOST_WIDTH_PIXELS, DimensionsC.GHOST_HEIGHT_PIXELS);
     }
 
+    private static CanvasRect toWallRect(CanvasCoordinate topLeftCorner) {
+        return new CanvasRect(topLeftCorner, DimensionsC.MAZE_CELL_SIZE_PIXELS, DimensionsC.MAZE_CELL_SIZE_PIXELS);
+    }
+
 
     private static CanvasCoordinate c2SugarTopLeftCorner(CanvasCoordinate cord) {
         final double offset = (DimensionsC.MAZE_CELL_SIZE_PIXELS - DimensionsC.SUGAR_CELL_SIZE_PIXELS) / 2;
@@ -76,6 +82,10 @@ public class SpriteUtil {
         final double topOffset = (DimensionsC.MAZE_CELL_SIZE_PIXELS - DimensionsC.GHOST_HEIGHT_PIXELS) / 2;
         final double leftOffset = (DimensionsC.MAZE_CELL_SIZE_PIXELS - DimensionsC.GHOST_WIDTH_PIXELS) / 2;
         return new CanvasCoordinate(cord.getRow() + topOffset, cord.getCol() + leftOffset);
+    }
+
+    private static CanvasCoordinate c2WallTopLeftCorner(CanvasCoordinate cord) {
+        return cord;
     }
 
 }
