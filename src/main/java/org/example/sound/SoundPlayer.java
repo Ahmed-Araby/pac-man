@@ -17,13 +17,13 @@ public class SoundPlayer implements Subscriber {
 
     public void playPacManSugarCollisionSound() {
         if(!eatSugar.isPlaying()) {
-//            eatSugar.play();
+            eatSugar.play();
         }
     }
 
     public void playPacManSuperSugarCollisionSound() {
         if(!eatSugar.isPlaying()) {
-//            eatSugar.play();
+            eatSugar.play();
         }
     }
 
