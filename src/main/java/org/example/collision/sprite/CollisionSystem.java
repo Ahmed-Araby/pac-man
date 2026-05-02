@@ -5,14 +5,13 @@ import org.example.entity.CanvasCoordinate;
 import org.example.entity.CanvasRect;
 import org.example.event.EventType;
 import org.example.event.PacMan2GhostCollisionEvent;
-import org.example.event.PacManSugarCollisionEvent;
+import org.example.event.PacMan2SugarCollisionEvent;
 import org.example.event.manager.EventManager;
 import org.example.ghostmode.Ghost;
 import org.example.model.CollisionReport;
 import org.example.model.GameState;
 import org.example.util.SpriteUtil;
 
-import java.util.List;
 import java.util.Optional;
 
 public class CollisionSystem {
@@ -45,8 +44,8 @@ public class CollisionSystem {
         final Optional<CollisionReport> reportOpt = this.m2SCollisionDetector.detect(pacManRect, SpriteE.SUGAR);
         reportOpt.ifPresent((report) -> {
             final CanvasRect collidingRect = report.getCollidingObjects().getFirst();
-            final PacManSugarCollisionEvent collisionEvent = new PacManSugarCollisionEvent(
-                    EventType.PAC_MAN_SUGAR_COLLISION, List.of(collidingRect.getTopLeftCorner()));
+            final PacMan2SugarCollisionEvent collisionEvent = new PacMan2SugarCollisionEvent(
+                    EventType.PAC_MAN_SUGAR_COLLISION, collidingRect);
             asyncEventManager.notifySubscribers(collisionEvent);
         });
     }
@@ -58,8 +57,8 @@ public class CollisionSystem {
         final Optional<CollisionReport> reportOpt = this.m2SCollisionDetector.detect(pacManRect, SpriteE.SUPER_SUGAR);
         reportOpt.ifPresent((report) -> {
             final CanvasRect collidingRect = report.getCollidingObjects().getFirst();
-            final PacManSugarCollisionEvent collisionEvent = new PacManSugarCollisionEvent(
-                    EventType.PAC_MAN_SUPER_SUGAR_COLLISION, List.of(collidingRect.getTopLeftCorner()));
+            final PacMan2SugarCollisionEvent collisionEvent = new PacMan2SugarCollisionEvent(
+                    EventType.PAC_MAN_SUPER_SUGAR_COLLISION, collidingRect);
             asyncEventManager.notifySubscribers(collisionEvent);
         });
     }
