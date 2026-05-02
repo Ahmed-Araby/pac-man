@@ -16,20 +16,9 @@ import org.example.ghostmode.navigation.ShortestPathNavigator;
 import org.example.ghostmode.timer.ChaseScatterTimer;
 import org.example.ghostmode.timer.RealTimer;
 import org.example.sprite.PacMan;
-import org.example.sprite.Sprite;
 
 
-public class Blinky extends Ghost implements Sprite, Subscriber {
-
-    // [todo] move the common filed to the Ghost abstract class
-    @Getter
-    @Setter
-    private double canvasCol = 0, canvasRow = 0;
-
-    @Getter
-    @Setter
-    private DirectionsE directionsE = DirectionsE.STILL;
-
+public class Blinky extends Ghost implements Subscriber {
     // [TODO] rename modes
     // ghost modes
     private final GhostMode blinkyChaser;
@@ -64,7 +53,7 @@ public class Blinky extends Ghost implements Sprite, Subscriber {
 
     @Override
     public void render(Canvas canvas) {
-        System.out.println("blinky: row = " + canvasRow + " , col = " + canvasCol + " , Dir = " + directionsE);
+        System.out.println("blinky: row = " + row + " , col = " + col + " , Dir = " + dir);
         activeMode.render(canvas, this);
     }
 

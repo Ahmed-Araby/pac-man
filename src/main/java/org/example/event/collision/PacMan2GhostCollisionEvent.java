@@ -3,7 +3,7 @@ package org.example.event.collision;
 import lombok.Getter;
 import org.example.event.Event;
 import org.example.event.EventType;
-import org.example.ghostmode.Ghost;
+import org.example.sprite.ghost.Ghost;
 
 @Getter
 public class PacMan2GhostCollisionEvent extends Event {

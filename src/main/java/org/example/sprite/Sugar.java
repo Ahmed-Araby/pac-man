@@ -19,7 +19,7 @@ import org.example.util.MazeUtil;
 import org.example.util.debug.DebugUtil;
 import org.example.util.SugarUtil;
 
-public class Sugar implements Sprite, Subscriber {
+public class Sugar extends Sprite implements Subscriber {
     private final EnrichedThreadLocalRandom enrichedRandom = new EnrichedThreadLocalRandom();
 
     public Sugar() {
@@ -63,12 +63,6 @@ public class Sugar implements Sprite, Subscriber {
             }
         }
     }
-
-    @Override
-    public void move(Event event) {
-        throw new UnsupportedOperationException();
-    }
-
 
     @Override
     public void update(Event event) {

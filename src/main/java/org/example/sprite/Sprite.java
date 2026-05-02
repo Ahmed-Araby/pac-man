@@ -1,11 +1,11 @@
 package org.example.sprite;
 
 import javafx.scene.canvas.Canvas;
+import org.example.constant.DimensionsC;
+import org.example.entity.CanvasCoordinate;
 import org.example.event.Event;
 
 
-public interface Sprite {
-
-    void render(Canvas canvas);
-    void move(Event event);
+public abstract class Sprite {
+    public abstract void render(Canvas canvas);
 }

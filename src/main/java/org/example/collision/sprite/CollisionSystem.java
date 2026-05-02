@@ -7,7 +7,7 @@ import org.example.event.EventType;
 import org.example.event.collision.PacMan2GhostCollisionEvent;
 import org.example.event.collision.PacMan2SugarCollisionEvent;
 import org.example.event.manager.EventManager;
-import org.example.ghostmode.Ghost;
+import org.example.sprite.ghost.Ghost;
 import org.example.model.CollisionReport;
 import org.example.model.GameState;
 import org.example.util.SpriteUtil;
