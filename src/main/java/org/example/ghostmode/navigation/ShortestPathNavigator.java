@@ -1,6 +1,5 @@
 package org.example.ghostmode.navigation;
 
-import javafx.scene.control.Spinner;
 import lombok.AllArgsConstructor;
 import org.example.collision.sprite.M2SSpriteCollisionDetector;
 import org.example.constant.DirectionsE;
@@ -9,7 +8,6 @@ import org.example.entity.CanvasCoordinate;
 import org.example.entity.CanvasRect;
 import org.example.entity.MazeCell;
 import org.example.entity.MazeMove;
-import org.example.event.ghost.GhostMovementAttemptEvent;
 import org.example.model.CollisionReport;
 import org.example.util.BfsUtil;
 import org.example.util.SpriteUtil;
