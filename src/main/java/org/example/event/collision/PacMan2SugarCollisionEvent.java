@@ -1,7 +1,9 @@
-package org.example.event;
+package org.example.event.collision;
 
 import lombok.Getter;
 import org.example.entity.CanvasRect;
+import org.example.event.Event;
+import org.example.event.EventType;
 
 public class PacMan2SugarCollisionEvent extends Event {
 

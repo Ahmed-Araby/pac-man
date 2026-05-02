@@ -1,6 +1,8 @@
-package org.example.event;
+package org.example.event.collision;
 
 import lombok.Getter;
+import org.example.event.Event;
+import org.example.event.EventType;
 import org.example.ghostmode.Ghost;
 
 @Getter

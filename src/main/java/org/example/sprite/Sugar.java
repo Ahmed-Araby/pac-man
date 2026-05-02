@@ -10,7 +10,7 @@ import org.example.entity.CanvasCoordinate;
 import org.example.entity.CanvasRect;
 import org.example.entity.MazeCell;
 import org.example.event.Event;
-import org.example.event.PacMan2SugarCollisionEvent;
+import org.example.event.collision.PacMan2SugarCollisionEvent;
 import org.example.event.Subscriber;
 import org.example.maze.MazeMatrix;
 import org.example.util.canvas.CanvasUtil;
