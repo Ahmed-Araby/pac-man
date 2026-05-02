@@ -31,9 +31,6 @@ public class EventManager implements Publisher {
             case PAC_MAN_SUPER_SUGAR_COLLISION:
                 pacManSuperSugarCollisionSubscribers.add(subscriber);
                 break;
-            case PAC_MAN_CURRENT_LOCATION:
-                pacManCurrentLocationEventSubscribers.add(subscriber);
-                break;
             case PAC_MAN_GHOST_COLLISION:
                 pacMan2GhostCollisionSubscribers.add(subscriber);
                 break;
@@ -51,9 +48,6 @@ public class EventManager implements Publisher {
             case PAC_MAN_SUPER_SUGAR_COLLISION:
                 pacManSuperSugarCollisionSubscribers.remove(subscriber);
                 break;
-            case PAC_MAN_CURRENT_LOCATION:
-                pacManCurrentLocationEventSubscribers.remove(subscriber);
-                break;
             case PAC_MAN_GHOST_COLLISION:
                 pacMan2GhostCollisionSubscribers.remove(subscriber);
                 break;
@@ -70,9 +64,6 @@ public class EventManager implements Publisher {
                 break;
             case PAC_MAN_SUPER_SUGAR_COLLISION:
                 pacManSuperSugarCollisionSubscribers.stream().forEach(sub -> sub.update(event));
-                break;
-            case PAC_MAN_CURRENT_LOCATION:
-                pacManCurrentLocationEventSubscribers.forEach(sub -> sub.update(event));
                 break;
             case PAC_MAN_GHOST_COLLISION:
                 pacMan2GhostCollisionSubscribers.forEach(sub -> sub.update(event));

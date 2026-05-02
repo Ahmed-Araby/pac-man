@@ -141,8 +141,6 @@ public class PacMan implements Sprite, Subscriber {
                 attemptMovement(turnBuffer.getBufferedPacManAutomatedMovementRequest());
             }
         }
-
-        this.eventManager.notifySubscribers(new PacManCurrentLocationEvent(new CanvasCoordinate(canvasRow, canvasCol), direction, this));
     }
 
     private void handleDeniedMovementAttempt(PacManMovementAttemptDeniedEvent event) {
