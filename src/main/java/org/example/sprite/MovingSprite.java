@@ -9,10 +9,8 @@ import org.example.constant.SpriteE;
 import org.example.entity.CanvasCoordinate;
 import org.example.entity.CanvasRect;
 import org.example.event.Event;
-import org.example.model.CollisionReport;
 import org.example.util.SpriteUtil;
 
-import java.util.Optional;
 
 @Getter
 @Setter
