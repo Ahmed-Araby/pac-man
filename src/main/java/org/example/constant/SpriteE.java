@@ -6,5 +6,6 @@ public enum SpriteE {
     SUGAR,
     PAC_MAN,
     GHOST,
-    SUPER_SUGAR;
+    SUPER_SUGAR,
+    MAZE;
 }

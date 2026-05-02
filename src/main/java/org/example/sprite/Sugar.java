@@ -23,6 +23,8 @@ public class Sugar extends Sprite implements Subscriber {
     private final EnrichedThreadLocalRandom enrichedRandom = new EnrichedThreadLocalRandom();
 
     public Sugar() {
+        super(SpriteE.SUGAR, -1, -1);
+
         for(int row = 0; row < MazeMatrix.height(); row++) {
             for (int col = 0; col < MazeMatrix.width(); col++) {
                 if (MazeMatrix.isEmpty(row, col)) {

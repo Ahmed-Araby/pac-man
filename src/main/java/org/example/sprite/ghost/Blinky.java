@@ -39,6 +39,8 @@ public class Blinky extends Ghost implements Subscriber {
     }
 
     public Blinky(PacMan pacMan, ShortestPathNavigator chaseMode) {
+        super(SpriteE.GHOST, 0, 0, DirectionsE.STILL);
+
         this.pacMan = pacMan;
         this.chaseScatterTimer = new ChaseScatterTimer();
         this.realTimer = new RealTimer();

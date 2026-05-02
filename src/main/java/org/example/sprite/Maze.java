@@ -19,6 +19,10 @@ import org.example.util.debug.DebugUtil;
 public class Maze extends Sprite {
 
 
+    public Maze() {
+        super(SpriteE.MAZE, 0, 0);
+    }
+
     @Override
     public void render(Canvas canvas) {
         final GraphicsContext con = canvas.getGraphicsContext2D();

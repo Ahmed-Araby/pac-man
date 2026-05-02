@@ -6,6 +6,7 @@ import javafx.scene.canvas.GraphicsContext;
 import org.example.config.Configs;
 import org.example.constant.DimensionsC;
 import org.example.constant.DirectionsE;
+import org.example.constant.SpriteE;
 import org.example.entity.CanvasCoordinate;
 import org.example.entity.CanvasRect;
 import org.example.event.*;
@@ -34,9 +35,7 @@ public class PacMan extends MovingSprite implements Subscriber {
     private final SyncEventManager syncEventManager;
 
     public PacMan(double col, double row, EventManager eventManager, SyncEventManager syncEventManager) {
-        this.col = col;
-        this.row = row;
-        this.dir = DirectionsE.STILL;
+        super(SpriteE.PAC_MAN, col, row, DirectionsE.STILL);
 
         this.turnBuffer = new TurnBuffer();
         this.closedMousePixelStrideTracker = new PixelStrideTracker(DimensionsC.PAC_MAN_CLOSED_MOUSE_DISTANCE_PIXELS,
