@@ -5,10 +5,7 @@ import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
-import org.example.collision.PacMan2GhostCollisionDetection;
-import org.example.collision.PacManToSugarCollisionDetection;
-import org.example.collision.PacManToSuperSugarCollisionDetection;
-import org.example.collision.PacManToWallCollisionDetection;
+import org.example.collision.sprite.CollisionSystem;
 import org.example.config.GameConfig;
 import org.example.constant.ColorC;
 import org.example.constant.DimensionsC;
@@ -19,6 +16,7 @@ import org.example.ghostmode.navigation.ShortestPathNavigator;
 import org.example.input.JavaFXInputHandler;
 import org.example.input.JavaFXUserInputHandler;
 import org.example.maze.MazeMatrix;
+import org.example.model.GameState;
 import org.example.sound.SoundPlayer;
 import org.example.sprite.Maze;
 import org.example.sprite.PacMan;
@@ -26,6 +24,8 @@ import org.example.entity.CanvasCoordinate;
 import org.example.sprite.Sugar;
 import org.example.sprite.ghost.Blinky;
 import org.example.util.debug.DebugUtil;
+
+import java.util.List;
 
 public class GamePlayGameScene implements GameScene {
     // sprites
@@ -48,10 +48,7 @@ public class GamePlayGameScene implements GameScene {
     final JavaFXInputHandler javaFXInputHandler;
 
     // collision detection
-    private final PacManToSugarCollisionDetection pacManToSugarCollisionDetection;
-    private final PacManToSuperSugarCollisionDetection pacManToSuperSugarCollisionDetection;
-    private final PacManToWallCollisionDetection pacManToWallCollisionDetection;
-    private final PacMan2GhostCollisionDetection pacMan2GhostCollisionDetection;
+    private final CollisionSystem collisionSystem;
 
     public GamePlayGameScene() {
         // init
@@ -73,10 +70,9 @@ public class GamePlayGameScene implements GameScene {
         initGhosts();
 
         // collision detection
-        pacManToWallCollisionDetection = new PacManToWallCollisionDetection(syncEventManager);
-        pacManToSugarCollisionDetection = new PacManToSugarCollisionDetection(eventManager);
-        pacManToSuperSugarCollisionDetection = new PacManToSuperSugarCollisionDetection(eventManager);
-        pacMan2GhostCollisionDetection = new PacMan2GhostCollisionDetection(eventManager, blinky);
+        final GameState gameState = new GameState(pacMan, List.of(blinky));
+        collisionSystem = new CollisionSystem(gameState, eventManager);
+
 
         // javaFX setup
         canvas = new Canvas(DimensionsC.CANVAS_WIDTH_PIXELS, DimensionsC.CANVAS_HEIGHT_PIXELS);
@@ -102,24 +98,17 @@ public class GamePlayGameScene implements GameScene {
         eventManager.subscribe(EventType.PAC_MAN_SUPER_SUGAR_COLLISION, soundPlayer);
         eventManager.subscribe(EventType.PAC_MAN_SUPER_SUGAR_COLLISION, sugar);
 
-        eventManager.subscribe(EventType.PAC_MAN_CURRENT_LOCATION, pacManToSugarCollisionDetection);
-        eventManager.subscribe(EventType.PAC_MAN_CURRENT_LOCATION, pacManToSuperSugarCollisionDetection);
-        eventManager.subscribe(EventType.PAC_MAN_CURRENT_LOCATION, pacMan2GhostCollisionDetection);
-
         eventManager.subscribe(EventType.PAC_MAN_SUPER_SUGAR_COLLISION, blinky);
 
         eventManager.subscribe(EventType.PAC_MAN_GHOST_COLLISION, blinky);
     }
 
     private void registerSubscribersForSyncEvents() {
-        if (pacMan == null || pacManToWallCollisionDetection == null) {
+        if (pacMan == null) {
             throw new IllegalStateException("can't register null objects for sync event subscription, PacMan, and pacManToWallCollisionDetection must be defined");
 
         }
         syncEventManager.subscribe(EventType.PAC_MAN_MOVEMENT_REQUEST, pacMan);
-        syncEventManager.subscribe(EventType.PAC_MAN_MOVEMENT_ATTEMPT, pacManToWallCollisionDetection);
-        syncEventManager.subscribe(EventType.PAC_MAN_MOVEMENT_ATTEMPT_APPROVED, pacMan);
-        syncEventManager.subscribe(EventType.PAC_MAN_MOVEMENT_ATTEMPT_DENIED, pacMan);
     }
 
     public void initGhosts() {
@@ -153,5 +142,6 @@ public class GamePlayGameScene implements GameScene {
     @Override
     public void update() {
         blinky.move(null);
+        collisionSystem.detect();
     }
 }

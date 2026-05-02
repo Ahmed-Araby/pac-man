@@ -1,6 +1,7 @@
 package org.example.ghostmode;
 
 import javafx.scene.canvas.Canvas;
+import org.example.sprite.ghost.Ghost;
 
 public interface GhostMode {
 

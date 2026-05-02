@@ -12,6 +12,7 @@ import org.example.entity.CanvasCoordinate;
 import org.example.entity.Vector;
 import org.example.ghostmode.navigation.GhostNavigator;
 import org.example.ghostmode.navigation.ShortestPathNavigator;
+import org.example.sprite.ghost.Ghost;
 import org.example.util.ghost.GhostUtil;
 
 import java.util.AbstractMap;
@@ -50,18 +51,18 @@ public class GhostEaten implements GhostMode {
 
     @Override
     public void render(Canvas canvas, Ghost ghost) {
-        canvas.getGraphicsContext2D().drawImage(animator.getFrame(), ghost.getCanvasCol(), ghost.getCanvasRow());
+        canvas.getGraphicsContext2D().drawImage(animator.getFrame(), ghost.getCol(), ghost.getRow());
     }
 
     @Override
     public void move(Ghost ghost) {
-        final CanvasCoordinate currCord = new CanvasCoordinate(ghost.getCanvasRow(), ghost.getCanvasCol());
+        final CanvasCoordinate currCord = new CanvasCoordinate(ghost.getRow(), ghost.getCol());
         final DirectionsE newDir = this.navigator.nextMoveDirection(currCord, bottomRightCorner);
         final CanvasCoordinate newCord = GhostUtil.move(currCord, newDir);
 
-        ghost.setDirectionsE(newDir);
-        ghost.setCanvasRow(newCord.getRow());
-        ghost.setCanvasCol(newCord.getCol());
+        ghost.setDir(newDir);
+        ghost.setRow(newCord.getRow());
+        ghost.setCol(newCord.getCol());
 
         if (newDir != DirectionsE.STILL) {
             this.animator.stride(DimensionsC.BLINKY_STRIDE_PIXELS / Configs.FRAMES_PER_SEC_FOR_GHOST_BLINKY_STRIDE);

@@ -16,8 +16,12 @@ import org.example.maze.RecursiveDivisionMazeGenerator;
 import org.example.util.MazeUtil;
 import org.example.util.debug.DebugUtil;
 
-public class Maze implements Sprite {
+public class Maze extends Sprite {
 
+
+    public Maze() {
+        super(SpriteE.MAZE, 0, 0);
+    }
 
     @Override
     public void render(Canvas canvas) {
@@ -47,10 +51,5 @@ public class Maze implements Sprite {
                 }
             }
         }
-    }
-
-    @Override
-    public void move(Event event) {
-        throw new UnsupportedOperationException();
     }
 }

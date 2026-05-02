@@ -7,9 +7,10 @@ import org.example.config.Configs;
 import org.example.config.GameConfig;
 import org.example.constant.*;
 import org.example.entity.CanvasCoordinate;
+import org.example.entity.CanvasRect;
 import org.example.entity.MazeCell;
 import org.example.event.Event;
-import org.example.event.PacManSugarCollisionEvent;
+import org.example.event.collision.PacMan2SugarCollisionEvent;
 import org.example.event.Subscriber;
 import org.example.maze.MazeMatrix;
 import org.example.util.canvas.CanvasUtil;
@@ -18,10 +19,12 @@ import org.example.util.MazeUtil;
 import org.example.util.debug.DebugUtil;
 import org.example.util.SugarUtil;
 
-public class Sugar implements Sprite, Subscriber {
+public class Sugar extends Sprite implements Subscriber {
     private final EnrichedThreadLocalRandom enrichedRandom = new EnrichedThreadLocalRandom();
 
     public Sugar() {
+        super(SpriteE.SUGAR, -1, -1);
+
         for(int row = 0; row < MazeMatrix.height(); row++) {
             for (int col = 0; col < MazeMatrix.width(); col++) {
                 if (MazeMatrix.isEmpty(row, col)) {
@@ -64,24 +67,18 @@ public class Sugar implements Sprite, Subscriber {
     }
 
     @Override
-    public void move(Event event) {
-        throw new UnsupportedOperationException();
-    }
-
-
-    @Override
     public void update(Event event) {
         switch (event.getType()) {
             case PAC_MAN_SUGAR_COLLISION, PAC_MAN_SUPER_SUGAR_COLLISION:
-                ((PacManSugarCollisionEvent)event).getEatenSugarCanvasRect().forEach(this::removeSugar);
+                removeSugar(((PacMan2SugarCollisionEvent)event).getSugarRect());
                 break;
             default:
                 throw new UnsupportedOperationException();
         }
     }
 
-    public void removeSugar(CanvasCoordinate sugarRectCanvasTopLeftCanvasCoordinate) {
-        final MazeCell sugarCellMazeTopLeftCornerCoordinate = CanvasUtil.toMazeCoordinate(sugarRectCanvasTopLeftCanvasCoordinate, DirectionsE.STILL);
+    public void removeSugar(CanvasRect rect) {
+        final MazeCell sugarCellMazeTopLeftCornerCoordinate = CanvasUtil.toMazeCoordinate(rect.getTopLeftCorner(), DirectionsE.STILL);
         MazeMatrix.set(sugarCellMazeTopLeftCornerCoordinate.getRow(), sugarCellMazeTopLeftCornerCoordinate.getCol(), SpriteE.EMPTY);
     }
 }
