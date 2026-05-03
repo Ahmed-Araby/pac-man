@@ -158,12 +158,12 @@ if the turn is still not possible and Pac-Man is now in the next Cell (in respec
 - [X] code refactor: use events (observer pattern) for the interactions between the different game components (i.e. collision detection and side effects of this collisions in maze, sounds, pac man mouse animation, etc....)
 - [X] write documenntation and turotial for the work completed so far.
 - [ ] Ghosts
-  - [ ] Blinky
+  - [X] Blinky
   - [ ] Inky
   - [ ] Pinky
   - [ ] Clyde
 - [ ] Refactoring
-  - [ ] Collision Detection
+  - [X] Collision Detection
   - [ ] combine data with its behaviour when appropriate (tell, don't ask prinsible)
   - [ ] Event Structure
   - [ ] sprite movement in relation to frames and time.
