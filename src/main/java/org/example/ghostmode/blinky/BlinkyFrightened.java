@@ -10,7 +10,7 @@ import org.example.constant.DirectionsE;
 import org.example.constant.SpriteFileNameC;
 import org.example.entity.CanvasCoordinate;
 import org.example.entity.Vector;
-import org.example.ghostmode.Ghost;
+import org.example.sprite.ghost.Ghost;
 import org.example.ghostmode.GhostMode;
 import org.example.util.EnrichedThreadLocalRandom;
 import org.example.util.ghost.GhostUtil;
@@ -45,13 +45,13 @@ public class BlinkyFrightened implements GhostMode {
 
     @Override
     public void render(Canvas canvas, Ghost ghost) {
-        canvas.getGraphicsContext2D().drawImage(animator.getFrame(), ghost.getCanvasCol(), ghost.getCanvasRow());
+        canvas.getGraphicsContext2D().drawImage(animator.getFrame(), ghost.getCol(), ghost.getRow());
     }
 
     @Override
     public void move(Ghost ghost) {
-        final CanvasCoordinate sCord = new CanvasCoordinate(ghost.getCanvasRow(), ghost.getCanvasCol());
-        final Vector currDir = VectorUtil.toVector(ghost.getDirectionsE());
+        final CanvasCoordinate sCord = new CanvasCoordinate(ghost.getRow(), ghost.getCol());
+        final Vector currDir = VectorUtil.toVector(ghost.getDir());
 
         final List<Vector> eligibleDirections = FrightenedGhostUtil.getEligibleDirections(sCord, currDir);
         Vector newDirV;
@@ -65,9 +65,9 @@ public class BlinkyFrightened implements GhostMode {
         final DirectionsE newDirE = VectorUtil.toDirection(newDirV);
         final CanvasCoordinate nCord = GhostUtil.move(sCord, newDirE);
 
-        ghost.setDirectionsE(newDirE);
-        ghost.setCanvasRow(nCord.getRow());
-        ghost.setCanvasCol(nCord.getCol());
+        ghost.setDir(newDirE);
+        ghost.setRow(nCord.getRow());
+        ghost.setCol(nCord.getCol());
 
         animator.stride(DimensionsC.BLINKY_STRIDE_PIXELS / Configs.FRAMES_PER_SEC_FOR_GHOST_BLINKY_STRIDE);
     }
@@ -82,10 +82,10 @@ public class BlinkyFrightened implements GhostMode {
     }
 
     private void turnAround(Ghost ghost) {
-        final DirectionsE currDirE = ghost.getDirectionsE();
+        final DirectionsE currDirE = ghost.getDir();
         final Vector dir = VectorUtil.toVector(currDirE);
         final Vector oppositeDir = VectorUtil.flip180(dir);
         final DirectionsE oppositeDirE = VectorUtil.toDirection(oppositeDir);
-        ghost.setDirectionsE(oppositeDirE);
+        ghost.setDir(oppositeDirE);
     }
 }

@@ -9,7 +9,7 @@ import org.example.constant.DimensionsC;
 import org.example.constant.DirectionsE;
 import org.example.constant.SpriteFileNameC;
 import org.example.entity.CanvasCoordinate;
-import org.example.ghostmode.Ghost;
+import org.example.sprite.ghost.Ghost;
 import org.example.ghostmode.GhostMode;
 import org.example.ghostmode.navigation.GhostNavigator;
 import org.example.ghostmode.navigation.ShortestPathNavigator;
@@ -41,18 +41,18 @@ public class BlinkyScattered implements GhostMode {
 
     @Override
     public void render(Canvas canvas, Ghost ghost) {
-        canvas.getGraphicsContext2D().drawImage(animator.getFrame(), ghost.getCanvasCol(), ghost.getCanvasRow());
+        canvas.getGraphicsContext2D().drawImage(animator.getFrame(), ghost.getCol(), ghost.getRow());
     }
 
     @Override
     public void move(Ghost ghost) {
-        final CanvasCoordinate ghostCurrCord = new CanvasCoordinate(ghost.getCanvasRow(), ghost.getCanvasCol());
+        final CanvasCoordinate ghostCurrCord = new CanvasCoordinate(ghost.getRow(), ghost.getCol());
         final DirectionsE directionsE = navigator.nextMoveDirection(ghostCurrCord, topRightCorner);
         final CanvasCoordinate ghostNewCord = GhostUtil.move(ghostCurrCord, directionsE);
 
-        ghost.setDirectionsE(directionsE);
-        ghost.setCanvasRow(ghostNewCord.getRow());
-        ghost.setCanvasCol(ghostNewCord.getCol());
+        ghost.setDir(directionsE);
+        ghost.setRow(ghostNewCord.getRow());
+        ghost.setCol(ghostNewCord.getCol());
 
         if(directionsE != DirectionsE.STILL) {
             animator.stride(DimensionsC.BLINKY_STRIDE_PIXELS / Configs.FRAMES_PER_SEC_FOR_GHOST_BLINKY_STRIDE);

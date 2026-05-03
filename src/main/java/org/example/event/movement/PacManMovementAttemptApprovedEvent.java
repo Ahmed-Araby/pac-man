@@ -6,6 +6,7 @@ import org.example.entity.CanvasCoordinate;
 import org.example.event.EventType;
 import org.example.event.Event;
 
+// [TODO] remove this event
 @Getter
 public class PacManMovementAttemptApprovedEvent extends Event {
     private CanvasCoordinate currentPacManCanvasRectTopLeftCorner;

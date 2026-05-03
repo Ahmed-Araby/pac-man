@@ -1,11 +1,29 @@
 package org.example.sprite;
 
 import javafx.scene.canvas.Canvas;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.Setter;
+import org.example.constant.DimensionsC;
+import org.example.constant.SpriteE;
+import org.example.entity.CanvasCoordinate;
+import org.example.entity.CanvasRect;
 import org.example.event.Event;
+import org.example.util.SpriteUtil;
 
 
-public interface Sprite {
+@Getter
+@Setter
+@AllArgsConstructor
+public abstract class Sprite {
+    protected SpriteE type;
+    protected double col;
+    protected double row;
 
-    void render(Canvas canvas);
-    void move(Event event);
+    public abstract void render(Canvas canvas);
+
+
+    public CanvasCoordinate getTopLeftCorner() {
+        return new CanvasCoordinate(row, col);
+    }
 }

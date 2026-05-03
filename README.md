@@ -6,19 +6,25 @@ pac man game using javaFX.
   - generate random mazes using maze generation algorithms.
 
 # Table Of Contents
+- [Sprites Class Architecture](#sprites-class-architecture)
 - [Drawing Pac Man with open and closed Mouth using simple circle and Arc Math.](#drawing-pac-man-with-open-and-closed-mouth-using-simple-circle-and-arc-math)
 - [Pac Man open and close mouth animation](#pac-man-open-and-close-mouth-animation)
 - [Generating the Maze Programmatically](#generating-the-maze-programmatically)
 - [Generating the Sugar](#generating-the-sugar)
 - [Collision Detection](#collision-detection)
+    - [Architecture](#architecture) 
     - [Pac Man to Wall](#pac-man-to-wall)
     - [Pac Man to sugar](#pac-man-to-sugar)
+    - [Pac Man to Ghost](#pac-man-to-ghost)
 - [Turn Buffer](#turn-buffer)
 - [Ghosts](#ghosts)
 - [Backlog](#backlog)
 - [Resources](#resources)
 
 <br><br>
+
+## Sprites Class Architecture
+![Sprites Class Architecture](https://github.com/Ahmed-Araby/pac-man/blob/collision-detection-refactoring/documentation/imgs/sprite-class-structure.png)
 ## Drawing Pac Man with open and closed Mouth using simple circle and Arc Math.
 Pac-Man with open mouth is just an Arc on a Circle. an Arc on a Circle is defined by the circle diameter, the start and end angles and drawing direction from the start angle to the end angle.
 
@@ -97,6 +103,8 @@ sugar to be eaten by Pac-Man is a small circle generated at the center of an emp
 
 <br><br>
 ## Collision Detection
+### Architecture
+![Collision Detection Architecture](https://github.com/Ahmed-Araby/pac-man/blob/collision-detection-refactoring/documentation/imgs/collision/collision-code-architecture.png)
 ### Pac Man to Wall
 Pac Man to wall collision Detection is a simple rectangle to rectangle collision, the first rectangle is a virtual rectangle that contains pac man (think of pac man as a circle) and the second rectangle is a maze cell with a wall in it.
 
@@ -116,6 +124,9 @@ however there is a bit of work to identify which Maze Cell / Wall to check for c
 
 ### Pac Man to Sugar
 it is as simple as checking that the virtual rectangle enclosing the sugar lies completely within the virtual rectangle enclosing Pac-Man.
+
+### Pac Man to Ghost
+TBD
 
 <br><br>
 ## Turn buffer
