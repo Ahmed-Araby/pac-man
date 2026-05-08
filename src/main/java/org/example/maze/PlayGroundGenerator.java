@@ -41,8 +41,8 @@ public class PlayGroundGenerator {
             mask[ghostHERow][i] = true;
             mask[ghostHSRow][i] = true;
 
-            mask[ghostHSRow - 1][i] = false;
-            mask[ghostHERow + 1][i] = false;
+//            mask[ghostHSRow - 1][i] = false;
+//            mask[ghostHERow + 1][i] = false;
         }
 
         // build vertical walls of the ghost house
@@ -50,8 +50,8 @@ public class PlayGroundGenerator {
             mask[i][ghostHSCol] = true;
             mask[i][ghostHECol] = true;
 
-            mask[i][ghostHSCol - 1] = false;
-            mask[i][ghostHECol + 1] = false;
+//            mask[i][ghostHSCol - 1] = false;
+//            mask[i][ghostHECol + 1] = false;
         }
 
         // make the house empty from the inside
@@ -75,8 +75,8 @@ public class PlayGroundGenerator {
         int ghostHSRow = height / 2 - 3;
         int ghostHERow = height / 2;
 
-        for(int i=ghostHSRow - 1; i<=ghostHERow + 1; i++) {
-            for(int j=ghostHSCol -1; j<=ghostHECol +1; j++) {
+        for(int i=ghostHSRow; i<=ghostHERow; i++) {
+            for(int j=ghostHSCol; j<=ghostHECol; j++) {
                 visited[i][j] = true;
             }
         }
