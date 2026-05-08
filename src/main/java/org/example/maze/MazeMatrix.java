@@ -10,8 +10,12 @@ public class MazeMatrix {
     private static SpriteE[][] maze;
 
     public static void init() {
-        final MazeGenerator recursiveDivisionMazeGen = new RandomizedDFSMazeGenerator();
-        final boolean[][] booleanMaze = recursiveDivisionMazeGen.generateMaze(DimensionsC.MAZE_HEIGHT, DimensionsC.MAZE_WIDTH, DimensionsC.MAZE_CHAMBER_MIN_WIDTH, DimensionsC.MAZE_CHAMBER_MIN_HEIGHT);
+        final PlayGroundGenerator playGroundGenerator = new PlayGroundGenerator();
+
+//        final MazeGenerator recursiveDivisionMazeGen = new RandomizedDFSMazeGenerator();
+//        final boolean[][] booleanMaze = recursiveDivisionMazeGen.generateMaze(DimensionsC.MAZE_HEIGHT, DimensionsC.MAZE_WIDTH, DimensionsC.MAZE_CHAMBER_MIN_WIDTH, DimensionsC.MAZE_CHAMBER_MIN_HEIGHT);
+        final boolean[][] booleanMaze = playGroundGenerator.generate();
+
         maze = new SpriteE[DimensionsC.MAZE_HEIGHT][DimensionsC.MAZE_WIDTH];
         for(int mazeRow = 0; mazeRow< DimensionsC.MAZE_HEIGHT; mazeRow++) {
             for(int mazeCol = 0; mazeCol< DimensionsC.MAZE_WIDTH; mazeCol++) {
