@@ -10,13 +10,36 @@ import java.util.Stack;
 public class RandomizedDFSMazeGenerator implements MazeGenerator{
 
     @Override
+    public boolean[][] generateMaze(boolean[][] mask, boolean[][] visited) {
+        final int width = mask[0].length;
+        final int height = mask.length;
+        final boolean[][] maze = new boolean[height][width];
+        for(int i=0; i<height; i++) {
+            for (int j=0; j<width; j++) {
+                maze[i][j] = mask[i][j];
+            }
+        }
+
+        return buildMaze(maze, visited);
+    }
+
+    @Override
     public boolean[][] generateMaze(int height, int width, int chamberMinWidth, int chamberMinHeight) {
         final boolean[][] maze = new boolean[height][width];
         final boolean[][] visited = new boolean[height][width];
+        return buildMaze(maze, visited);
+    }
+
+    private boolean[][] buildMaze(boolean[][] maze, boolean[][] visited) {
+        final int width = maze[0].length;
+        final int height = maze.length;
 
         // start with walls at odd rows and columns
         for(int i=0; i<height; i++) {
             for(int j=1; j<width; j+=2) {
+                if(visited[i][j]) {
+                    continue;
+                }
                 maze[i][j] = true; // wall
                 visited[i][j] = false;
             }

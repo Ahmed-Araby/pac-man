@@ -14,16 +14,16 @@ public class PlayGroundGenerator {
         final int width = (int) (DimensionsC.CANVAS_WIDTH_PIXELS / DimensionsC.MAZE_CELL_SIZE_PIXELS);
         final int height = (int) (DimensionsC.CANVAS_HEIGHT_PIXELS / DimensionsC.MAZE_CELL_SIZE_PIXELS);
 
-        final boolean[][] maze = mazeGenerator.generateMaze(height, width, 1, 1);
+        final boolean[][] ghostHouseMask = getGhostHouseMask(width, height);
 
-        putGhostHouse(maze);
+        final boolean[][] visited = new boolean[height][width];
+        markGhostHouseCellsAsVisited(visited);
 
-        return maze;
+        return mazeGenerator.generateMaze(ghostHouseMask, visited);
     }
 
-    private void putGhostHouse(boolean[][] maze) {
-        final int width = maze[0].length;
-        final int height = maze.length;
+    private boolean[][] getGhostHouseMask(int width, int height) {
+        boolean[][] mask = new boolean[height][width];
 
         /**
          * ghost house will span an area of 4 * 7, where the empty area will be 2 * 5 surrounded by walls,
@@ -38,30 +38,47 @@ public class PlayGroundGenerator {
 
         // build horizontal walls of the ghost house
         for(int i=ghostHSCol; i<=ghostHECol; i++) {
-            maze[ghostHERow][i] = true;
-            maze[ghostHSRow][i] = true;
+            mask[ghostHERow][i] = true;
+            mask[ghostHSRow][i] = true;
 
-            maze[ghostHSRow - 1][i] = false;
-            maze[ghostHERow + 1][i] = false;
+            mask[ghostHSRow - 1][i] = false;
+            mask[ghostHERow + 1][i] = false;
         }
 
         // build vertical walls of the ghost house
         for(int i=ghostHSRow; i<=ghostHERow; i++) {
-            maze[i][ghostHSCol] = true;
-            maze[i][ghostHECol] = true;
+            mask[i][ghostHSCol] = true;
+            mask[i][ghostHECol] = true;
 
-            maze[i][ghostHSCol - 1] = false;
-            maze[i][ghostHECol + 1] = false;
+            mask[i][ghostHSCol - 1] = false;
+            mask[i][ghostHECol + 1] = false;
         }
 
         // make the house empty from the inside
         for(int i=ghostHSRow + 1; i< ghostHERow; i++) {
             for(int j=ghostHSCol + 1; j< ghostHECol; j++) {
-                maze[i][j] = false;
+                mask[i][j] = false;
             }
         }
 
         // open a door in the ghost house
-        maze[ghostHSRow][width / 2] = false;
+        mask[ghostHSRow][width / 2] = false;
+
+        return mask;
+    }
+    private void markGhostHouseCellsAsVisited(boolean[][] visited) {
+        final int width = visited[0].length;
+        final int height = visited.length;
+
+        int ghostHSCol = width / 2 - 3;
+        int ghostHECol = width / 2 + 3;
+        int ghostHSRow = height / 2 - 3;
+        int ghostHERow = height / 2;
+
+        for(int i=ghostHSRow - 1; i<=ghostHERow + 1; i++) {
+            for(int j=ghostHSCol -1; j<=ghostHECol +1; j++) {
+                visited[i][j] = true;
+            }
+        }
     }
 }
