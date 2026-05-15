@@ -3,18 +3,15 @@ package org.example.maze;
 public class RecursiveDivisionMazeGenerator implements MazeGenerator {
 
     @Override
-    public boolean[][] generateMaze(int height, int width, int chamberMinWidth, int chamberMinHeight) {
+    public boolean[][] gen(int height, int width) {
         final boolean[][] chamber = new boolean[height][width];
-        generateMaze(chamber, 0, 0,
-                height - 1, width - 1,
-                chamberMinWidth, chamberMinHeight);
+        gen(chamber, 0, 0, height - 1, width - 1);
         return chamber;
     }
 
-    private void generateMaze(boolean[][] chamber, int topLeftCornerRow, int topLeftCornerCol,
-                              int bottomRightCornerRow, int bottomRightCornerCol,
-                              int chamberMinWidth, int chamberMinHeight) {
-        if (bottomRightCornerCol - topLeftCornerCol + 1 <= chamberMinWidth || bottomRightCornerRow - topLeftCornerRow + 1 <= chamberMinHeight) {
+    private void gen(boolean[][] chamber, int topLeftCornerRow, int topLeftCornerCol,
+                     int bottomRightCornerRow, int bottomRightCornerCol) {
+        if (bottomRightCornerCol - topLeftCornerCol + 1 <= 1 || bottomRightCornerRow - topLeftCornerRow + 1 <= 1) {
             return;
         }
 
@@ -32,10 +29,10 @@ public class RecursiveDivisionMazeGenerator implements MazeGenerator {
         openWallToTheLeftOfIntersectionPoint(chamber, topLeftCornerCol, interPRow, interPCol);
 
         // recurse and work on the smaller chambers
-        recurseOnTopRightChamber(chamber, bottomRightCornerCol, topLeftCornerRow, interPRow, interPCol, chamberMinWidth, chamberMinHeight);
-        recurseOnBottomRightChamber(chamber, bottomRightCornerRow, bottomRightCornerCol, interPRow, interPCol, chamberMinWidth, chamberMinHeight);
-        recurseOnTopLeftChamber(chamber, topLeftCornerRow, topLeftCornerCol, interPRow, interPCol, chamberMinWidth, chamberMinHeight);
-        recurseOnBottomLeftChamber(chamber, bottomRightCornerRow, topLeftCornerCol, interPRow, interPCol, chamberMinWidth, chamberMinHeight);
+        recurseOnTopRightChamber(chamber, bottomRightCornerCol, topLeftCornerRow, interPRow, interPCol);
+        recurseOnBottomRightChamber(chamber, bottomRightCornerRow, bottomRightCornerCol, interPRow, interPCol);
+        recurseOnTopLeftChamber(chamber, topLeftCornerRow, topLeftCornerCol, interPRow, interPCol);
+        recurseOnBottomLeftChamber(chamber, bottomRightCornerRow, topLeftCornerCol, interPRow, interPCol);
     }
 
     // PUT WALLS
@@ -107,38 +104,34 @@ public class RecursiveDivisionMazeGenerator implements MazeGenerator {
     // RECURSE ON THE NEW SUB CHAMBERS.
     private void recurseOnTopRightChamber(boolean[][] chamber, int bottomRightCornerCol,
                                          int topLeftCornerRow,
-                                         int interPRow, int interPCol,
-                                         int chamberMinWidth, int chamberMinHeight) {
+                                         int interPRow, int interPCol) {
         final int newTopLeftCornerCol = interPCol + 1;
         final int newBottomRightCornerRow = interPRow - 1;
-        generateMaze(chamber, topLeftCornerRow, newTopLeftCornerCol, newBottomRightCornerRow, bottomRightCornerCol, chamberMinWidth, chamberMinHeight);
+        gen(chamber, topLeftCornerRow, newTopLeftCornerCol, newBottomRightCornerRow, bottomRightCornerCol);
     }
 
     private void recurseOnBottomRightChamber(boolean[][] chamber, int bottomRightCornerRow, int bottomRightCornerCol,
-                                             int interPRow, int interPCol,
-                                             int chamberMinWidth, int chamberMinHeight) {
+                                             int interPRow, int interPCol) {
         final int newTopLeftCornerRow = interPRow + 1;
         final int newTopLeftCornerCol = interPCol + 1;
-        generateMaze(chamber, newTopLeftCornerRow, newTopLeftCornerCol, bottomRightCornerRow, bottomRightCornerCol, chamberMinWidth, chamberMinHeight);
+        gen(chamber, newTopLeftCornerRow, newTopLeftCornerCol, bottomRightCornerRow, bottomRightCornerCol);
 
     }
 
     private void recurseOnTopLeftChamber(boolean[][] chamber, int topLeftCornerRow, int topLeftCornerCol,
-                                        int interPRow, int interPCol,
-                                        int chamberMinWidth, int chamberMinHeight) {
+                                        int interPRow, int interPCol) {
         final int newBottomRightCornerCol = interPCol - 1;
         final int newBottomRightCornerRow = interPRow - 1;
-        generateMaze(chamber, topLeftCornerRow, topLeftCornerCol, newBottomRightCornerRow, newBottomRightCornerCol, chamberMinWidth, chamberMinHeight);
+        gen(chamber, topLeftCornerRow, topLeftCornerCol, newBottomRightCornerRow, newBottomRightCornerCol);
     }
 
 
     private void recurseOnBottomLeftChamber(boolean[][] chamber, int bottomRightCornerRow,
                                             int topLeftCornerCol,
-                                            int interPRow, int interPCol,
-                                            int chamberMinWidth, int chamberMinHeight) {
+                                            int interPRow, int interPCol) {
         final int newTopLeftCornerRow = interPRow + 1;
         final int newBottomRightCornerCol = interPCol - 1;
-        generateMaze(chamber, newTopLeftCornerRow, topLeftCornerCol, bottomRightCornerRow, newBottomRightCornerCol, chamberMinWidth, chamberMinHeight);
+        gen(chamber, newTopLeftCornerRow, topLeftCornerCol, bottomRightCornerRow, newBottomRightCornerCol);
 
     }
 }
