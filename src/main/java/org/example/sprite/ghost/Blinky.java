@@ -15,6 +15,7 @@ import org.example.ghostmode.blinky.BlinkyScattered;
 import org.example.ghostmode.navigation.ShortestPathNavigator;
 import org.example.ghostmode.timer.ChaseScatterTimer;
 import org.example.ghostmode.timer.RealTimer;
+import org.example.model.GameState;
 import org.example.sprite.PacMan;
 
 
@@ -31,17 +32,15 @@ public class Blinky extends Ghost implements Subscriber {
     private final ChaseScatterTimer chaseScatterTimer;
     private final RealTimer realTimer;
 
-    // [TODO] find a better way to pass this information
-    private final PacMan pacMan;
+    private final GameState gameState;
     @Override
     public CanvasCoordinate getPacManCanvasCord() {
-        return pacMan.getCurrCanvasCord();
+        return gameState.getPacMan().getCurrCanvasCord();
     }
 
-    public Blinky(PacMan pacMan, ShortestPathNavigator chaseMode) {
+    public Blinky(GameState gameState) {
         super(SpriteE.GHOST, 0, 0, DirectionsE.STILL);
 
-        this.pacMan = pacMan;
         this.chaseScatterTimer = new ChaseScatterTimer();
         this.realTimer = new RealTimer();
 
@@ -49,8 +48,10 @@ public class Blinky extends Ghost implements Subscriber {
         this.blinkyChaser = new BlinkyChaser();
         this.blinkyScattered = new BlinkyScattered();
         this.frightened = new BlinkyFrightened();
-        this.eaten = new GhostEaten();
+        this.eaten = new GhostEaten(gameState);
         this.activeMode = blinkyScattered;
+
+        this.gameState = gameState;
     }
 
     @Override

@@ -29,6 +29,8 @@ import org.example.util.debug.DebugUtil;
 import java.util.List;
 
 public class GamePlayGameScene implements GameScene {
+    private final GameState gameState = new GameState();
+
     // sprites
     final PacMan pacMan;
     final Maze maze;
@@ -65,15 +67,12 @@ public class GamePlayGameScene implements GameScene {
 
         // sprites
         maze = new Maze();
-        final CanvasCoordinate emptyCellPos = Playground.getEmptyMazePosition();
-        pacMan = new PacMan(emptyCellPos.getCol(), emptyCellPos.getRow(), eventManager, syncEventManager);
+        pacMan = new PacMan(eventManager, syncEventManager);
         sugar = new Sugar();
         ghostHouseS = new GhostHouseS();
 
         // ghosts
         initGhosts();
-
-        final GameState gameState = new GameState(pacMan, List.of(blinky));
 
         // collision detection
         collisionSystem = new CollisionSystem(gameState, eventManager);
@@ -88,8 +87,14 @@ public class GamePlayGameScene implements GameScene {
         });
 
         // game engine
+        setGameState();
         registerEventSubscribers();
         registerSubscribersForSyncEvents();
+    }
+
+    private void setGameState() {
+        gameState.setPacMan(pacMan);
+        gameState.setGhostHouseS(ghostHouseS);
     }
 
     private void registerEventSubscribers() {
@@ -117,8 +122,8 @@ public class GamePlayGameScene implements GameScene {
     }
 
     public void initGhosts() {
-        final ShortestPathNavigator shortestPathMode = new ShortestPathNavigator();
-        blinky = new Blinky(pacMan, shortestPathMode);
+        blinky = new Blinky(gameState);
+        gameState.addGhost(blinky);
     }
 
     @Override

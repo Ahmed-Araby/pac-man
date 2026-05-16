@@ -12,6 +12,7 @@ import org.example.entity.CanvasCoordinate;
 import org.example.entity.Vector;
 import org.example.ghostmode.navigation.GhostNavigator;
 import org.example.ghostmode.navigation.ShortestPathNavigator;
+import org.example.model.GameState;
 import org.example.sprite.ghost.Ghost;
 import org.example.util.ghost.GhostUtil;
 
@@ -22,14 +23,12 @@ public class GhostEaten implements GhostMode {
 
     private final GhostNavigator navigator;
     private final Animator animator;
+    private final GameState gameState;
 
-    // [TODO] should move to the ghost house
-    private final CanvasCoordinate bottomRightCorner = new CanvasCoordinate(
-            0,
-            DimensionsC.CANVAS_WIDTH_PIXELS - 1
-    );
+    private CanvasCoordinate ghostHouseEmptyLoc;
 
-    public GhostEaten() {
+    public GhostEaten(GameState gameState) {
+        this.gameState = gameState;
         this.navigator = new ShortestPathNavigator();
 
         final Map<Vector, Image[]> sprites = loadSprites();
@@ -41,6 +40,9 @@ public class GhostEaten implements GhostMode {
 
     @Override
     public void enter(Ghost ghost) {
+        final double ghostHERow = gameState.getGhostHouseS().getERow();;
+        final double ghostHSCol = gameState.getGhostHouseS().getCol();
+        ghostHouseEmptyLoc = new CanvasCoordinate(ghostHERow - DimensionsC.MAZE_CELL_SIZE_PIXELS, ghostHSCol + DimensionsC.MAZE_CELL_SIZE_PIXELS);
         // [TODO] should prepare for rendering the score that pacman gained by eating this ghost
     }
 
@@ -57,7 +59,7 @@ public class GhostEaten implements GhostMode {
     @Override
     public void move(Ghost ghost) {
         final CanvasCoordinate currCord = new CanvasCoordinate(ghost.getRow(), ghost.getCol());
-        final DirectionsE newDir = this.navigator.nextMoveDirection(currCord, bottomRightCorner);
+        final DirectionsE newDir = this.navigator.nextMoveDirection(currCord, ghostHouseEmptyLoc);
         final CanvasCoordinate newCord = GhostUtil.move(currCord, newDir);
 
         ghost.setDir(newDir);

@@ -2,12 +2,16 @@ package org.example.sprite;
 
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
+import lombok.Getter;
+import lombok.Setter;
 import org.example.constant.*;
 import org.example.entity.CanvasCoordinate;
 import org.example.entity.MazeCell;
 import org.example.maze.Playground;
 import org.example.util.canvas.CanvasUtil;
 
+@Getter
+@Setter
 public class GhostHouseS extends Sprite {
     private final double eCol;
     private final double eRow;
