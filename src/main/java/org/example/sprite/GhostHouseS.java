@@ -5,7 +5,7 @@ import javafx.scene.canvas.GraphicsContext;
 import org.example.constant.*;
 import org.example.entity.CanvasCoordinate;
 import org.example.entity.MazeCell;
-import org.example.maze.MazeMatrix;
+import org.example.maze.Playground;
 import org.example.util.canvas.CanvasUtil;
 
 public class GhostHouseS extends Sprite {
@@ -43,7 +43,7 @@ public class GhostHouseS extends Sprite {
                 } else {
                     spriteType = SpriteE.GHOST_HOUSE_EMPTY;
                 }
-                MazeMatrix.set(cell.getRow(), cell.getCol(), spriteType);
+                Playground.set(cell.getRow(), cell.getCol(), spriteType);
             }
         }
     }

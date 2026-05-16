@@ -5,7 +5,7 @@ import org.example.constant.SpriteE;
 import org.example.entity.CanvasCoordinate;
 import org.example.entity.MazeCell;
 
-public class MazeMatrix {
+public class Playground {
 
     private static SpriteE[][] maze;
 
@@ -79,8 +79,8 @@ public class MazeMatrix {
     }
 
     public static CanvasCoordinate getEmptyMazePosition() {
-        for (int mazeRow = 0; mazeRow< MazeMatrix.height(); mazeRow++) {
-            for (int mazeCol = 0; mazeCol< MazeMatrix.width(); mazeCol++) {
+        for (int mazeRow = 0; mazeRow< Playground.height(); mazeRow++) {
+            for (int mazeCol = 0; mazeCol< Playground.width(); mazeCol++) {
                 if (isEmpty(mazeRow, mazeCol)) {
                     set(mazeRow, mazeCol, SpriteE.PAC_MAN);
                     return new CanvasCoordinate(mazeRow, mazeCol);

@@ -15,7 +15,7 @@ import org.example.event.manager.SyncEventManager;
 import org.example.ghostmode.navigation.ShortestPathNavigator;
 import org.example.input.JavaFXInputHandler;
 import org.example.input.JavaFXUserInputHandler;
-import org.example.maze.MazeMatrix;
+import org.example.maze.Playground;
 import org.example.model.GameState;
 import org.example.sound.SoundPlayer;
 import org.example.sprite.GhostHouseS;
@@ -55,7 +55,7 @@ public class GamePlayGameScene implements GameScene {
 
     public GamePlayGameScene() {
         // init
-        MazeMatrix.init();
+        Playground.init();
 
         // game engine
         eventManager = new EventManager();
@@ -65,7 +65,7 @@ public class GamePlayGameScene implements GameScene {
 
         // sprites
         maze = new Maze();
-        final CanvasCoordinate emptyCellPos = MazeMatrix.getEmptyMazePosition();
+        final CanvasCoordinate emptyCellPos = Playground.getEmptyMazePosition();
         pacMan = new PacMan(emptyCellPos.getCol(), emptyCellPos.getRow(), eventManager, syncEventManager);
         sugar = new Sugar();
         ghostHouseS = new GhostHouseS();
