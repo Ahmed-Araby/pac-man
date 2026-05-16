@@ -62,6 +62,14 @@ public class MazeMatrix {
         return maze[row][col] == SpriteE.WALL;
     }
 
+    public static boolean isGhostHWall(MazeCell cell) {
+        return isGhostHWall(cell.getRow(), cell.getCol());
+    }
+    public static boolean isGhostHWall(int row, int col) {
+        return maze[row][col] == SpriteE.GHOST_HOUSE_WALL;
+    }
+
+
     public static int height() {
         return maze.length;
     }

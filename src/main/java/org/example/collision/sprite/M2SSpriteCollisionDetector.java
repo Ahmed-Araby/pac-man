@@ -15,6 +15,14 @@ import java.util.Optional;
 
 public class M2SSpriteCollisionDetector {
 
+    public static List<CollisionReport> detect(CanvasRect rect, List<SpriteE> targets) {
+        // [TODO] optimize, either run in parallel, or check for all targets at once
+        return targets.stream()
+                .map(target -> detect(rect, target))
+                .filter(Optional::isPresent)
+                .map(Optional::get)
+                .toList();
+    }
     public static Optional<CollisionReport> detect(CanvasRect rect, SpriteE target) {
         final List<CanvasCoordinate> corners = CanvasRectUtils.get4Corners(rect);
         final Optional<CanvasRect> collidingRect = corners.stream()

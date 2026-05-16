@@ -51,7 +51,7 @@ public class GhostUtil {
         }
         return candidateNextCells
                 .stream()
-                .filter(cell -> !MazeMatrix.isWall(cell))
+                .filter(cell -> !MazeMatrix.isWall(cell) && !MazeMatrix.isGhostHWall(cell))
                 .toList();
     }
 }

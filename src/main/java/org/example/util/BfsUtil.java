@@ -35,7 +35,7 @@ public class BfsUtil {
                     targetReached = true;
                     break;
                 }
-                else if(!MazeMatrix.isWall(nextCell)) {
+                else if(!MazeMatrix.isWall(nextCell) && !MazeMatrix.isGhostHWall(nextCell)) {
                     if (dist[nextCell.getRow()][nextCell.getCol()] > 1 + dist[cCell.getRow()][cCell.getCol()]) {
                         dist[nextCell.getRow()][nextCell.getCol()] = 1 + dist[cCell.getRow()][cCell.getCol()];
                         cords.add(nextCell);

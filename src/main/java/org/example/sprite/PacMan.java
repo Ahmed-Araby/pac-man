@@ -123,7 +123,7 @@ public class PacMan extends MovingSprite implements Subscriber {
             return;
         }
 
-        if (isCollidingWithWall(nextCord)) {
+        if (isCollidingWithWallOrGhostHWall(nextCord)) {
             final PacManMovementAttemptDeniedEvent deniedEvent = new PacManMovementAttemptDeniedEvent(
                     nextCord, event.getDirectionsE(), event.getSource()
             );

@@ -21,6 +21,7 @@ public class SpriteUtil {
             case PAC_MAN -> toPacManRect(spriteTopLeftCorner);
             case GHOST -> toGhostRect(spriteTopLeftCorner);
             case WALL -> toWallRect(spriteTopLeftCorner);
+            case GHOST_HOUSE_WALL -> toGhostHWallRect(spriteTopLeftCorner);
             default -> throw new IllegalArgumentException(type.toString());
         };
     }
@@ -32,6 +33,7 @@ public class SpriteUtil {
             case PAC_MAN -> c2PacmanTopLeftCorner(cord);
             case GHOST -> c2GhostTopLeftCorner(cord);
             case WALL -> c2WallTopLeftCorner(cord);
+            case GHOST_HOUSE_WALL -> c2GhostHWallTopLeftCorner(cord);
             default -> throw new IllegalArgumentException(type.toString());
         };
     }
@@ -62,6 +64,11 @@ public class SpriteUtil {
         return new CanvasRect(topLeftCorner, DimensionsC.MAZE_CELL_SIZE_PIXELS, DimensionsC.MAZE_CELL_SIZE_PIXELS);
     }
 
+    private static CanvasRect toGhostHWallRect(CanvasCoordinate topLeftCorner) {
+        return new CanvasRect(topLeftCorner, DimensionsC.MAZE_CELL_SIZE_PIXELS, DimensionsC.MAZE_CELL_SIZE_PIXELS);
+    }
+
+
 
     private static CanvasCoordinate c2SugarTopLeftCorner(CanvasCoordinate cord) {
         final double offset = (DimensionsC.MAZE_CELL_SIZE_PIXELS - DimensionsC.SUGAR_CELL_SIZE_PIXELS) / 2;
@@ -85,6 +92,10 @@ public class SpriteUtil {
     }
 
     private static CanvasCoordinate c2WallTopLeftCorner(CanvasCoordinate cord) {
+        return cord;
+    }
+
+    private static CanvasCoordinate c2GhostHWallTopLeftCorner(CanvasCoordinate cord) {
         return cord;
     }
 
