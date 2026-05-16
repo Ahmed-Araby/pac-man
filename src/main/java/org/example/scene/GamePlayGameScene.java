@@ -18,6 +18,7 @@ import org.example.input.JavaFXUserInputHandler;
 import org.example.maze.MazeMatrix;
 import org.example.model.GameState;
 import org.example.sound.SoundPlayer;
+import org.example.sprite.GhostHouseS;
 import org.example.sprite.Maze;
 import org.example.sprite.PacMan;
 import org.example.entity.CanvasCoordinate;
@@ -32,6 +33,8 @@ public class GamePlayGameScene implements GameScene {
     final PacMan pacMan;
     final Maze maze;
     final Sugar sugar;
+    final GhostHouseS ghostHouseS;
+
     // ghosts
     private Blinky blinky;
 
@@ -65,12 +68,14 @@ public class GamePlayGameScene implements GameScene {
         final CanvasCoordinate emptyCellPos = MazeMatrix.getEmptyMazePosition();
         pacMan = new PacMan(emptyCellPos.getCol(), emptyCellPos.getRow(), eventManager, syncEventManager);
         sugar = new Sugar();
+        ghostHouseS = new GhostHouseS();
 
         // ghosts
         initGhosts();
 
-        // collision detection
         final GameState gameState = new GameState(pacMan, List.of(blinky));
+
+        // collision detection
         collisionSystem = new CollisionSystem(gameState, eventManager);
 
 
@@ -129,6 +134,7 @@ public class GamePlayGameScene implements GameScene {
 
 
         maze.render(canvas);
+        ghostHouseS.render(canvas);
         sugar.render(canvas);
 
         if(GameConfig.isDebugModeOn()) {
