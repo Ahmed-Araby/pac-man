@@ -1,6 +1,7 @@
 package org.example.sprite.ghost;
 
 import javafx.scene.canvas.Canvas;
+import org.example.config.GhostModeActivePeriodsConf;
 import org.example.constant.*;
 import org.example.entity.CanvasCoordinate;
 import org.example.event.Event;
@@ -40,8 +41,8 @@ public class Blinky extends Ghost implements Subscriber {
         this.realTimer = new RealTimer();
 
         // ghost modes
-        this.blinkyChaser = new BlinkyChaser();
-        this.blinkyScattered = new BlinkyScattered();
+        this.blinkyChaser = new BlinkyChaser(GhostModeActivePeriodsConf.LEVEL_1_CHASE_ACTIVE_PERIODS);
+        this.blinkyScattered = new BlinkyScattered(GhostModeActivePeriodsConf.LEVEL_1_SCATTER_ACTIVE_PERIODS);
         this.frightened = new BlinkyFrightened();
         this.eaten = new GhostEaten(gameState);
         this.activeMode = blinkyScattered;

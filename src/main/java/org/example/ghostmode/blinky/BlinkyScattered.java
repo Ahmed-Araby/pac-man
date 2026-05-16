@@ -9,13 +9,14 @@ import org.example.constant.DimensionsC;
 import org.example.constant.DirectionsE;
 import org.example.constant.SpriteFileNameC;
 import org.example.entity.CanvasCoordinate;
+import org.example.ghostmode.TemporalGhostMode;
 import org.example.sprite.ghost.Ghost;
 import org.example.ghostmode.GhostMode;
 import org.example.ghostmode.navigation.GhostNavigator;
 import org.example.ghostmode.navigation.ShortestPathNavigator;
 import org.example.util.ghost.GhostUtil;
 
-public class BlinkyScattered implements GhostMode {
+public class BlinkyScattered extends TemporalGhostMode implements GhostMode{
 
     private final Animator animator;
     private final GhostNavigator navigator;
@@ -24,15 +25,13 @@ public class BlinkyScattered implements GhostMode {
             DimensionsC.CANVAS_WIDTH_PIXELS - 1
     );
 
-    public BlinkyScattered() {
+    public BlinkyScattered(int[] activePeridosSec) {
+        super(activePeridosSec);
         final Image[] frames = loadSprites();
         this.animator = new DistanceBasedAnimator(
                 new double[]{DimensionsC.BLINKY_FIRST_LEG_MOVEMENT_DISTANCE_PIXELS, DimensionsC.BLINKY_SECOND_LEG_MOVEMENT_DISTANCE_PIXELS}, frames);
         this.navigator = new ShortestPathNavigator();
     }
-
-    @Override
-    public void enter(Ghost ghost) {}
 
     @Override
     public float getActivePeriodSeconds() {
