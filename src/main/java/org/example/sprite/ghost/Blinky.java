@@ -1,8 +1,6 @@
 package org.example.sprite.ghost;
 
 import javafx.scene.canvas.Canvas;
-import lombok.Getter;
-import lombok.Setter;
 import org.example.constant.*;
 import org.example.entity.CanvasCoordinate;
 import org.example.event.Event;
@@ -12,12 +10,9 @@ import org.example.ghostmode.*;
 import org.example.ghostmode.blinky.BlinkyChaser;
 import org.example.ghostmode.blinky.BlinkyFrightened;
 import org.example.ghostmode.blinky.BlinkyScattered;
-import org.example.ghostmode.navigation.ShortestPathNavigator;
 import org.example.ghostmode.timer.ChaseScatterTimer;
 import org.example.ghostmode.timer.RealTimer;
 import org.example.model.GameState;
-import org.example.sprite.PacMan;
-
 
 public class Blinky extends Ghost implements Subscriber {
     // [TODO] rename modes
@@ -97,7 +92,9 @@ public class Blinky extends Ghost implements Subscriber {
                 previousMode = null;
             }
         } else if (activeMode instanceof GhostEaten) {
-            // [TODO] transition back from Eaten mode
+            if (activeMode.end(this)) {
+                nextMode = blinkyChaser;
+            }
         }
 
         if(nextMode != null) {

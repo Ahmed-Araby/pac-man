@@ -52,6 +52,11 @@ public class GhostEaten implements GhostMode {
     }
 
     @Override
+    public boolean end(Ghost ghost) {
+        return ghost.getTopLeftCorner().equals(ghostHouseEmptyLoc);
+    }
+
+    @Override
     public void render(Canvas canvas, Ghost ghost) {
         canvas.getGraphicsContext2D().drawImage(animator.getFrame(), ghost.getCol(), ghost.getRow());
     }
