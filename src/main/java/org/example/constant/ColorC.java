@@ -11,5 +11,9 @@ public class ColorC {
     public static Color SUGAR_COLOR = Color.WHITE;
     public static Color SUPER_SUGAR_COLOR = Color.WHITE;
 
+    // ghost house
+    public static Color GHOST_HOUSE_WALL_COLOR = Color.CYAN;
+    public static Color GHOST_HOUSE_DOOR = Color.PINK;
+
 
 }

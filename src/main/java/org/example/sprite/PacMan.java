@@ -15,6 +15,7 @@ import org.example.event.manager.SyncEventManager;
 import org.example.event.movement.PacManMovementAttemptApprovedEvent;
 import org.example.event.movement.PacManMovementAttemptDeniedEvent;
 import org.example.event.movement.PacManMovementRequestEvent;
+import org.example.maze.Playground;
 import org.example.util.pacman.PacManGraphicsUtil;
 import org.example.util.pacman.PixelStrideTracker;
 import org.example.util.pacman.TurnBuffer;
@@ -33,8 +34,12 @@ public class PacMan extends MovingSprite implements Subscriber {
     // this synchronous event manager is concerned with pac man movement and collision detection with walls and turn buffer.
     private final SyncEventManager syncEventManager;
 
-    public PacMan(double col, double row, EventManager eventManager, SyncEventManager syncEventManager) {
-        super(SpriteE.PAC_MAN, col, row, DirectionsE.STILL);
+    public PacMan(EventManager eventManager, SyncEventManager syncEventManager) {
+        super(SpriteE.PAC_MAN, 0, 0, DirectionsE.STILL);
+
+        final CanvasCoordinate emptyCellPos = Playground.getEmptyMazePosition();
+        setCol(emptyCellPos.getCol());
+        setRow(emptyCellPos.getRow());
 
         this.turnBuffer = new TurnBuffer();
         this.closedMousePixelStrideTracker = new PixelStrideTracker(DimensionsC.PAC_MAN_CLOSED_MOUSE_DISTANCE_PIXELS,
@@ -123,7 +128,7 @@ public class PacMan extends MovingSprite implements Subscriber {
             return;
         }
 
-        if (isCollidingWithWall(nextCord)) {
+        if (isCollidingWithWallOrGhostHWall(nextCord)) {
             final PacManMovementAttemptDeniedEvent deniedEvent = new PacManMovementAttemptDeniedEvent(
                     nextCord, event.getDirectionsE(), event.getSource()
             );

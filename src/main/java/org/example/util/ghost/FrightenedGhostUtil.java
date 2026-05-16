@@ -12,7 +12,6 @@ import org.example.util.SpriteUtil;
 import org.example.util.VectorUtil;
 
 import java.util.List;
-import java.util.Optional;
 
 public class FrightenedGhostUtil {
 
@@ -34,7 +33,7 @@ public class FrightenedGhostUtil {
                         return false;
                     }
                     final CanvasRect rect = SpriteUtil.toRect(candidateNextCord, SpriteE.GHOST);
-                    final Optional<CollisionReport> collisionReportOpt = M2SSpriteCollisionDetector.detect(rect, SpriteE.WALL);
+                    final List<CollisionReport> collisionReportOpt = M2SSpriteCollisionDetector.detect(rect, List.of(SpriteE.WALL, SpriteE.GHOST_HOUSE_WALL));
                     return collisionReportOpt.isEmpty();
                 })
                 .toList();

@@ -1,8 +1,6 @@
 package org.example.sprite.ghost;
 
 import javafx.scene.canvas.Canvas;
-import lombok.Getter;
-import lombok.Setter;
 import org.example.constant.*;
 import org.example.entity.CanvasCoordinate;
 import org.example.event.Event;
@@ -12,11 +10,9 @@ import org.example.ghostmode.*;
 import org.example.ghostmode.blinky.BlinkyChaser;
 import org.example.ghostmode.blinky.BlinkyFrightened;
 import org.example.ghostmode.blinky.BlinkyScattered;
-import org.example.ghostmode.navigation.ShortestPathNavigator;
 import org.example.ghostmode.timer.ChaseScatterTimer;
 import org.example.ghostmode.timer.RealTimer;
-import org.example.sprite.PacMan;
-
+import org.example.model.GameState;
 
 public class Blinky extends Ghost implements Subscriber {
     // [TODO] rename modes
@@ -31,17 +27,15 @@ public class Blinky extends Ghost implements Subscriber {
     private final ChaseScatterTimer chaseScatterTimer;
     private final RealTimer realTimer;
 
-    // [TODO] find a better way to pass this information
-    private final PacMan pacMan;
+    private final GameState gameState;
     @Override
     public CanvasCoordinate getPacManCanvasCord() {
-        return pacMan.getCurrCanvasCord();
+        return gameState.getPacMan().getCurrCanvasCord();
     }
 
-    public Blinky(PacMan pacMan, ShortestPathNavigator chaseMode) {
+    public Blinky(GameState gameState) {
         super(SpriteE.GHOST, 0, 0, DirectionsE.STILL);
 
-        this.pacMan = pacMan;
         this.chaseScatterTimer = new ChaseScatterTimer();
         this.realTimer = new RealTimer();
 
@@ -49,8 +43,10 @@ public class Blinky extends Ghost implements Subscriber {
         this.blinkyChaser = new BlinkyChaser();
         this.blinkyScattered = new BlinkyScattered();
         this.frightened = new BlinkyFrightened();
-        this.eaten = new GhostEaten();
+        this.eaten = new GhostEaten(gameState);
         this.activeMode = blinkyScattered;
+
+        this.gameState = gameState;
     }
 
     @Override
@@ -96,7 +92,9 @@ public class Blinky extends Ghost implements Subscriber {
                 previousMode = null;
             }
         } else if (activeMode instanceof GhostEaten) {
-            // [TODO] transition back from Eaten mode
+            if (activeMode.end(this)) {
+                nextMode = blinkyChaser;
+            }
         }
 
         if(nextMode != null) {

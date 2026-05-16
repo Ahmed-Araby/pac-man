@@ -6,7 +6,7 @@ import org.example.constant.DirectionsE;
 import org.example.entity.CanvasCoordinate;
 import org.example.entity.MazeCell;
 import org.example.entity.Vector;
-import org.example.maze.MazeMatrix;
+import org.example.maze.Playground;
 import org.example.util.canvas.CanvasUtil;
 
 import java.util.List;
@@ -51,7 +51,7 @@ public class GhostUtil {
         }
         return candidateNextCells
                 .stream()
-                .filter(cell -> !MazeMatrix.isWall(cell))
+                .filter(cell -> !Playground.isWall(cell) && !Playground.isGhostHWall(cell))
                 .toList();
     }
 }

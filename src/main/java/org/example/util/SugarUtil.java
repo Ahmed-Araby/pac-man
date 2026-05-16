@@ -4,7 +4,7 @@ import org.example.constant.DimensionsC;
 import org.example.constant.DirectionsE;
 import org.example.entity.CanvasCoordinate;
 import org.example.entity.MazeCell;
-import org.example.maze.MazeMatrix;
+import org.example.maze.Playground;
 import org.example.util.canvas.CanvasUtil;
 
 public class SugarUtil {
@@ -24,11 +24,11 @@ public class SugarUtil {
 
     public static boolean isCanvasCellHasSugar(CanvasCoordinate cellTopLeftCornerCanvas) {
         final MazeCell cell = CanvasUtil.toMazeCoordinate(cellTopLeftCornerCanvas, DirectionsE.STILL);
-        return MazeMatrix.hasSugar(cell);
+        return Playground.hasSugar(cell);
     }
 
     public static boolean isCanvasCellHasSuperSugar(CanvasCoordinate cellTopLeftCornerCanvas) {
         final MazeCell cell = CanvasUtil.toMazeCoordinate(cellTopLeftCornerCanvas, DirectionsE.STILL);
-        return MazeMatrix.hasSuperSugar(cell);
+        return Playground.hasSuperSugar(cell);
     }
 }

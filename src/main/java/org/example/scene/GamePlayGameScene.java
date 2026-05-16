@@ -15,9 +15,10 @@ import org.example.event.manager.SyncEventManager;
 import org.example.ghostmode.navigation.ShortestPathNavigator;
 import org.example.input.JavaFXInputHandler;
 import org.example.input.JavaFXUserInputHandler;
-import org.example.maze.MazeMatrix;
+import org.example.maze.Playground;
 import org.example.model.GameState;
 import org.example.sound.SoundPlayer;
+import org.example.sprite.GhostHouseS;
 import org.example.sprite.Maze;
 import org.example.sprite.PacMan;
 import org.example.entity.CanvasCoordinate;
@@ -28,10 +29,14 @@ import org.example.util.debug.DebugUtil;
 import java.util.List;
 
 public class GamePlayGameScene implements GameScene {
+    private final GameState gameState = new GameState();
+
     // sprites
     final PacMan pacMan;
     final Maze maze;
     final Sugar sugar;
+    final GhostHouseS ghostHouseS;
+
     // ghosts
     private Blinky blinky;
 
@@ -52,7 +57,7 @@ public class GamePlayGameScene implements GameScene {
 
     public GamePlayGameScene() {
         // init
-        MazeMatrix.init();
+        Playground.init();
 
         // game engine
         eventManager = new EventManager();
@@ -62,15 +67,14 @@ public class GamePlayGameScene implements GameScene {
 
         // sprites
         maze = new Maze();
-        final CanvasCoordinate emptyCellPos = MazeMatrix.getEmptyMazePosition();
-        pacMan = new PacMan(emptyCellPos.getCol(), emptyCellPos.getRow(), eventManager, syncEventManager);
+        pacMan = new PacMan(eventManager, syncEventManager);
         sugar = new Sugar();
+        ghostHouseS = new GhostHouseS();
 
         // ghosts
         initGhosts();
 
         // collision detection
-        final GameState gameState = new GameState(pacMan, List.of(blinky));
         collisionSystem = new CollisionSystem(gameState, eventManager);
 
 
@@ -83,8 +87,14 @@ public class GamePlayGameScene implements GameScene {
         });
 
         // game engine
+        setGameState();
         registerEventSubscribers();
         registerSubscribersForSyncEvents();
+    }
+
+    private void setGameState() {
+        gameState.setPacMan(pacMan);
+        gameState.setGhostHouseS(ghostHouseS);
     }
 
     private void registerEventSubscribers() {
@@ -112,8 +122,8 @@ public class GamePlayGameScene implements GameScene {
     }
 
     public void initGhosts() {
-        final ShortestPathNavigator shortestPathMode = new ShortestPathNavigator();
-        blinky = new Blinky(pacMan, shortestPathMode);
+        blinky = new Blinky(gameState);
+        gameState.addGhost(blinky);
     }
 
     @Override
@@ -129,6 +139,7 @@ public class GamePlayGameScene implements GameScene {
 
 
         maze.render(canvas);
+        ghostHouseS.render(canvas);
         sugar.render(canvas);
 
         if(GameConfig.isDebugModeOn()) {

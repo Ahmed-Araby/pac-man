@@ -16,7 +16,6 @@ import org.example.util.ghost.GhostUtil;
 import org.example.util.MazeUtil;
 
 import java.util.List;
-import java.util.Optional;
 
 
 @AllArgsConstructor
@@ -34,7 +33,7 @@ public class ShortestPathNavigator implements GhostNavigator {
                 .filter(move -> {
                     final CanvasCoordinate candidateNextCord = MazeUtil.getCanvasCord(move.getCell());
                     final CanvasRect rect = SpriteUtil.toRect(candidateNextCord, SpriteE.GHOST);
-                    final Optional<CollisionReport> collisionReportOpt = M2SSpriteCollisionDetector.detect(rect, SpriteE.WALL);
+                    final List<CollisionReport> collisionReportOpt = M2SSpriteCollisionDetector.detect(rect, List.of(SpriteE.WALL, SpriteE.GHOST_HOUSE_WALL));
                     return collisionReportOpt.isEmpty();
                 })
                 .map(move -> {

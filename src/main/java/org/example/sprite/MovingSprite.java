@@ -9,7 +9,10 @@ import org.example.constant.SpriteE;
 import org.example.entity.CanvasCoordinate;
 import org.example.entity.CanvasRect;
 import org.example.event.Event;
+import org.example.model.CollisionReport;
 import org.example.util.SpriteUtil;
+
+import java.util.List;
 
 
 @Getter
@@ -32,8 +35,9 @@ public abstract class MovingSprite extends Sprite {
                 topLeftCorner.getCol() < 0 || topLeftCorner.getCol() > DimensionsC.CANVAS_WIDTH_PIXELS - DimensionsC.GHOST_WIDTH_PIXELS;
     }
 
-    protected boolean isCollidingWithWall(CanvasCoordinate topLeftCorner) {
+    protected boolean isCollidingWithWallOrGhostHWall(CanvasCoordinate topLeftCorner) {
         final CanvasRect rect = SpriteUtil.toRect(topLeftCorner, type);
-        return M2SSpriteCollisionDetector.detect(rect, SpriteE.WALL).isPresent();
+        List<CollisionReport> collisionReports = M2SSpriteCollisionDetector.detect(rect, List.of(SpriteE.WALL, SpriteE.GHOST_HOUSE_WALL));
+        return !collisionReports.isEmpty();
     }
 }

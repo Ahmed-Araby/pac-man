@@ -1,7 +1,6 @@
 package org.example.util;
-import org.example.constant.SpriteE;
 import org.example.entity.MazeCell;
-import org.example.maze.MazeMatrix;
+import org.example.maze.Playground;
 
 import java.util.ArrayList;
 import java.util.LinkedList;
@@ -13,7 +12,7 @@ public class BfsUtil {
 
     public static int[][] getDistMat(MazeCell sCord, MazeCell tCord) {
         // init
-        final int[][] dist = new int[MazeMatrix.height()][MazeMatrix.width()];
+        final int[][] dist = new int[Playground.height()][Playground.width()];
         for(int r=0; r < dist.length; r++) {
             for(int c=0; c<dist[0].length; c++) {
                 dist[r][c] = Integer.MAX_VALUE;
@@ -35,7 +34,7 @@ public class BfsUtil {
                     targetReached = true;
                     break;
                 }
-                else if(!MazeMatrix.isWall(nextCell)) {
+                else if(!Playground.isWall(nextCell) && !Playground.isGhostHWall(nextCell)) {
                     if (dist[nextCell.getRow()][nextCell.getCol()] > 1 + dist[cCell.getRow()][cCell.getCol()]) {
                         dist[nextCell.getRow()][nextCell.getCol()] = 1 + dist[cCell.getRow()][cCell.getCol()];
                         cords.add(nextCell);

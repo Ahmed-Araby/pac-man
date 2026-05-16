@@ -6,7 +6,7 @@ import org.example.constant.SpriteE;
 import org.example.entity.CanvasCoordinate;
 import org.example.entity.CanvasRect;
 import org.example.entity.MazeCell;
-import org.example.maze.MazeMatrix;
+import org.example.maze.Playground;
 import org.example.util.canvas.CanvasUtil;
 
 public class SpriteUtil {
@@ -21,6 +21,7 @@ public class SpriteUtil {
             case PAC_MAN -> toPacManRect(spriteTopLeftCorner);
             case GHOST -> toGhostRect(spriteTopLeftCorner);
             case WALL -> toWallRect(spriteTopLeftCorner);
+            case GHOST_HOUSE_WALL -> toGhostHWallRect(spriteTopLeftCorner);
             default -> throw new IllegalArgumentException(type.toString());
         };
     }
@@ -32,13 +33,14 @@ public class SpriteUtil {
             case PAC_MAN -> c2PacmanTopLeftCorner(cord);
             case GHOST -> c2GhostTopLeftCorner(cord);
             case WALL -> c2WallTopLeftCorner(cord);
+            case GHOST_HOUSE_WALL -> c2GhostHWallTopLeftCorner(cord);
             default -> throw new IllegalArgumentException(type.toString());
         };
     }
 
     public static SpriteE getSpriteType(CanvasCoordinate cord) {
         final MazeCell cell = CanvasUtil.toMazeCoordinate(cord, DirectionsE.STILL);
-        return MazeMatrix.get(cell);
+        return Playground.get(cell);
     }
 
 
@@ -61,6 +63,11 @@ public class SpriteUtil {
     private static CanvasRect toWallRect(CanvasCoordinate topLeftCorner) {
         return new CanvasRect(topLeftCorner, DimensionsC.MAZE_CELL_SIZE_PIXELS, DimensionsC.MAZE_CELL_SIZE_PIXELS);
     }
+
+    private static CanvasRect toGhostHWallRect(CanvasCoordinate topLeftCorner) {
+        return new CanvasRect(topLeftCorner, DimensionsC.MAZE_CELL_SIZE_PIXELS, DimensionsC.MAZE_CELL_SIZE_PIXELS);
+    }
+
 
 
     private static CanvasCoordinate c2SugarTopLeftCorner(CanvasCoordinate cord) {
@@ -85,6 +92,10 @@ public class SpriteUtil {
     }
 
     private static CanvasCoordinate c2WallTopLeftCorner(CanvasCoordinate cord) {
+        return cord;
+    }
+
+    private static CanvasCoordinate c2GhostHWallTopLeftCorner(CanvasCoordinate cord) {
         return cord;
     }
 

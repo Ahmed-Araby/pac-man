@@ -5,13 +5,14 @@ import org.example.constant.SpriteE;
 import org.example.entity.CanvasCoordinate;
 import org.example.entity.MazeCell;
 
-public class MazeMatrix {
+public class Playground {
 
     private static SpriteE[][] maze;
 
     public static void init() {
-        final MazeGenerator recursiveDivisionMazeGen = new RecursiveDivisionMazeGenerator();
-        final boolean[][] booleanMaze = recursiveDivisionMazeGen.generateMaze(DimensionsC.MAZE_HEIGHT, DimensionsC.MAZE_WIDTH, DimensionsC.MAZE_CHAMBER_MIN_WIDTH, DimensionsC.MAZE_CHAMBER_MIN_HEIGHT);
+        final MazeGenerator randomizedDfs = new RandomizedDFSMazeGenerator();
+        final boolean[][] booleanMaze = randomizedDfs.gen(DimensionsC.MAZE_HEIGHT, DimensionsC.MAZE_WIDTH);
+
         maze = new SpriteE[DimensionsC.MAZE_HEIGHT][DimensionsC.MAZE_WIDTH];
         for(int mazeRow = 0; mazeRow< DimensionsC.MAZE_HEIGHT; mazeRow++) {
             for(int mazeCol = 0; mazeCol< DimensionsC.MAZE_WIDTH; mazeCol++) {
@@ -61,6 +62,14 @@ public class MazeMatrix {
         return maze[row][col] == SpriteE.WALL;
     }
 
+    public static boolean isGhostHWall(MazeCell cell) {
+        return isGhostHWall(cell.getRow(), cell.getCol());
+    }
+    public static boolean isGhostHWall(int row, int col) {
+        return maze[row][col] == SpriteE.GHOST_HOUSE_WALL;
+    }
+
+
     public static int height() {
         return maze.length;
     }
@@ -70,8 +79,8 @@ public class MazeMatrix {
     }
 
     public static CanvasCoordinate getEmptyMazePosition() {
-        for (int mazeRow = 0; mazeRow< MazeMatrix.height(); mazeRow++) {
-            for (int mazeCol = 0; mazeCol< MazeMatrix.width(); mazeCol++) {
+        for (int mazeRow = 0; mazeRow< Playground.height(); mazeRow++) {
+            for (int mazeCol = 0; mazeCol< Playground.width(); mazeCol++) {
                 if (isEmpty(mazeRow, mazeCol)) {
                     set(mazeRow, mazeCol, SpriteE.PAC_MAN);
                     return new CanvasCoordinate(mazeRow, mazeCol);
