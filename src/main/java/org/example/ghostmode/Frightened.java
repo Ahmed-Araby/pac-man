@@ -1,4 +1,4 @@
-package org.example.ghostmode.blinky;
+package org.example.ghostmode;
 
 import javafx.scene.canvas.Canvas;
 import javafx.scene.image.Image;
@@ -11,7 +11,6 @@ import org.example.constant.SpriteFileNameC;
 import org.example.entity.CanvasCoordinate;
 import org.example.entity.Vector;
 import org.example.sprite.ghost.Ghost;
-import org.example.ghostmode.GhostMode;
 import org.example.util.EnrichedThreadLocalRandom;
 import org.example.util.ghost.GhostUtil;
 import org.example.util.VectorUtil;
@@ -20,13 +19,13 @@ import org.example.util.ghost.FrightenedGhostUtil;
 import java.util.List;
 
 
-public class BlinkyFrightened implements GhostMode {
+public class Frightened implements GhostMode {
 
     private final Animator animator;
     private final EnrichedThreadLocalRandom random;
     private final float activePeriodSeconds;
 
-    public BlinkyFrightened() {
+    public Frightened() {
         Image[] frames = loadSprites();
         this.animator = new DistanceBasedAnimator(new double[]{DimensionsC.BLINKY_FIRST_LEG_MOVEMENT_DISTANCE_PIXELS, DimensionsC.BLINKY_SECOND_LEG_MOVEMENT_DISTANCE_PIXELS}, frames);
         this.random = new EnrichedThreadLocalRandom();

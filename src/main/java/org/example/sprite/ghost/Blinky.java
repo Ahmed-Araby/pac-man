@@ -9,7 +9,7 @@ import org.example.event.EventType;
 import org.example.event.Subscriber;
 import org.example.ghostmode.*;
 import org.example.ghostmode.blinky.BlinkyChaser;
-import org.example.ghostmode.blinky.BlinkyFrightened;
+import org.example.ghostmode.Frightened;
 import org.example.ghostmode.blinky.BlinkyScattered;
 import org.example.ghostmode.timer.ChaseScatterTimer;
 import org.example.ghostmode.timer.RealTimer;
@@ -43,7 +43,7 @@ public class Blinky extends Ghost implements Subscriber {
         // ghost modes
         this.blinkyChaser = new BlinkyChaser(GhostModeActivePeriodsConf.LEVEL_1_CHASE_ACTIVE_PERIODS);
         this.blinkyScattered = new BlinkyScattered(GhostModeActivePeriodsConf.LEVEL_1_SCATTER_ACTIVE_PERIODS);
-        this.frightened = new BlinkyFrightened();
+        this.frightened = new Frightened();
         this.eaten = new GhostEaten(gameState);
         this.activeMode = blinkyScattered;
 
@@ -85,7 +85,7 @@ public class Blinky extends Ghost implements Subscriber {
             else if(chaseScatterTimer.up()){
                 nextMode = blinkyChaser;
             }
-        } else if (activeMode instanceof BlinkyFrightened) {
+        } else if (activeMode instanceof Frightened) {
             if (event != null && EventType.PAC_MAN_GHOST_COLLISION.equals(event.getType())) {
                 nextMode = eaten;
             } else if (realTimer.up()) {
