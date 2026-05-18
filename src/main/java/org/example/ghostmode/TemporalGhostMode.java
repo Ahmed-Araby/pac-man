@@ -2,7 +2,7 @@ package org.example.ghostmode;
 
 import java.time.Instant;
 
-public abstract class TemporalGhostMode {
+public abstract class TemporalGhostMode implements GhostMode {
     private Instant activeAt;
     private long skew = 0;
     private final int[] activePeriodsSec;

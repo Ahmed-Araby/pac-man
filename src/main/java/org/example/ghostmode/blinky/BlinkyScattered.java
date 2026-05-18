@@ -9,14 +9,13 @@ import org.example.constant.DimensionsC;
 import org.example.constant.DirectionsE;
 import org.example.constant.SpriteFileNameC;
 import org.example.entity.CanvasCoordinate;
-import org.example.ghostmode.TemporalGhostMode;
+import org.example.ghostmode.Scattered;
 import org.example.sprite.ghost.Ghost;
-import org.example.ghostmode.GhostMode;
 import org.example.ghostmode.navigation.GhostNavigator;
 import org.example.ghostmode.navigation.ShortestPathNavigator;
 import org.example.util.ghost.GhostUtil;
 
-public class BlinkyScattered extends TemporalGhostMode implements GhostMode{
+public class BlinkyScattered extends Scattered {
 
     private final Animator animator;
     private final GhostNavigator navigator;

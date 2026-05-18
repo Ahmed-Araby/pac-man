@@ -65,7 +65,7 @@ public class Blinky extends Ghost implements Subscriber {
     private void transitionMode(Event event) {
         GhostMode nextMode = null;
 
-        if (activeMode instanceof BlinkyChaser) {
+        if (activeMode instanceof Chaser) {
             if (event != null && EventType.PAC_MAN_SUPER_SUGAR_COLLISION.equals(event.getType())) {
                 previousMode = activeMode;
                 nextMode = frightened;
@@ -75,7 +75,7 @@ public class Blinky extends Ghost implements Subscriber {
             else if(chaseScatterTimer.up()) {
                 nextMode = blinkyScattered;
             }
-        } else if(activeMode instanceof BlinkyScattered) {
+        } else if(activeMode instanceof Scattered) {
             if (event != null && EventType.PAC_MAN_SUPER_SUGAR_COLLISION.equals(event.getType())) {
                 previousMode = activeMode;
                 nextMode = frightened;
