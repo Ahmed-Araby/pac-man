@@ -44,7 +44,7 @@ public class Blinky extends Ghost implements Subscriber {
         this.blinkyChaser = new BlinkyChaser(GhostModeActivePeriodsConf.LEVEL_1_CHASE_ACTIVE_PERIODS);
         this.blinkyScattered = new BlinkyScattered(GhostModeActivePeriodsConf.LEVEL_1_SCATTER_ACTIVE_PERIODS);
         this.frightened = new Frightened();
-        this.eaten = new GhostEaten(gameState);
+        this.eaten = new Eaten(gameState);
         this.activeMode = blinkyScattered;
 
         this.gameState = gameState;
@@ -92,7 +92,7 @@ public class Blinky extends Ghost implements Subscriber {
                 nextMode = previousMode;
                 previousMode = null;
             }
-        } else if (activeMode instanceof GhostEaten) {
+        } else if (activeMode instanceof Eaten) {
             if (activeMode.end(this)) {
                 nextMode = blinkyChaser;
             }
