@@ -35,44 +35,32 @@ public abstract class Ghost extends MovingSprite {
     }
 
     protected void transitionMode(Event event) {
-        if (activeMode instanceof Chaser) {
-            chaserTransition(event);
-        } else if(activeMode instanceof Scattered) {
-            scatteredTransition(event);
-        } else if (activeMode instanceof Frightened) {
+        if (activeMode instanceof Frightened) { // check for this first
             frightenedTransition(event);
         } else if (activeMode instanceof Eaten) {
             eatenTransition(activeMode);
+        } else if (activeMode instanceof Scattered || activeMode instanceof Chaser) {
+            ScatterOrChaserModeTransition(event);
         }
     }
 
-    protected void chaserTransition(Event event) {
+    protected void ScatterOrChaserModeTransition(Event event) {
+        TemporalGhostMode temporalActiveMode = (TemporalGhostMode) activeMode;
         if (event != null && EventType.PAC_MAN_SUPER_SUGAR_COLLISION.equals(event.getType())) {
-            chaser.pause();
-            frightened.enter();
-
-            previousMode = chaser;
-            activeMode = frightened;
-        } else if (chaser.ended()) {
-            chaser.exit();
-            scattered.enter();
-
-            activeMode = scattered;
+            temporalActiveMode.pause();
+            previousMode = temporalActiveMode;
+            temporalActiveMode = frightened;
+            temporalActiveMode.enter();
+        } else if (temporalActiveMode.ended() && temporalActiveMode instanceof Chaser) {
+            temporalActiveMode.exit();
+            temporalActiveMode = scattered;
+            temporalActiveMode.enter();
+        } else if (temporalActiveMode.ended() && temporalActiveMode instanceof Scattered) {
+            temporalActiveMode.exit();
+            temporalActiveMode = chaser;
+            temporalActiveMode.enter();
         }
-    }
-    protected void scatteredTransition(Event event) {
-        if (event != null && EventType.PAC_MAN_SUPER_SUGAR_COLLISION.equals(event.getType())) {
-            scattered.pause();
-            frightened.enter();
-
-            previousMode = scattered;
-            activeMode = frightened;
-        } else if (scattered.ended()) {
-            scattered.exit();
-            chaser.enter();
-
-            activeMode = chaser;
-        }
+        activeMode = temporalActiveMode;
     }
 
     protected void frightenedTransition(Event event) {
