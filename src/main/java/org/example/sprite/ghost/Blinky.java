@@ -6,6 +6,7 @@ import org.example.constant.*;
 import org.example.entity.CanvasCoordinate;
 import org.example.event.Event;
 import org.example.event.Subscriber;
+import org.example.event.collision.PacMan2GhostCollisionEvent;
 import org.example.ghostmode.*;
 import org.example.ghostmode.blinky.BlinkyChaser;
 import org.example.ghostmode.Frightened;
@@ -49,8 +50,17 @@ public class Blinky extends Ghost implements Subscriber {
 
     public void update(Event event) {
         switch (event.getType()) {
-            case PAC_MAN_SUPER_SUGAR_COLLISION, PAC_MAN_GHOST_COLLISION -> transitionMode(event);
-            default -> throw new IllegalArgumentException();
+            case PAC_MAN_SUPER_SUGAR_COLLISION:
+                transitionMode(event);
+                break;
+            case PAC_MAN_GHOST_COLLISION:
+                final Ghost collidedGhost = ((PacMan2GhostCollisionEvent) event).getGhost();
+                if (this == collidedGhost) {
+                    transitionMode(event);
+                }
+                break;
+            default:
+                throw new IllegalArgumentException("event of type : " + event.getType() + "is not supported by the Ghost Blinky");
         }
     }
 }

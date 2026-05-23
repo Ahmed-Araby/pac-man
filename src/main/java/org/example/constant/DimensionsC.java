@@ -32,14 +32,12 @@ public class DimensionsC {
     public static double PAC_MAN_DOWN_OPEN_MOUSE_START_ANGLE_IN_DEGREES = 315;
 
     // ghosts
-    public static double GHOST_WIDTH_PIXELS = MAZE_CELL_SIZE_PIXELS; // Pac-Man should fill a complete cell.
-    public static double GHOST_HEIGHT_PIXELS = MAZE_CELL_SIZE_PIXELS; // Pac-Man should fill a complete cell.
-
-    // blinky
-    public static double BLINKY_STRIDE_PIXELS = MAZE_CELL_SIZE_PIXELS;
-    public static double BLINKY_COMPLETE_LEG_MOVEMENT_DISTANCE_PIXELS = BLINKY_STRIDE_PIXELS;
-    public static double BLINKY_FIRST_LEG_MOVEMENT_DISTANCE_PIXELS = 0.5 * BLINKY_COMPLETE_LEG_MOVEMENT_DISTANCE_PIXELS;
-    public static double BLINKY_SECOND_LEG_MOVEMENT_DISTANCE_PIXELS = 0.5 * BLINKY_COMPLETE_LEG_MOVEMENT_DISTANCE_PIXELS;
+    public static double GHOST_WIDTH_PIXELS = MAZE_CELL_SIZE_PIXELS; // ghost should fill a complete cell.
+    public static double GHOST_HEIGHT_PIXELS = MAZE_CELL_SIZE_PIXELS; // ghost should fill a complete cell.
+    public static double GHOST_STRIDE_PIXELS = MAZE_CELL_SIZE_PIXELS;
+    public static double GHOST_COMPLETE_LEG_MOVEMENT_DISTANCE_PIXELS = GHOST_STRIDE_PIXELS;
+    public static double GHOST_FIRST_LEG_MOVEMENT_DISTANCE_PIXELS = 0.5 * GHOST_COMPLETE_LEG_MOVEMENT_DISTANCE_PIXELS;
+    public static double GHOST_SECOND_LEG_MOVEMENT_DISTANCE_PIXELS = 0.5 * GHOST_COMPLETE_LEG_MOVEMENT_DISTANCE_PIXELS;
 
     // sugar
     public static double SUGAR_CELL_SIZE_PIXELS = 0.15 * MAZE_CELL_SIZE_PIXELS;

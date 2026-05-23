@@ -22,6 +22,7 @@ import org.example.sprite.Maze;
 import org.example.sprite.PacMan;
 import org.example.sprite.Sugar;
 import org.example.sprite.ghost.Blinky;
+import org.example.sprite.ghost.Inky;
 import org.example.util.debug.DebugUtil;
 
 
@@ -36,6 +37,7 @@ public class GamePlayGameScene implements GameScene {
 
     // ghosts
     private Blinky blinky;
+    private Inky inky;
 
     // javaFX
     final Pane pane;
@@ -92,12 +94,14 @@ public class GamePlayGameScene implements GameScene {
 
     private void createGhostsSprites() {
         blinky = new Blinky(gameState);
+        inky = new Inky(gameState);
     }
 
     private void setGameState() {
         gameState.setPacMan(pacMan);
         gameState.setGhostHouseS(ghostHouseS);
         gameState.addGhost(blinky);
+        gameState.addGhost(inky);
     }
 
     private void registerEventSubscribers() {
@@ -112,8 +116,10 @@ public class GamePlayGameScene implements GameScene {
         eventManager.subscribe(EventType.PAC_MAN_SUPER_SUGAR_COLLISION, sugar);
 
         eventManager.subscribe(EventType.PAC_MAN_SUPER_SUGAR_COLLISION, blinky);
+        eventManager.subscribe(EventType.PAC_MAN_SUPER_SUGAR_COLLISION, inky);
 
         eventManager.subscribe(EventType.PAC_MAN_GHOST_COLLISION, blinky);
+        eventManager.subscribe(EventType.PAC_MAN_GHOST_COLLISION, inky);
     }
 
     private void registerSubscribersForSyncEvents() {
@@ -133,6 +139,7 @@ public class GamePlayGameScene implements GameScene {
 
     private void initGhostSprites() {
         blinky.init();
+        inky.init();
     }
 
     @Override
@@ -157,11 +164,13 @@ public class GamePlayGameScene implements GameScene {
 
         pacMan.render(canvas);
         blinky.render(canvas);
+        inky.render(canvas);
     }
 
     @Override
     public void update() {
         blinky.move(null);
+        inky.move(null);
         collisionSystem.detect();
     }
 }

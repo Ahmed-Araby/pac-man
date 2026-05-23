@@ -28,7 +28,7 @@ public class Frightened extends TemporalGhostMode {
         super(ghost, activePeriodsSec);
 
         Image[] frames = loadSprites();
-        this.animator = new DistanceBasedAnimator(new double[]{DimensionsC.BLINKY_FIRST_LEG_MOVEMENT_DISTANCE_PIXELS, DimensionsC.BLINKY_SECOND_LEG_MOVEMENT_DISTANCE_PIXELS}, frames);
+        this.animator = new DistanceBasedAnimator(new double[]{DimensionsC.GHOST_FIRST_LEG_MOVEMENT_DISTANCE_PIXELS, DimensionsC.GHOST_SECOND_LEG_MOVEMENT_DISTANCE_PIXELS}, frames);
         this.random = new EnrichedThreadLocalRandom();
     }
 
@@ -64,7 +64,7 @@ public class Frightened extends TemporalGhostMode {
         ghost.setRow(nCord.getRow());
         ghost.setCol(nCord.getCol());
 
-        animator.stride(DimensionsC.BLINKY_STRIDE_PIXELS / Configs.FRAMES_PER_SEC_FOR_GHOST_BLINKY_STRIDE);
+        animator.stride(DimensionsC.GHOST_STRIDE_PIXELS / Configs.FRAMES_PER_SEC_FOR_GHOST_STRIDE);
     }
 
     @Override
