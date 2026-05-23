@@ -6,6 +6,7 @@ import org.example.entity.CanvasCoordinate;
 import org.example.event.Event;
 import org.example.event.EventType;
 import org.example.ghostmode.*;
+import org.example.model.GameState;
 import org.example.sprite.MovingSprite;
 
 public abstract class Ghost extends MovingSprite {
@@ -18,8 +19,8 @@ public abstract class Ghost extends MovingSprite {
     protected TemporalGhostMode previousMode;
 
 
-    public Ghost(SpriteE type, double col, double row, DirectionsE dir) {
-        super(type, col, row, dir);
+    public Ghost(GameState gameState, SpriteE type, double col, double row, DirectionsE dir) {
+        super(gameState, type, col, row, dir);
     }
 
     public abstract CanvasCoordinate getPacManCanvasCord();

@@ -16,6 +16,7 @@ import org.example.event.movement.PacManMovementAttemptApprovedEvent;
 import org.example.event.movement.PacManMovementAttemptDeniedEvent;
 import org.example.event.movement.PacManMovementRequestEvent;
 import org.example.maze.Playground;
+import org.example.model.GameState;
 import org.example.util.pacman.PacManGraphicsUtil;
 import org.example.util.pacman.PixelStrideTracker;
 import org.example.util.pacman.TurnBuffer;
@@ -29,8 +30,8 @@ public class PacMan extends MovingSprite implements Subscriber {
     private final TurnBuffer turnBuffer;
     private final PixelStrideTracker closedMousePixelStrideTracker;
 
-    public PacMan() {
-        super(SpriteE.PAC_MAN, 0, 0, DirectionsE.STILL);
+    public PacMan(GameState gameState) {
+        super(gameState, SpriteE.PAC_MAN, 0, 0, DirectionsE.STILL);
 
         final CanvasCoordinate emptyCellPos = Playground.getEmptyMazePosition();
         setCol(emptyCellPos.getCol());

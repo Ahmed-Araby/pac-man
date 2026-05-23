@@ -17,14 +17,13 @@ public class Blinky extends Ghost implements Subscriber {
     // ghost modes
 
 
-    private final GameState gameState;
     @Override
     public CanvasCoordinate getPacManCanvasCord() {
         return gameState.getPacMan().getCurrCanvasCord();
     }
 
     public Blinky(GameState gameState) {
-        super(SpriteE.GHOST, 0, 0, DirectionsE.STILL);
+        super(gameState, SpriteE.GHOST, 0, 0, DirectionsE.STILL);
 
         // ghost modes
         this.chaser = new BlinkyChaser(GhostModeActivePeriodsConf.LEVEL_1_CHASE_ACTIVE_PERIODS);
@@ -34,8 +33,6 @@ public class Blinky extends Ghost implements Subscriber {
 
         scattered.enter();
         this.activeMode = scattered;
-
-        this.gameState = gameState;
     }
 
     @Override

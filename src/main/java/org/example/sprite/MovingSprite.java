@@ -10,6 +10,7 @@ import org.example.entity.CanvasCoordinate;
 import org.example.entity.CanvasRect;
 import org.example.event.Event;
 import org.example.model.CollisionReport;
+import org.example.model.GameState;
 import org.example.util.SpriteUtil;
 
 import java.util.List;
@@ -21,8 +22,8 @@ public abstract class MovingSprite extends Sprite {
 
     protected DirectionsE dir;
 
-    public MovingSprite(SpriteE type, double col, double row, DirectionsE dir) {
-        super(type, col, row);
+    public MovingSprite(GameState gameState, SpriteE type, double col, double row, DirectionsE dir) {
+        super(gameState, type, col, row);
         this.dir = dir;
     }
 
