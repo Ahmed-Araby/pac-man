@@ -153,6 +153,15 @@ if the turn is still not possible and Pac-Man is now in the next Cell (in respec
 | Frightened    | ghosts become food for PacMan, they turn into blue and start to move randomely | PacMan eating power pallet / super suger | turn around | Pick eligable direction at random | time up | - |
 | Eaten    | -    | - | - | - | - | - |
 
+### $\color{cyan}{\textsf{Inky }}$
+| Mode    | Description | Entering Condition  | Initial Behaviour | Target Tile | Movement Strategy | Exit Condition | Special Rules |
+| -------- | ------- |  ------- |  ------- |  ------- |  ------- |  ------- |  ------- | 
+| Scatter  | -    | timer based | turn around when entering this mode after leaving chaser mode | calculate the tile 2 steps ahead of Pac Man, call it Intermediate Tile. then calculate a vector from Blinky position to the Intermediate Tile. then double this vector. the tile at the end of this doubled vector is the target tile for Inky | pick the next adjacent tile that is closest to the target tile | timer up | - |
+| Chaser   | -    | timer based | turn around | - | pick the next adjacent tile that is closes to the target tile | timer up | the 4th transition from scattered to chaser is the last one between these 2 modes |
+| Frightened    | ghosts become food for PacMan, they turn into blue and start to move randomely | PacMan eating power pallet / super suger | turn around | - | Pick eligable direction at random | timer up | - | 
+| Eaten    | -    | - | - | - | - | - |
+
+
 ## Backlog
 - [X] generate random maze using recursive division maze generation algorithm
 - [X] render pac man and mouse open/close animations using simple circle/arc math.
