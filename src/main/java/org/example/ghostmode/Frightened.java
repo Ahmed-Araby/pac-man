@@ -1,4 +1,4 @@
-package org.example.ghostmode.blinky;
+package org.example.ghostmode;
 
 import javafx.scene.canvas.Canvas;
 import javafx.scene.image.Image;
@@ -11,7 +11,6 @@ import org.example.constant.SpriteFileNameC;
 import org.example.entity.CanvasCoordinate;
 import org.example.entity.Vector;
 import org.example.sprite.ghost.Ghost;
-import org.example.ghostmode.GhostMode;
 import org.example.util.EnrichedThreadLocalRandom;
 import org.example.util.ghost.GhostUtil;
 import org.example.util.VectorUtil;
@@ -20,36 +19,32 @@ import org.example.util.ghost.FrightenedGhostUtil;
 import java.util.List;
 
 
-public class BlinkyFrightened implements GhostMode {
+public class Frightened extends TemporalGhostMode {
 
     private final Animator animator;
     private final EnrichedThreadLocalRandom random;
-    private final float activePeriodSeconds;
 
-    public BlinkyFrightened() {
+    public Frightened(Ghost ghost, int[] activePeriodsSec) {
+        super(ghost, activePeriodsSec);
+
         Image[] frames = loadSprites();
         this.animator = new DistanceBasedAnimator(new double[]{DimensionsC.BLINKY_FIRST_LEG_MOVEMENT_DISTANCE_PIXELS, DimensionsC.BLINKY_SECOND_LEG_MOVEMENT_DISTANCE_PIXELS}, frames);
         this.random = new EnrichedThreadLocalRandom();
-        this.activePeriodSeconds = 9;
     }
 
     @Override
-    public void enter(Ghost ghost) {
+    public void enter() {
+        super.enter();
         turnAround(ghost);
     }
 
     @Override
-    public float getActivePeriodSeconds() {
-        return activePeriodSeconds;
-    }
-
-    @Override
-    public void render(Canvas canvas, Ghost ghost) {
+    public void render(Canvas canvas) {
         canvas.getGraphicsContext2D().drawImage(animator.getFrame(), ghost.getCol(), ghost.getRow());
     }
 
     @Override
-    public void move(Ghost ghost) {
+    public void move() {
         final CanvasCoordinate sCord = new CanvasCoordinate(ghost.getRow(), ghost.getCol());
         final Vector currDir = VectorUtil.toVector(ghost.getDir());
 
@@ -72,6 +67,10 @@ public class BlinkyFrightened implements GhostMode {
         animator.stride(DimensionsC.BLINKY_STRIDE_PIXELS / Configs.FRAMES_PER_SEC_FOR_GHOST_BLINKY_STRIDE);
     }
 
+    @Override
+    public void exit() {
+        // explicitly do nothing
+    }
 
     private Image[] loadSprites() {
         final String BLINKY_FRIGHTENED_FRAME_1_FILE_RESOURCE_ABSOLUTE_PATH = getClass().getResource(SpriteFileNameC.BLINKY_FRIGHTENED_FRAME_1_FILE_RESOURCE_RELATIVE_PATH).toString();

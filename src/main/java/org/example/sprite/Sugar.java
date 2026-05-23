@@ -13,6 +13,7 @@ import org.example.event.Event;
 import org.example.event.collision.PacMan2SugarCollisionEvent;
 import org.example.event.Subscriber;
 import org.example.maze.Playground;
+import org.example.model.GameState;
 import org.example.util.canvas.CanvasUtil;
 import org.example.util.EnrichedThreadLocalRandom;
 import org.example.util.MazeUtil;
@@ -22,8 +23,8 @@ import org.example.util.SugarUtil;
 public class Sugar extends Sprite implements Subscriber {
     private final EnrichedThreadLocalRandom enrichedRandom = new EnrichedThreadLocalRandom();
 
-    public Sugar() {
-        super(SpriteE.SUGAR, -1, -1);
+    public Sugar(GameState gameState) {
+        super(gameState, SpriteE.SUGAR, -1, -1);
 
         for(int row = 0; row < Playground.height(); row++) {
             for (int col = 0; col < Playground.width(); col++) {

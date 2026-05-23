@@ -8,6 +8,7 @@ import org.example.constant.*;
 import org.example.entity.CanvasCoordinate;
 import org.example.entity.MazeCell;
 import org.example.maze.Playground;
+import org.example.model.GameState;
 import org.example.util.canvas.CanvasUtil;
 
 @Getter
@@ -17,8 +18,8 @@ public class GhostHouseS extends Sprite {
     private final double eRow;
 
 
-    public GhostHouseS() {
-        super(SpriteE.GHOST_HOUSE, 0, 0);
+    public GhostHouseS(GameState gameState) {
+        super(gameState, SpriteE.GHOST_HOUSE, 0, 0);
 
         final int mazeWidth = (int) (DimensionsC.CANVAS_WIDTH_PIXELS / DimensionsC.MAZE_CELL_SIZE_PIXELS);
         final int mazeHeight = (int) (DimensionsC.CANVAS_HEIGHT_PIXELS / DimensionsC.MAZE_CELL_SIZE_PIXELS);

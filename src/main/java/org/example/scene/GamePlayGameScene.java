@@ -12,7 +12,6 @@ import org.example.constant.DimensionsC;
 import org.example.event.manager.EventManager;
 import org.example.event.EventType;
 import org.example.event.manager.SyncEventManager;
-import org.example.ghostmode.navigation.ShortestPathNavigator;
 import org.example.input.JavaFXInputHandler;
 import org.example.input.JavaFXUserInputHandler;
 import org.example.maze.Playground;
@@ -21,21 +20,19 @@ import org.example.sound.SoundPlayer;
 import org.example.sprite.GhostHouseS;
 import org.example.sprite.Maze;
 import org.example.sprite.PacMan;
-import org.example.entity.CanvasCoordinate;
 import org.example.sprite.Sugar;
 import org.example.sprite.ghost.Blinky;
 import org.example.util.debug.DebugUtil;
 
-import java.util.List;
 
 public class GamePlayGameScene implements GameScene {
     private final GameState gameState = new GameState();
 
     // sprites
-    final PacMan pacMan;
-    final Maze maze;
-    final Sugar sugar;
-    final GhostHouseS ghostHouseS;
+    GhostHouseS ghostHouseS;
+    Maze maze;
+    Sugar sugar;
+    PacMan pacMan;
 
     // ghosts
     private Blinky blinky;
@@ -64,19 +61,18 @@ public class GamePlayGameScene implements GameScene {
         syncEventManager = new SyncEventManager();
         soundPlayer = new SoundPlayer();
         javaFXInputHandler = new JavaFXUserInputHandler(syncEventManager);
-
-        // sprites
-        maze = new Maze();
-        pacMan = new PacMan(eventManager, syncEventManager);
-        sugar = new Sugar();
-        ghostHouseS = new GhostHouseS();
-
-        // ghosts
-        initGhosts();
-
-        // collision detection
         collisionSystem = new CollisionSystem(gameState, eventManager);
 
+        createNonGhostSprites();
+        createGhostsSprites();
+
+        setGameState();
+
+        registerEventSubscribers();
+        registerSubscribersForSyncEvents();
+
+        initNonGhostSprites();
+        initGhostSprites();
 
         // javaFX setup
         canvas = new Canvas(DimensionsC.CANVAS_WIDTH_PIXELS, DimensionsC.CANVAS_HEIGHT_PIXELS);
@@ -85,16 +81,23 @@ public class GamePlayGameScene implements GameScene {
         scene.setOnKeyPressed((event) -> {
             javaFXInputHandler.handleKeyPressedEvent(event);
         });
+    }
 
-        // game engine
-        setGameState();
-        registerEventSubscribers();
-        registerSubscribersForSyncEvents();
+    private void createNonGhostSprites() {
+        ghostHouseS = new GhostHouseS(gameState);
+        maze = new Maze(gameState);
+        pacMan = new PacMan(gameState);
+        sugar = new Sugar(gameState);
+    }
+
+    private void createGhostsSprites() {
+        blinky = new Blinky(gameState);
     }
 
     private void setGameState() {
         gameState.setPacMan(pacMan);
         gameState.setGhostHouseS(ghostHouseS);
+        gameState.addGhost(blinky);
     }
 
     private void registerEventSubscribers() {
@@ -121,9 +124,15 @@ public class GamePlayGameScene implements GameScene {
         syncEventManager.subscribe(EventType.PAC_MAN_MOVEMENT_REQUEST, pacMan);
     }
 
-    public void initGhosts() {
-        blinky = new Blinky(gameState);
-        gameState.addGhost(blinky);
+    private void initNonGhostSprites() {
+        ghostHouseS.init();
+        maze.init();
+        pacMan.init();
+        sugar.init();
+    }
+
+    private void initGhostSprites() {
+        blinky.init();
     }
 
     @Override

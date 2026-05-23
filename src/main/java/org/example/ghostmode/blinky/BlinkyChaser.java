@@ -9,18 +9,20 @@ import org.example.constant.DimensionsC;
 import org.example.constant.DirectionsE;
 import org.example.constant.SpriteFileNameC;
 import org.example.entity.CanvasCoordinate;
+import org.example.ghostmode.Chaser;
 import org.example.sprite.ghost.Ghost;
-import org.example.ghostmode.GhostMode;
 import org.example.ghostmode.navigation.GhostNavigator;
 import org.example.ghostmode.navigation.ShortestPathNavigator;
 import org.example.util.ghost.GhostUtil;
 
-public class BlinkyChaser implements GhostMode {
+public class BlinkyChaser extends Chaser {
 
     private final Animator animator;
     private final GhostNavigator navigator;
 
-    public BlinkyChaser() {
+    public BlinkyChaser(Ghost ghost, int[] activePeriodsSec) {
+        super(ghost, activePeriodsSec);
+
         final Image[] frames = loadSprites();
         this.animator = new DistanceBasedAnimator(
                 new double[]{DimensionsC.BLINKY_FIRST_LEG_MOVEMENT_DISTANCE_PIXELS, DimensionsC.BLINKY_SECOND_LEG_MOVEMENT_DISTANCE_PIXELS}, frames);
@@ -28,20 +30,12 @@ public class BlinkyChaser implements GhostMode {
     }
 
     @Override
-    public void enter(Ghost ghost) {}
-
-    @Override
-    public float getActivePeriodSeconds() {
-        throw new IllegalStateException("Not Implemented");
-    }
-
-    @Override
-    public void render(Canvas canvas, Ghost ghost) {
+    public void render(Canvas canvas) {
         canvas.getGraphicsContext2D().drawImage(animator.getFrame(), ghost.getCol(), ghost.getRow());
     }
 
     @Override
-    public void move(Ghost ghost) {
+    public void move() {
         final CanvasCoordinate ghostCurrCord = new CanvasCoordinate(ghost.getRow(), ghost.getCol());
         final CanvasCoordinate pacmanCurrCord = ghost.getPacManCanvasCord();
         final DirectionsE directionsE = navigator.nextMoveDirection(ghostCurrCord, pacmanCurrCord);

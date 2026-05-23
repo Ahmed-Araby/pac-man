@@ -16,6 +16,7 @@ import org.example.event.movement.PacManMovementAttemptApprovedEvent;
 import org.example.event.movement.PacManMovementAttemptDeniedEvent;
 import org.example.event.movement.PacManMovementRequestEvent;
 import org.example.maze.Playground;
+import org.example.model.GameState;
 import org.example.util.pacman.PacManGraphicsUtil;
 import org.example.util.pacman.PixelStrideTracker;
 import org.example.util.pacman.TurnBuffer;
@@ -29,13 +30,8 @@ public class PacMan extends MovingSprite implements Subscriber {
     private final TurnBuffer turnBuffer;
     private final PixelStrideTracker closedMousePixelStrideTracker;
 
-    // [TODO] remove this eventManager because it is not used
-    private final EventManager eventManager;
-    // this synchronous event manager is concerned with pac man movement and collision detection with walls and turn buffer.
-    private final SyncEventManager syncEventManager;
-
-    public PacMan(EventManager eventManager, SyncEventManager syncEventManager) {
-        super(SpriteE.PAC_MAN, 0, 0, DirectionsE.STILL);
+    public PacMan(GameState gameState) {
+        super(gameState, SpriteE.PAC_MAN, 0, 0, DirectionsE.STILL);
 
         final CanvasCoordinate emptyCellPos = Playground.getEmptyMazePosition();
         setCol(emptyCellPos.getCol());
@@ -45,9 +41,6 @@ public class PacMan extends MovingSprite implements Subscriber {
         this.closedMousePixelStrideTracker = new PixelStrideTracker(DimensionsC.PAC_MAN_CLOSED_MOUSE_DISTANCE_PIXELS,
                 DimensionsC.PAC_MAN_CLOSED_MOUSE_DISTANCE_PIXELS + DimensionsC.PAC_MAN_OPEN_MOUSE_DISTANCE_PIXELS // just the same as DimensionsC.PAC_MAN_COMPLETE_MOUSE_MOVEMENT_DISTANCE_PIXELS
         );
-
-        this.eventManager = eventManager;
-        this.syncEventManager = syncEventManager;
     }
 
     @Override

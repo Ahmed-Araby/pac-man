@@ -1,16 +1,20 @@
 package org.example.ghostmode;
 
 import javafx.scene.canvas.Canvas;
+import lombok.AllArgsConstructor;
 import org.example.sprite.ghost.Ghost;
 
-public interface GhostMode {
+@AllArgsConstructor
+public abstract class GhostMode {
 
-    void enter(Ghost ghost);
-    float getActivePeriodSeconds();
-    void render(Canvas canvas, Ghost ghost);
-    void move(Ghost ghost);
+    protected Ghost ghost;
 
-    default boolean end(Ghost ghost) {
-        throw new IllegalStateException("end method in not implemented for mode : " + this.getClass().getSimpleName());
+    public abstract void render(Canvas canvas);
+    public abstract  void move();
+
+    public void init() {
+        System.out.println("GhostMode.init() method is not implemented for sprite " + this.getClass().getSimpleName());
     }
+    public abstract void enter();
+    public abstract boolean ended();
 }

@@ -9,14 +9,15 @@ import org.example.constant.DimensionsC;
 import org.example.constant.SpriteE;
 import org.example.entity.CanvasCoordinate;
 import org.example.maze.Playground;
+import org.example.model.GameState;
 import org.example.util.MazeUtil;
 import org.example.util.debug.DebugUtil;
 
 public class Maze extends Sprite {
 
 
-    public Maze() {
-        super(SpriteE.MAZE, 0, 0);
+    public Maze(GameState gameState) {
+        super(gameState, SpriteE.MAZE, 0, 0);
     }
 
     @Override

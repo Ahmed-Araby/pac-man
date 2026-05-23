@@ -19,7 +19,7 @@ import org.example.util.ghost.GhostUtil;
 import java.util.AbstractMap;
 import java.util.Map;
 
-public class GhostEaten implements GhostMode {
+public class Eaten extends GhostMode {
 
     private final GhostNavigator navigator;
     private final Animator animator;
@@ -27,7 +27,8 @@ public class GhostEaten implements GhostMode {
 
     private CanvasCoordinate ghostHouseEmptyLoc;
 
-    public GhostEaten(GameState gameState) {
+    public Eaten(Ghost ghost, GameState gameState) {
+        super(ghost);
         this.gameState = gameState;
         this.navigator = new ShortestPathNavigator();
 
@@ -39,30 +40,30 @@ public class GhostEaten implements GhostMode {
     }
 
     @Override
-    public void enter(Ghost ghost) {
+    public void init() {
         final double ghostHERow = gameState.getGhostHouseS().getERow();;
         final double ghostHSCol = gameState.getGhostHouseS().getCol();
         ghostHouseEmptyLoc = new CanvasCoordinate(ghostHERow - DimensionsC.MAZE_CELL_SIZE_PIXELS, ghostHSCol + DimensionsC.MAZE_CELL_SIZE_PIXELS);
-        // [TODO] should prepare for rendering the score that pacman gained by eating this ghost
     }
 
     @Override
-    public float getActivePeriodSeconds() {
-        throw new IllegalStateException("Ghost Eaten mode doesn't depend on time");
+    public void enter() {
+        System.out.println("Eaten.enter() method need to do nothing");
     }
 
+
     @Override
-    public boolean end(Ghost ghost) {
+    public boolean ended() {
         return ghost.getTopLeftCorner().equals(ghostHouseEmptyLoc);
     }
 
     @Override
-    public void render(Canvas canvas, Ghost ghost) {
+    public void render(Canvas canvas) {
         canvas.getGraphicsContext2D().drawImage(animator.getFrame(), ghost.getCol(), ghost.getRow());
     }
 
     @Override
-    public void move(Ghost ghost) {
+    public void move() {
         final CanvasCoordinate currCord = new CanvasCoordinate(ghost.getRow(), ghost.getCol());
         final DirectionsE newDir = this.navigator.nextMoveDirection(currCord, ghostHouseEmptyLoc);
         final CanvasCoordinate newCord = GhostUtil.move(currCord, newDir);
