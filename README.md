@@ -6,7 +6,8 @@ pac man game using javaFX.
   - generate random mazes using maze generation algorithms.
 
 # Table Of Contents
-- [Sprites Class Architecture](#sprites-class-architecture)
+- [Sprites Class Structure](#sprites-class-structure)
+- [Ghost Mode Class Structure](#ghost-mode-class-structure)
 - [Drawing Pac Man with open and closed Mouth using simple circle and Arc Math.](#drawing-pac-man-with-open-and-closed-mouth-using-simple-circle-and-arc-math)
 - [Pac Man open and close mouth animation](#pac-man-open-and-close-mouth-animation)
 - [Generating the Maze Programmatically](#generating-the-maze-programmatically)
@@ -22,9 +23,14 @@ pac man game using javaFX.
 - [Resources](#resources)
 
 <br><br>
-
-## Sprites Class Architecture
+## Sprites Class Structure
 ![Sprites Class Architecture](https://github.com/Ahmed-Araby/pac-man/blob/collision-detection-refactoring/documentation/imgs/sprite-class-structure.png)
+
+<br><br>
+## Ghost Mode Class Structure
+![Ghost Mode Class Structure](https://github.com/Ahmed-Araby/pac-man/blob/main/documentation/imgs/ghost-mode-class-structure.png)
+
+<br><br>
 ## Drawing Pac Man with open and closed Mouth using simple circle and Arc Math.
 Pac-Man with open mouth is just an Arc on a Circle. an Arc on a Circle is defined by the circle diameter, the start and end angles and drawing direction from the start angle to the end angle.
 
@@ -60,7 +66,7 @@ Pac-Man with open mouth is just an Arc on a Circle. an Arc on a Circle is define
     * start angle =  0 degree
     * arc extent = 360
     * result: ![pac-man_with_closed-mouth](https://github.com/Ahmed-Araby/pac-man/blob/main/documentation/imgs/pac-man/pac-man_with_closed-mouth.png)
- 
+
 <br><br>
 ## Pac Man open and close mouth animation.
 ![pac-man_open-close-mouth-animation](https://github.com/Ahmed-Araby/pac-man/blob/main/documentation/imgs/pac-man/pac-man_open-close-mouth-animation.gif)
