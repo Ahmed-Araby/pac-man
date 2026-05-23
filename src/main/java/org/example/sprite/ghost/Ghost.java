@@ -6,19 +6,16 @@ import org.example.entity.CanvasCoordinate;
 import org.example.event.Event;
 import org.example.event.EventType;
 import org.example.ghostmode.*;
-import org.example.ghostmode.timer.RealTimer;
 import org.example.sprite.MovingSprite;
 
 public abstract class Ghost extends MovingSprite {
     protected TemporalGhostMode scattered;
     protected TemporalGhostMode chaser;
-    protected GhostMode frightened;
+    protected TemporalGhostMode frightened;
     protected GhostMode eaten;
 
     protected GhostMode activeMode;
     protected TemporalGhostMode previousMode;
-
-    protected RealTimer realTimer;
 
 
     public Ghost(SpriteE type, double col, double row, DirectionsE dir) {
@@ -44,12 +41,10 @@ public abstract class Ghost extends MovingSprite {
         if (event != null && EventType.PAC_MAN_SUPER_SUGAR_COLLISION.equals(event.getType())) {
             chaser.pause();
             frightened.enter(this);
+            frightened.enter();
 
             previousMode = chaser;
             activeMode = frightened;
-
-            final float activePeriodSec = activeMode.getActivePeriodSeconds();
-            realTimer.start(activePeriodSec);
         } else if (chaser.ended()) {
             chaser.exit();
             scattered.enter();
@@ -61,12 +56,10 @@ public abstract class Ghost extends MovingSprite {
         if (event != null && EventType.PAC_MAN_SUPER_SUGAR_COLLISION.equals(event.getType())) {
             scattered.pause();
             frightened.enter(this);
+            frightened.enter();
 
             previousMode = scattered;
             activeMode = frightened;
-
-            final float activePeriodSec = activeMode.getActivePeriodSeconds();
-            realTimer.start(activePeriodSec);
         } else if (scattered.ended()) {
             scattered.exit();
             chaser.enter();
@@ -79,7 +72,8 @@ public abstract class Ghost extends MovingSprite {
         if (event != null && EventType.PAC_MAN_GHOST_COLLISION.equals(event.getType())) {
             eaten.enter(this);
             activeMode = eaten;
-        } else if (realTimer.up()) {
+        } else if (frightened.ended()) {
+            frightened.exit();
             previousMode.enter();
             activeMode = previousMode;
             previousMode = null;
@@ -90,6 +84,8 @@ public abstract class Ghost extends MovingSprite {
         if (eaten.end(this)) {
             activeMode = previousMode;
             activeMode.enter(this);
+
+            previousMode = null;
         }
     }
 }

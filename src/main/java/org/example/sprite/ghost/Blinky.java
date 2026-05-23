@@ -10,7 +10,6 @@ import org.example.ghostmode.*;
 import org.example.ghostmode.blinky.BlinkyChaser;
 import org.example.ghostmode.Frightened;
 import org.example.ghostmode.blinky.BlinkyScattered;
-import org.example.ghostmode.timer.RealTimer;
 import org.example.model.GameState;
 
 public class Blinky extends Ghost implements Subscriber {
@@ -27,12 +26,10 @@ public class Blinky extends Ghost implements Subscriber {
     public Blinky(GameState gameState) {
         super(SpriteE.GHOST, 0, 0, DirectionsE.STILL);
 
-        this.realTimer = new RealTimer();
-
         // ghost modes
         this.chaser = new BlinkyChaser(GhostModeActivePeriodsConf.LEVEL_1_CHASE_ACTIVE_PERIODS);
         this.scattered = new BlinkyScattered(GhostModeActivePeriodsConf.LEVEL_1_SCATTER_ACTIVE_PERIODS);
-        this.frightened = new Frightened();
+        this.frightened = new Frightened(GhostModeActivePeriodsConf.ALL_LEVELS_FRIGHTENED_MODE_ACTIVE_PERIODS);
         this.eaten = new Eaten(gameState);
 
         scattered.enter();

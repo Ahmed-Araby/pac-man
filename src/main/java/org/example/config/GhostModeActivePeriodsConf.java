@@ -1,6 +1,8 @@
 package org.example.config;
 
 public class GhostModeActivePeriodsConf {
+    // all the giving periods are in seconds
+
     // scatter mode active periods
     public static final int[] LEVEL_1_SCATTER_ACTIVE_PERIODS = {
             7, 7, 5, 5
@@ -22,4 +24,7 @@ public class GhostModeActivePeriodsConf {
     public static final int[] LEVEL_5_UP_CHASE_ACTIVE_PERIODS = {
             20, 20, 780, -1
     };
+
+    // frightened mode active periods
+    public static final int[] ALL_LEVELS_FRIGHTENED_MODE_ACTIVE_PERIODS = {9};
 }

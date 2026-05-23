@@ -5,8 +5,6 @@ import org.example.sprite.ghost.Ghost;
 
 public interface GhostMode {
 
-
-    float getActivePeriodSeconds();
     void render(Canvas canvas, Ghost ghost);
     void move(Ghost ghost);
 

@@ -33,11 +33,6 @@ public class BlinkyScattered extends Scattered {
     }
 
     @Override
-    public float getActivePeriodSeconds() {
-        throw new IllegalStateException("Not Implemented");
-    }
-
-    @Override
     public void render(Canvas canvas, Ghost ghost) {
         canvas.getGraphicsContext2D().drawImage(animator.getFrame(), ghost.getCol(), ghost.getRow());
     }

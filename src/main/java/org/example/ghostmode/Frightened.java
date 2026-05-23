@@ -19,27 +19,22 @@ import org.example.util.ghost.FrightenedGhostUtil;
 import java.util.List;
 
 
-public class Frightened implements GhostMode {
+public class Frightened extends TemporalGhostMode {
 
     private final Animator animator;
     private final EnrichedThreadLocalRandom random;
-    private final float activePeriodSeconds;
 
-    public Frightened() {
+    public Frightened(int[] activePeriodsSec) {
+        super(activePeriodsSec);
+
         Image[] frames = loadSprites();
         this.animator = new DistanceBasedAnimator(new double[]{DimensionsC.BLINKY_FIRST_LEG_MOVEMENT_DISTANCE_PIXELS, DimensionsC.BLINKY_SECOND_LEG_MOVEMENT_DISTANCE_PIXELS}, frames);
         this.random = new EnrichedThreadLocalRandom();
-        this.activePeriodSeconds = 9;
     }
 
     @Override
     public void enter(Ghost ghost) {
         turnAround(ghost);
-    }
-
-    @Override
-    public float getActivePeriodSeconds() {
-        return activePeriodSeconds;
     }
 
     @Override
@@ -71,6 +66,10 @@ public class Frightened implements GhostMode {
         animator.stride(DimensionsC.BLINKY_STRIDE_PIXELS / Configs.FRAMES_PER_SEC_FOR_GHOST_BLINKY_STRIDE);
     }
 
+    @Override
+    public void exit() {
+        // explicitly do nothing
+    }
 
     private Image[] loadSprites() {
         final String BLINKY_FRIGHTENED_FRAME_1_FILE_RESOURCE_ABSOLUTE_PATH = getClass().getResource(SpriteFileNameC.BLINKY_FRIGHTENED_FRAME_1_FILE_RESOURCE_RELATIVE_PATH).toString();

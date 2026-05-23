@@ -47,11 +47,6 @@ public class Eaten implements GhostMode {
     }
 
     @Override
-    public float getActivePeriodSeconds() {
-        throw new IllegalStateException("Ghost Eaten mode doesn't depend on time");
-    }
-
-    @Override
     public boolean end(Ghost ghost) {
         return ghost.getTopLeftCorner().equals(ghostHouseEmptyLoc);
     }
