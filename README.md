@@ -146,12 +146,12 @@ if the turn is still not possible and Pac-Man is now in the next Cell (in respec
 
 ## Ghosts
 ### $\color{red}{\textsf{Blinky }}$
-| Mode    | Description | Entering Condition  | Initial Behaviour | Movement Strategy | Exit Condition |
-| -------- | ------- |  ------- |  ------- |  ------- |  ------- |
-| Scatter  | -    | - | - | - | - |
-| Chaser   | -    | - | - | - | - |
-| Frightened    | ghosts become food for PacMan, they turn into blue and start to move randomely | PacMan eating power pallet / super suger | turn around | Pick eligable direction at random | time up |
-| Eaten    | -    | - | - | - | - |
+| Mode    | Description | Entering Condition  | Initial Behaviour | Movement Strategy | Exit Condition | Special Rules |
+| -------- | ------- |  ------- |  ------- |  ------- |  ------- |  ------- | 
+| Scatter  | -    | - | - | - | turn around when entering this mode after leaving Chaser mode | switch to Chaser mode if a certain low number of dots(sugar) remain in the Playground |
+| Chaser   | -    | - | - | - | turn around | - |
+| Frightened    | ghosts become food for PacMan, they turn into blue and start to move randomely | PacMan eating power pallet / super suger | turn around | Pick eligable direction at random | time up | - |
+| Eaten    | -    | - | - | - | - | - |
 
 ## Backlog
 - [X] generate random maze using recursive division maze generation algorithm
