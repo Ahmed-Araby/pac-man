@@ -29,12 +29,7 @@ public class PacMan extends MovingSprite implements Subscriber {
     private final TurnBuffer turnBuffer;
     private final PixelStrideTracker closedMousePixelStrideTracker;
 
-    // [TODO] remove this eventManager because it is not used
-    private final EventManager eventManager;
-    // this synchronous event manager is concerned with pac man movement and collision detection with walls and turn buffer.
-    private final SyncEventManager syncEventManager;
-
-    public PacMan(EventManager eventManager, SyncEventManager syncEventManager) {
+    public PacMan() {
         super(SpriteE.PAC_MAN, 0, 0, DirectionsE.STILL);
 
         final CanvasCoordinate emptyCellPos = Playground.getEmptyMazePosition();
@@ -45,9 +40,6 @@ public class PacMan extends MovingSprite implements Subscriber {
         this.closedMousePixelStrideTracker = new PixelStrideTracker(DimensionsC.PAC_MAN_CLOSED_MOUSE_DISTANCE_PIXELS,
                 DimensionsC.PAC_MAN_CLOSED_MOUSE_DISTANCE_PIXELS + DimensionsC.PAC_MAN_OPEN_MOUSE_DISTANCE_PIXELS // just the same as DimensionsC.PAC_MAN_COMPLETE_MOUSE_MOVEMENT_DISTANCE_PIXELS
         );
-
-        this.eventManager = eventManager;
-        this.syncEventManager = syncEventManager;
     }
 
     @Override

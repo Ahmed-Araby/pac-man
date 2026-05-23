@@ -67,7 +67,7 @@ public class GamePlayGameScene implements GameScene {
 
         // sprites
         maze = new Maze();
-        pacMan = new PacMan(eventManager, syncEventManager);
+        pacMan = new PacMan();
         sugar = new Sugar();
         ghostHouseS = new GhostHouseS();
 
