@@ -24,8 +24,8 @@ public class Frightened extends TemporalGhostMode {
     private final Animator animator;
     private final EnrichedThreadLocalRandom random;
 
-    public Frightened(int[] activePeriodsSec) {
-        super(activePeriodsSec);
+    public Frightened(Ghost ghost, int[] activePeriodsSec) {
+        super(ghost, activePeriodsSec);
 
         Image[] frames = loadSprites();
         this.animator = new DistanceBasedAnimator(new double[]{DimensionsC.BLINKY_FIRST_LEG_MOVEMENT_DISTANCE_PIXELS, DimensionsC.BLINKY_SECOND_LEG_MOVEMENT_DISTANCE_PIXELS}, frames);
@@ -38,12 +38,12 @@ public class Frightened extends TemporalGhostMode {
     }
 
     @Override
-    public void render(Canvas canvas, Ghost ghost) {
+    public void render(Canvas canvas) {
         canvas.getGraphicsContext2D().drawImage(animator.getFrame(), ghost.getCol(), ghost.getRow());
     }
 
     @Override
-    public void move(Ghost ghost) {
+    public void move() {
         final CanvasCoordinate sCord = new CanvasCoordinate(ghost.getRow(), ghost.getCol());
         final Vector currDir = VectorUtil.toVector(ghost.getDir());
 

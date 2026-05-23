@@ -1,15 +1,18 @@
 package org.example.ghostmode;
 
+import org.example.sprite.ghost.Ghost;
+
 import java.time.Instant;
 
-public abstract class TemporalGhostMode implements GhostMode {
+public abstract class TemporalGhostMode extends GhostMode {
     private Instant activeAt;
     private long skew = 0;
     private final int[] activePeriodsSec;
     private int activePeriodIndex;
 
 
-    public TemporalGhostMode(int[] activePeriodsSec) {
+    public TemporalGhostMode(Ghost ghost, int[] activePeriodsSec) {
+        super(ghost);
         this.activePeriodsSec = activePeriodsSec;
     }
 

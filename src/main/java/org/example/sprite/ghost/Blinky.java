@@ -26,10 +26,10 @@ public class Blinky extends Ghost implements Subscriber {
         super(gameState, SpriteE.GHOST, 0, 0, DirectionsE.STILL);
 
         // ghost modes
-        this.chaser = new BlinkyChaser(GhostModeActivePeriodsConf.LEVEL_1_CHASE_ACTIVE_PERIODS);
-        this.scattered = new BlinkyScattered(GhostModeActivePeriodsConf.LEVEL_1_SCATTER_ACTIVE_PERIODS);
-        this.frightened = new Frightened(GhostModeActivePeriodsConf.ALL_LEVELS_FRIGHTENED_MODE_ACTIVE_PERIODS);
-        this.eaten = new Eaten(gameState);
+        this.chaser = new BlinkyChaser(this, GhostModeActivePeriodsConf.LEVEL_1_CHASE_ACTIVE_PERIODS);
+        this.scattered = new BlinkyScattered(this, GhostModeActivePeriodsConf.LEVEL_1_SCATTER_ACTIVE_PERIODS);
+        this.frightened = new Frightened(this, GhostModeActivePeriodsConf.ALL_LEVELS_FRIGHTENED_MODE_ACTIVE_PERIODS);
+        this.eaten = new Eaten(this, gameState);
 
         scattered.enter();
         this.activeMode = scattered;
@@ -38,13 +38,13 @@ public class Blinky extends Ghost implements Subscriber {
     @Override
     public void render(Canvas canvas) {
         System.out.println("blinky: row = " + row + " , col = " + col + " , Dir = " + dir);
-        activeMode.render(canvas, this);
+        activeMode.render(canvas);
     }
 
     @Override
     public void move(Event event) {
         transitionMode(event);
-        activeMode.move(this);
+        activeMode.move();
     }
 
     public void update(Event event) {

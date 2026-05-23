@@ -24,8 +24,8 @@ public class BlinkyScattered extends Scattered {
             DimensionsC.CANVAS_WIDTH_PIXELS - 1
     );
 
-    public BlinkyScattered(int[] activePeridosSec) {
-        super(activePeridosSec);
+    public BlinkyScattered(Ghost ghost, int[] activePeridosSec) {
+        super(ghost, activePeridosSec);
         final Image[] frames = loadSprites();
         this.animator = new DistanceBasedAnimator(
                 new double[]{DimensionsC.BLINKY_FIRST_LEG_MOVEMENT_DISTANCE_PIXELS, DimensionsC.BLINKY_SECOND_LEG_MOVEMENT_DISTANCE_PIXELS}, frames);
@@ -33,12 +33,12 @@ public class BlinkyScattered extends Scattered {
     }
 
     @Override
-    public void render(Canvas canvas, Ghost ghost) {
+    public void render(Canvas canvas) {
         canvas.getGraphicsContext2D().drawImage(animator.getFrame(), ghost.getCol(), ghost.getRow());
     }
 
     @Override
-    public void move(Ghost ghost) {
+    public void move() {
         final CanvasCoordinate ghostCurrCord = new CanvasCoordinate(ghost.getRow(), ghost.getCol());
         final DirectionsE directionsE = navigator.nextMoveDirection(ghostCurrCord, topRightCorner);
         final CanvasCoordinate ghostNewCord = GhostUtil.move(ghostCurrCord, directionsE);

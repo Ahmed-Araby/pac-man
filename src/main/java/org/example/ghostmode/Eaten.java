@@ -19,7 +19,7 @@ import org.example.util.ghost.GhostUtil;
 import java.util.AbstractMap;
 import java.util.Map;
 
-public class Eaten implements GhostMode {
+public class Eaten extends GhostMode {
 
     private final GhostNavigator navigator;
     private final Animator animator;
@@ -27,7 +27,8 @@ public class Eaten implements GhostMode {
 
     private CanvasCoordinate ghostHouseEmptyLoc;
 
-    public Eaten(GameState gameState) {
+    public Eaten(Ghost ghost, GameState gameState) {
+        super(ghost);
         this.gameState = gameState;
         this.navigator = new ShortestPathNavigator();
 
@@ -52,12 +53,12 @@ public class Eaten implements GhostMode {
     }
 
     @Override
-    public void render(Canvas canvas, Ghost ghost) {
+    public void render(Canvas canvas) {
         canvas.getGraphicsContext2D().drawImage(animator.getFrame(), ghost.getCol(), ghost.getRow());
     }
 
     @Override
-    public void move(Ghost ghost) {
+    public void move() {
         final CanvasCoordinate currCord = new CanvasCoordinate(ghost.getRow(), ghost.getCol());
         final DirectionsE newDir = this.navigator.nextMoveDirection(currCord, ghostHouseEmptyLoc);
         final CanvasCoordinate newCord = GhostUtil.move(currCord, newDir);

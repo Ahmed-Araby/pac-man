@@ -20,8 +20,8 @@ public class BlinkyChaser extends Chaser {
     private final Animator animator;
     private final GhostNavigator navigator;
 
-    public BlinkyChaser(int[] activePeriodsSec) {
-        super(activePeriodsSec);
+    public BlinkyChaser(Ghost ghost, int[] activePeriodsSec) {
+        super(ghost, activePeriodsSec);
 
         final Image[] frames = loadSprites();
         this.animator = new DistanceBasedAnimator(
@@ -30,12 +30,12 @@ public class BlinkyChaser extends Chaser {
     }
 
     @Override
-    public void render(Canvas canvas, Ghost ghost) {
+    public void render(Canvas canvas) {
         canvas.getGraphicsContext2D().drawImage(animator.getFrame(), ghost.getCol(), ghost.getRow());
     }
 
     @Override
-    public void move(Ghost ghost) {
+    public void move() {
         final CanvasCoordinate ghostCurrCord = new CanvasCoordinate(ghost.getRow(), ghost.getCol());
         final CanvasCoordinate pacmanCurrCord = ghost.getPacManCanvasCord();
         final DirectionsE directionsE = navigator.nextMoveDirection(ghostCurrCord, pacmanCurrCord);
