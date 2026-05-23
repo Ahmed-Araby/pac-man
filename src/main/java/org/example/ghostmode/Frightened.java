@@ -33,7 +33,8 @@ public class Frightened extends TemporalGhostMode {
     }
 
     @Override
-    public void enter(Ghost ghost) {
+    public void enter() {
+        super.enter();
         turnAround(ghost);
     }
 

@@ -40,15 +40,20 @@ public class Eaten extends GhostMode {
     }
 
     @Override
-    public void enter(Ghost ghost) {
+    public void init() {
         final double ghostHERow = gameState.getGhostHouseS().getERow();;
         final double ghostHSCol = gameState.getGhostHouseS().getCol();
         ghostHouseEmptyLoc = new CanvasCoordinate(ghostHERow - DimensionsC.MAZE_CELL_SIZE_PIXELS, ghostHSCol + DimensionsC.MAZE_CELL_SIZE_PIXELS);
-        // [TODO] should prepare for rendering the score that pacman gained by eating this ghost
     }
 
     @Override
-    public boolean end(Ghost ghost) {
+    public void enter() {
+        System.out.println("Eaten.enter() method need to do nothing");
+    }
+
+
+    @Override
+    public boolean ended() {
         return ghost.getTopLeftCorner().equals(ghostHouseEmptyLoc);
     }
 

@@ -12,9 +12,9 @@ public abstract class GhostMode {
     public abstract void render(Canvas canvas);
     public abstract  void move();
 
-    public void enter(Ghost ghost) {
+    public void init() {
+        System.out.println("GhostMode.init() method is not implemented for sprite " + this.getClass().getSimpleName());
     }
-    public boolean end(Ghost ghost) {
-        throw new IllegalStateException("ended(Ghost) method in not implemented for mode : " + this.getClass().getSimpleName());
-    }
+    public abstract void enter();
+    public abstract boolean ended();
 }

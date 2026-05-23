@@ -26,6 +26,14 @@ public abstract class Ghost extends MovingSprite {
     public abstract CanvasCoordinate getPacManCanvasCord();
 
 
+    @Override
+    public void init() {
+        scattered.init();
+        chaser.init();
+        frightened.init();
+        eaten.init();
+    }
+
     protected void transitionMode(Event event) {
         if (activeMode instanceof Chaser) {
             chaserTransition(event);
@@ -41,7 +49,6 @@ public abstract class Ghost extends MovingSprite {
     protected void chaserTransition(Event event) {
         if (event != null && EventType.PAC_MAN_SUPER_SUGAR_COLLISION.equals(event.getType())) {
             chaser.pause();
-            frightened.enter(this);
             frightened.enter();
 
             previousMode = chaser;
@@ -56,7 +63,6 @@ public abstract class Ghost extends MovingSprite {
     protected void scatteredTransition(Event event) {
         if (event != null && EventType.PAC_MAN_SUPER_SUGAR_COLLISION.equals(event.getType())) {
             scattered.pause();
-            frightened.enter(this);
             frightened.enter();
 
             previousMode = scattered;
@@ -71,7 +77,7 @@ public abstract class Ghost extends MovingSprite {
 
     protected void frightenedTransition(Event event) {
         if (event != null && EventType.PAC_MAN_GHOST_COLLISION.equals(event.getType())) {
-            eaten.enter(this);
+            eaten.enter();
             activeMode = eaten;
         } else if (frightened.ended()) {
             frightened.exit();
@@ -82,9 +88,9 @@ public abstract class Ghost extends MovingSprite {
     }
 
     protected void eatenTransition(GhostMode eaten) {
-        if (eaten.end(this)) {
+        if (eaten.ended()) {
             activeMode = previousMode;
-            activeMode.enter(this);
+            activeMode.enter();
 
             previousMode = null;
         }

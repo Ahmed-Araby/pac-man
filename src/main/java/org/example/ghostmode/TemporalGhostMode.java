@@ -16,6 +16,7 @@ public abstract class TemporalGhostMode extends GhostMode {
         this.activePeriodsSec = activePeriodsSec;
     }
 
+    @Override
     public void enter() {
         activeAt = Instant.now();
     }
@@ -25,6 +26,7 @@ public abstract class TemporalGhostMode extends GhostMode {
         skew += sessionActiveTime;
     }
 
+    @Override
     public boolean ended() {
         final int currActivePeriod = activePeriodsSec[activePeriodIndex];
         if (currActivePeriod == -1) {
