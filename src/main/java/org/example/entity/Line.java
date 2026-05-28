@@ -41,4 +41,32 @@ public class Line {
         return new CanvasCoordinate(y, x);
     }
 
+    public Line scale(double scalar) {
+        final Vector endV = new Vector(end);
+        final Vector startV = new Vector(start);
+        final Vector newEndV = endV
+                .sub(startV)
+                .scale(scalar)
+                .add(startV);
+        final CanvasCoordinate newEnd = new CanvasCoordinate(newEndV);
+        return new Line(start, newEnd);
+    }
+
+    public Line trim(CanvasRect enclosingRect) {
+        Optional<CanvasCoordinate> intersectionPoint = Optional.empty();
+
+        for(Line side: enclosingRect.getSides()) {
+            intersectionPoint = intersectAt(side);
+            if (intersectionPoint.isPresent()) {
+                break;
+            }
+        }
+
+        if (intersectionPoint.isPresent()) {
+            return new Line(start, intersectionPoint.get());
+        }
+
+        return this;
+    }
+
 }
