@@ -13,6 +13,7 @@ import org.example.model.GameState;
 import org.example.sprite.ghost.Ghost;
 
 public class InkyChaser extends Chaser {
+
     private final GhostNavigator navigator;
     private final DistanceBasedAnimator animator;
 
@@ -28,7 +29,8 @@ public class InkyChaser extends Chaser {
 
     @Override
     public void render(Canvas canvas) {
-
+        final GraphicsContext con = canvas.getGraphicsContext2D();
+        con.drawImage(animator.getFrame(), ghost.getCol(), ghost.getRow());
     }
 
     @Override
