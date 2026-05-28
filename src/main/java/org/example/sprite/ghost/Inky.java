@@ -10,8 +10,8 @@ import org.example.event.Subscriber;
 import org.example.event.collision.PacMan2GhostCollisionEvent;
 import org.example.ghostmode.Eaten;
 import org.example.ghostmode.Frightened;
+import org.example.ghostmode.Inky.InkyChaser;
 import org.example.ghostmode.Inky.InkyScattered;
-import org.example.ghostmode.blinky.BlinkyChaser;
 import org.example.model.GameState;
 
 public class Inky extends Ghost implements Subscriber {
@@ -21,7 +21,7 @@ public class Inky extends Ghost implements Subscriber {
         super(gameState, SpriteE.GHOST , 0, 0, DirectionsE.STILL);
         scattered = new InkyScattered(this, gameState, GhostModeActivePeriodsConf.LEVEL_1_SCATTER_ACTIVE_PERIODS);
         // [TODO] use InkyChaser
-        chaser = new BlinkyChaser(this, gameState, GhostModeActivePeriodsConf.LEVEL_1_CHASE_ACTIVE_PERIODS);
+        chaser = new InkyChaser(this, gameState, GhostModeActivePeriodsConf.LEVEL_1_CHASE_ACTIVE_PERIODS);
         frightened = new Frightened(this, gameState, GhostModeActivePeriodsConf.ALL_LEVELS_FRIGHTENED_MODE_ACTIVE_PERIODS);
         eaten = new Eaten(this, gameState);
 
