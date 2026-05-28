@@ -22,4 +22,21 @@ public class Vector {
         this.x = x;
         this.y = y;
     }
+
+    public Vector(CanvasCoordinate cord) {
+        this.x = cord.getCol();
+        this.y = cord.getRow();
+    }
+
+    public Vector sub(Vector b) {
+        return new Vector(x - b.getX(), y - b.getY());
+    }
+
+    public Vector add(Vector b) {
+        return new Vector(x + b.getX(), y + b.getY());
+    }
+
+    public Vector scale(double scalar) {
+        return new Vector(x * scalar, y * scalar);
+    }
 }
