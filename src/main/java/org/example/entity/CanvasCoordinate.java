@@ -8,8 +8,12 @@ import lombok.ToString;
 @Getter
 @ToString
 public class CanvasCoordinate {
-    private double row, col;
+    private final double row, col;
 
+    public CanvasCoordinate(Vector v) {
+        this.col = v.getX();
+        this.row = v.getY();
+    }
 
     @Override
     public boolean equals(Object o) {
@@ -17,5 +21,9 @@ public class CanvasCoordinate {
             return false;
         }
         return row == ((CanvasCoordinate) o).getRow() && col == ((CanvasCoordinate) o).getCol();
+    }
+
+    public CanvasCoordinate add(double colOffset, double rowOffset) {
+        return new CanvasCoordinate(row + rowOffset, col + colOffset);
     }
 }
