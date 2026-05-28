@@ -23,14 +23,10 @@ public class Eaten extends GhostMode {
 
     private final GhostNavigator navigator;
     private final Animator animator;
-    // [TODO] make the game state present on the GhostMode level
-    private final GameState gameState;
-
     private CanvasCoordinate ghostHouseEmptyLoc;
 
     public Eaten(Ghost ghost, GameState gameState) {
-        super(ghost);
-        this.gameState = gameState;
+        super(ghost, gameState);
         this.navigator = new ShortestPathNavigator();
 
         final Map<Vector, Image[]> sprites = loadSprites();

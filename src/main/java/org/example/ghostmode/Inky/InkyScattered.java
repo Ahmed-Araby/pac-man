@@ -12,6 +12,7 @@ import org.example.entity.CanvasCoordinate;
 import org.example.ghostmode.Scattered;
 import org.example.ghostmode.navigation.GhostNavigator;
 import org.example.ghostmode.navigation.ShortestPathNavigator;
+import org.example.model.GameState;
 import org.example.sprite.ghost.Ghost;
 import org.example.util.ghost.GhostUtil;
 
@@ -23,8 +24,8 @@ public class InkyScattered extends Scattered {
             DimensionsC.CANVAS_HEIGHT_PIXELS - DimensionsC.MAZE_CELL_SIZE_PIXELS,
             DimensionsC.CANVAS_WIDTH_PIXELS - DimensionsC.MAZE_CELL_SIZE_PIXELS
     );
-    public InkyScattered(Ghost ghost, int[] activePeriodsSec) {
-        super(ghost, activePeriodsSec);
+    public InkyScattered(Ghost ghost, GameState gameState, int[] activePeriodsSec) {
+        super(ghost, gameState, activePeriodsSec);
         final Image[] frames = loadSprites();
         navigator = new ShortestPathNavigator();
         animator = new DistanceBasedAnimator(

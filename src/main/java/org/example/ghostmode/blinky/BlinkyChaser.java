@@ -10,6 +10,7 @@ import org.example.constant.DirectionsE;
 import org.example.constant.SpriteFileNameC;
 import org.example.entity.CanvasCoordinate;
 import org.example.ghostmode.Chaser;
+import org.example.model.GameState;
 import org.example.sprite.ghost.Ghost;
 import org.example.ghostmode.navigation.GhostNavigator;
 import org.example.ghostmode.navigation.ShortestPathNavigator;
@@ -20,8 +21,8 @@ public class BlinkyChaser extends Chaser {
     private final Animator animator;
     private final GhostNavigator navigator;
 
-    public BlinkyChaser(Ghost ghost, int[] activePeriodsSec) {
-        super(ghost, activePeriodsSec);
+    public BlinkyChaser(Ghost ghost, GameState gameState, int[] activePeriodsSec) {
+        super(ghost, gameState, activePeriodsSec);
 
         final Image[] frames = loadSprites();
         this.animator = new DistanceBasedAnimator(

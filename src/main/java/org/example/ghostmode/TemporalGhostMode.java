@@ -1,5 +1,6 @@
 package org.example.ghostmode;
 
+import org.example.model.GameState;
 import org.example.sprite.ghost.Ghost;
 
 import java.time.Instant;
@@ -11,8 +12,8 @@ public abstract class TemporalGhostMode extends GhostMode {
     private int activePeriodIndex;
 
 
-    public TemporalGhostMode(Ghost ghost, int[] activePeriodsSec) {
-        super(ghost);
+    public TemporalGhostMode(Ghost ghost, GameState gameState, int[] activePeriodsSec) {
+        super(ghost, gameState);
         this.activePeriodsSec = activePeriodsSec;
     }
 

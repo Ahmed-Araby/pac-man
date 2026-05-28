@@ -27,9 +27,9 @@ public class Blinky extends Ghost implements Subscriber {
         super(gameState, SpriteE.GHOST, 0, 0, DirectionsE.STILL);
 
         // ghost modes
-        this.chaser = new BlinkyChaser(this, GhostModeActivePeriodsConf.LEVEL_1_CHASE_ACTIVE_PERIODS);
-        this.scattered = new BlinkyScattered(this, GhostModeActivePeriodsConf.LEVEL_1_SCATTER_ACTIVE_PERIODS);
-        this.frightened = new Frightened(this, GhostModeActivePeriodsConf.ALL_LEVELS_FRIGHTENED_MODE_ACTIVE_PERIODS);
+        this.chaser = new BlinkyChaser(this, gameState, GhostModeActivePeriodsConf.LEVEL_1_CHASE_ACTIVE_PERIODS);
+        this.scattered = new BlinkyScattered(this, gameState, GhostModeActivePeriodsConf.LEVEL_1_SCATTER_ACTIVE_PERIODS);
+        this.frightened = new Frightened(this, gameState, GhostModeActivePeriodsConf.ALL_LEVELS_FRIGHTENED_MODE_ACTIVE_PERIODS);
         this.eaten = new Eaten(this, gameState);
 
         scattered.enter();
