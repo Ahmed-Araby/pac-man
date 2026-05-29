@@ -2,6 +2,7 @@ package org.example.sprite.ghost;
 
 import javafx.scene.canvas.Canvas;
 import org.example.config.GhostModeActivePeriodsConf;
+import org.example.constant.DimensionsC;
 import org.example.constant.DirectionsE;
 import org.example.constant.SpriteE;
 import org.example.entity.CanvasCoordinate;
@@ -13,6 +14,7 @@ import org.example.ghostmode.Frightened;
 import org.example.ghostmode.Inky.InkyChaser;
 import org.example.ghostmode.Inky.InkyScattered;
 import org.example.model.GameState;
+import org.example.sprite.GhostHouseS;
 
 public class Inky extends Ghost implements Subscriber {
 
@@ -28,6 +30,17 @@ public class Inky extends Ghost implements Subscriber {
         this.activeMode = scattered;
         scattered.enter();
     }
+
+    @Override
+    public void init() {
+        final GhostHouseS ghostHouseS = gameState.getGhostHouseS();
+        final double col = ghostHouseS.getCol() + 2 * DimensionsC.MAZE_CELL_SIZE_PIXELS;
+        final double row = ghostHouseS.getERow() - DimensionsC.MAZE_CELL_SIZE_PIXELS;
+        setCol(col);
+        setRow(row);
+    }
+
+
 
     @Override
     public CanvasCoordinate getPacManCanvasCord() {
