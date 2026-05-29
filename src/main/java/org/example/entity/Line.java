@@ -3,6 +3,8 @@ package org.example.entity;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 
 @AllArgsConstructor
@@ -16,28 +18,29 @@ public class Line {
         return (end.getRow() - start.getRow()) / (end.getCol() - start.getCol());
     }
 
-    public Optional<CanvasCoordinate> intersectAt(Line line2) {
-        // assume this line is called line1
-        final double slope1 = slope();
-        final double slope2 = line2.slope();
-
-        if (slope1 == slope2) { // an error margin should be taken into account
+    public Optional<CanvasCoordinate> intersectAtWithVLine(Line line) {
+        if (Double.isInfinite(slope())) {
             return Optional.empty();
         }
+        return Optional.of(getPointGivenX(line.getStart().getCol()));
+    }
 
-        // the following math is derived from the solving the slope equation for both lines together
-        // in the following equations, c stands for common
-        // slope equation for the 1st line : slope1 = (Yc - Y1) / (Xc - X1)
-        // slope equation for the 2nd line : slope2 = (Yc - Y2) / (Xc - X2)
-        final double line1EqPart = slope1 * start.getCol() - start.getRow();
-        final double line2EqPart = - slope2 * line2.getStart().getCol() + line2.getStart().getRow();
-        final double xCommon = (line1EqPart + line2EqPart) / (slope1 - slope2);
-
-        return Optional.of(getPointGivenX(xCommon));
+    public Optional<CanvasCoordinate> intersectAtWithHLine(Line line) {
+        if (slope() == 0) {
+            return Optional.empty();
+        }
+        return Optional.of(getPointGivenY(line.getStart().getRow()));
     }
 
     public CanvasCoordinate getPointGivenX(double x) {
-        final double y = slope() * (x - start.getCol()) + start.getRow();
+        double y = slope() * (x - start.getCol()) + start.getRow();
+        y = Math.round(y);
+        return new CanvasCoordinate(y, x);
+    }
+
+    public CanvasCoordinate getPointGivenY(double y) {
+        double x = (y - start.getRow()) / slope() + start.getCol();
+        x = Math.round(x);
         return new CanvasCoordinate(y, x);
     }
 
@@ -53,17 +56,27 @@ public class Line {
     }
 
     public Line trim(CanvasRect enclosingRect) {
-        Optional<CanvasCoordinate> intersectionPoint = Optional.empty();
+        List<CanvasCoordinate> intersectionPoints = new ArrayList<>();
 
-        for(Line side: enclosingRect.getSides()) {
-            intersectionPoint = intersectAt(side);
-            if (intersectionPoint.isPresent()) {
-                break;
-            }
+        if (end.getCol() > enclosingRect.rightEdgeCol()) {
+            intersectAtWithVLine(enclosingRect.rightSide()).ifPresent(intersectionPoints::add);
+        }
+        if (end.getCol() < enclosingRect.leftEdgeCol()) {
+            intersectAtWithVLine(enclosingRect.leftSide()).ifPresent(intersectionPoints::add);
+        }
+        if (end.getRow() > enclosingRect.bottomEdgeRow()) {
+            intersectAtWithHLine(enclosingRect.bottomSide()).ifPresent(intersectionPoints::add);
+        }
+        if (end.getRow() < enclosingRect.topEdgeRow()) {
+            intersectAtWithHLine(enclosingRect.topSide()).ifPresent(intersectionPoints::add);
         }
 
-        if (intersectionPoint.isPresent()) {
-            return new Line(start, intersectionPoint.get());
+        Optional<CanvasCoordinate> newEndCord = intersectionPoints.stream()
+                .filter(cord -> cord.within(enclosingRect))
+                .findFirst();
+
+        if (newEndCord.isPresent()) {
+            return new Line(start, newEndCord.get());
         }
 
         return this;
