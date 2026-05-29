@@ -23,18 +23,15 @@ public class Eaten extends GhostMode {
 
     private final GhostNavigator navigator;
     private final Animator animator;
-    private final GameState gameState;
-
     private CanvasCoordinate ghostHouseEmptyLoc;
 
     public Eaten(Ghost ghost, GameState gameState) {
-        super(ghost);
-        this.gameState = gameState;
+        super(ghost, gameState);
         this.navigator = new ShortestPathNavigator();
 
         final Map<Vector, Image[]> sprites = loadSprites();
         this.animator = new DistanceBasedAnimator(
-                new double[]{DimensionsC.BLINKY_STRIDE_PIXELS},
+                new double[]{DimensionsC.GHOST_STRIDE_PIXELS},
                 sprites.get(Vector.UP)
         );
     }
@@ -73,7 +70,7 @@ public class Eaten extends GhostMode {
         ghost.setCol(newCord.getCol());
 
         if (newDir != DirectionsE.STILL) {
-            this.animator.stride(DimensionsC.BLINKY_STRIDE_PIXELS / Configs.FRAMES_PER_SEC_FOR_GHOST_BLINKY_STRIDE);
+            this.animator.stride(DimensionsC.GHOST_STRIDE_PIXELS / Configs.FRAMES_PER_SEC_FOR_GHOST_STRIDE);
         }
     }
 

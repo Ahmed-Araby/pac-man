@@ -9,7 +9,7 @@ public class Configs {
 
     // ghost
     // blinky
-    public static int FRAMES_PER_SEC_FOR_GHOST_BLINKY_STRIDE = 25;
+    public static int FRAMES_PER_SEC_FOR_GHOST_STRIDE = 25;
 
     // suger
     public static int SUPER_SUGAR_PERCENTAGE = 3;

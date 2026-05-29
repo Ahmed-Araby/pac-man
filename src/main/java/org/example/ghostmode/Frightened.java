@@ -10,6 +10,7 @@ import org.example.constant.DirectionsE;
 import org.example.constant.SpriteFileNameC;
 import org.example.entity.CanvasCoordinate;
 import org.example.entity.Vector;
+import org.example.model.GameState;
 import org.example.sprite.ghost.Ghost;
 import org.example.util.EnrichedThreadLocalRandom;
 import org.example.util.ghost.GhostUtil;
@@ -24,11 +25,11 @@ public class Frightened extends TemporalGhostMode {
     private final Animator animator;
     private final EnrichedThreadLocalRandom random;
 
-    public Frightened(Ghost ghost, int[] activePeriodsSec) {
-        super(ghost, activePeriodsSec);
+    public Frightened(Ghost ghost, GameState gameState, int[] activePeriodsSec) {
+        super(ghost, gameState, activePeriodsSec);
 
         Image[] frames = loadSprites();
-        this.animator = new DistanceBasedAnimator(new double[]{DimensionsC.BLINKY_FIRST_LEG_MOVEMENT_DISTANCE_PIXELS, DimensionsC.BLINKY_SECOND_LEG_MOVEMENT_DISTANCE_PIXELS}, frames);
+        this.animator = new DistanceBasedAnimator(new double[]{DimensionsC.GHOST_FIRST_LEG_MOVEMENT_DISTANCE_PIXELS, DimensionsC.GHOST_SECOND_LEG_MOVEMENT_DISTANCE_PIXELS}, frames);
         this.random = new EnrichedThreadLocalRandom();
     }
 
@@ -64,7 +65,7 @@ public class Frightened extends TemporalGhostMode {
         ghost.setRow(nCord.getRow());
         ghost.setCol(nCord.getCol());
 
-        animator.stride(DimensionsC.BLINKY_STRIDE_PIXELS / Configs.FRAMES_PER_SEC_FOR_GHOST_BLINKY_STRIDE);
+        animator.stride(DimensionsC.GHOST_STRIDE_PIXELS / Configs.FRAMES_PER_SEC_FOR_GHOST_STRIDE);
     }
 
     @Override

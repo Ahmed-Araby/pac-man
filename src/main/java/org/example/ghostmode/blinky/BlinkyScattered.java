@@ -10,6 +10,7 @@ import org.example.constant.DirectionsE;
 import org.example.constant.SpriteFileNameC;
 import org.example.entity.CanvasCoordinate;
 import org.example.ghostmode.Scattered;
+import org.example.model.GameState;
 import org.example.sprite.ghost.Ghost;
 import org.example.ghostmode.navigation.GhostNavigator;
 import org.example.ghostmode.navigation.ShortestPathNavigator;
@@ -24,11 +25,11 @@ public class BlinkyScattered extends Scattered {
             DimensionsC.CANVAS_WIDTH_PIXELS - 1
     );
 
-    public BlinkyScattered(Ghost ghost, int[] activePeridosSec) {
-        super(ghost, activePeridosSec);
+    public BlinkyScattered(Ghost ghost, GameState gameState, int[] activePeridosSec) {
+        super(ghost, gameState, activePeridosSec);
         final Image[] frames = loadSprites();
         this.animator = new DistanceBasedAnimator(
-                new double[]{DimensionsC.BLINKY_FIRST_LEG_MOVEMENT_DISTANCE_PIXELS, DimensionsC.BLINKY_SECOND_LEG_MOVEMENT_DISTANCE_PIXELS}, frames);
+                new double[]{DimensionsC.GHOST_FIRST_LEG_MOVEMENT_DISTANCE_PIXELS, DimensionsC.GHOST_SECOND_LEG_MOVEMENT_DISTANCE_PIXELS}, frames);
         this.navigator = new ShortestPathNavigator();
     }
 
@@ -48,7 +49,7 @@ public class BlinkyScattered extends Scattered {
         ghost.setCol(ghostNewCord.getCol());
 
         if(directionsE != DirectionsE.STILL) {
-            animator.stride(DimensionsC.BLINKY_STRIDE_PIXELS / Configs.FRAMES_PER_SEC_FOR_GHOST_BLINKY_STRIDE);
+            animator.stride(DimensionsC.GHOST_STRIDE_PIXELS / Configs.FRAMES_PER_SEC_FOR_GHOST_STRIDE);
         }
     }
 

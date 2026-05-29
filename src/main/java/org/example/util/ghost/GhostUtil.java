@@ -20,15 +20,15 @@ public class GhostUtil {
         switch (dir) {
             case RIGHT:
                 return new CanvasCoordinate(cord.getRow(),
-                        cord.getCol() + DimensionsC.BLINKY_STRIDE_PIXELS / Configs.FRAMES_PER_SEC_FOR_GHOST_BLINKY_STRIDE);
+                        cord.getCol() + DimensionsC.GHOST_STRIDE_PIXELS / Configs.FRAMES_PER_SEC_FOR_GHOST_STRIDE);
             case LEFT:
                 return new CanvasCoordinate(cord.getRow(),
-                        cord.getCol() - DimensionsC.BLINKY_STRIDE_PIXELS / Configs.FRAMES_PER_SEC_FOR_GHOST_BLINKY_STRIDE);
+                        cord.getCol() - DimensionsC.GHOST_STRIDE_PIXELS / Configs.FRAMES_PER_SEC_FOR_GHOST_STRIDE);
             case UP:
-                return new CanvasCoordinate(cord.getRow() - DimensionsC.BLINKY_STRIDE_PIXELS / Configs.FRAMES_PER_SEC_FOR_GHOST_BLINKY_STRIDE,
+                return new CanvasCoordinate(cord.getRow() - DimensionsC.GHOST_STRIDE_PIXELS / Configs.FRAMES_PER_SEC_FOR_GHOST_STRIDE,
                         cord.getCol());
             case DOWN:
-                return new CanvasCoordinate(cord.getRow() + DimensionsC.BLINKY_STRIDE_PIXELS / Configs.FRAMES_PER_SEC_FOR_GHOST_BLINKY_STRIDE,
+                return new CanvasCoordinate(cord.getRow() + DimensionsC.GHOST_STRIDE_PIXELS / Configs.FRAMES_PER_SEC_FOR_GHOST_STRIDE,
                         cord.getCol());
             default:
                 return cord;
@@ -36,8 +36,8 @@ public class GhostUtil {
     }
 
     public static CanvasCoordinate move(CanvasCoordinate cord, Vector dir) {
-        final double newX = cord.getCol() + dir.getX() * (DimensionsC.BLINKY_STRIDE_PIXELS / Configs.FRAMES_PER_SEC_FOR_GHOST_BLINKY_STRIDE);
-        final double newY = cord.getRow() + dir.getY() * (DimensionsC.BLINKY_STRIDE_PIXELS / Configs.FRAMES_PER_SEC_FOR_GHOST_BLINKY_STRIDE);
+        final double newX = cord.getCol() + dir.getX() * (DimensionsC.GHOST_STRIDE_PIXELS / Configs.FRAMES_PER_SEC_FOR_GHOST_STRIDE);
+        final double newY = cord.getRow() + dir.getY() * (DimensionsC.GHOST_STRIDE_PIXELS / Configs.FRAMES_PER_SEC_FOR_GHOST_STRIDE);
         return new CanvasCoordinate(newY, newX);
     }
 

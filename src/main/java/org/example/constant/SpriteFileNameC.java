@@ -20,4 +20,12 @@ public class SpriteFileNameC {
     public static final String BLINKY_FRIGHTENED_FRAME_2_FILE_NAME = "blinky-frightened-frame-2.png";
     public static final String BLINKY_FRIGHTENED_FRAME_2_FILE_RESOURCE_RELATIVE_PATH = FORWARD_SLASH + SPRITE_FILES_DIRECTORY + FORWARD_SLASH + BLINKY_FRIGHTENED_FRAME_2_FILE_NAME;
     // eaten
+
+    // Inky
+    // chaser and scatter
+    public static final String INKY_FOLDER = "ghost/inky";
+    public static final String INKY_FRAME_1_FILE_NAME = "inky-frame-1.png";
+    public static final String INKY_FRAME_1_FILE_RESOURCE_RELATIVE_PATH = FORWARD_SLASH + SPRITE_FILES_DIRECTORY + FORWARD_SLASH + INKY_FOLDER + FORWARD_SLASH + INKY_FRAME_1_FILE_NAME;
+    public static final String INKY_FRAME_2_FILE_NAME = "inky-frame-2.png";
+    public static final String INKY_FRAME_2_FILE_RESOURCE_RELATIVE_PATH = FORWARD_SLASH + SPRITE_FILES_DIRECTORY +  FORWARD_SLASH + INKY_FOLDER + FORWARD_SLASH + INKY_FRAME_2_FILE_NAME;
 }

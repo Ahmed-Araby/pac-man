@@ -1,6 +1,7 @@
 package org.example.constant;
 
 import javafx.scene.input.KeyCode;
+import org.example.entity.Vector;
 
 public enum DirectionsE {
     RIGHT,
@@ -40,6 +41,23 @@ public enum DirectionsE {
                 return KeyCode.SPACE;
             default:
                 throw new IllegalStateException();
+        }
+    }
+
+    public Vector toVector() {
+        switch (this) {
+            case RIGHT:
+                return Vector.RIGHT;
+            case UP:
+                return Vector.UP;
+            case LEFT:
+                return Vector.LEFT;
+            case DOWN:
+                return Vector.DOWN;
+            case STILL:
+                return Vector.STILL;
+            default:
+                throw new IllegalStateException("unhandled DirectionE constant : " + this);
         }
     }
 }
