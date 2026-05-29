@@ -1,7 +1,7 @@
 package org.example.model;
 
 import lombok.*;
-import org.example.sprite.GhostHouseS;
+import org.example.sprite.playground.GhostHouseS;
 import org.example.sprite.ghost.Ghost;
 import org.example.sprite.PacMan;
 

@@ -14,7 +14,7 @@ import org.example.ghostmode.common.Frightened;
 import org.example.ghostmode.Inky.InkyChaser;
 import org.example.ghostmode.Inky.InkyScattered;
 import org.example.model.GameState;
-import org.example.sprite.GhostHouseS;
+import org.example.sprite.playground.GhostHouseS;
 
 public class Inky extends Ghost implements Subscriber {
 

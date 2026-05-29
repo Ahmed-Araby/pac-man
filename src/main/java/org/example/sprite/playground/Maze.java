@@ -1,4 +1,4 @@
-package org.example.sprite;
+package org.example.sprite.playground;
 
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
@@ -10,6 +10,7 @@ import org.example.constant.SpriteE;
 import org.example.entity.CanvasCoordinate;
 import org.example.maze.Playground;
 import org.example.model.GameState;
+import org.example.sprite.Sprite;
 import org.example.util.MazeUtil;
 import org.example.util.debug.DebugUtil;
 

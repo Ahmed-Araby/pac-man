@@ -12,7 +12,7 @@ import org.example.ghostmode.common.Eaten;
 import org.example.ghostmode.common.Frightened;
 import org.example.ghostmode.blinky.BlinkyScattered;
 import org.example.model.GameState;
-import org.example.sprite.GhostHouseS;
+import org.example.sprite.playground.GhostHouseS;
 
 public class Blinky extends Ghost implements Subscriber {
     // [TODO] rename modes
