@@ -1,4 +1,4 @@
-package org.example.ghostmode;
+package org.example.ghostmode.common;
 
 import javafx.scene.canvas.Canvas;
 import javafx.scene.image.Image;
@@ -10,6 +10,7 @@ import org.example.constant.DirectionsE;
 import org.example.constant.GhostEatenSpritesFileNameC;
 import org.example.entity.CanvasCoordinate;
 import org.example.entity.Vector;
+import org.example.ghostmode.GhostMode;
 import org.example.ghostmode.navigation.GhostNavigator;
 import org.example.ghostmode.navigation.ShortestPathNavigator;
 import org.example.model.GameState;

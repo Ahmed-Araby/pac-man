@@ -6,6 +6,8 @@ import org.example.entity.CanvasCoordinate;
 import org.example.event.Event;
 import org.example.event.EventType;
 import org.example.ghostmode.*;
+import org.example.ghostmode.common.Eaten;
+import org.example.ghostmode.common.Frightened;
 import org.example.model.GameState;
 import org.example.sprite.MovingSprite;
 
