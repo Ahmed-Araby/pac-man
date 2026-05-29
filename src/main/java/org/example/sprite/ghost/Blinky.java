@@ -12,6 +12,7 @@ import org.example.ghostmode.blinky.BlinkyChaser;
 import org.example.ghostmode.Frightened;
 import org.example.ghostmode.blinky.BlinkyScattered;
 import org.example.model.GameState;
+import org.example.sprite.GhostHouseS;
 
 public class Blinky extends Ghost implements Subscriber {
     // [TODO] rename modes
@@ -34,6 +35,15 @@ public class Blinky extends Ghost implements Subscriber {
 
         scattered.enter();
         this.activeMode = scattered;
+    }
+
+    @Override
+    public void init() {
+        final GhostHouseS ghostHouseS = gameState.getGhostHouseS();
+        final double col = ghostHouseS.getCol() + DimensionsC.MAZE_CELL_SIZE_PIXELS;
+        final double row = ghostHouseS.getERow() - DimensionsC.MAZE_CELL_SIZE_PIXELS;
+        setCol(col);
+        setRow(row);
     }
 
     @Override
