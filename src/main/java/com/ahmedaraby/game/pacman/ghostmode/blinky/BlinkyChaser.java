@@ -38,7 +38,7 @@ public class BlinkyChaser extends Chaser {
     @Override
     public void move() {
         final CanvasCoordinate ghostCurrCord = new CanvasCoordinate(ghost.getRow(), ghost.getCol());
-        final CanvasCoordinate pacmanCurrCord = ghost.getPacManCanvasCord();
+        final CanvasCoordinate pacmanCurrCord = gameState.getPacMan().getTopLeftCorner();
         final DirectionsE directionsE = navigator.nextMoveDirection(ghostCurrCord, pacmanCurrCord);
         final CanvasCoordinate ghostNewCord = GhostUtil.move(ghostCurrCord, directionsE);
 

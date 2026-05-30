@@ -8,7 +8,6 @@ import com.ahmedaraby.game.pacman.model.GameState;
 import com.ahmedaraby.game.pacman.sprite.playground.GhostHouseS;
 import javafx.scene.canvas.Canvas;
 import com.ahmedaraby.game.pacman.config.GhostModeActivePeriodsConf;
-import com.ahmedaraby.game.pacman.entity.CanvasCoordinate;
 import com.ahmedaraby.game.pacman.event.Event;
 import com.ahmedaraby.game.pacman.event.Subscriber;
 import com.ahmedaraby.game.pacman.ghostmode.blinky.BlinkyChaser;
@@ -17,14 +16,6 @@ import com.ahmedaraby.game.pacman.ghostmode.common.Frightened;
 import com.ahmedaraby.game.pacman.ghostmode.blinky.BlinkyScattered;
 
 public class Blinky extends Ghost implements Subscriber {
-    // [TODO] rename modes
-    // ghost modes
-
-
-    @Override
-    public CanvasCoordinate getPacManCanvasCord() {
-        return gameState.getPacMan().getCurrCanvasCord();
-    }
 
     public Blinky(GameState gameState) {
         super(gameState, SpriteE.GHOST, 0, 0, DirectionsE.STILL);

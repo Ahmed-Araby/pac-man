@@ -127,7 +127,7 @@ public class PacMan extends MovingSprite implements Subscriber {
             handleDeniedMovementAttempt(deniedEvent);
         } else {
             final PacManMovementAttemptApprovedEvent approvedEvent = new PacManMovementAttemptApprovedEvent(
-                    getCurrCanvasCord(), nextCord, event.getDirectionsE(), event.getSource()
+                    getTopLeftCorner(), nextCord, event.getDirectionsE(), event.getSource()
             );
             handleApprovedMovementAttempt(approvedEvent);
         }
@@ -172,11 +172,5 @@ public class PacMan extends MovingSprite implements Subscriber {
             default:
                 throw new UnsupportedOperationException();
         }
-    }
-
-
-
-    public CanvasCoordinate getCurrCanvasCord() {
-        return new CanvasCoordinate(row, col);
     }
 }

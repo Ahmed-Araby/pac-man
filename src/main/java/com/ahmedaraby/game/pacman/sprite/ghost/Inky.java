@@ -3,7 +3,6 @@ package com.ahmedaraby.game.pacman.sprite.ghost;
 import com.ahmedaraby.game.pacman.constant.DimensionsC;
 import com.ahmedaraby.game.pacman.constant.DirectionsE;
 import com.ahmedaraby.game.pacman.constant.SpriteE;
-import com.ahmedaraby.game.pacman.entity.CanvasCoordinate;
 import com.ahmedaraby.game.pacman.event.Event;
 import com.ahmedaraby.game.pacman.event.Subscriber;
 import com.ahmedaraby.game.pacman.event.collision.PacMan2GhostCollisionEvent;
@@ -38,14 +37,6 @@ public class Inky extends Ghost implements Subscriber {
         final double row = ghostHouseS.getERow() - DimensionsC.MAZE_CELL_SIZE_PIXELS;
         setCol(col);
         setRow(row);
-    }
-
-
-
-    @Override
-    public CanvasCoordinate getPacManCanvasCord() {
-        // [TODO] remove this method, and instead the ghost mode should be able to access the game state and retrieve the info it needs
-        return this.gameState.getPacMan().getTopLeftCorner();
     }
 
     @Override

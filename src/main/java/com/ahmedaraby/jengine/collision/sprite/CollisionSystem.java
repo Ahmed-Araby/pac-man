@@ -33,7 +33,7 @@ public class CollisionSystem {
     }
 
     private void detectPacman2SugarCollision() {
-        final CanvasCoordinate pacmanTopLeftCorner = gameState.getPacMan().getCurrCanvasCord();
+        final CanvasCoordinate pacmanTopLeftCorner = gameState.getPacMan().getTopLeftCorner();
         final CanvasRect pacManRect = SpriteUtil.toRect(pacmanTopLeftCorner, SpriteE.PAC_MAN);
 
         final Optional<CollisionReport> reportOpt = M2SSpriteCollisionDetector.detect(pacManRect, SpriteE.SUGAR);
@@ -46,7 +46,7 @@ public class CollisionSystem {
     }
 
     private void detectPacman2SuperSugarCollision() {
-        final CanvasCoordinate pacmanTopLeftCorner = gameState.getPacMan().getCurrCanvasCord();
+        final CanvasCoordinate pacmanTopLeftCorner = gameState.getPacMan().getTopLeftCorner();
         final CanvasRect pacManRect = SpriteUtil.toRect(pacmanTopLeftCorner, SpriteE.PAC_MAN);
 
         final Optional<CollisionReport> reportOpt = M2SSpriteCollisionDetector.detect(pacManRect, SpriteE.SUPER_SUGAR);
@@ -59,7 +59,7 @@ public class CollisionSystem {
     }
 
     private void detectPacman2GhostCollision() {
-        final CanvasCoordinate pacManTopLeftCorner = gameState.getPacMan().getCurrCanvasCord();
+        final CanvasCoordinate pacManTopLeftCorner = gameState.getPacMan().getTopLeftCorner();
         final CanvasRect pacManRect = SpriteUtil.toRect(pacManTopLeftCorner, SpriteE.PAC_MAN);
 
         for(Ghost ghost: gameState.getGhosts()) {
