@@ -23,31 +23,35 @@ public class GhostHouseS extends Sprite {
 
 
     public GhostHouseS(GameState gameState) {
-        super(gameState, SpriteE.GHOST_HOUSE, 0, 0);
+        super(gameState, SpriteE.GHOST_HOUSE);
 
         final int mazeWidth = (int) (DimensionsC.CANVAS_WIDTH_PIXELS / DimensionsC.MAZE_CELL_SIZE_PIXELS);
         final int mazeHeight = (int) (DimensionsC.CANVAS_HEIGHT_PIXELS / DimensionsC.MAZE_CELL_SIZE_PIXELS);
 
         final double sCol = (mazeWidth / 2 - 3) * DimensionsC.MAZE_CELL_SIZE_PIXELS;
         final double sRow = (mazeHeight / 2 - 3) * DimensionsC.MAZE_CELL_SIZE_PIXELS;
-        setCol(sCol);
-        setRow(sRow);
 
         this.eCol = (mazeWidth / 2 + 3) * DimensionsC.MAZE_CELL_SIZE_PIXELS;
         this.eRow = (mazeHeight / 2) * DimensionsC.MAZE_CELL_SIZE_PIXELS;
+
+        setTopLeftCorner(new CanvasCoordinate(sRow, sCol));
+        setWidth(eCol - sCol + 1);
+        setHeight(eRow - sRow + 1);
+
         putGhostHouse();
     }
 
     private void putGhostHouse() {
         final MazeCell doorCell = calcDoorCel();
-
-        for (double i = row; i<=eRow; i+=DimensionsC.MAZE_CELL_SIZE_PIXELS) {
-            for (double j = col; j<=eCol; j+=DimensionsC.MAZE_CELL_SIZE_PIXELS) {
+        final double sCol = getCol();
+        final double sRow = getRow();
+        for (double i = sRow; i<=eRow; i+=DimensionsC.MAZE_CELL_SIZE_PIXELS) {
+            for (double j = sCol; j<=eCol; j+=DimensionsC.MAZE_CELL_SIZE_PIXELS) {
                 MazeCell cell = CanvasUtil.toMazeCoordinate(new CanvasCoordinate(i, j), DirectionsE.STILL);
-                SpriteE spriteType = null;
+                SpriteE spriteType;
                 if (cell.equals(doorCell)) {
                     spriteType = SpriteE.GHOST_HOUSE_DOOR;
-                } else if (i == row || i ==eRow || j==col || j==eCol) {
+                } else if (i == sRow || i ==eRow || j == sCol || j==eCol) {
                     spriteType = SpriteE.GHOST_HOUSE_WALL;
                 } else {
                     spriteType = SpriteE.GHOST_HOUSE_EMPTY;
@@ -62,14 +66,16 @@ public class GhostHouseS extends Sprite {
         final GraphicsContext con = canvas.getGraphicsContext2D();
 
         final MazeCell doorCell = calcDoorCel();
+        final double sCol = getCol();
+        final double sRow = getRow();
 
-        for (double i = row; i<=eRow; i+=DimensionsC.MAZE_CELL_SIZE_PIXELS) {
-            for (double j = col; j<=eCol; j+=DimensionsC.MAZE_CELL_SIZE_PIXELS) {
+        for (double i = sRow; i<=eRow; i+=DimensionsC.MAZE_CELL_SIZE_PIXELS) {
+            for (double j = sCol; j<=eCol; j+=DimensionsC.MAZE_CELL_SIZE_PIXELS) {
                 MazeCell cell = CanvasUtil.toMazeCoordinate(new CanvasCoordinate(i, j), DirectionsE.STILL);
                 if (cell.equals(doorCell)) {
-//                    con.setFill(ColorC.GHOST_HOUSE_DOOR);
-//                    con.fillRect(j, i, DimensionsC.MAZE_CELL_SIZE_PIXELS, DimensionsC.MAZE_CELL_SIZE_PIXELS);
-                } else if (i == row || i ==eRow || j==col || j==eCol) {
+                    continue;
+                }
+                if (i == sRow || i == eRow || j == sCol || j == eCol) {
                     con.setFill(ColorC.GHOST_HOUSE_WALL_COLOR);
                     con.fillRect(j, i, DimensionsC.MAZE_CELL_SIZE_PIXELS, DimensionsC.MAZE_CELL_SIZE_PIXELS);
                 }
@@ -78,11 +84,11 @@ public class GhostHouseS extends Sprite {
     }
 
     private double calcDoorRow() {
-        return row;
+        return getRow();
     }
 
     private double calcDoorCol() {
-        return (eCol - col) / 2 + col;
+        return (eCol - getCol()) / 2 + getCol();
     }
 
     private MazeCell calcDoorCel() {

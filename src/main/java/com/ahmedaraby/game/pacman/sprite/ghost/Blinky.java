@@ -41,7 +41,6 @@ public class Blinky extends Ghost implements Subscriber {
 
     @Override
     public void render(Canvas canvas) {
-        System.out.println("blinky: row = " + row + " , col = " + col + " , Dir = " + dir);
         activeMode.render(canvas);
     }
 

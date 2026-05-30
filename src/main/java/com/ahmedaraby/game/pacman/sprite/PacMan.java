@@ -30,11 +30,10 @@ public class PacMan extends MovingSprite implements Subscriber {
     private final PixelStrideTracker closedMousePixelStrideTracker;
 
     public PacMan(GameState gameState) {
-        super(gameState, SpriteE.PAC_MAN, 0, 0, DirectionsE.STILL);
+        super(gameState, SpriteE.PAC_MAN, null, DimensionsC.PAC_MAN_DIAMETER_PIXELS, DimensionsC.PAC_MAN_DIAMETER_PIXELS, DirectionsE.STILL);
 
         final CanvasCoordinate emptyCellPos = Playground.getEmptyMazePosition();
-        setCol(emptyCellPos.getCol());
-        setRow(emptyCellPos.getRow());
+        setTopLeftCorner(emptyCellPos);
 
         this.turnBuffer = new TurnBuffer();
         this.closedMousePixelStrideTracker = new PixelStrideTracker(DimensionsC.PAC_MAN_CLOSED_MOUSE_DISTANCE_PIXELS,
@@ -44,10 +43,9 @@ public class PacMan extends MovingSprite implements Subscriber {
 
     @Override
     public void render(Canvas canvas) {
-        System.out.println("pac man row = " + row + ", pac man col " + col + ", direction = " + dir);
-
         final GraphicsContext con = canvas.getGraphicsContext2D();
-
+        final double col = getCol();
+        final double row = getRow();
         switch (dir) {
             case RIGHT:
                 PacManGraphicsUtil.drawRightOpenMousePacMan(con, col, row);
@@ -87,8 +85,10 @@ public class PacMan extends MovingSprite implements Subscriber {
     }
 
     private void attemptMovement(PacManMovementRequestEvent event) {
-        double newCol = col;
-        double newRow = row;
+        final double col = getCol();
+        final double row = getRow();
+        double newCol = getCol();
+        double newRow = getRow();
 
         switch (event.getDirectionsE()) {
             case RIGHT:
@@ -112,7 +112,9 @@ public class PacMan extends MovingSprite implements Subscriber {
         }
 
         final CanvasCoordinate nextCord = new CanvasCoordinate(newRow, newCol);
-        if (isGoingOutOfCanvas(nextCord)) {
+        final CanvasRect virtualPacManRect = new CanvasRect(nextCord, DimensionsC.PAC_MAN_DIAMETER_PIXELS, DimensionsC.PAC_MAN_DIAMETER_PIXELS);
+
+        if (!virtualPacManRect.within(gameState.getMaze().getRect())) {
             final PacManMovementAttemptDeniedEvent deniedEvent = new PacManMovementAttemptDeniedEvent(
                     nextCord, event.getDirectionsE(), event.getSource()
             );
@@ -135,8 +137,8 @@ public class PacMan extends MovingSprite implements Subscriber {
 
     private void handleApprovedMovementAttempt(PacManMovementAttemptApprovedEvent event) {
         System.out.println("approved move");
-        row = event.getRequestedPacManCanvasRectTopLeftCorner().getRow();
-        col = event.getRequestedPacManCanvasRectTopLeftCorner().getCol();
+        setRow(event.getRequestedPacManCanvasRectTopLeftCorner().getRow());
+        setCol(event.getRequestedPacManCanvasRectTopLeftCorner().getCol());
         dir = event.getRequestedDirection();
 
         if (event.getMovementAttemptSource() instanceof Scene || event.getMovementAttemptSource() instanceof TurnBuffer) {
@@ -156,7 +158,7 @@ public class PacMan extends MovingSprite implements Subscriber {
         if (event.getMovementAttemptSource() instanceof Scene) {
             // user input
             if(turnBuffer.isBlockedTurn(dir, event.getRequestedDirection())) {
-                final CanvasRect pacManCanvasCanvasRect = new CanvasRect(new CanvasCoordinate(row, col), DimensionsC.MAZE_CELL_SIZE_PIXELS, DimensionsC.MAZE_CELL_SIZE_PIXELS);
+                final CanvasRect pacManCanvasCanvasRect = new CanvasRect(new CanvasCoordinate(getRow(), getCol()), DimensionsC.MAZE_CELL_SIZE_PIXELS, DimensionsC.MAZE_CELL_SIZE_PIXELS);
                 turnBuffer.bufferTurn(event.getRequestedDirection(), pacManCanvasCanvasRect);
             }
         }

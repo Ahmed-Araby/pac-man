@@ -22,7 +22,7 @@ import com.ahmedaraby.game.pacman.maze.Playground;
 public class SuperSugar extends Sprite implements Subscriber {
 
     public SuperSugar(GameState gameState) {
-        super(gameState, SpriteE.SUPER_SUGAR, -1, -1);
+        super(gameState, SpriteE.SUPER_SUGAR, null, DimensionsC.SUPER_SUGAR_DIAMETER_PIXELS, DimensionsC.SUPER_SUGAR_DIAMETER_PIXELS);
 
         for(int row = 0; row < Playground.height(); row++) {
             for (int col = 0; col < Playground.width(); col++) {

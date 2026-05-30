@@ -22,8 +22,8 @@ public abstract class MovingSprite extends Sprite {
 
     protected DirectionsE dir;
 
-    public MovingSprite(GameState gameState, SpriteE type, double col, double row, DirectionsE dir) {
-        super(gameState, type, col, row);
+    public MovingSprite(GameState gameState, SpriteE type, CanvasCoordinate cord, double width, double height, DirectionsE dir) {
+        super(gameState, type, cord, width, height);
         this.dir = dir;
     }
 

@@ -18,7 +18,7 @@ public class Maze extends Sprite {
 
 
     public Maze(GameState gameState) {
-        super(gameState, SpriteE.MAZE, 0, 0);
+        super(gameState, SpriteE.MAZE, new CanvasCoordinate(0, 0), DimensionsC.MAZE_WIDTH, DimensionsC.MAZE_HEIGHT);
     }
 
     @Override
