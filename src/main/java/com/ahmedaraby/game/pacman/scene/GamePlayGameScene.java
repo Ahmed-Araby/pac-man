@@ -173,8 +173,10 @@ public class GamePlayGameScene implements GameScene {
 
     @Override
     public void update() {
+        pacMan.move(null);
         blinky.move(null);
         inky.move(null);
+
         collisionSystem.detect();
     }
 }

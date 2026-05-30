@@ -2,18 +2,18 @@ package com.ahmedaraby.game.pacman.event.movement;
 
 import com.ahmedaraby.game.pacman.event.Event;
 import com.ahmedaraby.game.pacman.event.EventType;
+import com.ahmedaraby.jengine.entity.Vector;
 import lombok.Getter;
-import com.ahmedaraby.game.pacman.constant.DirectionsE;
 
 @Getter
 public class PacManMovementRequestEvent extends Event<EventType> {
-    private final DirectionsE directionsE;
+    private final Vector dir;
     private final Object source;
 
 
-    public PacManMovementRequestEvent(DirectionsE directionsE, Object source) {
+    public PacManMovementRequestEvent(Vector dir, Object source) {
         super(EventType.PAC_MAN_MOVEMENT_REQUEST);
-        this.directionsE = directionsE;
+        this.dir = dir;
         this.source = source;
     }
 }
