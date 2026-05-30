@@ -3,6 +3,7 @@ package com.ahmedaraby.game.pacman.util.canvas;
 import com.ahmedaraby.game.pacman.constant.DirectionsE;
 import com.ahmedaraby.jengine.entity.Coordinate;
 import com.ahmedaraby.jengine.entity.Rectangle;
+import com.ahmedaraby.jengine.entity.Vector;
 
 import java.util.List;
 
@@ -51,30 +52,29 @@ public class CanvasRectUtils {
     }
 
 
-    public static Coordinate getTopLeftCornerOfNextRect(Rectangle rectangle, DirectionsE movementDirection) {
+    public static Coordinate getTopLeftCornerOfNextRect(Rectangle rectangle, Vector movementDirection) {
         return getNextRect(rectangle, movementDirection).getTopLeftCorner();
     }
-    public static Rectangle getNextRect(Rectangle rectangle, DirectionsE movementDirection) {
+    public static Rectangle getNextRect(Rectangle rectangle, Vector movementDirection) {
         double nextCanvasCellCol;
         double nextCanvasCellRow;
 
-        switch (movementDirection) {
-            case RIGHT:
-                nextCanvasCellCol = getTopLeftCornerColOfNextRect(rectangle);
-                return new Rectangle(new Coordinate(rectangle.getTopLeftCorner().getRow(), nextCanvasCellCol), rectangle.getWidth(), rectangle.getHeight());
-            case UP:
-                nextCanvasCellRow = getTopLeftCornerRowOfPrevRect(rectangle);
-                return new Rectangle(new Coordinate(nextCanvasCellRow, rectangle.getTopLeftCorner().getCol()), rectangle.getWidth(), rectangle.getHeight());
-            case DOWN:
-                nextCanvasCellRow = getTopLeftCornerRowOfNextRect(rectangle);
-                return new Rectangle(new Coordinate(nextCanvasCellRow, rectangle.getTopLeftCorner().getCol()), rectangle.getWidth(), rectangle.getHeight());
-            case LEFT:
-                nextCanvasCellCol = getTopLeftCornerColOfPrevRect(rectangle);
-                return new Rectangle(new Coordinate(rectangle.getTopLeftCorner().getRow(), nextCanvasCellCol), rectangle.getWidth(), rectangle.getHeight());
-            case STILL:
-                return new Rectangle(new Coordinate(rectangle.getTopLeftCorner().getRow(), rectangle.getTopLeftCorner().getCol()), rectangle.getWidth(), rectangle.getHeight());
-            default:
-                throw new IllegalStateException();
+        if (movementDirection == Vector.RIGHT) {
+            nextCanvasCellCol = getTopLeftCornerColOfNextRect(rectangle);
+            return new Rectangle(new Coordinate(rectangle.getTopLeftCorner().getRow(), nextCanvasCellCol), rectangle.getWidth(), rectangle.getHeight());
+        } else if (movementDirection == Vector.UP) {
+            nextCanvasCellRow = getTopLeftCornerRowOfPrevRect(rectangle);
+            return new Rectangle(new Coordinate(nextCanvasCellRow, rectangle.getTopLeftCorner().getCol()), rectangle.getWidth(), rectangle.getHeight());
+        } else if (movementDirection == Vector.DOWN) {
+            nextCanvasCellRow = getTopLeftCornerRowOfNextRect(rectangle);
+            return new Rectangle(new Coordinate(nextCanvasCellRow, rectangle.getTopLeftCorner().getCol()), rectangle.getWidth(), rectangle.getHeight());
+        } else if (movementDirection == Vector.LEFT) {
+            nextCanvasCellCol = getTopLeftCornerColOfPrevRect(rectangle);
+            return new Rectangle(new Coordinate(rectangle.getTopLeftCorner().getRow(), nextCanvasCellCol), rectangle.getWidth(), rectangle.getHeight());
+        } else if (movementDirection == Vector.STILL) {
+            return new Rectangle(new Coordinate(rectangle.getTopLeftCorner().getRow(), rectangle.getTopLeftCorner().getCol()), rectangle.getWidth(), rectangle.getHeight());
+        } else {
+            throw new IllegalStateException();
         }
     }
 
