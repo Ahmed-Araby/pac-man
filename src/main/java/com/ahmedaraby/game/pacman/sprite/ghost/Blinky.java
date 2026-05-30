@@ -32,6 +32,7 @@ public class Blinky extends Ghost implements Subscriber {
 
     @Override
     public void init() {
+        super.init();
         final GhostHouseS ghostHouseS = gameState.getGhostHouseS();
         final double col = ghostHouseS.getCol() + DimensionsC.MAZE_CELL_SIZE_PIXELS;
         final double row = ghostHouseS.getERow() - DimensionsC.MAZE_CELL_SIZE_PIXELS;

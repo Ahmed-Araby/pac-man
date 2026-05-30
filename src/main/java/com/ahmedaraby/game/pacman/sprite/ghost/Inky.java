@@ -32,6 +32,7 @@ public class Inky extends Ghost implements Subscriber {
 
     @Override
     public void init() {
+        super.init();
         final GhostHouseS ghostHouseS = gameState.getGhostHouseS();
         final double col = ghostHouseS.getCol() + 2 * DimensionsC.MAZE_CELL_SIZE_PIXELS;
         final double row = ghostHouseS.getERow() - DimensionsC.MAZE_CELL_SIZE_PIXELS;
