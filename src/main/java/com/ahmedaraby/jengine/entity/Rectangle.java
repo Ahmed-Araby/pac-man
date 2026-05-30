@@ -31,15 +31,15 @@ public class Rectangle {
     }
 
     public Coordinate topRightCorner() {
-       return new Coordinate(0, width - 1);
+       return new Coordinate(topLeftCorner.getRow(), width - 1);
     }
 
     public Coordinate bottomRightCorner() {
-        return new Coordinate(height - 1, width -1);
+        return new Coordinate(topLeftCorner.getRow() + height - 1, topLeftCorner.getCol() + width - 1);
     }
 
     public Coordinate bottomLeftCorner() {
-        return new Coordinate(height - 1, 0);
+        return new Coordinate(topLeftCorner.getRow() + height - 1, topLeftCorner.getCol());
     }
 
 
