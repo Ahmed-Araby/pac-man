@@ -77,6 +77,8 @@ public class PacMan extends MovingSprite implements Subscriber<EventType> {
     public void move(Event event) {
         if (event == null) {
             attemptMovement(new PacManMovementRequestEvent(dir, this));
+        } else {
+            attemptMovement((PacManMovementRequestEvent)event);
         }
     }
 
@@ -170,7 +172,7 @@ public class PacMan extends MovingSprite implements Subscriber<EventType> {
     public void update(Event<EventType> event) {
         switch (event.getType()) {
             case PAC_MAN_MOVEMENT_REQUEST:
-                attemptMovement(((PacManMovementRequestEvent)event));
+                move(event);
                 break;
             default:
                 throw new UnsupportedOperationException();
