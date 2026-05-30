@@ -17,7 +17,7 @@ import com.ahmedaraby.game.pacman.util.SugarUtil;
 import com.ahmedaraby.game.pacman.util.canvas.CanvasUtil;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
-import com.ahmedaraby.game.pacman.maze.Playground;
+import com.ahmedaraby.game.pacman.playground.Playground;
 
 public class SuperSugar extends Sprite implements Subscriber {
 

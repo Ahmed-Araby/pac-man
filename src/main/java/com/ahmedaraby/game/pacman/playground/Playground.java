@@ -1,4 +1,4 @@
-package com.ahmedaraby.game.pacman.maze;
+package com.ahmedaraby.game.pacman.playground;
 
 import com.ahmedaraby.game.pacman.constant.DimensionsC;
 import com.ahmedaraby.game.pacman.constant.SpriteE;

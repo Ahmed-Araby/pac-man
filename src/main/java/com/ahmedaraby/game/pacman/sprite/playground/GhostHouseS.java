@@ -10,7 +10,7 @@ import lombok.Getter;
 import lombok.Setter;
 import com.ahmedaraby.jengine.entity.Coordinate;
 import com.ahmedaraby.game.pacman.entity.MazeCell;
-import com.ahmedaraby.game.pacman.maze.Playground;
+import com.ahmedaraby.game.pacman.playground.Playground;
 import com.ahmedaraby.game.pacman.model.GameState;
 import com.ahmedaraby.game.pacman.sprite.Sprite;
 import com.ahmedaraby.game.pacman.util.canvas.CanvasUtil;

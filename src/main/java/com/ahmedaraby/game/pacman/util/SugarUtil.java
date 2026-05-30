@@ -5,7 +5,7 @@ import com.ahmedaraby.game.pacman.constant.DirectionsE;
 import com.ahmedaraby.jengine.entity.Coordinate;
 import com.ahmedaraby.game.pacman.entity.MazeCell;
 import com.ahmedaraby.game.pacman.util.canvas.CanvasUtil;
-import com.ahmedaraby.game.pacman.maze.Playground;
+import com.ahmedaraby.game.pacman.playground.Playground;
 
 public class SugarUtil {
 

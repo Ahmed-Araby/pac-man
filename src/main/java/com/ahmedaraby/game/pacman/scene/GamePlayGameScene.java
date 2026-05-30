@@ -19,7 +19,7 @@ import com.ahmedaraby.game.pacman.event.EventType;
 import com.ahmedaraby.game.pacman.event.manager.SyncEventManager;
 import com.ahmedaraby.game.pacman.input.JavaFXInputHandler;
 import com.ahmedaraby.game.pacman.input.JavaFXUserInputHandler;
-import com.ahmedaraby.game.pacman.maze.Playground;
+import com.ahmedaraby.game.pacman.playground.Playground;
 import com.ahmedaraby.game.pacman.sound.SoundPlayer;
 import com.ahmedaraby.game.pacman.sprite.PacMan;
 import com.ahmedaraby.game.pacman.sprite.ghost.Inky;
