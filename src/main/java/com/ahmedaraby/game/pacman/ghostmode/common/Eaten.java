@@ -3,7 +3,7 @@ package com.ahmedaraby.game.pacman.ghostmode.common;
 import com.ahmedaraby.jengine.animation.Animator;
 import com.ahmedaraby.jengine.animation.DistanceBasedAnimator;
 import com.ahmedaraby.game.pacman.constant.GhostEatenSpritesFileNameC;
-import com.ahmedaraby.game.pacman.entity.CanvasCoordinate;
+import com.ahmedaraby.game.pacman.entity.Coordinate;
 import com.ahmedaraby.game.pacman.entity.Vector;
 import com.ahmedaraby.game.pacman.ghostmode.navigation.GhostNavigator;
 import com.ahmedaraby.game.pacman.ghostmode.navigation.ShortestPathNavigator;
@@ -24,7 +24,7 @@ public class Eaten extends GhostMode {
 
     private final GhostNavigator navigator;
     private final Animator animator;
-    private CanvasCoordinate ghostHouseEmptyLoc;
+    private Coordinate ghostHouseEmptyLoc;
 
     public Eaten(Ghost ghost, GameState gameState) {
         super(ghost, gameState);
@@ -41,7 +41,7 @@ public class Eaten extends GhostMode {
     public void init() {
         final double ghostHERow = gameState.getGhostHouseS().getERow();;
         final double ghostHSCol = gameState.getGhostHouseS().getCol();
-        ghostHouseEmptyLoc = new CanvasCoordinate(ghostHERow - DimensionsC.MAZE_CELL_SIZE_PIXELS, ghostHSCol + DimensionsC.MAZE_CELL_SIZE_PIXELS);
+        ghostHouseEmptyLoc = new Coordinate(ghostHERow - DimensionsC.MAZE_CELL_SIZE_PIXELS, ghostHSCol + DimensionsC.MAZE_CELL_SIZE_PIXELS);
     }
 
     @Override
@@ -62,9 +62,9 @@ public class Eaten extends GhostMode {
 
     @Override
     public void move() {
-        final CanvasCoordinate currCord = new CanvasCoordinate(ghost.getRow(), ghost.getCol());
+        final Coordinate currCord = new Coordinate(ghost.getRow(), ghost.getCol());
         final DirectionsE newDir = this.navigator.nextMoveDirection(currCord, ghostHouseEmptyLoc);
-        final CanvasCoordinate newCord = GhostUtil.move(currCord, newDir);
+        final Coordinate newCord = GhostUtil.move(currCord, newDir);
 
         ghost.setDir(newDir);
         ghost.setRow(newCord.getRow());

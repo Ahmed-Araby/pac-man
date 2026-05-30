@@ -3,7 +3,7 @@ package com.ahmedaraby.game.pacman.util.ghost;
 import com.ahmedaraby.jengine.collision.sprite.M2SSpriteCollisionDetector;
 import com.ahmedaraby.game.pacman.constant.DimensionsC;
 import com.ahmedaraby.game.pacman.constant.SpriteE;
-import com.ahmedaraby.game.pacman.entity.CanvasCoordinate;
+import com.ahmedaraby.game.pacman.entity.Coordinate;
 import com.ahmedaraby.game.pacman.entity.Rectangle;
 import com.ahmedaraby.game.pacman.entity.Vector;
 import com.ahmedaraby.game.pacman.model.CollisionReport;
@@ -22,13 +22,13 @@ public class FrightenedGhostUtil {
                 .toList();
     }
 
-    public static List<Vector> getEligibleDirections(CanvasCoordinate cord, Vector dir) {
+    public static List<Vector> getEligibleDirections(Coordinate cord, Vector dir) {
         final List<Vector> allowedDirections = getAllowedDirections(dir);
         return allowedDirections
                 .stream()
                 .filter(allowedDir -> {
                     final DirectionsE allowedDirectionE = VectorUtil.toDirection(allowedDir);
-                    final CanvasCoordinate candidateNextCord = GhostUtil.move(cord, allowedDirectionE);
+                    final Coordinate candidateNextCord = GhostUtil.move(cord, allowedDirectionE);
                     if (isGoingOutOfCanvas(candidateNextCord))  {
                         return false;
                     }
@@ -41,7 +41,7 @@ public class FrightenedGhostUtil {
 
     // [TODO] move this method because it doesn't fit this class
     // [TODO] move this to the Sprite class
-    private static boolean isGoingOutOfCanvas(CanvasCoordinate topLeftCorner) {
+    private static boolean isGoingOutOfCanvas(Coordinate topLeftCorner) {
         return topLeftCorner.getRow() < 0 || topLeftCorner.getRow() > DimensionsC.CANVAS_HEIGHT_PIXELS - DimensionsC.GHOST_HEIGHT_PIXELS ||
                 topLeftCorner.getCol() < 0 || topLeftCorner.getCol() > DimensionsC.CANVAS_WIDTH_PIXELS - DimensionsC.GHOST_WIDTH_PIXELS;
     }

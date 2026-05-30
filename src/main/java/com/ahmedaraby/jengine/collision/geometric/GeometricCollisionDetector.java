@@ -1,12 +1,12 @@
 package com.ahmedaraby.jengine.collision.geometric;
 
 import com.ahmedaraby.game.pacman.constant.DimensionsC;
-import com.ahmedaraby.game.pacman.entity.CanvasCoordinate;
+import com.ahmedaraby.game.pacman.entity.Coordinate;
 import com.ahmedaraby.game.pacman.entity.Rectangle;
 
 public interface GeometricCollisionDetector {
 
-    boolean collide(CanvasCoordinate topLeftCorner1, CanvasCoordinate topLeftCorner2);
+    boolean collide(Coordinate topLeftCorner1, Coordinate topLeftCorner2);
 
     default boolean outOfCanvas(Rectangle rect) {
         return rect.topEdgeRow() < 0 || rect.bottomEdgeRow() >= DimensionsC.CANVAS_HEIGHT_PIXELS

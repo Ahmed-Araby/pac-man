@@ -11,7 +11,7 @@ import com.ahmedaraby.game.pacman.config.Configs;
 import com.ahmedaraby.game.pacman.constant.DimensionsC;
 import com.ahmedaraby.game.pacman.constant.DirectionsE;
 import com.ahmedaraby.game.pacman.constant.SpriteFileNameC;
-import com.ahmedaraby.game.pacman.entity.CanvasCoordinate;
+import com.ahmedaraby.game.pacman.entity.Coordinate;
 import com.ahmedaraby.game.pacman.ghostmode.Scattered;
 import com.ahmedaraby.game.pacman.ghostmode.navigation.ShortestPathNavigator;
 import com.ahmedaraby.game.pacman.util.ghost.GhostUtil;
@@ -20,7 +20,7 @@ public class BlinkyScattered extends Scattered {
 
     private final Animator animator;
     private final GhostNavigator navigator;
-    private final CanvasCoordinate topRightCorner = new CanvasCoordinate(
+    private final Coordinate topRightCorner = new Coordinate(
             0,
             DimensionsC.CANVAS_WIDTH_PIXELS - 1
     );
@@ -40,9 +40,9 @@ public class BlinkyScattered extends Scattered {
 
     @Override
     public void move() {
-        final CanvasCoordinate ghostCurrCord = new CanvasCoordinate(ghost.getRow(), ghost.getCol());
+        final Coordinate ghostCurrCord = new Coordinate(ghost.getRow(), ghost.getCol());
         final DirectionsE directionsE = navigator.nextMoveDirection(ghostCurrCord, topRightCorner);
-        final CanvasCoordinate ghostNewCord = GhostUtil.move(ghostCurrCord, directionsE);
+        final Coordinate ghostNewCord = GhostUtil.move(ghostCurrCord, directionsE);
 
         ghost.setDir(directionsE);
         ghost.setRow(ghostNewCord.getRow());

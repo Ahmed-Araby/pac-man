@@ -9,7 +9,7 @@ import com.ahmedaraby.game.pacman.model.GameState;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import com.ahmedaraby.game.pacman.config.Configs;
-import com.ahmedaraby.game.pacman.entity.CanvasCoordinate;
+import com.ahmedaraby.game.pacman.entity.Coordinate;
 import com.ahmedaraby.game.pacman.entity.Rectangle;
 import com.ahmedaraby.game.pacman.entity.MazeCell;
 import com.ahmedaraby.game.pacman.event.Event;
@@ -47,8 +47,8 @@ public class Sugar extends Sprite implements Subscriber {
         for (int row = 0; row < Playground.height(); row++) {
             for (int col = 0; col < Playground.width(); col++) {
                 if (Playground.hasSugar(row, col)) {
-                    final CanvasCoordinate cellTopLeftCornerCanvas = MazeUtil.getCanvasCord(row, col);
-                    final CanvasCoordinate sugarCellTopLeftCornerCanvas = SugarUtil.getSugarTopLeftCornerCanvas(cellTopLeftCornerCanvas);
+                    final Coordinate cellTopLeftCornerCanvas = MazeUtil.getCanvasCord(row, col);
+                    final Coordinate sugarCellTopLeftCornerCanvas = SugarUtil.getSugarTopLeftCornerCanvas(cellTopLeftCornerCanvas);
                     con.fillRect(sugarCellTopLeftCornerCanvas.getCol(), sugarCellTopLeftCornerCanvas.getRow(), DimensionsC.SUGAR_CELL_SIZE_PIXELS, DimensionsC.SUGAR_CELL_SIZE_PIXELS);
                 }
             }

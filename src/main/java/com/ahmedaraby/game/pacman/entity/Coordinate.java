@@ -7,24 +7,24 @@ import lombok.ToString;
 @AllArgsConstructor
 @Getter
 @ToString
-public class CanvasCoordinate {
+public class Coordinate {
     private final double row, col;
 
-    public CanvasCoordinate(Vector v) {
+    public Coordinate(Vector v) {
         this.col = v.getX();
         this.row = v.getY();
     }
 
     @Override
     public boolean equals(Object o) {
-        if (o == null || !(o instanceof CanvasCoordinate)) {
+        if (o == null || !(o instanceof Coordinate)) {
             return false;
         }
-        return row == ((CanvasCoordinate) o).getRow() && col == ((CanvasCoordinate) o).getCol();
+        return row == ((Coordinate) o).getRow() && col == ((Coordinate) o).getCol();
     }
 
-    public CanvasCoordinate add(double colOffset, double rowOffset) {
-        return new CanvasCoordinate(row + rowOffset, col + colOffset);
+    public Coordinate add(double colOffset, double rowOffset) {
+        return new Coordinate(row + rowOffset, col + colOffset);
     }
 
     public boolean within(Rectangle rect) {

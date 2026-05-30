@@ -4,7 +4,7 @@ package com.ahmedaraby.jengine.collision.sprite;
 import com.ahmedaraby.jengine.collision.geometric.Rect2RectCollisionDetectorUtil;
 import com.ahmedaraby.game.pacman.constant.DimensionsC;
 import com.ahmedaraby.game.pacman.constant.SpriteE;
-import com.ahmedaraby.game.pacman.entity.CanvasCoordinate;
+import com.ahmedaraby.game.pacman.entity.Coordinate;
 import com.ahmedaraby.game.pacman.entity.Rectangle;
 import com.ahmedaraby.game.pacman.model.CollisionReport;
 import com.ahmedaraby.game.pacman.util.SpriteUtil;
@@ -24,7 +24,7 @@ public class M2SSpriteCollisionDetector {
                 .toList();
     }
     public static Optional<CollisionReport> detect(Rectangle rect, SpriteE target) {
-        final List<CanvasCoordinate> corners = CanvasRectUtils.get4Corners(rect);
+        final List<Coordinate> corners = CanvasRectUtils.get4Corners(rect);
         final Optional<Rectangle> collidingRect = corners.stream()
                 .map(M2SSpriteCollisionDetector::toTopLeftCornerOfRectContainingPoint)
                 .filter(topLeftCornerCord -> isTarget(topLeftCornerCord, target))
@@ -39,10 +39,10 @@ public class M2SSpriteCollisionDetector {
     }
 
 
-    private static CanvasCoordinate toTopLeftCornerOfRectContainingPoint(CanvasCoordinate point) {
+    private static Coordinate toTopLeftCornerOfRectContainingPoint(Coordinate point) {
         return CanvasRectUtils.getTopLeftCornerOfRectContainingPoint(DimensionsC.MAZE_CELL_SIZE_PIXELS, DimensionsC.MAZE_CELL_SIZE_PIXELS, point);
     }
-    private static boolean isTarget(CanvasCoordinate topLeftCornerCord, SpriteE targetSpriteType) {
+    private static boolean isTarget(Coordinate topLeftCornerCord, SpriteE targetSpriteType) {
         return SpriteUtil.getSpriteType(topLeftCornerCord).equals(targetSpriteType);
     }
 }

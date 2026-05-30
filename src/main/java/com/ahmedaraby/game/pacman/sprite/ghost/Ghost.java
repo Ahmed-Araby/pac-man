@@ -3,7 +3,7 @@ package com.ahmedaraby.game.pacman.sprite.ghost;
 import com.ahmedaraby.game.pacman.constant.DimensionsC;
 import com.ahmedaraby.game.pacman.constant.DirectionsE;
 import com.ahmedaraby.game.pacman.constant.SpriteE;
-import com.ahmedaraby.game.pacman.entity.CanvasCoordinate;
+import com.ahmedaraby.game.pacman.entity.Coordinate;
 import com.ahmedaraby.game.pacman.event.Event;
 import com.ahmedaraby.game.pacman.event.EventType;
 import com.ahmedaraby.game.pacman.ghostmode.Chaser;
@@ -26,7 +26,7 @@ public abstract class Ghost extends MovingSprite {
 
 
     public Ghost(GameState gameState, SpriteE type, double col, double row, DirectionsE dir) {
-        super(gameState, type, new CanvasCoordinate(row, col), DimensionsC.GHOST_WIDTH_PIXELS, DimensionsC.GHOST_HEIGHT_PIXELS, dir);
+        super(gameState, type, new Coordinate(row, col), DimensionsC.GHOST_WIDTH_PIXELS, DimensionsC.GHOST_HEIGHT_PIXELS, dir);
     }
 
     @Override

@@ -23,7 +23,7 @@ public class Vector {
         this.y = y;
     }
 
-    public Vector(CanvasCoordinate cord) {
+    public Vector(Coordinate cord) {
         this.x = cord.getCol();
         this.y = cord.getRow();
     }

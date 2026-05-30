@@ -8,7 +8,7 @@ import com.ahmedaraby.game.pacman.config.GameConfig;
 import com.ahmedaraby.game.pacman.constant.ColorC;
 import com.ahmedaraby.game.pacman.constant.DimensionsC;
 import com.ahmedaraby.game.pacman.constant.SpriteE;
-import com.ahmedaraby.game.pacman.entity.CanvasCoordinate;
+import com.ahmedaraby.game.pacman.entity.Coordinate;
 import com.ahmedaraby.game.pacman.maze.Playground;
 import com.ahmedaraby.game.pacman.sprite.Sprite;
 import com.ahmedaraby.game.pacman.util.MazeUtil;
@@ -18,7 +18,7 @@ public class Maze extends Sprite {
 
 
     public Maze(GameState gameState) {
-        super(gameState, SpriteE.MAZE, new CanvasCoordinate(0, 0), DimensionsC.MAZE_WIDTH, DimensionsC.MAZE_HEIGHT);
+        super(gameState, SpriteE.MAZE, new Coordinate(0, 0), DimensionsC.MAZE_WIDTH, DimensionsC.MAZE_HEIGHT);
     }
 
     @Override
@@ -33,7 +33,7 @@ public class Maze extends Sprite {
         con.setFill(ColorC.CANVAS_WALL_COLOR);
         for (int mazeRow = 0; mazeRow< Playground.height(); mazeRow++) {
             for(int mazeCol = 0; mazeCol< Playground.width(); mazeCol++) {
-                final CanvasCoordinate canvasCord = MazeUtil.getCanvasCord(mazeRow, mazeCol);
+                final Coordinate canvasCord = MazeUtil.getCanvasCord(mazeRow, mazeCol);
                 if (Playground.get(mazeRow, mazeCol) == SpriteE.WALL) {
                     // map from the abstract maze scale to the graphical maze scale
                     con.setFill(ColorC.CANVAS_WALL_COLOR);

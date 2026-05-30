@@ -8,7 +8,7 @@ import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import lombok.Getter;
 import lombok.Setter;
-import com.ahmedaraby.game.pacman.entity.CanvasCoordinate;
+import com.ahmedaraby.game.pacman.entity.Coordinate;
 import com.ahmedaraby.game.pacman.entity.MazeCell;
 import com.ahmedaraby.game.pacman.maze.Playground;
 import com.ahmedaraby.game.pacman.model.GameState;
@@ -34,7 +34,7 @@ public class GhostHouseS extends Sprite {
         this.eCol = (mazeWidth / 2 + 3) * DimensionsC.MAZE_CELL_SIZE_PIXELS;
         this.eRow = (mazeHeight / 2) * DimensionsC.MAZE_CELL_SIZE_PIXELS;
 
-        setTopLeftCorner(new CanvasCoordinate(sRow, sCol));
+        setTopLeftCorner(new Coordinate(sRow, sCol));
         setWidth(eCol - sCol + 1);
         setHeight(eRow - sRow + 1);
 
@@ -47,7 +47,7 @@ public class GhostHouseS extends Sprite {
         final double sRow = getRow();
         for (double i = sRow; i<=eRow; i+=DimensionsC.MAZE_CELL_SIZE_PIXELS) {
             for (double j = sCol; j<=eCol; j+=DimensionsC.MAZE_CELL_SIZE_PIXELS) {
-                MazeCell cell = CanvasUtil.toMazeCoordinate(new CanvasCoordinate(i, j), DirectionsE.STILL);
+                MazeCell cell = CanvasUtil.toMazeCoordinate(new Coordinate(i, j), DirectionsE.STILL);
                 SpriteE spriteType;
                 if (cell.equals(doorCell)) {
                     spriteType = SpriteE.GHOST_HOUSE_DOOR;
@@ -71,7 +71,7 @@ public class GhostHouseS extends Sprite {
 
         for (double i = sRow; i<=eRow; i+=DimensionsC.MAZE_CELL_SIZE_PIXELS) {
             for (double j = sCol; j<=eCol; j+=DimensionsC.MAZE_CELL_SIZE_PIXELS) {
-                MazeCell cell = CanvasUtil.toMazeCoordinate(new CanvasCoordinate(i, j), DirectionsE.STILL);
+                MazeCell cell = CanvasUtil.toMazeCoordinate(new Coordinate(i, j), DirectionsE.STILL);
                 if (cell.equals(doorCell)) {
                     continue;
                 }
@@ -92,7 +92,7 @@ public class GhostHouseS extends Sprite {
     }
 
     private MazeCell calcDoorCel() {
-        final CanvasCoordinate cord = new CanvasCoordinate(calcDoorRow(), calcDoorCol());
+        final Coordinate cord = new Coordinate(calcDoorRow(), calcDoorCol());
         return CanvasUtil.toMazeCoordinate(cord, DirectionsE.STILL);
     }
 

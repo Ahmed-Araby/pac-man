@@ -1,6 +1,6 @@
 package com.ahmedaraby.game.pacman.util.pacman;
 
-import com.ahmedaraby.game.pacman.entity.CanvasCoordinate;
+import com.ahmedaraby.game.pacman.entity.Coordinate;
 import com.ahmedaraby.game.pacman.entity.Rectangle;
 import com.ahmedaraby.game.pacman.event.movement.PacManMovementRequestEvent;
 import com.ahmedaraby.game.pacman.util.canvas.CanvasRectUtils;
@@ -51,7 +51,7 @@ public class TurnBuffer {
 
     private boolean hasPacManMovedBeyondTheNextCell(Rectangle currPacManCanvasRectangle, DirectionsE currentPacManDirection) {
         // handle out of bounds situations
-        final CanvasCoordinate topLeftCornerOfNextRect = CanvasRectUtils.getTopLeftCornerOfNextRect(pacManCanvasRectangleAtBufferingTime, currentPacManDirection);
+        final Coordinate topLeftCornerOfNextRect = CanvasRectUtils.getTopLeftCornerOfNextRect(pacManCanvasRectangleAtBufferingTime, currentPacManDirection);
 
         if (currentPacManDirection == DirectionsE.RIGHT) {
             return currPacManCanvasRectangle.getTopLeftCorner().getCol() > topLeftCornerOfNextRect.getCol();

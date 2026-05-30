@@ -2,7 +2,7 @@ package com.ahmedaraby.game.pacman.maze;
 
 import com.ahmedaraby.game.pacman.constant.DimensionsC;
 import com.ahmedaraby.game.pacman.constant.SpriteE;
-import com.ahmedaraby.game.pacman.entity.CanvasCoordinate;
+import com.ahmedaraby.game.pacman.entity.Coordinate;
 import com.ahmedaraby.game.pacman.entity.MazeCell;
 
 public class Playground {
@@ -78,12 +78,12 @@ public class Playground {
         return maze[0].length;
     }
 
-    public static CanvasCoordinate getEmptyMazePosition() {
+    public static Coordinate getEmptyMazePosition() {
         for (int mazeRow = 0; mazeRow< Playground.height(); mazeRow++) {
             for (int mazeCol = 0; mazeCol< Playground.width(); mazeCol++) {
                 if (isEmpty(mazeRow, mazeCol)) {
                     set(mazeRow, mazeCol, SpriteE.PAC_MAN);
-                    return new CanvasCoordinate(mazeRow, mazeCol);
+                    return new Coordinate(mazeRow, mazeCol);
                 }
             }
         }

@@ -5,7 +5,7 @@ import com.ahmedaraby.game.pacman.config.Configs;
 import com.ahmedaraby.game.pacman.constant.DimensionsC;
 import com.ahmedaraby.game.pacman.constant.DirectionsE;
 import com.ahmedaraby.game.pacman.constant.SpriteFileNameC;
-import com.ahmedaraby.game.pacman.entity.CanvasCoordinate;
+import com.ahmedaraby.game.pacman.entity.Coordinate;
 import com.ahmedaraby.game.pacman.entity.Rectangle;
 import com.ahmedaraby.game.pacman.entity.Line;
 import com.ahmedaraby.game.pacman.entity.Vector;
@@ -44,9 +44,9 @@ public class InkyChaser extends Chaser {
     @Override
     public void move() {
         // calculate the target coordinate
-        final CanvasCoordinate interTile = calculateIntermediateTile();
+        final Coordinate interTile = calculateIntermediateTile();
         final Line blinky2InterTileLine = makeLineFromBlinkyToIntermediateTile(interTile);
-        final CanvasCoordinate target = calculateTheTargetCoordinate(blinky2InterTileLine);
+        final Coordinate target = calculateTheTargetCoordinate(blinky2InterTileLine);
 
         // navigate the ghost to the target
         DirectionsE newDir = navigator.nextMoveDirection(ghost.getTopLeftCorner(), target);
@@ -54,7 +54,7 @@ public class InkyChaser extends Chaser {
         if (newDir != null) {
             animator.stride(DimensionsC.GHOST_STRIDE_PIXELS / Configs.FRAMES_PER_SEC_FOR_GHOST_STRIDE);
 
-            final CanvasCoordinate newCord = GhostUtil.move(ghost.getTopLeftCorner(), newDir);
+            final Coordinate newCord = GhostUtil.move(ghost.getTopLeftCorner(), newDir);
 
             ghost.setDir(newDir);
             ghost.setCol(newCord.getCol());
@@ -62,8 +62,8 @@ public class InkyChaser extends Chaser {
         }
     }
 
-    private CanvasCoordinate calculateIntermediateTile() {
-        final CanvasCoordinate pacManCord = gameState.getPacMan().getTopLeftCorner();
+    private Coordinate calculateIntermediateTile() {
+        final Coordinate pacManCord = gameState.getPacMan().getTopLeftCorner();
         final Vector pacManDir = gameState.getPacMan().getDir().toVector();
         return pacManCord.add(
                 DimensionsC.PAC_MAN_STRIDE_PIXELS * 2 * pacManDir.getX(),
@@ -72,8 +72,8 @@ public class InkyChaser extends Chaser {
 
     }
 
-    private Line makeLineFromBlinkyToIntermediateTile(CanvasCoordinate interTile) {
-        final CanvasCoordinate blinkyCord = gameState.getGhosts()
+    private Line makeLineFromBlinkyToIntermediateTile(Coordinate interTile) {
+        final Coordinate blinkyCord = gameState.getGhosts()
                 .stream()
                 .filter(ghost -> ghost instanceof Blinky)
                 .findFirst()
@@ -83,9 +83,9 @@ public class InkyChaser extends Chaser {
 
     }
 
-    private CanvasCoordinate calculateTheTargetCoordinate(Line blinky2InterTileLine) {
+    private Coordinate calculateTheTargetCoordinate(Line blinky2InterTileLine) {
         final Rectangle wholePLayGround = new Rectangle(
-                new CanvasCoordinate(0, 0), DimensionsC.CANVAS_WIDTH_PIXELS, DimensionsC.CANVAS_HEIGHT_PIXELS);
+                new Coordinate(0, 0), DimensionsC.CANVAS_WIDTH_PIXELS, DimensionsC.CANVAS_HEIGHT_PIXELS);
         return blinky2InterTileLine
                 .scale(2) // double the line in the direction from blinky to the Intermediate tile
                 .trim(wholePLayGround) // then trim the line such that the line endpoint are within the playground

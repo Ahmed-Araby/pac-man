@@ -2,7 +2,7 @@ package com.ahmedaraby.game.pacman.util.ghost;
 
 import com.ahmedaraby.game.pacman.config.Configs;
 import com.ahmedaraby.game.pacman.constant.DimensionsC;
-import com.ahmedaraby.game.pacman.entity.CanvasCoordinate;
+import com.ahmedaraby.game.pacman.entity.Coordinate;
 import com.ahmedaraby.game.pacman.entity.MazeCell;
 import com.ahmedaraby.game.pacman.entity.Vector;
 import com.ahmedaraby.game.pacman.util.canvas.CanvasUtil;
@@ -16,32 +16,32 @@ public class GhostUtil {
     }
 
     // [TODO] put this movement behaviour in the Ghost abstract class
-    public static CanvasCoordinate move(CanvasCoordinate cord, DirectionsE dir) {
+    public static Coordinate move(Coordinate cord, DirectionsE dir) {
         switch (dir) {
             case RIGHT:
-                return new CanvasCoordinate(cord.getRow(),
+                return new Coordinate(cord.getRow(),
                         cord.getCol() + DimensionsC.GHOST_STRIDE_PIXELS / Configs.FRAMES_PER_SEC_FOR_GHOST_STRIDE);
             case LEFT:
-                return new CanvasCoordinate(cord.getRow(),
+                return new Coordinate(cord.getRow(),
                         cord.getCol() - DimensionsC.GHOST_STRIDE_PIXELS / Configs.FRAMES_PER_SEC_FOR_GHOST_STRIDE);
             case UP:
-                return new CanvasCoordinate(cord.getRow() - DimensionsC.GHOST_STRIDE_PIXELS / Configs.FRAMES_PER_SEC_FOR_GHOST_STRIDE,
+                return new Coordinate(cord.getRow() - DimensionsC.GHOST_STRIDE_PIXELS / Configs.FRAMES_PER_SEC_FOR_GHOST_STRIDE,
                         cord.getCol());
             case DOWN:
-                return new CanvasCoordinate(cord.getRow() + DimensionsC.GHOST_STRIDE_PIXELS / Configs.FRAMES_PER_SEC_FOR_GHOST_STRIDE,
+                return new Coordinate(cord.getRow() + DimensionsC.GHOST_STRIDE_PIXELS / Configs.FRAMES_PER_SEC_FOR_GHOST_STRIDE,
                         cord.getCol());
             default:
                 return cord;
         }
     }
 
-    public static CanvasCoordinate move(CanvasCoordinate cord, Vector dir) {
+    public static Coordinate move(Coordinate cord, Vector dir) {
         final double newX = cord.getCol() + dir.getX() * (DimensionsC.GHOST_STRIDE_PIXELS / Configs.FRAMES_PER_SEC_FOR_GHOST_STRIDE);
         final double newY = cord.getRow() + dir.getY() * (DimensionsC.GHOST_STRIDE_PIXELS / Configs.FRAMES_PER_SEC_FOR_GHOST_STRIDE);
-        return new CanvasCoordinate(newY, newX);
+        return new Coordinate(newY, newX);
     }
 
-    public static List<MazeCell> getCandidateNextCells(CanvasCoordinate cord) {
+    public static List<MazeCell> getCandidateNextCells(Coordinate cord) {
         List<MazeCell> candidateNextCells = null;
         candidateNextCells = CanvasUtil.getIntersectingMazeCells(cord);
         System.out.println("interestingMazeCells = " + candidateNextCells);

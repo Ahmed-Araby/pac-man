@@ -8,7 +8,7 @@ import lombok.ToString;
 @Getter
 @ToString
 public class Rectangle {
-    private final CanvasCoordinate topLeftCorner;
+    private final Coordinate topLeftCorner;
     private final double width;
     private final double height;
 
@@ -26,20 +26,20 @@ public class Rectangle {
     }
 
     // corners
-    public CanvasCoordinate topLeftCorner() {
+    public Coordinate topLeftCorner() {
         return topLeftCorner;
     }
 
-    public CanvasCoordinate topRightCorner() {
-       return new CanvasCoordinate(0, width - 1);
+    public Coordinate topRightCorner() {
+       return new Coordinate(0, width - 1);
     }
 
-    public CanvasCoordinate bottomRightCorner() {
-        return new CanvasCoordinate(height - 1, width -1);
+    public Coordinate bottomRightCorner() {
+        return new Coordinate(height - 1, width -1);
     }
 
-    public CanvasCoordinate bottomLeftCorner() {
-        return new CanvasCoordinate(height - 1, 0);
+    public Coordinate bottomLeftCorner() {
+        return new Coordinate(height - 1, 0);
     }
 
 
@@ -56,7 +56,7 @@ public class Rectangle {
         return new Line(bottomRightCorner(), bottomLeftCorner());
     }
     public Line leftSide() {
-        final CanvasCoordinate bottomLeftCorner = new CanvasCoordinate(height - 1, 0);
+        final Coordinate bottomLeftCorner = new Coordinate(height - 1, 0);
         return new Line(bottomLeftCorner, topLeftCorner);
     }
 

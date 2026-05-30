@@ -3,7 +3,7 @@ package com.ahmedaraby.game.pacman.util;
 import com.ahmedaraby.game.pacman.constant.DimensionsC;
 import com.ahmedaraby.game.pacman.constant.DirectionsE;
 import com.ahmedaraby.game.pacman.constant.SpriteE;
-import com.ahmedaraby.game.pacman.entity.CanvasCoordinate;
+import com.ahmedaraby.game.pacman.entity.Coordinate;
 import com.ahmedaraby.game.pacman.entity.Rectangle;
 import com.ahmedaraby.game.pacman.entity.MazeCell;
 import com.ahmedaraby.game.pacman.maze.Playground;
@@ -13,8 +13,8 @@ public class SpriteUtil {
     private SpriteUtil() {}
 
 
-    public static Rectangle toRect(CanvasCoordinate cTopLeftCorner, SpriteE type) {
-        final CanvasCoordinate spriteTopLeftCorner = c2STopLeftCorner(cTopLeftCorner, type);
+    public static Rectangle toRect(Coordinate cTopLeftCorner, SpriteE type) {
+        final Coordinate spriteTopLeftCorner = c2STopLeftCorner(cTopLeftCorner, type);
         return switch (type) {
             case SUGAR -> toSugarRect(spriteTopLeftCorner);
             case SUPER_SUGAR -> toSuperSugarRect(spriteTopLeftCorner);
@@ -26,7 +26,7 @@ public class SpriteUtil {
         };
     }
     
-    public static CanvasCoordinate c2STopLeftCorner(CanvasCoordinate cord, SpriteE type) {
+    public static Coordinate c2STopLeftCorner(Coordinate cord, SpriteE type) {
         return switch (type) {
             case SUGAR -> c2SugarTopLeftCorner(cord);
             case SUPER_SUGAR -> c2SuperSugarTopLeftCorner(cord);
@@ -38,64 +38,64 @@ public class SpriteUtil {
         };
     }
 
-    public static SpriteE getSpriteType(CanvasCoordinate cord) {
+    public static SpriteE getSpriteType(Coordinate cord) {
         final MazeCell cell = CanvasUtil.toMazeCoordinate(cord, DirectionsE.STILL);
         return Playground.get(cell);
     }
 
 
-    private static Rectangle toSugarRect(CanvasCoordinate topLeftCorner) {
+    private static Rectangle toSugarRect(Coordinate topLeftCorner) {
         return new Rectangle(topLeftCorner, DimensionsC.SUGAR_CELL_SIZE_PIXELS, DimensionsC.SUGAR_CELL_SIZE_PIXELS);
     }
 
-    private static Rectangle toSuperSugarRect(CanvasCoordinate topLeftCorner) {
+    private static Rectangle toSuperSugarRect(Coordinate topLeftCorner) {
         return new Rectangle(topLeftCorner, DimensionsC.SUPER_SUGAR_DIAMETER_PIXELS, DimensionsC.SUPER_SUGAR_DIAMETER_PIXELS);
     }
 
-    private static Rectangle toPacManRect(CanvasCoordinate topLeftCorner) {
+    private static Rectangle toPacManRect(Coordinate topLeftCorner) {
         return new Rectangle(topLeftCorner, DimensionsC.PAC_MAN_DIAMETER_PIXELS, DimensionsC.PAC_MAN_DIAMETER_PIXELS);
     }
 
-    private static Rectangle toGhostRect(CanvasCoordinate topLeftCorner) {
+    private static Rectangle toGhostRect(Coordinate topLeftCorner) {
         return new Rectangle(topLeftCorner, DimensionsC.GHOST_WIDTH_PIXELS, DimensionsC.GHOST_HEIGHT_PIXELS);
     }
 
-    private static Rectangle toWallRect(CanvasCoordinate topLeftCorner) {
+    private static Rectangle toWallRect(Coordinate topLeftCorner) {
         return new Rectangle(topLeftCorner, DimensionsC.MAZE_CELL_SIZE_PIXELS, DimensionsC.MAZE_CELL_SIZE_PIXELS);
     }
 
-    private static Rectangle toGhostHWallRect(CanvasCoordinate topLeftCorner) {
+    private static Rectangle toGhostHWallRect(Coordinate topLeftCorner) {
         return new Rectangle(topLeftCorner, DimensionsC.MAZE_CELL_SIZE_PIXELS, DimensionsC.MAZE_CELL_SIZE_PIXELS);
     }
 
 
 
-    private static CanvasCoordinate c2SugarTopLeftCorner(CanvasCoordinate cord) {
+    private static Coordinate c2SugarTopLeftCorner(Coordinate cord) {
         final double offset = (DimensionsC.MAZE_CELL_SIZE_PIXELS - DimensionsC.SUGAR_CELL_SIZE_PIXELS) / 2;
-        return new CanvasCoordinate(cord.getRow() + offset, cord.getCol() + offset);
+        return new Coordinate(cord.getRow() + offset, cord.getCol() + offset);
     }
 
-    private static CanvasCoordinate c2SuperSugarTopLeftCorner(CanvasCoordinate cord) {
+    private static Coordinate c2SuperSugarTopLeftCorner(Coordinate cord) {
         final double offset = (DimensionsC.MAZE_CELL_SIZE_PIXELS - DimensionsC.SUPER_SUGAR_DIAMETER_PIXELS) / 2;
-        return new CanvasCoordinate(cord.getRow() + offset, cord.getCol() + offset);
+        return new Coordinate(cord.getRow() + offset, cord.getCol() + offset);
     }
 
-    private static CanvasCoordinate c2PacmanTopLeftCorner(CanvasCoordinate cord) {
+    private static Coordinate c2PacmanTopLeftCorner(Coordinate cord) {
         final double offset = (DimensionsC.MAZE_CELL_SIZE_PIXELS - DimensionsC.PAC_MAN_DIAMETER_PIXELS) / 2;
-        return new CanvasCoordinate(cord.getRow() + offset, cord.getCol() + offset);
+        return new Coordinate(cord.getRow() + offset, cord.getCol() + offset);
     }
 
-    private static CanvasCoordinate c2GhostTopLeftCorner(CanvasCoordinate cord) {
+    private static Coordinate c2GhostTopLeftCorner(Coordinate cord) {
         final double topOffset = (DimensionsC.MAZE_CELL_SIZE_PIXELS - DimensionsC.GHOST_HEIGHT_PIXELS) / 2;
         final double leftOffset = (DimensionsC.MAZE_CELL_SIZE_PIXELS - DimensionsC.GHOST_WIDTH_PIXELS) / 2;
-        return new CanvasCoordinate(cord.getRow() + topOffset, cord.getCol() + leftOffset);
+        return new Coordinate(cord.getRow() + topOffset, cord.getCol() + leftOffset);
     }
 
-    private static CanvasCoordinate c2WallTopLeftCorner(CanvasCoordinate cord) {
+    private static Coordinate c2WallTopLeftCorner(Coordinate cord) {
         return cord;
     }
 
-    private static CanvasCoordinate c2GhostHWallTopLeftCorner(CanvasCoordinate cord) {
+    private static Coordinate c2GhostHWallTopLeftCorner(Coordinate cord) {
         return cord;
     }
 

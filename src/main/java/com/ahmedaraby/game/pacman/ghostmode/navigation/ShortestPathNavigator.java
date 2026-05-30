@@ -8,7 +8,7 @@ import com.ahmedaraby.game.pacman.util.canvas.CanvasUtil;
 import lombok.AllArgsConstructor;
 import com.ahmedaraby.game.pacman.constant.DirectionsE;
 import com.ahmedaraby.game.pacman.constant.SpriteE;
-import com.ahmedaraby.game.pacman.entity.CanvasCoordinate;
+import com.ahmedaraby.game.pacman.entity.Coordinate;
 import com.ahmedaraby.game.pacman.entity.Rectangle;
 import com.ahmedaraby.game.pacman.entity.MazeMove;
 import com.ahmedaraby.game.pacman.util.BfsUtil;
@@ -21,7 +21,7 @@ import java.util.List;
 @AllArgsConstructor
 public class ShortestPathNavigator implements GhostNavigator {
 
-    public DirectionsE nextMoveDirection(CanvasCoordinate ghostCord, CanvasCoordinate targetCord) {
+    public DirectionsE nextMoveDirection(Coordinate ghostCord, Coordinate targetCord) {
         if(ghostCord.equals(targetCord)) {
             return DirectionsE.STILL;
         }
@@ -31,20 +31,20 @@ public class ShortestPathNavigator implements GhostNavigator {
                 .sorted()
                 .filter(move -> move.getDist2Target() < Integer.MAX_VALUE)
                 .filter(move -> {
-                    final CanvasCoordinate candidateNextCord = MazeUtil.getCanvasCord(move.getCell());
+                    final Coordinate candidateNextCord = MazeUtil.getCanvasCord(move.getCell());
                     final Rectangle rect = SpriteUtil.toRect(candidateNextCord, SpriteE.GHOST);
                     final List<CollisionReport> collisionReportOpt = M2SSpriteCollisionDetector.detect(rect, List.of(SpriteE.WALL, SpriteE.GHOST_HOUSE_WALL));
                     return collisionReportOpt.isEmpty();
                 })
                 .map(move -> {
-                    final CanvasCoordinate candidateNextCord = MazeUtil.getCanvasCord(move.getCell());
+                    final Coordinate candidateNextCord = MazeUtil.getCanvasCord(move.getCell());
                     return CanvasUtil.getMovementDir(ghostCord, candidateNextCord);
                 })
                 .findFirst()
                 .orElse(DirectionsE.STILL);
     }
 
-    private List<MazeMove> getCandidateMoves(CanvasCoordinate ghostCord, CanvasCoordinate targetCord) {
+    private List<MazeMove> getCandidateMoves(Coordinate ghostCord, Coordinate targetCord) {
         // this work can be parallelized
         final MazeCell targetCell = CanvasUtil.toMazeCoordinate(targetCord, DirectionsE.STILL);
         final List<MazeCell> candidateNextMazeCell = GhostUtil.getCandidateNextCells(ghostCord);

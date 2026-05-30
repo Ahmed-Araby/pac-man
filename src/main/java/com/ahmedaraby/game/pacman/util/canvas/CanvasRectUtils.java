@@ -1,14 +1,14 @@
 package com.ahmedaraby.game.pacman.util.canvas;
 
 import com.ahmedaraby.game.pacman.constant.DirectionsE;
-import com.ahmedaraby.game.pacman.entity.CanvasCoordinate;
+import com.ahmedaraby.game.pacman.entity.Coordinate;
 import com.ahmedaraby.game.pacman.entity.Rectangle;
 
 import java.util.List;
 
 public class CanvasRectUtils {
 
-    public static List<CanvasCoordinate> get4Corners(Rectangle rectangle) {
+    public static List<Coordinate> get4Corners(Rectangle rectangle) {
         return List.of(
                 rectangle.getTopLeftCorner(),
                 getTopRightCorner(rectangle),
@@ -17,33 +17,33 @@ public class CanvasRectUtils {
         );
     }
 
-    private static CanvasCoordinate getTopRightCorner(Rectangle rectangle) {
-        return new CanvasCoordinate(rectangle.getTopLeftCorner().getRow(), rectangle.getTopLeftCorner().getCol() + rectangle.getWidth() -1);
+    private static Coordinate getTopRightCorner(Rectangle rectangle) {
+        return new Coordinate(rectangle.getTopLeftCorner().getRow(), rectangle.getTopLeftCorner().getCol() + rectangle.getWidth() -1);
     }
 
-    private static CanvasCoordinate getBottomRightCorner(Rectangle rectangle) {
-        return new CanvasCoordinate(rectangle.getTopLeftCorner().getRow() + rectangle.getHeight() - 1, rectangle.getTopLeftCorner().getCol() + rectangle.getWidth() - 1);
+    private static Coordinate getBottomRightCorner(Rectangle rectangle) {
+        return new Coordinate(rectangle.getTopLeftCorner().getRow() + rectangle.getHeight() - 1, rectangle.getTopLeftCorner().getCol() + rectangle.getWidth() - 1);
     }
 
-    private static CanvasCoordinate getBottomLeftCorner(Rectangle rectangle) {
-        return new CanvasCoordinate(rectangle.getTopLeftCorner().getRow() + rectangle.getHeight() - 1, rectangle.getTopLeftCorner().getCol());
+    private static Coordinate getBottomLeftCorner(Rectangle rectangle) {
+        return new Coordinate(rectangle.getTopLeftCorner().getRow() + rectangle.getHeight() - 1, rectangle.getTopLeftCorner().getCol());
     }
 
-    public static CanvasCoordinate getTopLeftCornerOfRectContainingPoint(double rectWidth, double rectHeight, CanvasCoordinate point) {
+    public static Coordinate getTopLeftCornerOfRectContainingPoint(double rectWidth, double rectHeight, Coordinate point) {
         return getRectContainingPoint(rectWidth, rectHeight, point).getTopLeftCorner();
     }
-    public static Rectangle getRectContainingPoint(double rectWidth, double rectHeight, CanvasCoordinate point) {
+    public static Rectangle getRectContainingPoint(double rectWidth, double rectHeight, Coordinate point) {
         final double topLeftCornerRow = point.getRow() - point.getRow() % rectHeight;
         final double topLeftCornerCol = point.getCol() - point.getCol() % rectWidth;
-        return new Rectangle(new CanvasCoordinate(topLeftCornerRow, topLeftCornerCol), rectWidth, rectHeight);
+        return new Rectangle(new Coordinate(topLeftCornerRow, topLeftCornerCol), rectWidth, rectHeight);
     }
 
     public static boolean isRectContainsRect(Rectangle parentRectangle, Rectangle childRectangle) {
-        final CanvasCoordinate childRectBottomRightCorner = getBottomRightCorner(childRectangle);
+        final Coordinate childRectBottomRightCorner = getBottomRightCorner(childRectangle);
         return isRectContainsPoint(parentRectangle, childRectangle.getTopLeftCorner()) && isRectContainsPoint(parentRectangle, childRectBottomRightCorner);
     }
-    public static boolean isRectContainsPoint(Rectangle rectangle, CanvasCoordinate point) {
-        final CanvasCoordinate rectBottomRightCorner = getBottomRightCorner(rectangle);
+    public static boolean isRectContainsPoint(Rectangle rectangle, Coordinate point) {
+        final Coordinate rectBottomRightCorner = getBottomRightCorner(rectangle);
         return point.getCol() >= rectangle.getTopLeftCorner().getCol() &&
                 point.getCol() <= rectBottomRightCorner.getCol() &&
                 point.getRow() >= rectangle.getTopLeftCorner().getRow() &&
@@ -51,7 +51,7 @@ public class CanvasRectUtils {
     }
 
 
-    public static CanvasCoordinate getTopLeftCornerOfNextRect(Rectangle rectangle, DirectionsE movementDirection) {
+    public static Coordinate getTopLeftCornerOfNextRect(Rectangle rectangle, DirectionsE movementDirection) {
         return getNextRect(rectangle, movementDirection).getTopLeftCorner();
     }
     public static Rectangle getNextRect(Rectangle rectangle, DirectionsE movementDirection) {
@@ -61,18 +61,18 @@ public class CanvasRectUtils {
         switch (movementDirection) {
             case RIGHT:
                 nextCanvasCellCol = getTopLeftCornerColOfNextRect(rectangle);
-                return new Rectangle(new CanvasCoordinate(rectangle.getTopLeftCorner().getRow(), nextCanvasCellCol), rectangle.getWidth(), rectangle.getHeight());
+                return new Rectangle(new Coordinate(rectangle.getTopLeftCorner().getRow(), nextCanvasCellCol), rectangle.getWidth(), rectangle.getHeight());
             case UP:
                 nextCanvasCellRow = getTopLeftCornerRowOfPrevRect(rectangle);
-                return new Rectangle(new CanvasCoordinate(nextCanvasCellRow, rectangle.getTopLeftCorner().getCol()), rectangle.getWidth(), rectangle.getHeight());
+                return new Rectangle(new Coordinate(nextCanvasCellRow, rectangle.getTopLeftCorner().getCol()), rectangle.getWidth(), rectangle.getHeight());
             case DOWN:
                 nextCanvasCellRow = getTopLeftCornerRowOfNextRect(rectangle);
-                return new Rectangle(new CanvasCoordinate(nextCanvasCellRow, rectangle.getTopLeftCorner().getCol()), rectangle.getWidth(), rectangle.getHeight());
+                return new Rectangle(new Coordinate(nextCanvasCellRow, rectangle.getTopLeftCorner().getCol()), rectangle.getWidth(), rectangle.getHeight());
             case LEFT:
                 nextCanvasCellCol = getTopLeftCornerColOfPrevRect(rectangle);
-                return new Rectangle(new CanvasCoordinate(rectangle.getTopLeftCorner().getRow(), nextCanvasCellCol), rectangle.getWidth(), rectangle.getHeight());
+                return new Rectangle(new Coordinate(rectangle.getTopLeftCorner().getRow(), nextCanvasCellCol), rectangle.getWidth(), rectangle.getHeight());
             case STILL:
-                return new Rectangle(new CanvasCoordinate(rectangle.getTopLeftCorner().getRow(), rectangle.getTopLeftCorner().getCol()), rectangle.getWidth(), rectangle.getHeight());
+                return new Rectangle(new Coordinate(rectangle.getTopLeftCorner().getRow(), rectangle.getTopLeftCorner().getCol()), rectangle.getWidth(), rectangle.getHeight());
             default:
                 throw new IllegalStateException();
         }

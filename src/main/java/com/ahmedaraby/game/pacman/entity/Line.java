@@ -10,38 +10,38 @@ import java.util.Optional;
 @AllArgsConstructor
 @Getter
 public class Line {
-    CanvasCoordinate start;
-    CanvasCoordinate end;
+    Coordinate start;
+    Coordinate end;
 
 
     public double slope() {
         return (end.getRow() - start.getRow()) / (end.getCol() - start.getCol());
     }
 
-    public Optional<CanvasCoordinate> intersectAtWithVLine(Line line) {
+    public Optional<Coordinate> intersectAtWithVLine(Line line) {
         if (Double.isInfinite(slope())) {
             return Optional.empty();
         }
         return Optional.of(getPointGivenX(line.getStart().getCol()));
     }
 
-    public Optional<CanvasCoordinate> intersectAtWithHLine(Line line) {
+    public Optional<Coordinate> intersectAtWithHLine(Line line) {
         if (slope() == 0) {
             return Optional.empty();
         }
         return Optional.of(getPointGivenY(line.getStart().getRow()));
     }
 
-    public CanvasCoordinate getPointGivenX(double x) {
+    public Coordinate getPointGivenX(double x) {
         double y = slope() * (x - start.getCol()) + start.getRow();
         y = Math.round(y);
-        return new CanvasCoordinate(y, x);
+        return new Coordinate(y, x);
     }
 
-    public CanvasCoordinate getPointGivenY(double y) {
+    public Coordinate getPointGivenY(double y) {
         double x = (y - start.getRow()) / slope() + start.getCol();
         x = Math.round(x);
-        return new CanvasCoordinate(y, x);
+        return new Coordinate(y, x);
     }
 
     public Line scale(double scalar) {
@@ -51,12 +51,12 @@ public class Line {
                 .sub(startV)
                 .scale(scalar)
                 .add(startV);
-        final CanvasCoordinate newEnd = new CanvasCoordinate(newEndV);
+        final Coordinate newEnd = new Coordinate(newEndV);
         return new Line(start, newEnd);
     }
 
     public Line trim(Rectangle enclosingRect) {
-        List<CanvasCoordinate> intersectionPoints = new ArrayList<>();
+        List<Coordinate> intersectionPoints = new ArrayList<>();
 
         if (end.getCol() > enclosingRect.rightEdgeCol()) {
             intersectAtWithVLine(enclosingRect.rightSide()).ifPresent(intersectionPoints::add);
@@ -71,7 +71,7 @@ public class Line {
             intersectAtWithHLine(enclosingRect.topSide()).ifPresent(intersectionPoints::add);
         }
 
-        Optional<CanvasCoordinate> newEndCord = intersectionPoints.stream()
+        Optional<Coordinate> newEndCord = intersectionPoints.stream()
                 .filter(cord -> cord.within(enclosingRect))
                 .findFirst();
 

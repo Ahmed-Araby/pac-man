@@ -3,7 +3,7 @@ package com.ahmedaraby.game.pacman.util.canvas;
 import com.ahmedaraby.game.pacman.entity.MazeCell;
 import com.ahmedaraby.game.pacman.constant.DimensionsC;
 import com.ahmedaraby.game.pacman.constant.DirectionsE;
-import com.ahmedaraby.game.pacman.entity.CanvasCoordinate;
+import com.ahmedaraby.game.pacman.entity.Coordinate;
 import com.ahmedaraby.game.pacman.entity.Rectangle;
 import com.ahmedaraby.game.pacman.util.MazeUtil;
 
@@ -11,13 +11,13 @@ import java.util.List;
 
 public class CanvasUtil {
 
-    public static boolean inCanvas(CanvasCoordinate cord) {
+    public static boolean inCanvas(Coordinate cord) {
         return cord.getCol() >=0 && cord.getCol() < DimensionsC.CANVAS_WIDTH_PIXELS
                 && cord.getRow() >= 0 && cord.getRow() < DimensionsC.CANVAS_HEIGHT_PIXELS;
     }
-    public static List<MazeCell> getIntersectingMazeCells(CanvasCoordinate cord) {
+    public static List<MazeCell> getIntersectingMazeCells(Coordinate cord) {
         final Rectangle rectangle = new Rectangle(cord, DimensionsC.MAZE_CELL_SIZE_PIXELS, DimensionsC.MAZE_CELL_SIZE_PIXELS);
-        final List<CanvasCoordinate> rectCorners = CanvasRectUtils.get4Corners(rectangle);
+        final List<Coordinate> rectCorners = CanvasRectUtils.get4Corners(rectangle);
         return rectCorners
                 .stream()
                 .map(corner -> CanvasRectUtils.getTopLeftCornerOfRectContainingPoint(DimensionsC.MAZE_CELL_SIZE_PIXELS, DimensionsC.MAZE_CELL_SIZE_PIXELS, corner))
@@ -26,14 +26,14 @@ public class CanvasUtil {
                 .toList();
     }
 
-    public static List<MazeCell> get90DegAdjMazeCells(CanvasCoordinate cord) {
+    public static List<MazeCell> get90DegAdjMazeCells(Coordinate cord) {
         final MazeCell mazeCell = CanvasUtil.toMazeCoordinate(cord, DirectionsE.STILL);
         return MazeUtil.get90DegMoves(mazeCell);
     }
 
 
 
-    public static DirectionsE getMovementDir(CanvasCoordinate from, CanvasCoordinate to) {
+    public static DirectionsE getMovementDir(Coordinate from, Coordinate to) {
         if(to.getRow() > from.getRow()) {
             return DirectionsE.DOWN;
         } else if(to.getRow() < from.getRow()) {
@@ -47,7 +47,7 @@ public class CanvasUtil {
         }
     }
 
-    public static MazeCell toMazeCoordinate(CanvasCoordinate cord, DirectionsE dir) {
+    public static MazeCell toMazeCoordinate(Coordinate cord, DirectionsE dir) {
         switch (dir) {
             case RIGHT, DOWN:
                 return toMazeCoordinateFlooring(cord);
@@ -58,13 +58,13 @@ public class CanvasUtil {
         }
     }
 
-    private static MazeCell toMazeCoordinateFlooring(CanvasCoordinate cord) {
+    private static MazeCell toMazeCoordinateFlooring(Coordinate cord) {
         final int mazeRow = (int) Math.floor(cord.getRow() / DimensionsC.MAZE_CELL_SIZE_PIXELS);
         final int mazeCol = (int) Math.floor(cord.getCol() / DimensionsC.MAZE_CELL_SIZE_PIXELS);
         return new MazeCell(mazeRow, mazeCol);
     }
 
-    private static MazeCell toMazeCoordinateCeiling(CanvasCoordinate cord) {
+    private static MazeCell toMazeCoordinateCeiling(Coordinate cord) {
         final int mazeRow = (int) Math.ceil(cord.getRow() / DimensionsC.MAZE_CELL_SIZE_PIXELS);
         final int mazeCol = (int) Math.ceil(cord.getCol() / DimensionsC.MAZE_CELL_SIZE_PIXELS);
         return new MazeCell(mazeRow, mazeCol);

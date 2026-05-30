@@ -11,7 +11,7 @@ import com.ahmedaraby.game.pacman.config.Configs;
 import com.ahmedaraby.game.pacman.constant.DimensionsC;
 import com.ahmedaraby.game.pacman.constant.DirectionsE;
 import com.ahmedaraby.game.pacman.constant.SpriteFileNameC;
-import com.ahmedaraby.game.pacman.entity.CanvasCoordinate;
+import com.ahmedaraby.game.pacman.entity.Coordinate;
 import com.ahmedaraby.game.pacman.ghostmode.TemporalGhostMode;
 import com.ahmedaraby.game.pacman.util.EnrichedThreadLocalRandom;
 import com.ahmedaraby.game.pacman.util.ghost.GhostUtil;
@@ -47,7 +47,7 @@ public class Frightened extends TemporalGhostMode {
 
     @Override
     public void move() {
-        final CanvasCoordinate sCord = new CanvasCoordinate(ghost.getRow(), ghost.getCol());
+        final Coordinate sCord = new Coordinate(ghost.getRow(), ghost.getCol());
         final Vector currDir = VectorUtil.toVector(ghost.getDir());
 
         final List<Vector> eligibleDirections = FrightenedGhostUtil.getEligibleDirections(sCord, currDir);
@@ -60,7 +60,7 @@ public class Frightened extends TemporalGhostMode {
         }
 
         final DirectionsE newDirE = VectorUtil.toDirection(newDirV);
-        final CanvasCoordinate nCord = GhostUtil.move(sCord, newDirE);
+        final Coordinate nCord = GhostUtil.move(sCord, newDirE);
 
         ghost.setDir(newDirE);
         ghost.setRow(nCord.getRow());

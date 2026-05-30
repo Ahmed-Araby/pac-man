@@ -7,7 +7,7 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.Setter;
 import com.ahmedaraby.game.pacman.constant.SpriteE;
-import com.ahmedaraby.game.pacman.entity.CanvasCoordinate;
+import com.ahmedaraby.game.pacman.entity.Coordinate;
 
 
 @Getter
@@ -16,7 +16,7 @@ import com.ahmedaraby.game.pacman.entity.CanvasCoordinate;
 public abstract class Sprite {
     protected GameState gameState;
     protected SpriteE type;
-    protected CanvasCoordinate topLeftCorner;
+    protected Coordinate topLeftCorner;
     protected double width;
     protected double height;
 
@@ -44,10 +44,10 @@ public abstract class Sprite {
     }
 
     public void setCol(double col) {
-        topLeftCorner = new CanvasCoordinate(topLeftCorner.getRow(), col);
+        topLeftCorner = new Coordinate(topLeftCorner.getRow(), col);
     }
 
     public void setRow(double row) {
-        topLeftCorner = new CanvasCoordinate(row, topLeftCorner.getCol());
+        topLeftCorner = new Coordinate(row, topLeftCorner.getCol());
     }
 }

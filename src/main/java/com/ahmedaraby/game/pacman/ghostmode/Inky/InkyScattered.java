@@ -5,7 +5,7 @@ import com.ahmedaraby.game.pacman.config.Configs;
 import com.ahmedaraby.game.pacman.constant.DimensionsC;
 import com.ahmedaraby.game.pacman.constant.DirectionsE;
 import com.ahmedaraby.game.pacman.constant.SpriteFileNameC;
-import com.ahmedaraby.game.pacman.entity.CanvasCoordinate;
+import com.ahmedaraby.game.pacman.entity.Coordinate;
 import com.ahmedaraby.game.pacman.ghostmode.Scattered;
 import com.ahmedaraby.game.pacman.ghostmode.navigation.GhostNavigator;
 import com.ahmedaraby.game.pacman.ghostmode.navigation.ShortestPathNavigator;
@@ -20,7 +20,7 @@ public class InkyScattered extends Scattered {
 
     private final GhostNavigator navigator;
     private final DistanceBasedAnimator animator;
-    private final CanvasCoordinate target = new CanvasCoordinate(  // bottom right corner
+    private final Coordinate target = new Coordinate(  // bottom right corner
             DimensionsC.CANVAS_HEIGHT_PIXELS - DimensionsC.MAZE_CELL_SIZE_PIXELS,
             DimensionsC.CANVAS_WIDTH_PIXELS - DimensionsC.MAZE_CELL_SIZE_PIXELS
     );
@@ -45,7 +45,7 @@ public class InkyScattered extends Scattered {
         if (nextDir != DirectionsE.STILL) {
             animator.stride(DimensionsC.GHOST_STRIDE_PIXELS / Configs.FRAMES_PER_SEC_FOR_GHOST_STRIDE);
 
-            final CanvasCoordinate nextCord = GhostUtil.move(ghost.getTopLeftCorner(), nextDir);
+            final Coordinate nextCord = GhostUtil.move(ghost.getTopLeftCorner(), nextDir);
 
             ghost.setDir(nextDir);
             ghost.setCol(nextCord.getCol());

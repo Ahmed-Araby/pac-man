@@ -1,7 +1,7 @@
 package com.ahmedaraby.jengine.collision.sprite;
 
 import com.ahmedaraby.game.pacman.constant.SpriteE;
-import com.ahmedaraby.game.pacman.entity.CanvasCoordinate;
+import com.ahmedaraby.game.pacman.entity.Coordinate;
 import com.ahmedaraby.game.pacman.entity.Rectangle;
 import com.ahmedaraby.game.pacman.event.EventType;
 import com.ahmedaraby.game.pacman.event.collision.PacMan2GhostCollisionEvent;
@@ -33,7 +33,7 @@ public class CollisionSystem {
     }
 
     private void detectPacman2SugarCollision() {
-        final CanvasCoordinate pacmanTopLeftCorner = gameState.getPacMan().getTopLeftCorner();
+        final Coordinate pacmanTopLeftCorner = gameState.getPacMan().getTopLeftCorner();
         final Rectangle pacManRect = SpriteUtil.toRect(pacmanTopLeftCorner, SpriteE.PAC_MAN);
 
         final Optional<CollisionReport> reportOpt = M2SSpriteCollisionDetector.detect(pacManRect, SpriteE.SUGAR);
@@ -46,7 +46,7 @@ public class CollisionSystem {
     }
 
     private void detectPacman2SuperSugarCollision() {
-        final CanvasCoordinate pacmanTopLeftCorner = gameState.getPacMan().getTopLeftCorner();
+        final Coordinate pacmanTopLeftCorner = gameState.getPacMan().getTopLeftCorner();
         final Rectangle pacManRect = SpriteUtil.toRect(pacmanTopLeftCorner, SpriteE.PAC_MAN);
 
         final Optional<CollisionReport> reportOpt = M2SSpriteCollisionDetector.detect(pacManRect, SpriteE.SUPER_SUGAR);
@@ -59,7 +59,7 @@ public class CollisionSystem {
     }
 
     private void detectPacman2GhostCollision() {
-        final CanvasCoordinate pacManTopLeftCorner = gameState.getPacMan().getTopLeftCorner();
+        final Coordinate pacManTopLeftCorner = gameState.getPacMan().getTopLeftCorner();
         final Rectangle pacManRect = SpriteUtil.toRect(pacManTopLeftCorner, SpriteE.PAC_MAN);
 
         for(Ghost ghost: gameState.getGhosts()) {

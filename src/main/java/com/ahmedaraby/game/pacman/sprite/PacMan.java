@@ -3,7 +3,7 @@ package com.ahmedaraby.game.pacman.sprite;
 import com.ahmedaraby.game.pacman.config.Configs;
 import com.ahmedaraby.game.pacman.constant.DimensionsC;
 import com.ahmedaraby.game.pacman.constant.SpriteE;
-import com.ahmedaraby.game.pacman.entity.CanvasCoordinate;
+import com.ahmedaraby.game.pacman.entity.Coordinate;
 import com.ahmedaraby.game.pacman.entity.Rectangle;
 import com.ahmedaraby.game.pacman.event.Event;
 import com.ahmedaraby.game.pacman.event.Subscriber;
@@ -32,7 +32,7 @@ public class PacMan extends MovingSprite implements Subscriber {
     public PacMan(GameState gameState) {
         super(gameState, SpriteE.PAC_MAN, null, DimensionsC.PAC_MAN_DIAMETER_PIXELS, DimensionsC.PAC_MAN_DIAMETER_PIXELS, DirectionsE.STILL);
 
-        final CanvasCoordinate emptyCellPos = Playground.getEmptyMazePosition();
+        final Coordinate emptyCellPos = Playground.getEmptyMazePosition();
         setTopLeftCorner(emptyCellPos);
 
         this.turnBuffer = new TurnBuffer();
@@ -111,7 +111,7 @@ public class PacMan extends MovingSprite implements Subscriber {
             return;
         }
 
-        final CanvasCoordinate nextCord = new CanvasCoordinate(newRow, newCol);
+        final Coordinate nextCord = new Coordinate(newRow, newCol);
         final Rectangle virtualPacManRect = new Rectangle(nextCord, DimensionsC.PAC_MAN_DIAMETER_PIXELS, DimensionsC.PAC_MAN_DIAMETER_PIXELS);
 
         if (!virtualPacManRect.within(gameState.getMaze().getRect())) {
@@ -158,7 +158,7 @@ public class PacMan extends MovingSprite implements Subscriber {
         if (event.getMovementAttemptSource() instanceof Scene) {
             // user input
             if(turnBuffer.isBlockedTurn(dir, event.getRequestedDirection())) {
-                final Rectangle pacManCanvasRectangle = new Rectangle(new CanvasCoordinate(getRow(), getCol()), DimensionsC.MAZE_CELL_SIZE_PIXELS, DimensionsC.MAZE_CELL_SIZE_PIXELS);
+                final Rectangle pacManCanvasRectangle = new Rectangle(new Coordinate(getRow(), getCol()), DimensionsC.MAZE_CELL_SIZE_PIXELS, DimensionsC.MAZE_CELL_SIZE_PIXELS);
                 turnBuffer.bufferTurn(event.getRequestedDirection(), pacManCanvasRectangle);
             }
         }

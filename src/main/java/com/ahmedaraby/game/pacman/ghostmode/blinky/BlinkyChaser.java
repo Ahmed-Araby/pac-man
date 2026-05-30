@@ -10,7 +10,7 @@ import com.ahmedaraby.game.pacman.config.Configs;
 import com.ahmedaraby.game.pacman.constant.DimensionsC;
 import com.ahmedaraby.game.pacman.constant.DirectionsE;
 import com.ahmedaraby.game.pacman.constant.SpriteFileNameC;
-import com.ahmedaraby.game.pacman.entity.CanvasCoordinate;
+import com.ahmedaraby.game.pacman.entity.Coordinate;
 import com.ahmedaraby.game.pacman.ghostmode.Chaser;
 import com.ahmedaraby.game.pacman.ghostmode.navigation.GhostNavigator;
 import com.ahmedaraby.game.pacman.ghostmode.navigation.ShortestPathNavigator;
@@ -37,10 +37,10 @@ public class BlinkyChaser extends Chaser {
 
     @Override
     public void move() {
-        final CanvasCoordinate ghostCurrCord = new CanvasCoordinate(ghost.getRow(), ghost.getCol());
-        final CanvasCoordinate pacmanCurrCord = gameState.getPacMan().getTopLeftCorner();
+        final Coordinate ghostCurrCord = new Coordinate(ghost.getRow(), ghost.getCol());
+        final Coordinate pacmanCurrCord = gameState.getPacMan().getTopLeftCorner();
         final DirectionsE directionsE = navigator.nextMoveDirection(ghostCurrCord, pacmanCurrCord);
-        final CanvasCoordinate ghostNewCord = GhostUtil.move(ghostCurrCord, directionsE);
+        final Coordinate ghostNewCord = GhostUtil.move(ghostCurrCord, directionsE);
 
         ghost.setDir(directionsE);
         ghost.setRow(ghostNewCord.getRow());
