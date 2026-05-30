@@ -1,13 +1,13 @@
 package com.ahmedaraby.game.pacman.sprite;
 
-import com.ahmedaraby.game.pacman.entity.Rectangle;
+import com.ahmedaraby.jengine.entity.Rectangle;
 import com.ahmedaraby.game.pacman.model.GameState;
 import javafx.scene.canvas.Canvas;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.Setter;
 import com.ahmedaraby.game.pacman.constant.SpriteE;
-import com.ahmedaraby.game.pacman.entity.Coordinate;
+import com.ahmedaraby.jengine.entity.Coordinate;
 
 
 @Getter

@@ -1,4 +1,4 @@
-package com.ahmedaraby.game.pacman.entity;
+package com.ahmedaraby.jengine.entity;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;

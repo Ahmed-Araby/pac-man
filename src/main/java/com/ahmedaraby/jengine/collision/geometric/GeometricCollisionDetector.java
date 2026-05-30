@@ -1,8 +1,8 @@
 package com.ahmedaraby.jengine.collision.geometric;
 
 import com.ahmedaraby.game.pacman.constant.DimensionsC;
-import com.ahmedaraby.game.pacman.entity.Coordinate;
-import com.ahmedaraby.game.pacman.entity.Rectangle;
+import com.ahmedaraby.jengine.entity.Coordinate;
+import com.ahmedaraby.jengine.entity.Rectangle;
 
 public interface GeometricCollisionDetector {
 

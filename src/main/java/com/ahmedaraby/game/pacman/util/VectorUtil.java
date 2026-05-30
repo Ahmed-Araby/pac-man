@@ -1,7 +1,7 @@
 package com.ahmedaraby.game.pacman.util;
 
 import com.ahmedaraby.game.pacman.constant.DirectionsE;
-import com.ahmedaraby.game.pacman.entity.Vector;
+import com.ahmedaraby.jengine.entity.Vector;
 
 public class VectorUtil {
 

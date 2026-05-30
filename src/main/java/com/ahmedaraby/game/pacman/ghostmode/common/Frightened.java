@@ -1,6 +1,6 @@
 package com.ahmedaraby.game.pacman.ghostmode.common;
 
-import com.ahmedaraby.game.pacman.entity.Vector;
+import com.ahmedaraby.jengine.entity.Vector;
 import com.ahmedaraby.game.pacman.model.GameState;
 import com.ahmedaraby.game.pacman.sprite.ghost.Ghost;
 import javafx.scene.canvas.Canvas;
@@ -11,7 +11,7 @@ import com.ahmedaraby.game.pacman.config.Configs;
 import com.ahmedaraby.game.pacman.constant.DimensionsC;
 import com.ahmedaraby.game.pacman.constant.DirectionsE;
 import com.ahmedaraby.game.pacman.constant.SpriteFileNameC;
-import com.ahmedaraby.game.pacman.entity.Coordinate;
+import com.ahmedaraby.jengine.entity.Coordinate;
 import com.ahmedaraby.game.pacman.ghostmode.TemporalGhostMode;
 import com.ahmedaraby.game.pacman.util.EnrichedThreadLocalRandom;
 import com.ahmedaraby.game.pacman.util.ghost.GhostUtil;

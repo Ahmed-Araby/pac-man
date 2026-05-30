@@ -1,7 +1,7 @@
 package com.ahmedaraby.game.pacman.event.collision;
 
 import lombok.Getter;
-import com.ahmedaraby.game.pacman.entity.Rectangle;
+import com.ahmedaraby.jengine.entity.Rectangle;
 import com.ahmedaraby.game.pacman.event.Event;
 import com.ahmedaraby.game.pacman.event.EventType;
 

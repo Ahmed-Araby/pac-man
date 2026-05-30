@@ -3,8 +3,8 @@ package com.ahmedaraby.game.pacman.util.canvas;
 import com.ahmedaraby.game.pacman.entity.MazeCell;
 import com.ahmedaraby.game.pacman.constant.DimensionsC;
 import com.ahmedaraby.game.pacman.constant.DirectionsE;
-import com.ahmedaraby.game.pacman.entity.Coordinate;
-import com.ahmedaraby.game.pacman.entity.Rectangle;
+import com.ahmedaraby.jengine.entity.Coordinate;
+import com.ahmedaraby.jengine.entity.Rectangle;
 import com.ahmedaraby.game.pacman.util.MazeUtil;
 
 import java.util.List;

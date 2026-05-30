@@ -1,7 +1,7 @@
 package com.ahmedaraby.game.pacman.util.pacman;
 
-import com.ahmedaraby.game.pacman.entity.Coordinate;
-import com.ahmedaraby.game.pacman.entity.Rectangle;
+import com.ahmedaraby.jengine.entity.Coordinate;
+import com.ahmedaraby.jengine.entity.Rectangle;
 import com.ahmedaraby.game.pacman.event.movement.PacManMovementRequestEvent;
 import com.ahmedaraby.game.pacman.util.canvas.CanvasRectUtils;
 import lombok.NoArgsConstructor;

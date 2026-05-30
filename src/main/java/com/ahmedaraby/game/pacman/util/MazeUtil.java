@@ -1,7 +1,7 @@
 package com.ahmedaraby.game.pacman.util;
 
 import com.ahmedaraby.game.pacman.constant.DimensionsC;
-import com.ahmedaraby.game.pacman.entity.Coordinate;
+import com.ahmedaraby.jengine.entity.Coordinate;
 import com.ahmedaraby.game.pacman.entity.MazeCell;
 
 import java.util.ArrayList;

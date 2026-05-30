@@ -1,6 +1,6 @@
 package com.ahmedaraby.game.pacman.constant;
 
-import com.ahmedaraby.game.pacman.entity.Vector;
+import com.ahmedaraby.jengine.entity.Vector;
 import javafx.scene.input.KeyCode;
 
 public enum DirectionsE {

@@ -1,7 +1,7 @@
 package com.ahmedaraby.game.pacman.maze;
 
 import com.ahmedaraby.game.pacman.entity.MazeCell;
-import com.ahmedaraby.game.pacman.entity.Vector;
+import com.ahmedaraby.jengine.entity.Vector;
 
 import java.util.ArrayList;
 import java.util.List;

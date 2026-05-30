@@ -2,9 +2,9 @@ package com.ahmedaraby.game.pacman.util.ghost;
 
 import com.ahmedaraby.game.pacman.config.Configs;
 import com.ahmedaraby.game.pacman.constant.DimensionsC;
-import com.ahmedaraby.game.pacman.entity.Coordinate;
+import com.ahmedaraby.jengine.entity.Coordinate;
 import com.ahmedaraby.game.pacman.entity.MazeCell;
-import com.ahmedaraby.game.pacman.entity.Vector;
+import com.ahmedaraby.jengine.entity.Vector;
 import com.ahmedaraby.game.pacman.util.canvas.CanvasUtil;
 import com.ahmedaraby.game.pacman.constant.DirectionsE;
 import com.ahmedaraby.game.pacman.maze.Playground;

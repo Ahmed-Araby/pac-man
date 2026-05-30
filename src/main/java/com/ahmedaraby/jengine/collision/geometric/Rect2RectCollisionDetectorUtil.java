@@ -1,6 +1,6 @@
 package com.ahmedaraby.jengine.collision.geometric;
 
-import com.ahmedaraby.game.pacman.entity.Rectangle;
+import com.ahmedaraby.jengine.entity.Rectangle;
 
 public class Rect2RectCollisionDetectorUtil {
 

@@ -3,7 +3,7 @@ package com.ahmedaraby.jengine.collision.sprite;
 
 import com.ahmedaraby.jengine.collision.geometric.Rect2RectCollisionDetectorUtil;
 import com.ahmedaraby.game.pacman.constant.DimensionsC;
-import com.ahmedaraby.game.pacman.entity.Rectangle;
+import com.ahmedaraby.jengine.entity.Rectangle;
 import com.ahmedaraby.game.pacman.model.CollisionReport;
 
 import java.util.List;
