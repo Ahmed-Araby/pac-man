@@ -1,7 +1,7 @@
 package com.ahmedaraby.game.pacman.collision;
 
 
-import com.ahmedaraby.jengine.collision.geometric.Rect2RectCollisionDetectorUtil;
+import com.ahmedaraby.jengine.collision.Rect2RectCollisionDetectorUtil;
 import com.ahmedaraby.jengine.entity.Rectangle;
 import com.ahmedaraby.jengine.models.CollisionReport;
 

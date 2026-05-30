@@ -1,4 +1,4 @@
-package com.ahmedaraby.jengine.collision.geometric;
+package com.ahmedaraby.jengine.collision;
 
 import com.ahmedaraby.jengine.entity.Rectangle;
 
