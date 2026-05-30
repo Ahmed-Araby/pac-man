@@ -50,19 +50,15 @@ public class PacMan extends MovingSprite implements Subscriber<EventType> {
         switch (dir) {
             case RIGHT:
                 PacManGraphicsUtil.drawRightOpenMousePacMan(con, col, row);
-                attemptMovement(new PacManMovementRequestEvent(DirectionsE.RIGHT, this));
                 break;
             case UP:
                 PacManGraphicsUtil.drawUpOpenMousePacMan(con, col, row);
-                attemptMovement(new PacManMovementRequestEvent(DirectionsE.UP, this));
                 break;
             case LEFT:
                 PacManGraphicsUtil.drawLeftOpenMousePacMan(con, col, row);
-                attemptMovement(new PacManMovementRequestEvent(DirectionsE.LEFT, this));
                 break;
             case DOWN:
                 PacManGraphicsUtil.drawDownOpenMousePacMan(con, col, row);
-                attemptMovement(new PacManMovementRequestEvent(DirectionsE.DOWN, this));
                 break;
             case STILL:
                 PacManGraphicsUtil.drawClosedMousePacMan(con, col, row);
@@ -70,19 +66,18 @@ public class PacMan extends MovingSprite implements Subscriber<EventType> {
         }
 
         // close pac man mouse
-        closedMousePixelStrideTracker.stride(DimensionsC.PAC_MAN_COMPLETE_MOUSE_MOVEMENT_DISTANCE_PIXELS / Configs.FRAMES_PER_SEC_FOR_PAC_MAN_MOUSE_OPEN_CLOSED_ANIMATION);
         if (!closedMousePixelStrideTracker.isDesiredPixelStrideAchieved()) {
             PacManGraphicsUtil.removePacMan(con, col, row);
             PacManGraphicsUtil.drawClosedMousePacMan(con, col, row);
-        } else if (closedMousePixelStrideTracker.isRestPixelStrideAchieved()) {
-            closedMousePixelStrideTracker.reset();
         }
     }
 
 
     @Override
     public void move(Event event) {
-        throw new IllegalStateException("PacMan.move is not implemented, refactoring is coming in the way");
+        if (event == null) {
+            attemptMovement(new PacManMovementRequestEvent(dir, this));
+        }
     }
 
     private void attemptMovement(PacManMovementRequestEvent event) {
@@ -133,6 +128,12 @@ public class PacMan extends MovingSprite implements Subscriber<EventType> {
                     getTopLeftCorner(), nextCord, event.getDirectionsE(), event.getSource()
             );
             handleApprovedMovementAttempt(approvedEvent);
+        }
+
+        // pacman animation related
+        closedMousePixelStrideTracker.stride(DimensionsC.PAC_MAN_COMPLETE_MOUSE_MOVEMENT_DISTANCE_PIXELS / Configs.FRAMES_PER_SEC_FOR_PAC_MAN_MOUSE_OPEN_CLOSED_ANIMATION);
+        if (closedMousePixelStrideTracker.isRestPixelStrideAchieved()) {
+            closedMousePixelStrideTracker.reset();
         }
     }
 
