@@ -1,12 +1,13 @@
 package com.ahmedaraby.game.pacman.collision;
 
 import com.ahmedaraby.game.pacman.constant.SpriteE;
+import com.ahmedaraby.game.pacman.event.Event;
+import com.ahmedaraby.game.pacman.event.Publisher;
 import com.ahmedaraby.jengine.entity.Coordinate;
 import com.ahmedaraby.jengine.entity.Rectangle;
 import com.ahmedaraby.game.pacman.event.EventType;
 import com.ahmedaraby.game.pacman.event.collision.PacMan2GhostCollisionEvent;
 import com.ahmedaraby.game.pacman.event.collision.PacMan2SugarCollisionEvent;
-import com.ahmedaraby.game.pacman.event.manager.EventManager;
 import com.ahmedaraby.game.pacman.sprite.ghost.Ghost;
 import com.ahmedaraby.game.pacman.model.CollisionReport;
 import com.ahmedaraby.game.pacman.model.GameState;
@@ -17,9 +18,9 @@ import java.util.Optional;
 public class CollisionSystem {
 
     private final GameState gameState;
-    private final EventManager asyncEventManager;
+    private final Publisher<EventType, Event<EventType>> asyncEventManager;
 
-    public CollisionSystem(GameState gameState, EventManager asyncEventManager) {
+    public CollisionSystem(GameState gameState, Publisher<EventType, Event<EventType>> asyncEventManager) {
         this.gameState = gameState;
         this.asyncEventManager = asyncEventManager;
     }

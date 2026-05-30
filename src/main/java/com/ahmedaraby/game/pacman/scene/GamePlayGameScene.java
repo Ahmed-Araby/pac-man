@@ -15,7 +15,6 @@ import javafx.scene.paint.Color;
 import com.ahmedaraby.game.pacman.config.GameConfig;
 import com.ahmedaraby.game.pacman.constant.ColorC;
 import com.ahmedaraby.game.pacman.constant.DimensionsC;
-import com.ahmedaraby.game.pacman.event.manager.EventManager;
 import com.ahmedaraby.game.pacman.event.EventType;
 import com.ahmedaraby.game.pacman.event.manager.SyncEventManager;
 import com.ahmedaraby.game.pacman.input.JavaFXInputHandler;
@@ -48,7 +47,6 @@ public class GamePlayGameScene implements GameScene {
     final Scene scene;
 
     // game engine
-    final EventManager<EventType, Event<EventType>> eventManager;
     final SyncEventManager<EventType, Event<EventType>> syncEventManager;
 
     final SoundPlayer soundPlayer;
@@ -62,11 +60,10 @@ public class GamePlayGameScene implements GameScene {
         Playground.init();
 
         // game engine
-        eventManager = new EventManager();
         syncEventManager = new SyncEventManager();
         soundPlayer = new SoundPlayer();
         javaFXInputHandler = new JavaFXUserInputHandler(syncEventManager);
-        collisionSystem = new CollisionSystem(gameState, eventManager);
+        collisionSystem = new CollisionSystem(gameState, syncEventManager);
 
         createNonGhostSprites();
         createGhostsSprites();
@@ -115,17 +112,17 @@ public class GamePlayGameScene implements GameScene {
             throw new IllegalStateException("can't register null sprite for event subscription, SoundPlayer, Sugar and PacMan sprites must be defined");
         }
 
-        eventManager.subscribe(EventType.PAC_MAN_SUGAR_COLLISION, soundPlayer);
-        eventManager.subscribe(EventType.PAC_MAN_SUGAR_COLLISION, sugar);
+        syncEventManager.subscribe(EventType.PAC_MAN_SUGAR_COLLISION, soundPlayer);
+        syncEventManager.subscribe(EventType.PAC_MAN_SUGAR_COLLISION, sugar);
 
-        eventManager.subscribe(EventType.PAC_MAN_SUPER_SUGAR_COLLISION, soundPlayer);
-        eventManager.subscribe(EventType.PAC_MAN_SUPER_SUGAR_COLLISION, superSugar);
+        syncEventManager.subscribe(EventType.PAC_MAN_SUPER_SUGAR_COLLISION, soundPlayer);
+        syncEventManager.subscribe(EventType.PAC_MAN_SUPER_SUGAR_COLLISION, superSugar);
 
-        eventManager.subscribe(EventType.PAC_MAN_SUPER_SUGAR_COLLISION, blinky);
-        eventManager.subscribe(EventType.PAC_MAN_SUPER_SUGAR_COLLISION, inky);
+        syncEventManager.subscribe(EventType.PAC_MAN_SUPER_SUGAR_COLLISION, blinky);
+        syncEventManager.subscribe(EventType.PAC_MAN_SUPER_SUGAR_COLLISION, inky);
 
-        eventManager.subscribe(EventType.PAC_MAN_GHOST_COLLISION, blinky);
-        eventManager.subscribe(EventType.PAC_MAN_GHOST_COLLISION, inky);
+        syncEventManager.subscribe(EventType.PAC_MAN_GHOST_COLLISION, blinky);
+        syncEventManager.subscribe(EventType.PAC_MAN_GHOST_COLLISION, inky);
     }
 
     private void registerSubscribersForSyncEvents() {
