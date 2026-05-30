@@ -19,7 +19,7 @@ public class JavaFXUserInputHandler implements JavaFXInputHandler{
     public void handleKeyPressedEvent(KeyEvent keyEvent) {
         try {
             final PacManMovementRequestEvent event = new PacManMovementRequestEvent(DirectionsE.from(keyEvent.getCode()), keyEvent.getSource());
-            syncEventManager.notifySubscribers(event);
+            syncEventManager.notify(event);
         } catch (Exception exc) {
             System.out.println("user input is not a valid pac man movement input");
         }

@@ -29,7 +29,7 @@ public class SyncEventManager<T, E extends Event<T>> implements Publisher<T, E> 
     }
 
     @Override
-    public void notifySubscribers(E event) {
+    public void notify(E event) {
         subscribers
                 .get(event.getType())
                 .forEach(sub -> sub.update(event));

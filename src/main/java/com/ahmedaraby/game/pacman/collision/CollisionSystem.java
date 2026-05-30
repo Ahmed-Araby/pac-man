@@ -42,7 +42,7 @@ public class CollisionSystem {
             final Rectangle collidingRect = report.getCollidingObjects().getFirst();
             final PacMan2SugarCollisionEvent collisionEvent = new PacMan2SugarCollisionEvent(
                     EventType.PAC_MAN_SUGAR_COLLISION, collidingRect);
-            asyncEventManager.notifySubscribers(collisionEvent);
+            asyncEventManager.notify(collisionEvent);
         });
     }
 
@@ -55,7 +55,7 @@ public class CollisionSystem {
             final Rectangle collidingRect = report.getCollidingObjects().getFirst();
             final PacMan2SugarCollisionEvent collisionEvent = new PacMan2SugarCollisionEvent(
                     EventType.PAC_MAN_SUPER_SUGAR_COLLISION, collidingRect);
-            asyncEventManager.notifySubscribers(collisionEvent);
+            asyncEventManager.notify(collisionEvent);
         });
     }
 
@@ -67,7 +67,7 @@ public class CollisionSystem {
             final Rectangle ghostRect = SpriteUtil.toRect(ghost.getTopLeftCorner(), SpriteE.GHOST);
             M2MSpriteCollisionDetector.detect(pacManRect, ghostRect).ifPresent((report)-> {
                 final PacMan2GhostCollisionEvent collisionEvent = new PacMan2GhostCollisionEvent(ghost);
-                asyncEventManager.notifySubscribers(collisionEvent);
+                asyncEventManager.notify(collisionEvent);
             });
         }
 
