@@ -25,25 +25,45 @@ public class CanvasRect {
         return topLeftCorner.getRow();
     }
 
+    // corners
+    public CanvasCoordinate topLeftCorner() {
+        return topLeftCorner;
+    }
 
+    public CanvasCoordinate topRightCorner() {
+       return new CanvasCoordinate(0, width - 1);
+    }
+
+    public CanvasCoordinate bottomRightCorner() {
+        return new CanvasCoordinate(height - 1, width -1);
+    }
+
+    public CanvasCoordinate bottomLeftCorner() {
+        return new CanvasCoordinate(height - 1, 0);
+    }
+
+
+    // sides
     public Line topSide() {
-        final CanvasCoordinate topRightCorner = new CanvasCoordinate(0, width - 1);
-        return new Line(topLeftCorner, topRightCorner);
+        return new Line(topLeftCorner, topRightCorner());
     }
 
     public Line rightSide() {
-        final CanvasCoordinate topRightCorner = new CanvasCoordinate(0, width - 1);
-        final CanvasCoordinate bottomRightCorner = new CanvasCoordinate(height - 1, width -1);
-        return new Line(topRightCorner, bottomRightCorner);
+        return new Line(topRightCorner(), bottomRightCorner());
     }
 
     public Line bottomSide() {
-        final CanvasCoordinate bottomLeftCorner = new CanvasCoordinate(height - 1, 0);
-        final CanvasCoordinate bottomRightCorner = new CanvasCoordinate(height - 1, width -1);
-        return new Line(bottomRightCorner, bottomLeftCorner);
+        return new Line(bottomRightCorner(), bottomLeftCorner());
     }
     public Line leftSide() {
         final CanvasCoordinate bottomLeftCorner = new CanvasCoordinate(height - 1, 0);
         return new Line(bottomLeftCorner, topLeftCorner);
+    }
+
+    public boolean within(CanvasRect rect) {
+        return topLeftCorner.within(rect)
+                && topRightCorner().within(rect)
+                && bottomRightCorner().within(rect)
+                && bottomLeftCorner().within(rect);
     }
 }
