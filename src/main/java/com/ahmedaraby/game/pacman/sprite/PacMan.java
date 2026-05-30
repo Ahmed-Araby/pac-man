@@ -116,13 +116,12 @@ public class PacMan extends MovingSprite implements Subscriber<EventType> {
             );
             handleDeniedMovementAttempt(deniedEvent);
             return;
-        }
-
-        if (isCollidingWithWallOrGhostHWall(nextCord)) {
+        } else if (isCollidingWithWallOrGhostHWall(nextCord)) {
             final PacManMovementAttemptDeniedEvent deniedEvent = new PacManMovementAttemptDeniedEvent(
                     nextCord, event.getDirectionsE(), event.getSource()
             );
             handleDeniedMovementAttempt(deniedEvent);
+            return;
         } else {
             final PacManMovementAttemptApprovedEvent approvedEvent = new PacManMovementAttemptApprovedEvent(
                     getTopLeftCorner(), nextCord, event.getDirectionsE(), event.getSource()
