@@ -1,4 +1,4 @@
-package com.ahmedaraby.game.pacman.maze;
+package com.ahmedaraby.jengine.maze;
 
 import com.ahmedaraby.game.pacman.entity.MazeCell;
 import com.ahmedaraby.jengine.entity.Vector;

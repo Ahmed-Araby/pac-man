@@ -1,4 +1,4 @@
-package com.ahmedaraby.game.pacman.maze;
+package com.ahmedaraby.jengine.maze;
 
 public class RecursiveDivisionMazeGenerator implements MazeGenerator {
 

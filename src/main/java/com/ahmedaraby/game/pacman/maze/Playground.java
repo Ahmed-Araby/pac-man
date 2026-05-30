@@ -4,6 +4,8 @@ import com.ahmedaraby.game.pacman.constant.DimensionsC;
 import com.ahmedaraby.game.pacman.constant.SpriteE;
 import com.ahmedaraby.jengine.entity.Coordinate;
 import com.ahmedaraby.game.pacman.entity.MazeCell;
+import com.ahmedaraby.jengine.maze.MazeGenerator;
+import com.ahmedaraby.jengine.maze.RandomizedDFSMazeGenerator;
 
 public class Playground {
 
