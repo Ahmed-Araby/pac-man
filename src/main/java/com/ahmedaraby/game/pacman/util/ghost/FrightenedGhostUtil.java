@@ -4,7 +4,7 @@ import com.ahmedaraby.jengine.collision.sprite.M2SSpriteCollisionDetector;
 import com.ahmedaraby.game.pacman.constant.DimensionsC;
 import com.ahmedaraby.game.pacman.constant.SpriteE;
 import com.ahmedaraby.game.pacman.entity.CanvasCoordinate;
-import com.ahmedaraby.game.pacman.entity.CanvasRect;
+import com.ahmedaraby.game.pacman.entity.Rectangle;
 import com.ahmedaraby.game.pacman.entity.Vector;
 import com.ahmedaraby.game.pacman.model.CollisionReport;
 import com.ahmedaraby.game.pacman.util.SpriteUtil;
@@ -32,7 +32,7 @@ public class FrightenedGhostUtil {
                     if (isGoingOutOfCanvas(candidateNextCord))  {
                         return false;
                     }
-                    final CanvasRect rect = SpriteUtil.toRect(candidateNextCord, SpriteE.GHOST);
+                    final Rectangle rect = SpriteUtil.toRect(candidateNextCord, SpriteE.GHOST);
                     final List<CollisionReport> collisionReportOpt = M2SSpriteCollisionDetector.detect(rect, List.of(SpriteE.WALL, SpriteE.GHOST_HOUSE_WALL));
                     return collisionReportOpt.isEmpty();
                 })

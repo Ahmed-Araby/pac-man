@@ -6,7 +6,7 @@ import com.ahmedaraby.game.pacman.constant.DimensionsC;
 import com.ahmedaraby.game.pacman.constant.DirectionsE;
 import com.ahmedaraby.game.pacman.constant.SpriteFileNameC;
 import com.ahmedaraby.game.pacman.entity.CanvasCoordinate;
-import com.ahmedaraby.game.pacman.entity.CanvasRect;
+import com.ahmedaraby.game.pacman.entity.Rectangle;
 import com.ahmedaraby.game.pacman.entity.Line;
 import com.ahmedaraby.game.pacman.entity.Vector;
 import com.ahmedaraby.game.pacman.ghostmode.navigation.GhostNavigator;
@@ -84,7 +84,7 @@ public class InkyChaser extends Chaser {
     }
 
     private CanvasCoordinate calculateTheTargetCoordinate(Line blinky2InterTileLine) {
-        final CanvasRect wholePLayGround = new CanvasRect(
+        final Rectangle wholePLayGround = new Rectangle(
                 new CanvasCoordinate(0, 0), DimensionsC.CANVAS_WIDTH_PIXELS, DimensionsC.CANVAS_HEIGHT_PIXELS);
         return blinky2InterTileLine
                 .scale(2) // double the line in the direction from blinky to the Intermediate tile

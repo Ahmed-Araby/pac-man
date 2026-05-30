@@ -55,7 +55,7 @@ public class Line {
         return new Line(start, newEnd);
     }
 
-    public Line trim(CanvasRect enclosingRect) {
+    public Line trim(Rectangle enclosingRect) {
         List<CanvasCoordinate> intersectionPoints = new ArrayList<>();
 
         if (end.getCol() > enclosingRect.rightEdgeCol()) {

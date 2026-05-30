@@ -8,7 +8,7 @@ import com.ahmedaraby.game.pacman.constant.DimensionsC;
 import com.ahmedaraby.game.pacman.constant.DirectionsE;
 import com.ahmedaraby.game.pacman.constant.SpriteE;
 import com.ahmedaraby.game.pacman.entity.CanvasCoordinate;
-import com.ahmedaraby.game.pacman.entity.CanvasRect;
+import com.ahmedaraby.game.pacman.entity.Rectangle;
 import com.ahmedaraby.game.pacman.event.Event;
 import com.ahmedaraby.game.pacman.model.CollisionReport;
 import com.ahmedaraby.game.pacman.model.GameState;
@@ -37,7 +37,7 @@ public abstract class MovingSprite extends Sprite {
     }
 
     protected boolean isCollidingWithWallOrGhostHWall(CanvasCoordinate topLeftCorner) {
-        final CanvasRect rect = SpriteUtil.toRect(topLeftCorner, type);
+        final Rectangle rect = SpriteUtil.toRect(topLeftCorner, type);
         List<CollisionReport> collisionReports = M2SSpriteCollisionDetector.detect(rect, List.of(SpriteE.WALL, SpriteE.GHOST_HOUSE_WALL));
         return !collisionReports.isEmpty();
     }

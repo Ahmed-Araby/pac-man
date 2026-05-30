@@ -4,7 +4,7 @@ import com.ahmedaraby.game.pacman.entity.MazeCell;
 import com.ahmedaraby.game.pacman.constant.DimensionsC;
 import com.ahmedaraby.game.pacman.constant.DirectionsE;
 import com.ahmedaraby.game.pacman.entity.CanvasCoordinate;
-import com.ahmedaraby.game.pacman.entity.CanvasRect;
+import com.ahmedaraby.game.pacman.entity.Rectangle;
 import com.ahmedaraby.game.pacman.util.MazeUtil;
 
 import java.util.List;
@@ -16,8 +16,8 @@ public class CanvasUtil {
                 && cord.getRow() >= 0 && cord.getRow() < DimensionsC.CANVAS_HEIGHT_PIXELS;
     }
     public static List<MazeCell> getIntersectingMazeCells(CanvasCoordinate cord) {
-        final CanvasRect canvasRect = new CanvasRect(cord, DimensionsC.MAZE_CELL_SIZE_PIXELS, DimensionsC.MAZE_CELL_SIZE_PIXELS);
-        final List<CanvasCoordinate> rectCorners = CanvasRectUtils.get4Corners(canvasRect);
+        final Rectangle rectangle = new Rectangle(cord, DimensionsC.MAZE_CELL_SIZE_PIXELS, DimensionsC.MAZE_CELL_SIZE_PIXELS);
+        final List<CanvasCoordinate> rectCorners = CanvasRectUtils.get4Corners(rectangle);
         return rectCorners
                 .stream()
                 .map(corner -> CanvasRectUtils.getTopLeftCornerOfRectContainingPoint(DimensionsC.MAZE_CELL_SIZE_PIXELS, DimensionsC.MAZE_CELL_SIZE_PIXELS, corner))

@@ -4,7 +4,7 @@ import lombok.AllArgsConstructor;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.ToString;
-import com.ahmedaraby.game.pacman.entity.CanvasRect;
+import com.ahmedaraby.game.pacman.entity.Rectangle;
 
 import java.util.List;
 
@@ -15,6 +15,6 @@ import java.util.List;
 public class CollisionReport {
 
     // this is stupid, I need to find a smarter names
-    private final CanvasRect collidingObject;
-    private final List<CanvasRect> collidingObjects;
+    private final Rectangle collidingObject;
+    private final List<Rectangle> collidingObjects;
 }

@@ -4,7 +4,7 @@ import com.ahmedaraby.game.pacman.config.Configs;
 import com.ahmedaraby.game.pacman.constant.DimensionsC;
 import com.ahmedaraby.game.pacman.constant.SpriteE;
 import com.ahmedaraby.game.pacman.entity.CanvasCoordinate;
-import com.ahmedaraby.game.pacman.entity.CanvasRect;
+import com.ahmedaraby.game.pacman.entity.Rectangle;
 import com.ahmedaraby.game.pacman.event.Event;
 import com.ahmedaraby.game.pacman.event.Subscriber;
 import com.ahmedaraby.game.pacman.event.movement.PacManMovementAttemptApprovedEvent;
@@ -112,7 +112,7 @@ public class PacMan extends MovingSprite implements Subscriber {
         }
 
         final CanvasCoordinate nextCord = new CanvasCoordinate(newRow, newCol);
-        final CanvasRect virtualPacManRect = new CanvasRect(nextCord, DimensionsC.PAC_MAN_DIAMETER_PIXELS, DimensionsC.PAC_MAN_DIAMETER_PIXELS);
+        final Rectangle virtualPacManRect = new Rectangle(nextCord, DimensionsC.PAC_MAN_DIAMETER_PIXELS, DimensionsC.PAC_MAN_DIAMETER_PIXELS);
 
         if (!virtualPacManRect.within(gameState.getMaze().getRect())) {
             final PacManMovementAttemptDeniedEvent deniedEvent = new PacManMovementAttemptDeniedEvent(
@@ -146,8 +146,8 @@ public class PacMan extends MovingSprite implements Subscriber {
             this.turnBuffer.discardTurnBuffer();
         } else if (event.getMovementAttemptSource() instanceof PacMan) {
             // automated straight line movement
-            final CanvasRect pacManCanvasCanvasRect = new CanvasRect(event.getRequestedPacManCanvasRectTopLeftCorner(), DimensionsC.MAZE_CELL_SIZE_PIXELS, DimensionsC.MAZE_CELL_SIZE_PIXELS);
-            if (turnBuffer.isThereBufferedTurn(pacManCanvasCanvasRect, event.getRequestedDirection())) {
+            final Rectangle pacManCanvasRectangle = new Rectangle(event.getRequestedPacManCanvasRectTopLeftCorner(), DimensionsC.MAZE_CELL_SIZE_PIXELS, DimensionsC.MAZE_CELL_SIZE_PIXELS);
+            if (turnBuffer.isThereBufferedTurn(pacManCanvasRectangle, event.getRequestedDirection())) {
                 attemptMovement(turnBuffer.getBufferedPacManAutomatedMovementRequest());
             }
         }
@@ -158,8 +158,8 @@ public class PacMan extends MovingSprite implements Subscriber {
         if (event.getMovementAttemptSource() instanceof Scene) {
             // user input
             if(turnBuffer.isBlockedTurn(dir, event.getRequestedDirection())) {
-                final CanvasRect pacManCanvasCanvasRect = new CanvasRect(new CanvasCoordinate(getRow(), getCol()), DimensionsC.MAZE_CELL_SIZE_PIXELS, DimensionsC.MAZE_CELL_SIZE_PIXELS);
-                turnBuffer.bufferTurn(event.getRequestedDirection(), pacManCanvasCanvasRect);
+                final Rectangle pacManCanvasRectangle = new Rectangle(new CanvasCoordinate(getRow(), getCol()), DimensionsC.MAZE_CELL_SIZE_PIXELS, DimensionsC.MAZE_CELL_SIZE_PIXELS);
+                turnBuffer.bufferTurn(event.getRequestedDirection(), pacManCanvasRectangle);
             }
         }
         // do nothing for denied automated movements

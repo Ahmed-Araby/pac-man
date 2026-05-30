@@ -7,7 +7,7 @@ import lombok.ToString;
 @AllArgsConstructor
 @Getter
 @ToString
-public class CanvasRect {
+public class Rectangle {
     private final CanvasCoordinate topLeftCorner;
     private final double width;
     private final double height;
@@ -60,7 +60,7 @@ public class CanvasRect {
         return new Line(bottomLeftCorner, topLeftCorner);
     }
 
-    public boolean within(CanvasRect rect) {
+    public boolean within(Rectangle rect) {
         return topLeftCorner.within(rect)
                 && topRightCorner().within(rect)
                 && bottomRightCorner().within(rect)

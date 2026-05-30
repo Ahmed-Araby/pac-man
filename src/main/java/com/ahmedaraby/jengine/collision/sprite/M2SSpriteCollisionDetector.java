@@ -5,7 +5,7 @@ import com.ahmedaraby.jengine.collision.geometric.Rect2RectCollisionDetectorUtil
 import com.ahmedaraby.game.pacman.constant.DimensionsC;
 import com.ahmedaraby.game.pacman.constant.SpriteE;
 import com.ahmedaraby.game.pacman.entity.CanvasCoordinate;
-import com.ahmedaraby.game.pacman.entity.CanvasRect;
+import com.ahmedaraby.game.pacman.entity.Rectangle;
 import com.ahmedaraby.game.pacman.model.CollisionReport;
 import com.ahmedaraby.game.pacman.util.SpriteUtil;
 import com.ahmedaraby.game.pacman.util.canvas.CanvasRectUtils;
@@ -15,7 +15,7 @@ import java.util.Optional;
 
 public class M2SSpriteCollisionDetector {
 
-    public static List<CollisionReport> detect(CanvasRect rect, List<SpriteE> targets) {
+    public static List<CollisionReport> detect(Rectangle rect, List<SpriteE> targets) {
         // [TODO] optimize, either run in parallel, or check for all targets at once
         return targets.stream()
                 .map(target -> detect(rect, target))
@@ -23,9 +23,9 @@ public class M2SSpriteCollisionDetector {
                 .map(Optional::get)
                 .toList();
     }
-    public static Optional<CollisionReport> detect(CanvasRect rect, SpriteE target) {
+    public static Optional<CollisionReport> detect(Rectangle rect, SpriteE target) {
         final List<CanvasCoordinate> corners = CanvasRectUtils.get4Corners(rect);
-        final Optional<CanvasRect> collidingRect = corners.stream()
+        final Optional<Rectangle> collidingRect = corners.stream()
                 .map(M2SSpriteCollisionDetector::toTopLeftCornerOfRectContainingPoint)
                 .filter(topLeftCornerCord -> isTarget(topLeftCornerCord, target))
                 .map(topLeftCornerCord -> SpriteUtil.toRect(topLeftCornerCord, target))

@@ -1,6 +1,6 @@
 package com.ahmedaraby.game.pacman.sprite;
 
-import com.ahmedaraby.game.pacman.entity.CanvasRect;
+import com.ahmedaraby.game.pacman.entity.Rectangle;
 import com.ahmedaraby.game.pacman.model.GameState;
 import javafx.scene.canvas.Canvas;
 import lombok.AllArgsConstructor;
@@ -31,8 +31,8 @@ public abstract class Sprite {
         System.out.println("Sprite.init() method is not implemented for sprite " + this.getClass().getSimpleName());
     }
 
-    public CanvasRect getRect() {
-        return new CanvasRect(topLeftCorner, width, height);
+    public Rectangle getRect() {
+        return new Rectangle(topLeftCorner, width, height);
     }
 
     public double getCol() {

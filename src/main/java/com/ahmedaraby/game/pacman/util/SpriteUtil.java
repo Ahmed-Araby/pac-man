@@ -4,7 +4,7 @@ import com.ahmedaraby.game.pacman.constant.DimensionsC;
 import com.ahmedaraby.game.pacman.constant.DirectionsE;
 import com.ahmedaraby.game.pacman.constant.SpriteE;
 import com.ahmedaraby.game.pacman.entity.CanvasCoordinate;
-import com.ahmedaraby.game.pacman.entity.CanvasRect;
+import com.ahmedaraby.game.pacman.entity.Rectangle;
 import com.ahmedaraby.game.pacman.entity.MazeCell;
 import com.ahmedaraby.game.pacman.maze.Playground;
 import com.ahmedaraby.game.pacman.util.canvas.CanvasUtil;
@@ -13,7 +13,7 @@ public class SpriteUtil {
     private SpriteUtil() {}
 
 
-    public static CanvasRect toRect(CanvasCoordinate cTopLeftCorner, SpriteE type) {
+    public static Rectangle toRect(CanvasCoordinate cTopLeftCorner, SpriteE type) {
         final CanvasCoordinate spriteTopLeftCorner = c2STopLeftCorner(cTopLeftCorner, type);
         return switch (type) {
             case SUGAR -> toSugarRect(spriteTopLeftCorner);
@@ -44,28 +44,28 @@ public class SpriteUtil {
     }
 
 
-    private static CanvasRect toSugarRect(CanvasCoordinate topLeftCorner) {
-        return new CanvasRect(topLeftCorner, DimensionsC.SUGAR_CELL_SIZE_PIXELS, DimensionsC.SUGAR_CELL_SIZE_PIXELS);
+    private static Rectangle toSugarRect(CanvasCoordinate topLeftCorner) {
+        return new Rectangle(topLeftCorner, DimensionsC.SUGAR_CELL_SIZE_PIXELS, DimensionsC.SUGAR_CELL_SIZE_PIXELS);
     }
 
-    private static CanvasRect toSuperSugarRect(CanvasCoordinate topLeftCorner) {
-        return new CanvasRect(topLeftCorner, DimensionsC.SUPER_SUGAR_DIAMETER_PIXELS, DimensionsC.SUPER_SUGAR_DIAMETER_PIXELS);
+    private static Rectangle toSuperSugarRect(CanvasCoordinate topLeftCorner) {
+        return new Rectangle(topLeftCorner, DimensionsC.SUPER_SUGAR_DIAMETER_PIXELS, DimensionsC.SUPER_SUGAR_DIAMETER_PIXELS);
     }
 
-    private static CanvasRect toPacManRect(CanvasCoordinate topLeftCorner) {
-        return new CanvasRect(topLeftCorner, DimensionsC.PAC_MAN_DIAMETER_PIXELS, DimensionsC.PAC_MAN_DIAMETER_PIXELS);
+    private static Rectangle toPacManRect(CanvasCoordinate topLeftCorner) {
+        return new Rectangle(topLeftCorner, DimensionsC.PAC_MAN_DIAMETER_PIXELS, DimensionsC.PAC_MAN_DIAMETER_PIXELS);
     }
 
-    private static CanvasRect toGhostRect(CanvasCoordinate topLeftCorner) {
-        return new CanvasRect(topLeftCorner, DimensionsC.GHOST_WIDTH_PIXELS, DimensionsC.GHOST_HEIGHT_PIXELS);
+    private static Rectangle toGhostRect(CanvasCoordinate topLeftCorner) {
+        return new Rectangle(topLeftCorner, DimensionsC.GHOST_WIDTH_PIXELS, DimensionsC.GHOST_HEIGHT_PIXELS);
     }
 
-    private static CanvasRect toWallRect(CanvasCoordinate topLeftCorner) {
-        return new CanvasRect(topLeftCorner, DimensionsC.MAZE_CELL_SIZE_PIXELS, DimensionsC.MAZE_CELL_SIZE_PIXELS);
+    private static Rectangle toWallRect(CanvasCoordinate topLeftCorner) {
+        return new Rectangle(topLeftCorner, DimensionsC.MAZE_CELL_SIZE_PIXELS, DimensionsC.MAZE_CELL_SIZE_PIXELS);
     }
 
-    private static CanvasRect toGhostHWallRect(CanvasCoordinate topLeftCorner) {
-        return new CanvasRect(topLeftCorner, DimensionsC.MAZE_CELL_SIZE_PIXELS, DimensionsC.MAZE_CELL_SIZE_PIXELS);
+    private static Rectangle toGhostHWallRect(CanvasCoordinate topLeftCorner) {
+        return new Rectangle(topLeftCorner, DimensionsC.MAZE_CELL_SIZE_PIXELS, DimensionsC.MAZE_CELL_SIZE_PIXELS);
     }
 
 

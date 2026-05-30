@@ -10,7 +10,7 @@ import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import com.ahmedaraby.game.pacman.config.Configs;
 import com.ahmedaraby.game.pacman.entity.CanvasCoordinate;
-import com.ahmedaraby.game.pacman.entity.CanvasRect;
+import com.ahmedaraby.game.pacman.entity.Rectangle;
 import com.ahmedaraby.game.pacman.entity.MazeCell;
 import com.ahmedaraby.game.pacman.event.Event;
 import com.ahmedaraby.game.pacman.event.Subscriber;
@@ -67,7 +67,7 @@ public class Sugar extends Sprite implements Subscriber {
         }
     }
 
-    public void removeSugar(CanvasRect rect) {
+    public void removeSugar(Rectangle rect) {
         final MazeCell sugarCellMazeTopLeftCornerCoordinate = CanvasUtil.toMazeCoordinate(rect.getTopLeftCorner(), DirectionsE.STILL);
         Playground.set(sugarCellMazeTopLeftCornerCoordinate.getRow(), sugarCellMazeTopLeftCornerCoordinate.getCol(), SpriteE.EMPTY);
     }

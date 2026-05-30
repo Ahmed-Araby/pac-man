@@ -1,10 +1,10 @@
 package com.ahmedaraby.jengine.collision.geometric;
 
-import com.ahmedaraby.game.pacman.entity.CanvasRect;
+import com.ahmedaraby.game.pacman.entity.Rectangle;
 
 public class Rect2RectCollisionDetectorUtil {
 
-    public static boolean collide(CanvasRect r1, CanvasRect r2) {
+    public static boolean collide(Rectangle r1, Rectangle r2) {
         return r1.rightEdgeCol() >= r2.leftEdgeCol()
                 && r1.leftEdgeCol() <= r2.rightEdgeCol()
                 && r1.bottomEdgeRow() >= r2.topEdgeRow()

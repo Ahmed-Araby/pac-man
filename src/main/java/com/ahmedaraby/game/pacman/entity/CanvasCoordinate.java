@@ -27,7 +27,7 @@ public class CanvasCoordinate {
         return new CanvasCoordinate(row + rowOffset, col + colOffset);
     }
 
-    public boolean within(CanvasRect rect) {
+    public boolean within(Rectangle rect) {
         return col >= rect.leftEdgeCol() && col <= rect.rightEdgeCol()
                 && row >= rect.topEdgeRow() && row <= rect.bottomEdgeRow();
     }

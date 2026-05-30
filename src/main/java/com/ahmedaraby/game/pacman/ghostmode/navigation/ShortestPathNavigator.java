@@ -9,7 +9,7 @@ import lombok.AllArgsConstructor;
 import com.ahmedaraby.game.pacman.constant.DirectionsE;
 import com.ahmedaraby.game.pacman.constant.SpriteE;
 import com.ahmedaraby.game.pacman.entity.CanvasCoordinate;
-import com.ahmedaraby.game.pacman.entity.CanvasRect;
+import com.ahmedaraby.game.pacman.entity.Rectangle;
 import com.ahmedaraby.game.pacman.entity.MazeMove;
 import com.ahmedaraby.game.pacman.util.BfsUtil;
 import com.ahmedaraby.game.pacman.util.ghost.GhostUtil;
@@ -32,7 +32,7 @@ public class ShortestPathNavigator implements GhostNavigator {
                 .filter(move -> move.getDist2Target() < Integer.MAX_VALUE)
                 .filter(move -> {
                     final CanvasCoordinate candidateNextCord = MazeUtil.getCanvasCord(move.getCell());
-                    final CanvasRect rect = SpriteUtil.toRect(candidateNextCord, SpriteE.GHOST);
+                    final Rectangle rect = SpriteUtil.toRect(candidateNextCord, SpriteE.GHOST);
                     final List<CollisionReport> collisionReportOpt = M2SSpriteCollisionDetector.detect(rect, List.of(SpriteE.WALL, SpriteE.GHOST_HOUSE_WALL));
                     return collisionReportOpt.isEmpty();
                 })

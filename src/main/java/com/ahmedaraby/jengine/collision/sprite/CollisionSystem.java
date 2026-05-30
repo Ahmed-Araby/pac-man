@@ -2,7 +2,7 @@ package com.ahmedaraby.jengine.collision.sprite;
 
 import com.ahmedaraby.game.pacman.constant.SpriteE;
 import com.ahmedaraby.game.pacman.entity.CanvasCoordinate;
-import com.ahmedaraby.game.pacman.entity.CanvasRect;
+import com.ahmedaraby.game.pacman.entity.Rectangle;
 import com.ahmedaraby.game.pacman.event.EventType;
 import com.ahmedaraby.game.pacman.event.collision.PacMan2GhostCollisionEvent;
 import com.ahmedaraby.game.pacman.event.collision.PacMan2SugarCollisionEvent;
@@ -34,11 +34,11 @@ public class CollisionSystem {
 
     private void detectPacman2SugarCollision() {
         final CanvasCoordinate pacmanTopLeftCorner = gameState.getPacMan().getTopLeftCorner();
-        final CanvasRect pacManRect = SpriteUtil.toRect(pacmanTopLeftCorner, SpriteE.PAC_MAN);
+        final Rectangle pacManRect = SpriteUtil.toRect(pacmanTopLeftCorner, SpriteE.PAC_MAN);
 
         final Optional<CollisionReport> reportOpt = M2SSpriteCollisionDetector.detect(pacManRect, SpriteE.SUGAR);
         reportOpt.ifPresent((report) -> {
-            final CanvasRect collidingRect = report.getCollidingObjects().getFirst();
+            final Rectangle collidingRect = report.getCollidingObjects().getFirst();
             final PacMan2SugarCollisionEvent collisionEvent = new PacMan2SugarCollisionEvent(
                     EventType.PAC_MAN_SUGAR_COLLISION, collidingRect);
             asyncEventManager.notifySubscribers(collisionEvent);
@@ -47,11 +47,11 @@ public class CollisionSystem {
 
     private void detectPacman2SuperSugarCollision() {
         final CanvasCoordinate pacmanTopLeftCorner = gameState.getPacMan().getTopLeftCorner();
-        final CanvasRect pacManRect = SpriteUtil.toRect(pacmanTopLeftCorner, SpriteE.PAC_MAN);
+        final Rectangle pacManRect = SpriteUtil.toRect(pacmanTopLeftCorner, SpriteE.PAC_MAN);
 
         final Optional<CollisionReport> reportOpt = M2SSpriteCollisionDetector.detect(pacManRect, SpriteE.SUPER_SUGAR);
         reportOpt.ifPresent((report) -> {
-            final CanvasRect collidingRect = report.getCollidingObjects().getFirst();
+            final Rectangle collidingRect = report.getCollidingObjects().getFirst();
             final PacMan2SugarCollisionEvent collisionEvent = new PacMan2SugarCollisionEvent(
                     EventType.PAC_MAN_SUPER_SUGAR_COLLISION, collidingRect);
             asyncEventManager.notifySubscribers(collisionEvent);
@@ -60,10 +60,10 @@ public class CollisionSystem {
 
     private void detectPacman2GhostCollision() {
         final CanvasCoordinate pacManTopLeftCorner = gameState.getPacMan().getTopLeftCorner();
-        final CanvasRect pacManRect = SpriteUtil.toRect(pacManTopLeftCorner, SpriteE.PAC_MAN);
+        final Rectangle pacManRect = SpriteUtil.toRect(pacManTopLeftCorner, SpriteE.PAC_MAN);
 
         for(Ghost ghost: gameState.getGhosts()) {
-            final CanvasRect ghostRect = SpriteUtil.toRect(ghost.getTopLeftCorner(), SpriteE.GHOST);
+            final Rectangle ghostRect = SpriteUtil.toRect(ghost.getTopLeftCorner(), SpriteE.GHOST);
             M2MSpriteCollisionDetector.detect(pacManRect, ghostRect).ifPresent((report)-> {
                 final PacMan2GhostCollisionEvent collisionEvent = new PacMan2GhostCollisionEvent(ghost);
                 asyncEventManager.notifySubscribers(collisionEvent);
