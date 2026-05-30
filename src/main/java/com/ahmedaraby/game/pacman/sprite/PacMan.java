@@ -112,13 +112,9 @@ public class PacMan extends MovingSprite implements Subscriber<EventType> {
         final Coordinate nextCord = new Coordinate(newRow, newCol);
         final Rectangle virtualPacManRect = new Rectangle(nextCord, DimensionsC.PAC_MAN_DIAMETER_PIXELS, DimensionsC.PAC_MAN_DIAMETER_PIXELS);
 
-        if (!virtualPacManRect.within(gameState.getMaze().getRect())) {
-            final PacManMovementAttemptDeniedEvent deniedEvent = new PacManMovementAttemptDeniedEvent(
-                    nextCord, event.getDirectionsE(), event.getSource()
-            );
-            handleDeniedMovementAttempt(deniedEvent);
-            return;
-        } else if (isCollidingWithWallOrGhostHWall(nextCord)) {
+        if (!virtualPacManRect.within(gameState.getMaze().getRect())
+                || isCollidingWithWallOrGhostHWall(nextCord)
+        ) {
             final PacManMovementAttemptDeniedEvent deniedEvent = new PacManMovementAttemptDeniedEvent(
                     nextCord, event.getDirectionsE(), event.getSource()
             );
