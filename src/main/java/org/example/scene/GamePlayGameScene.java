@@ -23,6 +23,7 @@ import org.example.sprite.PacMan;
 import org.example.sprite.playground.Sugar;
 import org.example.sprite.ghost.Blinky;
 import org.example.sprite.ghost.Inky;
+import org.example.sprite.playground.SuperSugar;
 import org.example.util.debug.DebugUtil;
 
 
@@ -33,6 +34,7 @@ public class GamePlayGameScene implements GameScene {
     GhostHouseS ghostHouseS;
     Maze maze;
     Sugar sugar;
+    SuperSugar superSugar;
     PacMan pacMan;
 
     // ghosts
@@ -89,7 +91,9 @@ public class GamePlayGameScene implements GameScene {
         ghostHouseS = new GhostHouseS(gameState);
         maze = new Maze(gameState);
         pacMan = new PacMan(gameState);
+        // sugar Sprite has to be instantiated before SuperSugar Sprite
         sugar = new Sugar(gameState);
+        superSugar = new SuperSugar(gameState);
     }
 
     private void createGhostsSprites() {
@@ -157,6 +161,7 @@ public class GamePlayGameScene implements GameScene {
         maze.render(canvas);
         ghostHouseS.render(canvas);
         sugar.render(canvas);
+        superSugar.render(canvas);
 
         if(GameConfig.isDebugModeOn()) {
             DebugUtil.drawDummyPacman(context, 0, 0, DimensionsC.PAC_MAN_DIAMETER_PIXELS, DimensionsC.PAC_MAN_DIAMETER_PIXELS, Color.GRAY);

@@ -2,7 +2,6 @@ package org.example.sprite.playground;
 
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
-import org.example.config.Configs;
 import org.example.constant.*;
 import org.example.entity.CanvasCoordinate;
 import org.example.entity.CanvasRect;
@@ -14,22 +13,18 @@ import org.example.maze.Playground;
 import org.example.model.GameState;
 import org.example.sprite.Sprite;
 import org.example.util.canvas.CanvasUtil;
-import org.example.util.EnrichedThreadLocalRandom;
 import org.example.util.MazeUtil;
 import org.example.util.SugarUtil;
 
-public class Sugar extends Sprite implements Subscriber {
-    private final EnrichedThreadLocalRandom enrichedRandom = new EnrichedThreadLocalRandom();
+public class SuperSugar extends Sprite implements Subscriber {
 
-    public Sugar(GameState gameState) {
-        super(gameState, SpriteE.SUGAR, -1, -1);
+    public SuperSugar(GameState gameState) {
+        super(gameState, SpriteE.SUPER_SUGAR, -1, -1);
 
         for(int row = 0; row < Playground.height(); row++) {
             for (int col = 0; col < Playground.width(); col++) {
                 if (Playground.isEmpty(row, col)) {
-                    if (enrichedRandom.nextPercentage() > Configs.SUPER_SUGAR_PERCENTAGE) {
-                        Playground.set(row, col, SpriteE.SUGAR);
-                    }
+                    Playground.set(row, col, SpriteE.SUPER_SUGAR);
                 }
             }
         }
@@ -39,24 +34,23 @@ public class Sugar extends Sprite implements Subscriber {
     public void render(Canvas canvas) {
         final GraphicsContext con = canvas.getGraphicsContext2D();
 
-        con.setFill(ColorC.SUGAR_COLOR);
+        con.setFill(ColorC.SUPER_SUGAR_COLOR);
 
         for (int row = 0; row < Playground.height(); row++) {
             for (int col = 0; col < Playground.width(); col++) {
-                if (Playground.hasSugar(row, col)) {
+                if (Playground.hasSuperSugar(row, col)) {
                     final CanvasCoordinate cellTopLeftCornerCanvas = MazeUtil.getCanvasCord(row, col);
-                    final CanvasCoordinate sugarCellTopLeftCornerCanvas = SugarUtil.getSugarTopLeftCornerCanvas(cellTopLeftCornerCanvas);
-                    con.fillRect(sugarCellTopLeftCornerCanvas.getCol(), sugarCellTopLeftCornerCanvas.getRow(), DimensionsC.SUGAR_CELL_SIZE_PIXELS, DimensionsC.SUGAR_CELL_SIZE_PIXELS);
+                    final CanvasCoordinate sugarCellTopLeftCornerCanvas = SugarUtil.getSuperSugarTopLeftCornerCanvas(cellTopLeftCornerCanvas);
+                    con.fillOval(sugarCellTopLeftCornerCanvas.getCol(), sugarCellTopLeftCornerCanvas.getRow(), DimensionsC.SUPER_SUGAR_DIAMETER_PIXELS, DimensionsC.SUPER_SUGAR_DIAMETER_PIXELS);
                 }
             }
         }
-
     }
 
     @Override
     public void update(Event event) {
         switch (event.getType()) {
-            case PAC_MAN_SUGAR_COLLISION:
+            case PAC_MAN_SUPER_SUGAR_COLLISION:
                 removeSugar(((PacMan2SugarCollisionEvent)event).getSugarRect());
                 break;
             default:
