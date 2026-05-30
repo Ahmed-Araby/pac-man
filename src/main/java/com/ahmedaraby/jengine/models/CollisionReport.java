@@ -1,4 +1,4 @@
-package com.ahmedaraby.game.pacman.model;
+package com.ahmedaraby.jengine.models;
 
 import lombok.AllArgsConstructor;
 import lombok.EqualsAndHashCode;
