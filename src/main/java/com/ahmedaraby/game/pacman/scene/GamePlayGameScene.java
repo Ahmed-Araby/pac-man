@@ -102,6 +102,7 @@ public class GamePlayGameScene implements GameScene {
     }
 
     private void setGameState() {
+        gameState.setMaze(maze);
         gameState.setPacMan(pacMan);
         gameState.setGhostHouseS(ghostHouseS);
         gameState.addGhost(blinky);
