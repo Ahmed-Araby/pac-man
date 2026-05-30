@@ -1,6 +1,6 @@
 package com.ahmedaraby.game.pacman.event;
 
-public interface Subscriber {
+public interface Subscriber<T> {
 
-    void update(Event event);
+    void update(Event<T> event);
 }

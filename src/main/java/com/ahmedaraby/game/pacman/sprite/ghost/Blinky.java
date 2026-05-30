@@ -3,6 +3,7 @@ package com.ahmedaraby.game.pacman.sprite.ghost;
 import com.ahmedaraby.game.pacman.constant.DimensionsC;
 import com.ahmedaraby.game.pacman.constant.DirectionsE;
 import com.ahmedaraby.game.pacman.constant.SpriteE;
+import com.ahmedaraby.game.pacman.event.EventType;
 import com.ahmedaraby.game.pacman.event.collision.PacMan2GhostCollisionEvent;
 import com.ahmedaraby.game.pacman.model.GameState;
 import com.ahmedaraby.game.pacman.sprite.playground.GhostHouseS;
@@ -15,7 +16,7 @@ import com.ahmedaraby.game.pacman.ghostmode.common.Eaten;
 import com.ahmedaraby.game.pacman.ghostmode.common.Frightened;
 import com.ahmedaraby.game.pacman.ghostmode.blinky.BlinkyScattered;
 
-public class Blinky extends Ghost implements Subscriber {
+public class Blinky extends Ghost implements Subscriber<EventType> {
 
     public Blinky(GameState gameState) {
         super(gameState, SpriteE.GHOST, 0, 0, DirectionsE.STILL);
@@ -51,7 +52,7 @@ public class Blinky extends Ghost implements Subscriber {
         activeMode.move();
     }
 
-    public void update(Event event) {
+    public void update(Event<EventType> event) {
         switch (event.getType()) {
             case PAC_MAN_SUPER_SUGAR_COLLISION:
                 transitionMode(event);

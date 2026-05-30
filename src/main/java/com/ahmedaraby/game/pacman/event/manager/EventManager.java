@@ -1,73 +1,38 @@
 package com.ahmedaraby.game.pacman.event.manager;
 
 import com.ahmedaraby.game.pacman.event.Event;
-import com.ahmedaraby.game.pacman.event.EventType;
 import com.ahmedaraby.game.pacman.event.Publisher;
 import com.ahmedaraby.game.pacman.event.Subscriber;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 // this EventManager is to be refactored to work in asynchronous manner using separate threads other than the JavaFX Main graphics threads
-public class EventManager implements Publisher {
-    List<Subscriber> pacManSugarCollisionEventSubscribers;
-    List<Subscriber> pacManSuperSugarCollisionSubscribers;
-    List<Subscriber> pacMan2GhostCollisionSubscribers;
+public class EventManager<T, E extends Event<T>> implements Publisher<T, E> {
+    private final Map<T, List<Subscriber>> subscribers;
 
     public EventManager() {
-        pacManSugarCollisionEventSubscribers = new ArrayList<>();
-        pacManSuperSugarCollisionSubscribers = new ArrayList<>();
-        pacMan2GhostCollisionSubscribers = new ArrayList<>();
+        subscribers = new HashMap<>();
     }
 
     @Override
-    public void subscribe(EventType type, Subscriber subscriber) {
-        switch (type) {
-            case PAC_MAN_SUGAR_COLLISION:
-                pacManSugarCollisionEventSubscribers.add(subscriber);
-                break;
-            case PAC_MAN_SUPER_SUGAR_COLLISION:
-                pacManSuperSugarCollisionSubscribers.add(subscriber);
-                break;
-            case PAC_MAN_GHOST_COLLISION:
-                pacMan2GhostCollisionSubscribers.add(subscriber);
-                break;
-            default:
-                throw new IllegalArgumentException();
-        }
+    public void subscribe(T type, Subscriber subscriber) {
+        subscribers
+                .computeIfAbsent(type, key -> new ArrayList<>())
+                .add(subscriber);
     }
 
     @Override
-    public void unSubscribe(EventType type, Subscriber subscriber) {
-        switch (type) {
-            case PAC_MAN_SUGAR_COLLISION:
-                pacManSugarCollisionEventSubscribers.remove(subscriber);
-                break;
-            case PAC_MAN_SUPER_SUGAR_COLLISION:
-                pacManSuperSugarCollisionSubscribers.remove(subscriber);
-                break;
-            case PAC_MAN_GHOST_COLLISION:
-                pacMan2GhostCollisionSubscribers.remove(subscriber);
-                break;
-            default:
-                throw new IllegalArgumentException();
-        }
+    public void unSubscribe(T type, Subscriber subscriber) {
+        subscribers.get(type).remove(subscriber);
     }
 
     @Override
-    public void notifySubscribers(Event event) {
-        switch (event.getType()) {
-            case PAC_MAN_SUGAR_COLLISION:
-                pacManSugarCollisionEventSubscribers.stream().forEach(sub -> sub.update(event));
-                break;
-            case PAC_MAN_SUPER_SUGAR_COLLISION:
-                pacManSuperSugarCollisionSubscribers.stream().forEach(sub -> sub.update(event));
-                break;
-            case PAC_MAN_GHOST_COLLISION:
-                pacMan2GhostCollisionSubscribers.forEach(sub -> sub.update(event));
-                break;
-            default:
-                throw new IllegalArgumentException();
-        }
+    public void notifySubscribers(E event) {
+        subscribers
+                .get(event.getType())
+                .forEach(sub -> sub.update(event));
     }
 }

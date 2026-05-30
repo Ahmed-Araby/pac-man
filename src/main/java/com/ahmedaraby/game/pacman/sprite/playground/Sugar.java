@@ -4,6 +4,7 @@ import com.ahmedaraby.game.pacman.constant.ColorC;
 import com.ahmedaraby.game.pacman.constant.DimensionsC;
 import com.ahmedaraby.game.pacman.constant.DirectionsE;
 import com.ahmedaraby.game.pacman.constant.SpriteE;
+import com.ahmedaraby.game.pacman.event.EventType;
 import com.ahmedaraby.game.pacman.event.collision.PacMan2SugarCollisionEvent;
 import com.ahmedaraby.game.pacman.model.GameState;
 import javafx.scene.canvas.Canvas;
@@ -21,7 +22,7 @@ import com.ahmedaraby.game.pacman.util.EnrichedThreadLocalRandom;
 import com.ahmedaraby.game.pacman.util.MazeUtil;
 import com.ahmedaraby.game.pacman.util.SugarUtil;
 
-public class Sugar extends Sprite implements Subscriber {
+public class Sugar extends Sprite implements Subscriber<EventType> {
     private final EnrichedThreadLocalRandom enrichedRandom = new EnrichedThreadLocalRandom();
 
     public Sugar(GameState gameState) {
@@ -57,7 +58,7 @@ public class Sugar extends Sprite implements Subscriber {
     }
 
     @Override
-    public void update(Event event) {
+    public void update(Event<EventType> event) {
         switch (event.getType()) {
             case PAC_MAN_SUGAR_COLLISION:
                 removeSugar(((PacMan2SugarCollisionEvent)event).getSugarRect());

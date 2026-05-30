@@ -1,51 +1,39 @@
 package com.ahmedaraby.game.pacman.event.manager;
 
 import com.ahmedaraby.game.pacman.event.Event;
-import com.ahmedaraby.game.pacman.event.EventType;
 import com.ahmedaraby.game.pacman.event.Publisher;
 import com.ahmedaraby.game.pacman.event.Subscriber;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
-public class SyncEventManager implements Publisher {
-    List<Subscriber> pacManMovementRequestEventSubscribers;
+public class SyncEventManager<T, E extends Event<T>> implements Publisher<T, E> {
+    private final Map<T, List<Subscriber>> subscribers;
 
 
     public SyncEventManager() {
-        pacManMovementRequestEventSubscribers = new ArrayList<>();
+        subscribers = new HashMap<>();
     }
 
     @Override
-    public void subscribe(EventType type, Subscriber subscriber) {
-        switch (type) {
-            case PAC_MAN_MOVEMENT_REQUEST:
-                pacManMovementRequestEventSubscribers.add(subscriber);
-                break;
-            default:
-                throw new IllegalArgumentException();
-        }
+    public void subscribe(T type, Subscriber subscriber) {
+        subscribers
+                .computeIfAbsent(type, key -> new ArrayList<>())
+                .add(subscriber);
     }
 
     @Override
-    public void unSubscribe(EventType type, Subscriber subscriber) {
-        switch (type) {
-            case PAC_MAN_MOVEMENT_REQUEST:
-                pacManMovementRequestEventSubscribers.remove(subscriber);
-                break;
-            default:
-                throw new IllegalArgumentException();
-        }
+    public void unSubscribe(T type, Subscriber subscriber) {
+        subscribers.get(type).remove(subscriber);
+
     }
 
     @Override
-    public void notifySubscribers(Event event) {
-        switch (event.getType()) {
-            case PAC_MAN_MOVEMENT_REQUEST:
-                pacManMovementRequestEventSubscribers.forEach(sub -> sub.update(event));
-                break;
-            default:
-                throw new IllegalArgumentException();
-        }
+    public void notifySubscribers(E event) {
+        subscribers
+                .get(event.getType())
+                .forEach(sub -> sub.update(event));
     }
 }

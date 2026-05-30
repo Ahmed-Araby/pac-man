@@ -6,7 +6,7 @@ import com.ahmedaraby.game.pacman.event.Event;
 import com.ahmedaraby.game.pacman.event.EventType;
 
 @Getter
-public class PacMan2GhostCollisionEvent extends Event {
+public class PacMan2GhostCollisionEvent extends Event<EventType> {
     private final Ghost ghost;
 
     public PacMan2GhostCollisionEvent(Ghost ghost) {

@@ -5,7 +5,7 @@ import lombok.Getter;
 
 // [TODO] rethink the Events structure
 @AllArgsConstructor
-public abstract class Event {
+public abstract class Event<T> {
     @Getter
-    private EventType type;
+    private T type;
 }

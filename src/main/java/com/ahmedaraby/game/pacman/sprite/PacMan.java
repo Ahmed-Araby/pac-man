@@ -3,6 +3,7 @@ package com.ahmedaraby.game.pacman.sprite;
 import com.ahmedaraby.game.pacman.config.Configs;
 import com.ahmedaraby.game.pacman.constant.DimensionsC;
 import com.ahmedaraby.game.pacman.constant.SpriteE;
+import com.ahmedaraby.game.pacman.event.EventType;
 import com.ahmedaraby.jengine.entity.Coordinate;
 import com.ahmedaraby.jengine.entity.Rectangle;
 import com.ahmedaraby.game.pacman.event.Event;
@@ -24,7 +25,7 @@ import com.ahmedaraby.game.pacman.util.pacman.TurnBuffer;
  * notes:
  * - PacManMovementAttemptEvents has to be processed sequentially, otherwise some user inputs or buffered turns can be lost
  */
-public class PacMan extends MovingSprite implements Subscriber {
+public class PacMan extends MovingSprite implements Subscriber<EventType> {
 
     private final TurnBuffer turnBuffer;
     private final PixelStrideTracker closedMousePixelStrideTracker;
@@ -166,7 +167,7 @@ public class PacMan extends MovingSprite implements Subscriber {
     }
 
     @Override
-    public void update(Event event) {
+    public void update(Event<EventType> event) {
         switch (event.getType()) {
             case PAC_MAN_MOVEMENT_REQUEST:
                 attemptMovement(((PacManMovementRequestEvent)event));

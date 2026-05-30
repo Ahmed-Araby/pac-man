@@ -6,7 +6,7 @@ import lombok.Getter;
 import com.ahmedaraby.game.pacman.constant.DirectionsE;
 
 @Getter
-public class PacManMovementRequestEvent extends Event {
+public class PacManMovementRequestEvent extends Event<EventType> {
     private final DirectionsE directionsE;
     private final Object source;
 

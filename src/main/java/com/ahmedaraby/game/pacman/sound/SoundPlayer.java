@@ -2,10 +2,11 @@ package com.ahmedaraby.game.pacman.sound;
 
 import com.ahmedaraby.game.pacman.constant.SoundFileNameC;
 import com.ahmedaraby.game.pacman.event.Event;
+import com.ahmedaraby.game.pacman.event.EventType;
 import javafx.scene.media.AudioClip;
 import com.ahmedaraby.game.pacman.event.Subscriber;
 
-public class SoundPlayer implements Subscriber {
+public class SoundPlayer implements Subscriber<EventType> {
 
     private AudioClip eatSugar;
     public SoundPlayer() {
@@ -28,7 +29,7 @@ public class SoundPlayer implements Subscriber {
     }
 
     @Override
-    public void update(Event event) {
+    public void update(Event<EventType> event) {
         switch (event.getType()) {
             case PAC_MAN_SUGAR_COLLISION:
                 playPacManSugarCollisionSound();

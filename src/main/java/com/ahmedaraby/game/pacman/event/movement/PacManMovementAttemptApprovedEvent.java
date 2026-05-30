@@ -8,7 +8,7 @@ import com.ahmedaraby.game.pacman.constant.DirectionsE;
 
 // [TODO] remove this event
 @Getter
-public class PacManMovementAttemptApprovedEvent extends Event {
+public class PacManMovementAttemptApprovedEvent extends Event<EventType> {
     private Coordinate currentPacManCanvasRectTopLeftCorner;
     private Coordinate requestedPacManCanvasRectTopLeftCorner;
     private DirectionsE requestedDirection;

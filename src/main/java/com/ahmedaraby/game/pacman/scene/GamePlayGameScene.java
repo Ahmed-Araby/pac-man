@@ -1,6 +1,7 @@
 package com.ahmedaraby.game.pacman.scene;
 
 import com.ahmedaraby.game.pacman.collision.CollisionSystem;
+import com.ahmedaraby.game.pacman.event.Event;
 import com.ahmedaraby.game.pacman.model.GameState;
 import com.ahmedaraby.game.pacman.sprite.ghost.Blinky;
 import com.ahmedaraby.game.pacman.sprite.playground.GhostHouseS;
@@ -47,8 +48,8 @@ public class GamePlayGameScene implements GameScene {
     final Scene scene;
 
     // game engine
-    final EventManager eventManager;
-    final SyncEventManager syncEventManager;
+    final EventManager<EventType, Event<EventType>> eventManager;
+    final SyncEventManager<EventType, Event<EventType>> syncEventManager;
 
     final SoundPlayer soundPlayer;
     final JavaFXInputHandler javaFXInputHandler;
@@ -118,7 +119,7 @@ public class GamePlayGameScene implements GameScene {
         eventManager.subscribe(EventType.PAC_MAN_SUGAR_COLLISION, sugar);
 
         eventManager.subscribe(EventType.PAC_MAN_SUPER_SUGAR_COLLISION, soundPlayer);
-        eventManager.subscribe(EventType.PAC_MAN_SUPER_SUGAR_COLLISION, sugar);
+        eventManager.subscribe(EventType.PAC_MAN_SUPER_SUGAR_COLLISION, superSugar);
 
         eventManager.subscribe(EventType.PAC_MAN_SUPER_SUGAR_COLLISION, blinky);
         eventManager.subscribe(EventType.PAC_MAN_SUPER_SUGAR_COLLISION, inky);

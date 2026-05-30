@@ -1,8 +1,8 @@
 package com.ahmedaraby.game.pacman.event;
 
-public interface Publisher {
+public interface Publisher<T, E> {
 
-    void subscribe(EventType type, Subscriber subscriber);
-    void unSubscribe(EventType type, Subscriber subscriber);
-    void notifySubscribers(Event type);
+    void subscribe(T type, Subscriber subscriber);
+    void unSubscribe(T type, Subscriber subscriber);
+    void notifySubscribers(E type);
 }

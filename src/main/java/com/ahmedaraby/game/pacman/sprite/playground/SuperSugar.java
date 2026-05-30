@@ -4,6 +4,7 @@ import com.ahmedaraby.game.pacman.constant.ColorC;
 import com.ahmedaraby.game.pacman.constant.DimensionsC;
 import com.ahmedaraby.game.pacman.constant.DirectionsE;
 import com.ahmedaraby.game.pacman.constant.SpriteE;
+import com.ahmedaraby.game.pacman.event.EventType;
 import com.ahmedaraby.jengine.entity.Coordinate;
 import com.ahmedaraby.jengine.entity.Rectangle;
 import com.ahmedaraby.game.pacman.entity.MazeCell;
@@ -19,7 +20,7 @@ import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import com.ahmedaraby.game.pacman.playground.Playground;
 
-public class SuperSugar extends Sprite implements Subscriber {
+public class SuperSugar extends Sprite implements Subscriber<EventType> {
 
     public SuperSugar(GameState gameState) {
         super(gameState, SpriteE.SUPER_SUGAR, null, DimensionsC.SUPER_SUGAR_DIAMETER_PIXELS, DimensionsC.SUPER_SUGAR_DIAMETER_PIXELS);
@@ -51,7 +52,7 @@ public class SuperSugar extends Sprite implements Subscriber {
     }
 
     @Override
-    public void update(Event event) {
+    public void update(Event<EventType> event) {
         switch (event.getType()) {
             case PAC_MAN_SUPER_SUGAR_COLLISION:
                 removeSugar(((PacMan2SugarCollisionEvent)event).getSugarRect());

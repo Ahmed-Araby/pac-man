@@ -4,6 +4,7 @@ import com.ahmedaraby.game.pacman.constant.DimensionsC;
 import com.ahmedaraby.game.pacman.constant.DirectionsE;
 import com.ahmedaraby.game.pacman.constant.SpriteE;
 import com.ahmedaraby.game.pacman.event.Event;
+import com.ahmedaraby.game.pacman.event.EventType;
 import com.ahmedaraby.game.pacman.event.Subscriber;
 import com.ahmedaraby.game.pacman.event.collision.PacMan2GhostCollisionEvent;
 import com.ahmedaraby.game.pacman.ghostmode.common.Eaten;
@@ -15,7 +16,7 @@ import com.ahmedaraby.game.pacman.config.GhostModeActivePeriodsConf;
 import com.ahmedaraby.game.pacman.ghostmode.Inky.InkyChaser;
 import com.ahmedaraby.game.pacman.ghostmode.Inky.InkyScattered;
 
-public class Inky extends Ghost implements Subscriber {
+public class Inky extends Ghost implements Subscriber<EventType> {
 
 
     public Inky(GameState gameState) {
@@ -52,7 +53,7 @@ public class Inky extends Ghost implements Subscriber {
     }
 
     @Override
-    public void update(Event event) {
+    public void update(Event<EventType> event) {
         switch (event.getType()) {
             case PAC_MAN_SUPER_SUGAR_COLLISION:
                 transitionMode(event);

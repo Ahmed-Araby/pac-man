@@ -5,7 +5,7 @@ import com.ahmedaraby.jengine.entity.Rectangle;
 import com.ahmedaraby.game.pacman.event.Event;
 import com.ahmedaraby.game.pacman.event.EventType;
 
-public class PacMan2SugarCollisionEvent extends Event {
+public class PacMan2SugarCollisionEvent extends Event<EventType> {
 
     @Getter
     private final Rectangle sugarRect;
