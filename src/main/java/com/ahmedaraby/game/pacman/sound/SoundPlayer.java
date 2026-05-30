@@ -4,7 +4,7 @@ import com.ahmedaraby.game.pacman.constant.SoundFileNameC;
 import com.ahmedaraby.game.pacman.event.Event;
 import com.ahmedaraby.game.pacman.event.EventType;
 import javafx.scene.media.AudioClip;
-import com.ahmedaraby.game.pacman.event.Subscriber;
+import com.ahmedaraby.jengine.event.Subscriber;
 
 public class SoundPlayer implements Subscriber<EventType> {
 

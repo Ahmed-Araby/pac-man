@@ -7,7 +7,7 @@ import com.ahmedaraby.game.pacman.event.EventType;
 import com.ahmedaraby.jengine.entity.Coordinate;
 import com.ahmedaraby.jengine.entity.Rectangle;
 import com.ahmedaraby.game.pacman.event.Event;
-import com.ahmedaraby.game.pacman.event.Subscriber;
+import com.ahmedaraby.jengine.event.Subscriber;
 import com.ahmedaraby.game.pacman.event.movement.PacManMovementAttemptApprovedEvent;
 import com.ahmedaraby.game.pacman.event.movement.PacManMovementAttemptDeniedEvent;
 import com.ahmedaraby.game.pacman.event.movement.PacManMovementRequestEvent;

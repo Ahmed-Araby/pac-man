@@ -2,7 +2,7 @@ package com.ahmedaraby.game.pacman.collision;
 
 import com.ahmedaraby.game.pacman.constant.SpriteE;
 import com.ahmedaraby.game.pacman.event.Event;
-import com.ahmedaraby.game.pacman.event.Publisher;
+import com.ahmedaraby.jengine.event.Publisher;
 import com.ahmedaraby.jengine.entity.Coordinate;
 import com.ahmedaraby.jengine.entity.Rectangle;
 import com.ahmedaraby.game.pacman.event.EventType;

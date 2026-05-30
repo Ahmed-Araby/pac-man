@@ -2,7 +2,7 @@ package com.ahmedaraby.game.pacman.input;
 
 import com.ahmedaraby.game.pacman.constant.DirectionsE;
 import com.ahmedaraby.game.pacman.event.movement.PacManMovementRequestEvent;
-import com.ahmedaraby.game.pacman.event.manager.SyncEventManager;
+import com.ahmedaraby.jengine.event.SyncEventManager;
 import javafx.scene.input.KeyEvent;
 
 

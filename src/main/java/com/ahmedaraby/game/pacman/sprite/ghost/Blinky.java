@@ -10,7 +10,7 @@ import com.ahmedaraby.game.pacman.sprite.playground.GhostHouseS;
 import javafx.scene.canvas.Canvas;
 import com.ahmedaraby.game.pacman.config.GhostModeActivePeriodsConf;
 import com.ahmedaraby.game.pacman.event.Event;
-import com.ahmedaraby.game.pacman.event.Subscriber;
+import com.ahmedaraby.jengine.event.Subscriber;
 import com.ahmedaraby.game.pacman.ghostmode.blinky.BlinkyChaser;
 import com.ahmedaraby.game.pacman.ghostmode.common.Eaten;
 import com.ahmedaraby.game.pacman.ghostmode.common.Frightened;

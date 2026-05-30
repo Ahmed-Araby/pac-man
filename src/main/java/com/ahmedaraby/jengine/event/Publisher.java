@@ -1,4 +1,4 @@
-package com.ahmedaraby.game.pacman.event;
+package com.ahmedaraby.jengine.event;
 
 public interface Publisher<T, E> {
 

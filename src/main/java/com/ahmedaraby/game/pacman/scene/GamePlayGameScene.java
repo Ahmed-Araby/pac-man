@@ -16,7 +16,7 @@ import com.ahmedaraby.game.pacman.config.GameConfig;
 import com.ahmedaraby.game.pacman.constant.ColorC;
 import com.ahmedaraby.game.pacman.constant.DimensionsC;
 import com.ahmedaraby.game.pacman.event.EventType;
-import com.ahmedaraby.game.pacman.event.manager.SyncEventManager;
+import com.ahmedaraby.jengine.event.SyncEventManager;
 import com.ahmedaraby.game.pacman.input.JavaFXInputHandler;
 import com.ahmedaraby.game.pacman.input.JavaFXUserInputHandler;
 import com.ahmedaraby.game.pacman.playground.Playground;

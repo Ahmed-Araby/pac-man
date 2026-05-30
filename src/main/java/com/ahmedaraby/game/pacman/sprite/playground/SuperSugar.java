@@ -9,7 +9,7 @@ import com.ahmedaraby.jengine.entity.Coordinate;
 import com.ahmedaraby.jengine.entity.Rectangle;
 import com.ahmedaraby.game.pacman.entity.MazeCell;
 import com.ahmedaraby.game.pacman.event.Event;
-import com.ahmedaraby.game.pacman.event.Subscriber;
+import com.ahmedaraby.jengine.event.Subscriber;
 import com.ahmedaraby.game.pacman.event.collision.PacMan2SugarCollisionEvent;
 import com.ahmedaraby.game.pacman.model.GameState;
 import com.ahmedaraby.game.pacman.sprite.Sprite;

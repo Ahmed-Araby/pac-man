@@ -1,8 +1,6 @@
-package com.ahmedaraby.game.pacman.event.manager;
+package com.ahmedaraby.jengine.event;
 
 import com.ahmedaraby.game.pacman.event.Event;
-import com.ahmedaraby.game.pacman.event.Publisher;
-import com.ahmedaraby.game.pacman.event.Subscriber;
 
 import java.util.ArrayList;
 import java.util.HashMap;
