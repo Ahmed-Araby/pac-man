@@ -2,7 +2,7 @@ package com.ahmedaraby.game.pacman.ghostmode.navigation;
 
 import com.ahmedaraby.game.pacman.collision.M2SSpriteCollisionDetector;
 import com.ahmedaraby.game.pacman.entity.MazeCell;
-import com.ahmedaraby.jengine.models.CollisionReport;
+import com.ahmedaraby.game.pacman.model.CollisionReport;
 import com.ahmedaraby.game.pacman.util.SpriteUtil;
 import com.ahmedaraby.game.pacman.util.canvas.CanvasUtil;
 import lombok.AllArgsConstructor;

@@ -8,7 +8,7 @@ import com.ahmedaraby.game.pacman.event.collision.PacMan2GhostCollisionEvent;
 import com.ahmedaraby.game.pacman.event.collision.PacMan2SugarCollisionEvent;
 import com.ahmedaraby.game.pacman.event.manager.EventManager;
 import com.ahmedaraby.game.pacman.sprite.ghost.Ghost;
-import com.ahmedaraby.jengine.models.CollisionReport;
+import com.ahmedaraby.game.pacman.model.CollisionReport;
 import com.ahmedaraby.game.pacman.model.GameState;
 import com.ahmedaraby.game.pacman.util.SpriteUtil;
 
