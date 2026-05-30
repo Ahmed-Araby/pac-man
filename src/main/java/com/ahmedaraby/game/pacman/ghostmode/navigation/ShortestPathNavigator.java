@@ -1,6 +1,6 @@
 package com.ahmedaraby.game.pacman.ghostmode.navigation;
 
-import com.ahmedaraby.jengine.collision.sprite.M2SSpriteCollisionDetector;
+import com.ahmedaraby.game.pacman.collision.M2SSpriteCollisionDetector;
 import com.ahmedaraby.game.pacman.entity.MazeCell;
 import com.ahmedaraby.jengine.models.CollisionReport;
 import com.ahmedaraby.game.pacman.util.SpriteUtil;

@@ -1,6 +1,6 @@
 package com.ahmedaraby.game.pacman.sprite;
 
-import com.ahmedaraby.jengine.collision.sprite.M2SSpriteCollisionDetector;
+import com.ahmedaraby.game.pacman.collision.M2SSpriteCollisionDetector;
 import com.ahmedaraby.game.pacman.util.SpriteUtil;
 import lombok.Getter;
 import lombok.Setter;

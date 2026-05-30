@@ -1,6 +1,6 @@
 package com.ahmedaraby.game.pacman.util.ghost;
 
-import com.ahmedaraby.jengine.collision.sprite.M2SSpriteCollisionDetector;
+import com.ahmedaraby.game.pacman.collision.M2SSpriteCollisionDetector;
 import com.ahmedaraby.game.pacman.constant.DimensionsC;
 import com.ahmedaraby.game.pacman.constant.SpriteE;
 import com.ahmedaraby.jengine.entity.Coordinate;

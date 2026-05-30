@@ -1,4 +1,4 @@
-package com.ahmedaraby.jengine.collision.sprite;
+package com.ahmedaraby.game.pacman.collision;
 
 
 import com.ahmedaraby.jengine.collision.geometric.Rect2RectCollisionDetectorUtil;
