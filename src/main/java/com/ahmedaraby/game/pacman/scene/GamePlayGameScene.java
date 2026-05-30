@@ -1,6 +1,6 @@
 package com.ahmedaraby.game.pacman.scene;
 
-import com.ahmedaraby.game.pacman.collision.sprite.CollisionSystem;
+import com.ahmedaraby.jengine.collision.sprite.CollisionSystem;
 import com.ahmedaraby.game.pacman.model.GameState;
 import com.ahmedaraby.game.pacman.sprite.ghost.Blinky;
 import com.ahmedaraby.game.pacman.sprite.playground.GhostHouseS;

@@ -1,7 +1,7 @@
 package com.ahmedaraby.game.pacman.ghostmode.common;
 
-import com.ahmedaraby.game.pacman.animation.Animator;
-import com.ahmedaraby.game.pacman.animation.DistanceBasedAnimator;
+import com.ahmedaraby.jengine.animation.Animator;
+import com.ahmedaraby.jengine.animation.DistanceBasedAnimator;
 import com.ahmedaraby.game.pacman.constant.GhostEatenSpritesFileNameC;
 import com.ahmedaraby.game.pacman.entity.CanvasCoordinate;
 import com.ahmedaraby.game.pacman.entity.Vector;

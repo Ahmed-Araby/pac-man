@@ -1,4 +1,4 @@
-package com.ahmedaraby.game.pacman.collision.geometric;
+package com.ahmedaraby.jengine.collision.geometric;
 
 import com.ahmedaraby.game.pacman.constant.DimensionsC;
 import com.ahmedaraby.game.pacman.entity.CanvasCoordinate;

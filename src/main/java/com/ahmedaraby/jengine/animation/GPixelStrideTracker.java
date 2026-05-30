@@ -1,4 +1,4 @@
-package com.ahmedaraby.game.pacman.animation;
+package com.ahmedaraby.jengine.animation;
 
 import lombok.NoArgsConstructor;
 import lombok.Setter;

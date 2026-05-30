@@ -1,7 +1,7 @@
-package com.ahmedaraby.game.pacman.collision.sprite;
+package com.ahmedaraby.jengine.collision.sprite;
 
 
-import com.ahmedaraby.game.pacman.collision.geometric.Rect2RectCollisionDetectorUtil;
+import com.ahmedaraby.jengine.collision.geometric.Rect2RectCollisionDetectorUtil;
 import com.ahmedaraby.game.pacman.constant.DimensionsC;
 import com.ahmedaraby.game.pacman.constant.SpriteE;
 import com.ahmedaraby.game.pacman.entity.CanvasCoordinate;

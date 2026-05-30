@@ -1,4 +1,4 @@
-package com.ahmedaraby.game.pacman.collision.sprite;
+package com.ahmedaraby.jengine.collision.sprite;
 
 import com.ahmedaraby.game.pacman.constant.SpriteE;
 import com.ahmedaraby.game.pacman.entity.CanvasCoordinate;

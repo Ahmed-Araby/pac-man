@@ -1,6 +1,6 @@
 package com.ahmedaraby.game.pacman.ghostmode.Inky;
 
-import com.ahmedaraby.game.pacman.animation.DistanceBasedAnimator;
+import com.ahmedaraby.jengine.animation.DistanceBasedAnimator;
 import com.ahmedaraby.game.pacman.config.Configs;
 import com.ahmedaraby.game.pacman.constant.DimensionsC;
 import com.ahmedaraby.game.pacman.constant.DirectionsE;
