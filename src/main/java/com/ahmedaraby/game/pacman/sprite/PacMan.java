@@ -5,6 +5,7 @@ import com.ahmedaraby.game.pacman.constant.DimensionsC;
 import com.ahmedaraby.game.pacman.constant.SpriteE;
 import com.ahmedaraby.game.pacman.event.EventType;
 import com.ahmedaraby.game.pacman.util.pacman.TurnBuffer;
+import com.ahmedaraby.jengine.animation.GPixelStrideTracker;
 import com.ahmedaraby.jengine.entity.Coordinate;
 import com.ahmedaraby.jengine.entity.Rectangle;
 import com.ahmedaraby.game.pacman.event.Event;
@@ -15,12 +16,13 @@ import com.ahmedaraby.game.pacman.event.movement.PacManMovementAttemptDeniedEven
 import com.ahmedaraby.game.pacman.event.movement.PacManMovementRequestEvent;
 import com.ahmedaraby.game.pacman.model.GameState;
 import com.ahmedaraby.game.pacman.util.pacman.PacManGraphicsUtil;
-import com.ahmedaraby.game.pacman.util.pacman.PixelStrideTracker;
+import com.ahmedaraby.game.pacman.util.pacman.PacManMouthAnimationTracker;
 import javafx.scene.Scene;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import com.ahmedaraby.game.pacman.constant.DirectionsE;
 import com.ahmedaraby.game.pacman.playground.Playground;
+import javafx.scene.image.Image;
 
 /**
  * notes:
@@ -29,7 +31,7 @@ import com.ahmedaraby.game.pacman.playground.Playground;
 public class PacMan extends MovingSprite implements Subscriber<EventType> {
 
     private final TurnBuffer turnBuffer;
-    private final PixelStrideTracker closedMousePixelStrideTracker;
+    private final PacManMouthAnimationTracker mouthAnimationTracker;
     private Vector dir; // [TODO] move this to MovingSprite later
 
     public PacMan(GameState gameState) {
@@ -40,9 +42,8 @@ public class PacMan extends MovingSprite implements Subscriber<EventType> {
         setTopLeftCorner(emptyCellPos);
 
         this.turnBuffer = new TurnBuffer(DimensionsC.PAC_MAN_STRIDE_PIXELS * 2);
-        this.closedMousePixelStrideTracker = new PixelStrideTracker(DimensionsC.PAC_MAN_CLOSED_MOUSE_DISTANCE_PIXELS,
-                DimensionsC.PAC_MAN_CLOSED_MOUSE_DISTANCE_PIXELS + DimensionsC.PAC_MAN_OPEN_MOUSE_DISTANCE_PIXELS // just the same as DimensionsC.PAC_MAN_COMPLETE_MOUSE_MOVEMENT_DISTANCE_PIXELS
-        );
+        this.mouthAnimationTracker = new PacManMouthAnimationTracker(
+                DimensionsC.PAC_MAN_OPEN_MOUSE_DISTANCE_PIXELS, DimensionsC.PAC_MAN_CLOSED_MOUSE_DISTANCE_PIXELS);
     }
 
     @Override
@@ -52,7 +53,7 @@ public class PacMan extends MovingSprite implements Subscriber<EventType> {
         final double col = getCol();
         final double row = getRow();
 
-        if (!closedMousePixelStrideTracker.isDesiredPixelStrideAchieved()) {
+        if (mouthAnimationTracker.isClosed()) {
             PacManGraphicsUtil.drawClosedMousePacMan(con, col, row);
         } else if (dir == Vector.RIGHT) {
             PacManGraphicsUtil.drawRightOpenMousePacMan(con, col, row);
@@ -114,10 +115,7 @@ public class PacMan extends MovingSprite implements Subscriber<EventType> {
             );
             handleApprovedMovementAttempt(approvedEvent);
             // pacman animation related
-            closedMousePixelStrideTracker.stride(DimensionsC.PAC_MAN_COMPLETE_MOUSE_MOVEMENT_DISTANCE_PIXELS / Configs.FRAMES_PER_SEC_FOR_PAC_MAN_MOUSE_OPEN_CLOSED_ANIMATION);
-            if (closedMousePixelStrideTracker.isRestPixelStrideAchieved()) {
-                closedMousePixelStrideTracker.reset();
-            }
+            mouthAnimationTracker.stride(DimensionsC.PAC_MAN_COMPLETE_MOUSE_MOVEMENT_DISTANCE_PIXELS / Configs.FRAMES_PER_SEC_FOR_PAC_MAN_MOUSE_OPEN_CLOSED_ANIMATION);
             return true;
         }
     }

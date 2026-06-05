@@ -1,14 +1,16 @@
 package com.ahmedaraby.jengine.animation;
 
-import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-@NoArgsConstructor
 @Setter
 public abstract class GPixelStrideTracker {
 
     private double[] limits;
     private double accumulatedStridePixels = 0;
+
+    public GPixelStrideTracker(double[] limits) {
+        this.limits = limits;
+    }
 
     public void stride(double amountPixels) {
         accumulatedStridePixels += amountPixels;
