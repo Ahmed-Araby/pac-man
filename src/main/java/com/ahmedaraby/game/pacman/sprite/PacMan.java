@@ -100,12 +100,11 @@ public class PacMan extends MovingSprite implements Subscriber<EventType> {
                     getTopLeftCorner(), nextCord, event.getDir(), event.getSource()
             );
             handleApprovedMovementAttempt(approvedEvent);
-        }
-
-        // pacman animation related
-        closedMousePixelStrideTracker.stride(DimensionsC.PAC_MAN_COMPLETE_MOUSE_MOVEMENT_DISTANCE_PIXELS / Configs.FRAMES_PER_SEC_FOR_PAC_MAN_MOUSE_OPEN_CLOSED_ANIMATION);
-        if (closedMousePixelStrideTracker.isRestPixelStrideAchieved()) {
-            closedMousePixelStrideTracker.reset();
+            // pacman animation related
+            closedMousePixelStrideTracker.stride(DimensionsC.PAC_MAN_COMPLETE_MOUSE_MOVEMENT_DISTANCE_PIXELS / Configs.FRAMES_PER_SEC_FOR_PAC_MAN_MOUSE_OPEN_CLOSED_ANIMATION);
+            if (closedMousePixelStrideTracker.isRestPixelStrideAchieved()) {
+                closedMousePixelStrideTracker.reset();
+            }
         }
     }
 
