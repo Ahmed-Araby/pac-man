@@ -129,14 +129,17 @@ public class PacMan extends MovingSprite implements Subscriber<EventType> {
 
     private void handleDeniedMovementAttempt(PacManMovementAttemptDeniedEvent event) {
         System.out.println("denied move");
-        if (event.getMovementAttemptSource() instanceof Scene) {
-            // user input
-            if(turnBuffer.isBlockedTurn(dir, event.getRequestedDir())) {
-                final Rectangle pacManCanvasRectangle = new Rectangle(new Coordinate(getRow(), getCol()), DimensionsC.MAZE_CELL_SIZE_PIXELS, DimensionsC.MAZE_CELL_SIZE_PIXELS);
-                turnBuffer.bufferTurn(event.getRequestedDir(), pacManCanvasRectangle);
-            }
+        if (!(event.getMovementAttemptSource() instanceof Scene)) {
+            // do nothing for denied automated movements
+            return;
         }
-        // do nothing for denied automated movements
+
+        // buffer denied user movement
+        if(turnBuffer.isBlockedTurn(dir, event.getRequestedDir())) {
+            final Rectangle pacManCanvasRectangle = new Rectangle(new Coordinate(getRow(), getCol()), DimensionsC.MAZE_CELL_SIZE_PIXELS, DimensionsC.MAZE_CELL_SIZE_PIXELS);
+            turnBuffer.bufferTurn(event.getRequestedDir(), pacManCanvasRectangle);
+        }
+
     }
 
     @Override
