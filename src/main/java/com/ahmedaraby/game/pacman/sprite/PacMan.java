@@ -114,8 +114,6 @@ public class PacMan extends MovingSprite implements Subscriber<EventType> {
                     getTopLeftCorner(), nextCord, event.getDir(), event.getSource()
             );
             handleApprovedMovementAttempt(approvedEvent);
-            // pacman animation related
-            mouthAnimationTracker.stride(DimensionsC.PAC_MAN_COMPLETE_MOUSE_MOVEMENT_DISTANCE_PIXELS / Configs.FRAMES_PER_SEC_FOR_PAC_MAN_MOUSE_OPEN_CLOSED_ANIMATION);
             return true;
         }
     }
@@ -124,6 +122,7 @@ public class PacMan extends MovingSprite implements Subscriber<EventType> {
         setRow(event.getRequestedPacManCanvasRectTopLeftCorner().getRow());
         setCol(event.getRequestedPacManCanvasRectTopLeftCorner().getCol());
         dir = event.getRequestedDir();
+        mouthAnimationTracker.stride(DimensionsC.PAC_MAN_COMPLETE_MOUSE_MOVEMENT_DISTANCE_PIXELS / Configs.FRAMES_PER_SEC_FOR_PAC_MAN_MOUSE_OPEN_CLOSED_ANIMATION);
 
         if (event.getMovementAttemptSource() instanceof Scene
                 || event.getMovementAttemptSource() instanceof TurnBuffer) {
