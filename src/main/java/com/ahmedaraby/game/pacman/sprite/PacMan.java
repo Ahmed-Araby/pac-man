@@ -4,6 +4,7 @@ import com.ahmedaraby.game.pacman.config.Configs;
 import com.ahmedaraby.game.pacman.constant.DimensionsC;
 import com.ahmedaraby.game.pacman.constant.SpriteE;
 import com.ahmedaraby.game.pacman.event.EventType;
+import com.ahmedaraby.game.pacman.util.pacman.TurnBuffer;
 import com.ahmedaraby.jengine.entity.Coordinate;
 import com.ahmedaraby.jengine.entity.Rectangle;
 import com.ahmedaraby.game.pacman.event.Event;
@@ -20,7 +21,6 @@ import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import com.ahmedaraby.game.pacman.constant.DirectionsE;
 import com.ahmedaraby.game.pacman.playground.Playground;
-import com.ahmedaraby.game.pacman.util.pacman.TurnBuffer;
 
 /**
  * notes:
@@ -39,7 +39,7 @@ public class PacMan extends MovingSprite implements Subscriber<EventType> {
         final Coordinate emptyCellPos = Playground.getEmptyMazePosition();
         setTopLeftCorner(emptyCellPos);
 
-        this.turnBuffer = new TurnBuffer();
+        this.turnBuffer = new TurnBuffer(DimensionsC.PAC_MAN_STRIDE_PIXELS * 2);
         this.closedMousePixelStrideTracker = new PixelStrideTracker(DimensionsC.PAC_MAN_CLOSED_MOUSE_DISTANCE_PIXELS,
                 DimensionsC.PAC_MAN_CLOSED_MOUSE_DISTANCE_PIXELS + DimensionsC.PAC_MAN_OPEN_MOUSE_DISTANCE_PIXELS // just the same as DimensionsC.PAC_MAN_COMPLETE_MOUSE_MOVEMENT_DISTANCE_PIXELS
         );
@@ -70,17 +70,30 @@ public class PacMan extends MovingSprite implements Subscriber<EventType> {
 
     @Override
     public void move(Event event) {
-        if (event == null) {
-            attemptMovement(new PacManMovementRequestEvent(dir, this));
-        } else {
+        if (event != null) {
+            // movement attempt made by user
             attemptMovement((PacManMovementRequestEvent)event);
+            return;
         }
+
+        // automated and buffered movement attempt
+        if (!turnBuffer.isEmpty()) {
+            boolean moved = attemptMovement(new PacManMovementRequestEvent(turnBuffer.getDir(), turnBuffer));
+            if (turnBuffer.exceededBufferDist()) {
+                turnBuffer.clear();
+            }
+            if (moved) {
+                return;
+            }
+        }
+        attemptMovement(new PacManMovementRequestEvent(dir, this));
+
     }
 
-    private void attemptMovement(PacManMovementRequestEvent event) {
+    private boolean attemptMovement(PacManMovementRequestEvent event) {
         if (Vector.STILL == event.getDir()) {
             dir = event.getDir();
-            return;
+            return false;
         }
 
         final double newCol = getCol() + event.getDir().getX() * DimensionsC.PAC_MAN_STRIDE_PIXELS / Configs.FRAMES_PER_SEC_FOR_PAC_MAN_STRIDE;
@@ -94,7 +107,7 @@ public class PacMan extends MovingSprite implements Subscriber<EventType> {
         ) {
             final PacManMovementAttemptDeniedEvent deniedEvent = new PacManMovementAttemptDeniedEvent(nextCord, event.getDir(), event.getSource());
             handleDeniedMovementAttempt(deniedEvent);
-            return;
+            return false;
         } else {
             final PacManMovementAttemptApprovedEvent approvedEvent = new PacManMovementAttemptApprovedEvent(
                     getTopLeftCorner(), nextCord, event.getDir(), event.getSource()
@@ -105,40 +118,35 @@ public class PacMan extends MovingSprite implements Subscriber<EventType> {
             if (closedMousePixelStrideTracker.isRestPixelStrideAchieved()) {
                 closedMousePixelStrideTracker.reset();
             }
+            return true;
         }
     }
 
     private void handleApprovedMovementAttempt(PacManMovementAttemptApprovedEvent event) {
-        System.out.println("approved move");
         setRow(event.getRequestedPacManCanvasRectTopLeftCorner().getRow());
         setCol(event.getRequestedPacManCanvasRectTopLeftCorner().getCol());
         dir = event.getRequestedDir();
 
-        if (event.getMovementAttemptSource() instanceof Scene || event.getMovementAttemptSource() instanceof TurnBuffer) {
+        if (event.getMovementAttemptSource() instanceof Scene
+                || event.getMovementAttemptSource() instanceof TurnBuffer) {
             // user input or turn buffer automated move
-            this.turnBuffer.discardTurnBuffer();
+            turnBuffer.clear();
         } else if (event.getMovementAttemptSource() instanceof PacMan) {
             // automated straight line movement
-            final Rectangle pacManCanvasRectangle = new Rectangle(event.getRequestedPacManCanvasRectTopLeftCorner(), DimensionsC.MAZE_CELL_SIZE_PIXELS, DimensionsC.MAZE_CELL_SIZE_PIXELS);
-            if (turnBuffer.isThereBufferedTurn(pacManCanvasRectangle, event.getRequestedDir())) {
-                attemptMovement(turnBuffer.getBufferedPacManAutomatedMovementRequest());
-            }
+            turnBuffer.stride(DimensionsC.PAC_MAN_STRIDE_PIXELS / Configs.FRAMES_PER_SEC_FOR_PAC_MAN_STRIDE);
         }
     }
 
     private void handleDeniedMovementAttempt(PacManMovementAttemptDeniedEvent event) {
-        System.out.println("denied move");
         if (!(event.getMovementAttemptSource() instanceof Scene)) {
             // do nothing for denied automated movements
             return;
         }
 
         // buffer denied user movement
-        if(turnBuffer.isBlockedTurn(dir, event.getRequestedDir())) {
-            final Rectangle pacManCanvasRectangle = new Rectangle(new Coordinate(getRow(), getCol()), DimensionsC.MAZE_CELL_SIZE_PIXELS, DimensionsC.MAZE_CELL_SIZE_PIXELS);
-            turnBuffer.bufferTurn(event.getRequestedDir(), pacManCanvasRectangle);
+        if(dir != event.getRequestedDir()) {
+            turnBuffer.buffer(event.getRequestedDir());
         }
-
     }
 
     @Override
