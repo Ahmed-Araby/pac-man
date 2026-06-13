@@ -12,6 +12,8 @@ import com.ahmedaraby.jengine.entity.Coordinate;
 import lombok.Setter;
 
 public abstract class Scattered extends TemporalGhostMode {
+    protected GhostNavigator navigator;
+    protected Animator animator;
     protected Coordinate target;
 
     public Scattered(Ghost ghost, GameState gameState, int[] activePeriodsSec) {

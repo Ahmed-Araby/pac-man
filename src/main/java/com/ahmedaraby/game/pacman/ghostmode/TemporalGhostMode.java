@@ -1,10 +1,7 @@
 package com.ahmedaraby.game.pacman.ghostmode;
 
-import com.ahmedaraby.game.pacman.ghostmode.navigation.GhostNavigator;
 import com.ahmedaraby.game.pacman.model.GameState;
 import com.ahmedaraby.game.pacman.sprite.ghost.Ghost;
-import com.ahmedaraby.jengine.animation.Animator;
-
 import java.time.Instant;
 
 
