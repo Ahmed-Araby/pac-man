@@ -3,6 +3,7 @@ package com.ahmedaraby.game.pacman.sprite.ghost;
 import com.ahmedaraby.game.pacman.constant.DimensionsC;
 import com.ahmedaraby.game.pacman.constant.DirectionsE;
 import com.ahmedaraby.game.pacman.constant.SpriteE;
+import com.ahmedaraby.game.pacman.event.collision.PacMan2GhostCollisionEvent;
 import com.ahmedaraby.jengine.entity.Coordinate;
 import com.ahmedaraby.game.pacman.event.Event;
 import com.ahmedaraby.game.pacman.event.EventType;
@@ -14,8 +15,9 @@ import com.ahmedaraby.game.pacman.ghostmode.common.Eaten;
 import com.ahmedaraby.game.pacman.ghostmode.common.Frightened;
 import com.ahmedaraby.game.pacman.model.GameState;
 import com.ahmedaraby.game.pacman.sprite.MovingSprite;
+import com.ahmedaraby.jengine.event.Subscriber;
 
-public abstract class Ghost extends MovingSprite {
+public abstract class Ghost extends MovingSprite implements Subscriber<EventType> {
     protected TemporalGhostMode scattered;
     protected TemporalGhostMode chaser;
     protected TemporalGhostMode frightened;
@@ -68,6 +70,7 @@ public abstract class Ghost extends MovingSprite {
 
     protected void frightenedTransition(Event event) {
         if (event != null && EventType.PAC_MAN_GHOST_COLLISION.equals(event.getType())) {
+            // [TODO] exit from frightened mode
             eaten.enter();
             activeMode = eaten;
         } else if (frightened.ended()) {
@@ -84,6 +87,23 @@ public abstract class Ghost extends MovingSprite {
             activeMode.enter();
 
             previousMode = null;
+        }
+    }
+
+    @Override
+    public void update(Event<EventType> event) {
+        switch (event.getType()) {
+            case PAC_MAN_SUPER_SUGAR_COLLISION:
+                transitionMode(event);
+                break;
+            case PAC_MAN_GHOST_COLLISION:
+                final Ghost collidedGhost = ((PacMan2GhostCollisionEvent) event).getGhost();
+                if (this == collidedGhost) {
+                    transitionMode(event);
+                }
+                break;
+            default:
+                throw new IllegalArgumentException("event of type : " + event.getType() + "is not supported by the Ghost Blinky");
         }
     }
 }

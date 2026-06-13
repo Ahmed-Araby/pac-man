@@ -22,7 +22,6 @@ public class Inky extends Ghost implements Subscriber<EventType> {
     public Inky(GameState gameState) {
         super(gameState, SpriteE.GHOST , 0, 0, DirectionsE.STILL);
         scattered = new InkyScattered(this, gameState, GhostModeActivePeriodsConf.LEVEL_1_SCATTER_ACTIVE_PERIODS);
-        // [TODO] use InkyChaser
         chaser = new InkyChaser(this, gameState, GhostModeActivePeriodsConf.LEVEL_1_CHASE_ACTIVE_PERIODS);
         frightened = new Frightened(this, gameState, GhostModeActivePeriodsConf.ALL_LEVELS_FRIGHTENED_MODE_ACTIVE_PERIODS);
         eaten = new Eaten(this, gameState);
