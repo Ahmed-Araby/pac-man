@@ -42,6 +42,7 @@ public class PinkyScattered extends Scattered {
         con.drawImage(animator.getFrame(), ghost.getCol(), ghost.getRow());
     }
 
+    // [TODO] this scattered move logic can be moved to Scattered abstract class
     @Override
     public void move() {
         final DirectionsE newDir = navigator.nextMoveDirection(ghost.getTopLeftCorner(), target);
