@@ -9,6 +9,7 @@ import com.ahmedaraby.game.pacman.ghostmode.navigation.GhostNavigator;
 import com.ahmedaraby.game.pacman.ghostmode.navigation.ShortestPathNavigator;
 import com.ahmedaraby.game.pacman.model.GameState;
 import com.ahmedaraby.game.pacman.sprite.ghost.Ghost;
+import com.ahmedaraby.jengine.sprite.SpriteRegistry;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.image.Image;
 import com.ahmedaraby.game.pacman.config.Configs;
@@ -27,8 +28,8 @@ public class Eaten extends GhostMode {
     private final Animator animator;
     private Coordinate ghostHouseEmptyLoc;
 
-    public Eaten(Ghost ghost, GameState gameState) {
-        super(ghost, gameState);
+    public Eaten(Ghost ghost, GameState gameState, SpriteRegistry<String, Image> spriteRegistry) {
+        super(ghost, gameState, spriteRegistry);
         this.navigator = new ShortestPathNavigator();
 
         final Map<Vector, Image[]> sprites = loadSprites();

@@ -11,20 +11,22 @@ import com.ahmedaraby.game.pacman.ghostmode.common.Eaten;
 import com.ahmedaraby.game.pacman.ghostmode.common.Frightened;
 import com.ahmedaraby.game.pacman.model.GameState;
 import com.ahmedaraby.game.pacman.sprite.playground.GhostHouseS;
+import com.ahmedaraby.jengine.sprite.SpriteRegistry;
 import javafx.scene.canvas.Canvas;
 import com.ahmedaraby.game.pacman.config.GhostModeActivePeriodsConf;
 import com.ahmedaraby.game.pacman.ghostmode.Inky.InkyChaser;
 import com.ahmedaraby.game.pacman.ghostmode.Inky.InkyScattered;
+import javafx.scene.image.Image;
 
 public class Inky extends Ghost {
 
 
-    public Inky(GameState gameState) {
+    public Inky(GameState gameState, SpriteRegistry<String, Image> spriteRegistry) {
         super(gameState, SpriteE.GHOST , 0, 0, DirectionsE.STILL);
-        scattered = new InkyScattered(this, gameState, GhostModeActivePeriodsConf.LEVEL_1_SCATTER_ACTIVE_PERIODS);
-        chaser = new InkyChaser(this, gameState, GhostModeActivePeriodsConf.LEVEL_1_CHASE_ACTIVE_PERIODS);
-        frightened = new Frightened(this, gameState, GhostModeActivePeriodsConf.ALL_LEVELS_FRIGHTENED_MODE_ACTIVE_PERIODS);
-        eaten = new Eaten(this, gameState);
+        scattered = new InkyScattered(this, gameState, spriteRegistry, GhostModeActivePeriodsConf.LEVEL_1_SCATTER_ACTIVE_PERIODS);
+        chaser = new InkyChaser(this, gameState, spriteRegistry, GhostModeActivePeriodsConf.LEVEL_1_CHASE_ACTIVE_PERIODS);
+        frightened = new Frightened(this, gameState, spriteRegistry, GhostModeActivePeriodsConf.ALL_LEVELS_FRIGHTENED_MODE_ACTIVE_PERIODS);
+        eaten = new Eaten(this, gameState, spriteRegistry);
 
         this.activeMode = scattered;
         scattered.enter();

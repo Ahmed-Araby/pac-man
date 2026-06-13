@@ -16,6 +16,7 @@ import com.ahmedaraby.jengine.animation.DistanceBasedAnimator;
 import com.ahmedaraby.jengine.entity.Coordinate;
 import com.ahmedaraby.jengine.entity.Line;
 import com.ahmedaraby.jengine.entity.Vector;
+import com.ahmedaraby.jengine.sprite.SpriteRegistry;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
@@ -26,8 +27,8 @@ public class PinkyChaser extends Chaser {
     private final Animator animator;
     private final GhostNavigator navigator;
 
-    public PinkyChaser(Ghost ghost, GameState gameState, int[] activePeriodsSec) {
-        super(ghost, gameState, activePeriodsSec);
+    public PinkyChaser(Ghost ghost, GameState gameState, SpriteRegistry<String, Image> spriteRegistry, int[] activePeriodsSec) {
+        super(ghost, gameState, spriteRegistry, activePeriodsSec);
 
         final Image[] frames = loadSprites();
         animator = new DistanceBasedAnimator(new double[]{

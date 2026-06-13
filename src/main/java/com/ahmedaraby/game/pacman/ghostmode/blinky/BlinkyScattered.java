@@ -2,6 +2,7 @@ package com.ahmedaraby.game.pacman.ghostmode.blinky;
 
 import com.ahmedaraby.game.pacman.model.GameState;
 import com.ahmedaraby.game.pacman.sprite.ghost.Ghost;
+import com.ahmedaraby.jengine.sprite.SpriteRegistry;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
@@ -16,8 +17,8 @@ import java.net.URL;
 
 public class BlinkyScattered extends Scattered {
 
-    public BlinkyScattered(Ghost ghost, GameState gameState, int[] activePeridosSec) {
-        super(ghost, gameState, activePeridosSec);
+    public BlinkyScattered(Ghost ghost, GameState gameState, SpriteRegistry<String, Image> spriteRegistry, int[] activePeridosSec) {
+        super(ghost, gameState, spriteRegistry, activePeridosSec);
         this.target = new Coordinate(
                 0,
                 DimensionsC.CANVAS_WIDTH_PIXELS - 1
@@ -36,11 +37,10 @@ public class BlinkyScattered extends Scattered {
 
 
     private Image[] loadSprites() {
-        // [TODO] move sprites loading into a class that provide caching
-        final URL frame1Url = getClass().getResource(String.format(SpriteFileNameC.GHOST_SPRITE_PATH_TEMPLATE, SpriteFileNameC.BLINKY_FOLDER, SpriteFileNameC.BLINKY_FRAME_1_FILE_NAME));
-        final URL frame2Url = getClass().getResource(String.format(SpriteFileNameC.GHOST_SPRITE_PATH_TEMPLATE, SpriteFileNameC.BLINKY_FOLDER, SpriteFileNameC.BLINKY_FRAME_2_FILE_NAME));
-        final Image frame1 = new Image(frame1Url.toString());
-        final Image frame2 = new Image(frame2Url.toString());
+        final String frame1Path = String.format(SpriteFileNameC.GHOST_SPRITE_PATH_TEMPLATE, SpriteFileNameC.BLINKY_FOLDER, SpriteFileNameC.BLINKY_FRAME_1_FILE_NAME);
+        final String frame2Path = String.format(SpriteFileNameC.GHOST_SPRITE_PATH_TEMPLATE, SpriteFileNameC.BLINKY_FOLDER, SpriteFileNameC.BLINKY_FRAME_2_FILE_NAME);
+        final Image frame1 = spriteRegistry.get(frame1Path);
+        final Image frame2 = spriteRegistry.get(frame2Path);
         return new Image[]{frame1, frame2};
     }
 }

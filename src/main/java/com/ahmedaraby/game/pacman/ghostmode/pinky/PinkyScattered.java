@@ -8,6 +8,7 @@ import com.ahmedaraby.game.pacman.model.GameState;
 import com.ahmedaraby.game.pacman.sprite.ghost.Ghost;
 import com.ahmedaraby.jengine.animation.DistanceBasedAnimator;
 import com.ahmedaraby.jengine.entity.Coordinate;
+import com.ahmedaraby.jengine.sprite.SpriteRegistry;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
@@ -16,8 +17,8 @@ import java.net.URL;
 
 public class PinkyScattered extends Scattered {
 
-    public PinkyScattered(Ghost ghost, GameState gameState, int[] activePeriodsSec) {
-        super(ghost, gameState, activePeriodsSec);
+    public PinkyScattered(Ghost ghost, GameState gameState, SpriteRegistry<String, Image> spriteRegistry, int[] activePeriodsSec) {
+        super(ghost, gameState, spriteRegistry, activePeriodsSec);
 
         this.target = new Coordinate(0, 0); // top left corner
         final Image[] frames = loadSprites();

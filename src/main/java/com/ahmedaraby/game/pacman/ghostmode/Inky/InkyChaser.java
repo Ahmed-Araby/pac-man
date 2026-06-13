@@ -15,6 +15,7 @@ import com.ahmedaraby.game.pacman.model.GameState;
 import com.ahmedaraby.game.pacman.sprite.ghost.Blinky;
 import com.ahmedaraby.game.pacman.sprite.ghost.Ghost;
 import com.ahmedaraby.game.pacman.util.ghost.GhostUtil;
+import com.ahmedaraby.jengine.sprite.SpriteRegistry;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
@@ -27,8 +28,8 @@ public class InkyChaser extends Chaser {
     private final GhostNavigator navigator;
     private final DistanceBasedAnimator animator;
 
-    public InkyChaser(Ghost ghost, GameState gameState, int[] activePeriodsSec) {
-        super(ghost, gameState, activePeriodsSec);
+    public InkyChaser(Ghost ghost, GameState gameState, SpriteRegistry<String, Image> spriteRegistry, int[] activePeriodsSec) {
+        super(ghost, gameState, spriteRegistry, activePeriodsSec);
         final Image[] frames = loadSprites();
         navigator = new ShortestPathNavigator();
         animator = new DistanceBasedAnimator(

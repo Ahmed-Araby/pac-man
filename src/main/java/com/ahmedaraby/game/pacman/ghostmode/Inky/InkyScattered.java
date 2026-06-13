@@ -8,6 +8,7 @@ import com.ahmedaraby.game.pacman.ghostmode.Scattered;
 import com.ahmedaraby.game.pacman.ghostmode.navigation.ShortestPathNavigator;
 import com.ahmedaraby.game.pacman.model.GameState;
 import com.ahmedaraby.game.pacman.sprite.ghost.Ghost;
+import com.ahmedaraby.jengine.sprite.SpriteRegistry;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
@@ -15,8 +16,8 @@ import javafx.scene.image.Image;
 import java.net.URL;
 
 public class InkyScattered extends Scattered {
-    public InkyScattered(Ghost ghost, GameState gameState, int[] activePeriodsSec) {
-        super(ghost, gameState, activePeriodsSec);
+    public InkyScattered(Ghost ghost, GameState gameState, SpriteRegistry<String, Image> spriteRegistry, int[] activePeriodsSec) {
+        super(ghost, gameState, spriteRegistry, activePeriodsSec);
         this.target = new Coordinate(  // bottom right corner
                 DimensionsC.CANVAS_HEIGHT_PIXELS - DimensionsC.MAZE_CELL_SIZE_PIXELS,
                 DimensionsC.CANVAS_WIDTH_PIXELS - DimensionsC.MAZE_CELL_SIZE_PIXELS
