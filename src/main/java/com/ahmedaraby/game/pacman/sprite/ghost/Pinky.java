@@ -5,9 +5,9 @@ import com.ahmedaraby.game.pacman.constant.DimensionsC;
 import com.ahmedaraby.game.pacman.constant.DirectionsE;
 import com.ahmedaraby.game.pacman.constant.SpriteE;
 import com.ahmedaraby.game.pacman.event.Event;
-import com.ahmedaraby.game.pacman.ghostmode.blinky.BlinkyChaser;
 import com.ahmedaraby.game.pacman.ghostmode.common.Eaten;
 import com.ahmedaraby.game.pacman.ghostmode.common.Frightened;
+import com.ahmedaraby.game.pacman.ghostmode.pinky.PinkyChaser;
 import com.ahmedaraby.game.pacman.ghostmode.pinky.PinkyScattered;
 import com.ahmedaraby.game.pacman.model.GameState;
 import javafx.scene.canvas.Canvas;
@@ -17,8 +17,7 @@ public class Pinky extends Ghost {
     public Pinky(GameState gameState) {
         super(gameState, SpriteE.GHOST, -1, -1, DirectionsE.STILL);
         scattered = new PinkyScattered(this, gameState, GhostModeActivePeriodsConf.LEVEL_1_SCATTER_ACTIVE_PERIODS);
-        // [TODO] replace with PinkyChaser
-        chaser = new BlinkyChaser(this, gameState, GhostModeActivePeriodsConf.LEVEL_1_CHASE_ACTIVE_PERIODS);
+        chaser = new PinkyChaser(this, gameState, GhostModeActivePeriodsConf.LEVEL_1_CHASE_ACTIVE_PERIODS);
         frightened = new Frightened(this, gameState, GhostModeActivePeriodsConf.ALL_LEVELS_FRIGHTENED_MODE_ACTIVE_PERIODS);
         eaten = new Eaten(this, gameState);
 
