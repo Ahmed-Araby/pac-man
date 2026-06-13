@@ -174,7 +174,7 @@ if the turn is still not possible and Pac-Man is now in the next Cell (in respec
 - [X] write documenntation and turotial for the work completed so far.
 - [ ] Ghosts
   - [X] Blinky
-  - [ ] Inky
+  - [X] Inky
   - [ ] Pinky
   - [ ] Clyde
 - [ ] Refactoring
@@ -183,13 +183,13 @@ if the turn is still not possible and Pac-Man is now in the next Cell (in respec
   - [ ] Event Structure
   - [ ] sprite movement in relation to frames and time.
   - [ ] sprite animation in relation to sprite movement.
-  - [ ] pac man movement
+  - [X] pac man movement
   - [ ] Ghost Utility classes
   - [ ] maze vs canvas
   - [ ] logging
 - [ ] Dynamic Maze Generation
-  - [ ] Fix Bug: make sure the maze is a connected graph, i.e. Pac Man and Ghosts can reach any place in the maze
-  - [ ] put Ghost house in maze
+  - [X] Fix Bug: make sure the maze is a connected graph, i.e. Pac Man and Ghosts can reach any place in the maze
+  - [X] put Ghost house in the playground
   - [ ] implement at least one more dynamic maze generation Algorithm.
 - [ ] Game Levels
 - [ ] Performance Enhancement
