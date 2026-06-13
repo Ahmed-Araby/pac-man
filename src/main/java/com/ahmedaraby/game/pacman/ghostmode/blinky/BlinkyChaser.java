@@ -16,6 +16,8 @@ import com.ahmedaraby.game.pacman.ghostmode.navigation.GhostNavigator;
 import com.ahmedaraby.game.pacman.ghostmode.navigation.ShortestPathNavigator;
 import com.ahmedaraby.game.pacman.util.ghost.GhostUtil;
 
+import java.net.URL;
+
 public class BlinkyChaser extends Chaser {
 
     private final Animator animator;
@@ -54,11 +56,10 @@ public class BlinkyChaser extends Chaser {
 
 
     private Image[] loadSprites() {
-        // [TODO] move sprites loading into a class that provide caching
-        final String BLINKY_FRAME_1_FILE_RESOURCE_ABSOLUTE_PATH = getClass().getResource(SpriteFileNameC.BLINKY_FRAME_1_FILE_RESOURCE_RELATIVE_PATH).toString();
-        final String BLINKY_FRAME_2_FILE_RESOURCE_ABSOLUTE_PATH = getClass().getResource(SpriteFileNameC.BLINKY_FRAME_2_FILE_RESOURCE_RELATIVE_PATH).toString();
-        final Image frame1 = new Image(BLINKY_FRAME_1_FILE_RESOURCE_ABSOLUTE_PATH);
-        final Image frame2 = new Image(BLINKY_FRAME_2_FILE_RESOURCE_ABSOLUTE_PATH);
+        final URL frame1Url = getClass().getResource(String.format(SpriteFileNameC.GHOST_SPRITE_PATH_TEMPLATE, SpriteFileNameC.BLINKY_FOLDER, SpriteFileNameC.BLINKY_FRAME_1_FILE_NAME));
+        final URL frame2Url = getClass().getResource(String.format(SpriteFileNameC.GHOST_SPRITE_PATH_TEMPLATE, SpriteFileNameC.BLINKY_FOLDER, SpriteFileNameC.BLINKY_FRAME_2_FILE_NAME));
+        final Image frame1 = new Image(frame1Url.toString());
+        final Image frame2 = new Image(frame2Url.toString());
         return new Image[]{frame1, frame2};
     }
 }
