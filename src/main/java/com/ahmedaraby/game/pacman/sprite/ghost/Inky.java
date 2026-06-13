@@ -16,7 +16,7 @@ import com.ahmedaraby.game.pacman.config.GhostModeActivePeriodsConf;
 import com.ahmedaraby.game.pacman.ghostmode.Inky.InkyChaser;
 import com.ahmedaraby.game.pacman.ghostmode.Inky.InkyScattered;
 
-public class Inky extends Ghost implements Subscriber<EventType> {
+public class Inky extends Ghost {
 
 
     public Inky(GameState gameState) {
@@ -49,22 +49,5 @@ public class Inky extends Ghost implements Subscriber<EventType> {
     @Override
     public void render(Canvas canvas) {
         activeMode.render(canvas);
-    }
-
-    @Override
-    public void update(Event<EventType> event) {
-        switch (event.getType()) {
-            case PAC_MAN_SUPER_SUGAR_COLLISION:
-                transitionMode(event);
-                break;
-            case PAC_MAN_GHOST_COLLISION:
-                Ghost collidedGhost = ((PacMan2GhostCollisionEvent) event).getGhost();
-                if (this == collidedGhost) {
-                    transitionMode(event);
-                }
-                break;
-            default:
-                throw new IllegalArgumentException("event of type : " + event.getType() + "is not supported by The Ghost Inky");
-        }
     }
 }

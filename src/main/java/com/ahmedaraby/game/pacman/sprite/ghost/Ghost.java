@@ -103,7 +103,7 @@ public abstract class Ghost extends MovingSprite implements Subscriber<EventType
                 }
                 break;
             default:
-                throw new IllegalArgumentException("event of type : " + event.getType() + "is not supported by the Ghost Blinky");
+                throw new IllegalArgumentException("event of type : " + event.getType() + "is not supported by the Ghost" + this.getClass().getSimpleName());
         }
     }
 }
