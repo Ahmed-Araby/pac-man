@@ -16,6 +16,8 @@ public class MazeUtil {
 
     // [TODO] refactor that such that, 1- it is placed in a more convenient class.
     //  2- it account for forward, 90 degree clock wise and 90 degree counter clock wise moves
+    // original moves priority is up, left, down, right
+    // I will make it right, up, down, left
     public static List<MazeCell> get90DegMoves(MazeCell cord) {
         final List<MazeCell> ninetyDegMoves = new ArrayList<>();
         int nRow, nCol;
