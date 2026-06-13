@@ -1,23 +1,20 @@
 package com.ahmedaraby.game.pacman.ghostmode;
 
-import com.ahmedaraby.game.pacman.constant.SpriteFileNameC;
-import com.ahmedaraby.game.pacman.ghostmode.pinky.PinkyScattered;
+import com.ahmedaraby.game.pacman.ghostmode.navigation.GhostNavigator;
 import com.ahmedaraby.game.pacman.model.GameState;
 import com.ahmedaraby.game.pacman.sprite.ghost.Ghost;
-import com.sun.javafx.logging.jfr.JFRInputEvent;
+import com.ahmedaraby.jengine.animation.Animator;
 import javafx.scene.canvas.Canvas;
-import javafx.scene.image.Image;
-import lombok.AllArgsConstructor;
+import lombok.RequiredArgsConstructor;
+import lombok.Setter;
 
-import java.net.URL;
-import java.util.ArrayList;
-import java.util.List;
-
-@AllArgsConstructor
+@RequiredArgsConstructor
 public abstract class GhostMode {
 
-    protected Ghost ghost;
-    protected GameState gameState;
+    protected final Ghost ghost;
+    protected final GameState gameState;
+    protected GhostNavigator navigator;
+    protected Animator animator;
 
     public abstract void render(Canvas canvas);
     public abstract  void move();
