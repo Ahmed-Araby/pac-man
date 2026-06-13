@@ -181,7 +181,7 @@ if the turn is still not possible and Pac-Man is now in the next Cell (in respec
 - [ ] Ghosts
   - [X] Blinky
   - [X] Inky
-  - [ ] Pinky
+  - [X] Pinky
   - [ ] Clyde
 - [ ] Refactoring
   - [X] Collision Detection
