@@ -16,7 +16,7 @@ import com.ahmedaraby.game.pacman.ghostmode.common.Eaten;
 import com.ahmedaraby.game.pacman.ghostmode.common.Frightened;
 import com.ahmedaraby.game.pacman.ghostmode.blinky.BlinkyScattered;
 
-public class Blinky extends Ghost implements Subscriber<EventType> {
+public class Blinky extends Ghost {
 
     public Blinky(GameState gameState) {
         super(gameState, SpriteE.GHOST, 0, 0, DirectionsE.STILL);
@@ -50,21 +50,5 @@ public class Blinky extends Ghost implements Subscriber<EventType> {
     public void move(Event event) {
         transitionMode(event);
         activeMode.move();
-    }
-
-    public void update(Event<EventType> event) {
-        switch (event.getType()) {
-            case PAC_MAN_SUPER_SUGAR_COLLISION:
-                transitionMode(event);
-                break;
-            case PAC_MAN_GHOST_COLLISION:
-                final Ghost collidedGhost = ((PacMan2GhostCollisionEvent) event).getGhost();
-                if (this == collidedGhost) {
-                    transitionMode(event);
-                }
-                break;
-            default:
-                throw new IllegalArgumentException("event of type : " + event.getType() + "is not supported by the Ghost Blinky");
-        }
     }
 }

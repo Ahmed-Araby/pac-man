@@ -2,8 +2,8 @@ package com.ahmedaraby.game.pacman.ghostmode;
 
 import com.ahmedaraby.game.pacman.model.GameState;
 import com.ahmedaraby.game.pacman.sprite.ghost.Ghost;
-
 import java.time.Instant;
+
 
 public abstract class TemporalGhostMode extends GhostMode {
     private Instant activeAt;

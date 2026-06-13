@@ -148,7 +148,7 @@ if the turn is still not possible and Pac-Man is now in the next Cell (in respec
 ### $\color{red}{\textsf{Blinky }}$
 | Mode    | Description | Entering Condition  | Initial Behaviour | Movement Strategy | Exit Condition | Special Rules |
 | -------- | ------- |  ------- |  ------- |  ------- |  ------- |  ------- | 
-| Scatter  | -    | - | - | - | turn around when entering this mode after leaving Chaser mode | switch to Chaser mode if a certain low number of dots(sugar) remain in the Playground |
+| Scatter  | -    | - | - | - | turn around when entering this mode after leaving Chaser mode | switch to Chaser mode if a certain low number of dots/suger (20 dot in the first level, )remain in the Playground |
 | Chaser   | -    | - | - | - | turn around | - |
 | Frightened    | ghosts become food for PacMan, they turn into blue and start to move randomely | PacMan eating power pallet / super suger | turn around | Pick eligable direction at random | time up | - |
 | Eaten    | -    | - | - | - | - | - |
@@ -161,6 +161,12 @@ if the turn is still not possible and Pac-Man is now in the next Cell (in respec
 | Frightened    | ghosts become food for PacMan, they turn into blue and start to move randomely | PacMan eating power pallet / super suger | turn around | - | Pick eligable direction at random | timer up | - | 
 | Eaten    | -    | - | - | - | - | - |
 
+
+### $\color{pink}{\textsf{Pinky }}$ ![Pinky](https://github.com/Ahmed-Araby/pac-man/blob/pinky/documentation/imgs/ghosts/pinky.png)
+| Mode     | Description | Entering Condition  | Initial Behaviour | Target Tile | Movement Strategy | Exit Condition | Special Rules |
+| -------- | ------- |  ------- |  ------- |  ------- |  ------- |  ------- |  ------- | 
+| Scatter  | Move towards a corner | timer based | turn around when entering this mode after leaving chaser mode | top left corner of the playground | move to an the adjacent cell clossest to target tile | timer up | - |
+| Chaser   | chase pacman | timer based  | turn around | 4 tiles infront of pacman | ? | timer up | after the 4th transition from Scatter to Chaser mode, this mode becomes permanent and the ghost doesn't switch back to Scatter mode again |
 
 ## Backlog
 - [X] generate random maze using recursive division maze generation algorithm

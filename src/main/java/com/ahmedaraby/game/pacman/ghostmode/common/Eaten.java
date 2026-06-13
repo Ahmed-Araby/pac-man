@@ -1,8 +1,8 @@
 package com.ahmedaraby.game.pacman.ghostmode.common;
 
+import com.ahmedaraby.game.pacman.constant.SpriteFileNameC;
 import com.ahmedaraby.jengine.animation.Animator;
 import com.ahmedaraby.jengine.animation.DistanceBasedAnimator;
-import com.ahmedaraby.game.pacman.constant.GhostEatenSpritesFileNameC;
 import com.ahmedaraby.jengine.entity.Coordinate;
 import com.ahmedaraby.jengine.entity.Vector;
 import com.ahmedaraby.game.pacman.ghostmode.navigation.GhostNavigator;
@@ -17,6 +17,7 @@ import com.ahmedaraby.game.pacman.constant.DirectionsE;
 import com.ahmedaraby.game.pacman.ghostmode.GhostMode;
 import com.ahmedaraby.game.pacman.util.ghost.GhostUtil;
 
+import java.net.URL;
 import java.util.AbstractMap;
 import java.util.Map;
 
@@ -77,15 +78,16 @@ public class Eaten extends GhostMode {
 
     private Map<Vector, Image[]> loadSprites() {
         // [TODO] move sprites loading into a class that provide caching
-        final String GHOST_EATEN_UP_FRAME_FILE_RESOURCE_ABSOLUTE_PATH = getClass().getResource(GhostEatenSpritesFileNameC.GHOST_EATEN_UP_FRAME_FILE_RESOURCE_RELATIVE_PATH).toString();
-        final String GHOST_EATEN_RIGHT_FRAME_FILE_RESOURCE_ABSOLUTE_PATH = getClass().getResource(GhostEatenSpritesFileNameC.GHOST_EATEN_RIGHT_FRAME_FILE_RESOURCE_RELATIVE_PATH).toString();
-        final String GHOST_EATEN_DOWN_FRAME_FILE_RESOURCE_ABSOLUTE_PATH = getClass().getResource(GhostEatenSpritesFileNameC.GHOST_EATEN_DOWN_FRAME_FILE_RESOURCE_RELATIVE_PATH).toString();
-        final String GHOST_EATEN_LEFT_FRAME_FILE_RESOURCE_ABSOLUTE_PATH = getClass().getResource(GhostEatenSpritesFileNameC.GHOST_EATEN_LEFT_FRAME_FILE_RESOURCE_RELATIVE_PATH).toString();
 
-        final Image up = new Image(GHOST_EATEN_UP_FRAME_FILE_RESOURCE_ABSOLUTE_PATH);
-        final Image right = new Image(GHOST_EATEN_RIGHT_FRAME_FILE_RESOURCE_ABSOLUTE_PATH);
-        final Image down = new Image(GHOST_EATEN_DOWN_FRAME_FILE_RESOURCE_ABSOLUTE_PATH);
-        final Image left = new Image(GHOST_EATEN_LEFT_FRAME_FILE_RESOURCE_ABSOLUTE_PATH);
+        final URL eatenUpFrameUrl = getClass().getResource(String.format(SpriteFileNameC.GHOST_SPRITE_PATH_TEMPLATE, SpriteFileNameC.GHOST_EATEN_FOLDER, SpriteFileNameC.GHOST_EATEN_UP_FRAME_FILE_NAME));
+        final URL eatenRightFrameUrl = getClass().getResource(String.format(SpriteFileNameC.GHOST_SPRITE_PATH_TEMPLATE, SpriteFileNameC.GHOST_EATEN_FOLDER, SpriteFileNameC.GHOST_EATEN_RIGHT_FRAME_FILE_NAME));
+        final URL eatenDownFrameUrl = getClass().getResource(String.format(SpriteFileNameC.GHOST_SPRITE_PATH_TEMPLATE, SpriteFileNameC.GHOST_EATEN_FOLDER, SpriteFileNameC.GHOST_EATEN_DOWN_FRAME_FILE_NAME));
+        final URL eatenLeftFrameUrl = getClass().getResource(String.format(SpriteFileNameC.GHOST_SPRITE_PATH_TEMPLATE, SpriteFileNameC.GHOST_EATEN_FOLDER, SpriteFileNameC.GHOST_EATEN_LEFT_FRAME_FILE_NAME));
+
+        final Image up = new Image(eatenUpFrameUrl.toString());
+        final Image right = new Image(eatenRightFrameUrl.toString());
+        final Image down = new Image(eatenDownFrameUrl.toString());
+        final Image left = new Image(eatenLeftFrameUrl.toString());
 
         return Map.ofEntries(
                 new AbstractMap.SimpleEntry<>(Vector.UP, new Image[]{up}),

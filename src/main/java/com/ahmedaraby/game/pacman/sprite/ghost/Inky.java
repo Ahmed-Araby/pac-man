@@ -16,13 +16,12 @@ import com.ahmedaraby.game.pacman.config.GhostModeActivePeriodsConf;
 import com.ahmedaraby.game.pacman.ghostmode.Inky.InkyChaser;
 import com.ahmedaraby.game.pacman.ghostmode.Inky.InkyScattered;
 
-public class Inky extends Ghost implements Subscriber<EventType> {
+public class Inky extends Ghost {
 
 
     public Inky(GameState gameState) {
         super(gameState, SpriteE.GHOST , 0, 0, DirectionsE.STILL);
         scattered = new InkyScattered(this, gameState, GhostModeActivePeriodsConf.LEVEL_1_SCATTER_ACTIVE_PERIODS);
-        // [TODO] use InkyChaser
         chaser = new InkyChaser(this, gameState, GhostModeActivePeriodsConf.LEVEL_1_CHASE_ACTIVE_PERIODS);
         frightened = new Frightened(this, gameState, GhostModeActivePeriodsConf.ALL_LEVELS_FRIGHTENED_MODE_ACTIVE_PERIODS);
         eaten = new Eaten(this, gameState);
@@ -50,22 +49,5 @@ public class Inky extends Ghost implements Subscriber<EventType> {
     @Override
     public void render(Canvas canvas) {
         activeMode.render(canvas);
-    }
-
-    @Override
-    public void update(Event<EventType> event) {
-        switch (event.getType()) {
-            case PAC_MAN_SUPER_SUGAR_COLLISION:
-                transitionMode(event);
-                break;
-            case PAC_MAN_GHOST_COLLISION:
-                Ghost collidedGhost = ((PacMan2GhostCollisionEvent) event).getGhost();
-                if (this == collidedGhost) {
-                    transitionMode(event);
-                }
-                break;
-            default:
-                throw new IllegalArgumentException("event of type : " + event.getType() + "is not supported by The Ghost Inky");
-        }
     }
 }

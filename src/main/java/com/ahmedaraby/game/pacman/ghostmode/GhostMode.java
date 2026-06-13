@@ -8,8 +8,9 @@ import lombok.AllArgsConstructor;
 @AllArgsConstructor
 public abstract class GhostMode {
 
-    protected Ghost ghost;
-    protected GameState gameState;
+    protected final Ghost ghost;
+    protected final GameState gameState;
+
 
     public abstract void render(Canvas canvas);
     public abstract  void move();

@@ -4,6 +4,7 @@ import com.ahmedaraby.game.pacman.collision.CollisionSystem;
 import com.ahmedaraby.game.pacman.event.Event;
 import com.ahmedaraby.game.pacman.model.GameState;
 import com.ahmedaraby.game.pacman.sprite.ghost.Blinky;
+import com.ahmedaraby.game.pacman.sprite.ghost.Pinky;
 import com.ahmedaraby.game.pacman.sprite.playground.GhostHouseS;
 import com.ahmedaraby.game.pacman.sprite.playground.Maze;
 import com.ahmedaraby.game.pacman.sprite.playground.Sugar;
@@ -40,6 +41,7 @@ public class GamePlayGameScene implements GameScene {
     // ghosts
     private Blinky blinky;
     private Inky inky;
+    private Pinky pinky;
 
     // javaFX
     final Pane pane;
@@ -97,6 +99,7 @@ public class GamePlayGameScene implements GameScene {
     private void createGhostsSprites() {
         blinky = new Blinky(gameState);
         inky = new Inky(gameState);
+        pinky = new Pinky(gameState);
     }
 
     private void setGameState() {
@@ -105,6 +108,7 @@ public class GamePlayGameScene implements GameScene {
         gameState.setGhostHouseS(ghostHouseS);
         gameState.addGhost(blinky);
         gameState.addGhost(inky);
+        gameState.addGhost(pinky);
     }
 
     private void registerEventSubscribers() {
@@ -120,9 +124,11 @@ public class GamePlayGameScene implements GameScene {
 
         syncEventManager.subscribe(EventType.PAC_MAN_SUPER_SUGAR_COLLISION, blinky);
         syncEventManager.subscribe(EventType.PAC_MAN_SUPER_SUGAR_COLLISION, inky);
+        syncEventManager.subscribe(EventType.PAC_MAN_SUPER_SUGAR_COLLISION, pinky);
 
         syncEventManager.subscribe(EventType.PAC_MAN_GHOST_COLLISION, blinky);
         syncEventManager.subscribe(EventType.PAC_MAN_GHOST_COLLISION, inky);
+        syncEventManager.subscribe(EventType.PAC_MAN_GHOST_COLLISION, pinky);
     }
 
     private void registerSubscribersForSyncEvents() {
@@ -143,6 +149,7 @@ public class GamePlayGameScene implements GameScene {
     private void initGhostSprites() {
         blinky.init();
         inky.init();
+        pinky.init();
     }
 
     @Override
@@ -169,6 +176,7 @@ public class GamePlayGameScene implements GameScene {
         pacMan.render(canvas);
         blinky.render(canvas);
         inky.render(canvas);
+        pinky.render(canvas);
     }
 
     @Override
@@ -176,6 +184,7 @@ public class GamePlayGameScene implements GameScene {
         pacMan.move(null);
         blinky.move(null);
         inky.move(null);
+        pinky.move(null);
 
         collisionSystem.detect();
     }

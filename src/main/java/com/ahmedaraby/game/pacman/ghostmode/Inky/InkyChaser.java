@@ -20,6 +20,8 @@ import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
 import com.ahmedaraby.game.pacman.ghostmode.Chaser;
 
+import java.net.URL;
+
 public class InkyChaser extends Chaser {
 
     private final GhostNavigator navigator;
@@ -93,11 +95,10 @@ public class InkyChaser extends Chaser {
     }
 
     private Image[] loadSprites() {
-        final String INKY_FRAME_1_FILE_RESOURCE_ABSOLUTE_PATH = getClass().getResource(SpriteFileNameC.INKY_FRAME_1_FILE_RESOURCE_RELATIVE_PATH).toString();
-        final String INKY_FRAME_2_FILE_RESOURCE_ABSOLUTE_PATH = getClass().getResource(SpriteFileNameC.INKY_FRAME_2_FILE_RESOURCE_RELATIVE_PATH).toString();
-
-        final Image frame1 = new Image(INKY_FRAME_1_FILE_RESOURCE_ABSOLUTE_PATH);
-        final Image frame2 = new Image(INKY_FRAME_2_FILE_RESOURCE_ABSOLUTE_PATH);
+        final URL frame1Url = getClass().getResource(String.format(SpriteFileNameC.GHOST_SPRITE_PATH_TEMPLATE, SpriteFileNameC.INKY_FOLDER, SpriteFileNameC.INKY_FRAME_1_FILE_NAME));
+        final URL frame2Url = getClass().getResource(String.format(SpriteFileNameC.GHOST_SPRITE_PATH_TEMPLATE, SpriteFileNameC.INKY_FOLDER, SpriteFileNameC.INKY_FRAME_2_FILE_NAME));
+        final Image frame1 = new Image(frame1Url.toString());
+        final Image frame2 = new Image(frame2Url.toString());
         return new Image[] {frame1, frame2};
     }
 }
