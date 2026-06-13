@@ -17,10 +17,16 @@ public class SpriteFileNameC {
     public static final String BLINKY_FRAME_2_FILE_NAME = "blinky-frame-2.png";
 
     // frightened
-    public static final String FRIGHTENED_FOLDER = "frightened";
+    public static final String GHOST_FRIGHTENED_FOLDER = "frightened";
     public static final String GHOST_FRIGHTENED_FRAME_1_FILE_NAME = "ghost-frightened-frame-1.png";
     public static final String GHOST_FRIGHTENED_FRAME_2_FILE_NAME = "ghost-frightened-frame-2.png";
+
     // eaten
+    public static final String GHOST_EATEN_FOLDER = "eaten";
+    public static final String GHOST_EATEN_UP_FRAME_FILE_NAME = "ghost-eaten-up-frame.png";
+    public static final String GHOST_EATEN_RIGHT_FRAME_FILE_NAME = "ghost-eaten-right-frame.png";
+    public static final String GHOST_EATEN_DOWN_FRAME_FILE_NAME = "ghost-eaten-down-frame.png";
+    public static final String GHOST_EATEN_LEFT_FRAME_FILE_NAME = "ghost-eaten-left-frame.png";
 
     // Inky, chaser and scatter
     public static final String INKY_FOLDER = "inky";
