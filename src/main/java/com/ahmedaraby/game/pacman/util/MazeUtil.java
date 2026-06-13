@@ -14,6 +14,8 @@ public class MazeUtil {
     private static final int[] dRow = {-1, 1, 0, 0}; // up, down, don't change, don't change
     private static final int[] dCol = {0, 0, 1, -1}; // don't change, don't change, right, left
 
+    // [TODO] refactor that such that, 1- it is placed in a more convenient class.
+    //  2- it account for forward, 90 degree clock wise and 90 degree counter clock wise moves
     public static List<MazeCell> get90DegMoves(MazeCell cord) {
         final List<MazeCell> ninetyDegMoves = new ArrayList<>();
         int nRow, nCol;
