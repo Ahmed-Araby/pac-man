@@ -1,0 +1,36 @@
+package com.ahmedaraby.game.pacman.ghostmode.clyde;
+
+import com.ahmedaraby.game.pacman.constant.DimensionsC;
+import com.ahmedaraby.game.pacman.constant.SpriteFileNameC;
+import com.ahmedaraby.game.pacman.ghostmode.Scattered;
+import com.ahmedaraby.game.pacman.ghostmode.navigation.ShortestPathNavigator;
+import com.ahmedaraby.game.pacman.model.GameState;
+import com.ahmedaraby.game.pacman.sprite.ghost.Ghost;
+import com.ahmedaraby.jengine.animation.DistanceBasedAnimator;
+import com.ahmedaraby.jengine.entity.Coordinate;
+import com.ahmedaraby.jengine.sprite.SpriteRegistry;
+import javafx.scene.image.Image;
+
+public class ClydeScattered extends Scattered {
+
+    public ClydeScattered(Ghost ghost, GameState gameState, SpriteRegistry<String, Image> spriteRegistry, int[] activePeriodsSec) {
+        super(ghost, gameState, spriteRegistry, activePeriodsSec);
+
+        final Image[] frames = loadSprites();
+
+        super.navigator = new ShortestPathNavigator();
+        super.animator = new DistanceBasedAnimator(new double[]{
+                DimensionsC.GHOST_FIRST_LEG_MOVEMENT_DISTANCE_PIXELS,
+                DimensionsC.GHOST_SECOND_LEG_MOVEMENT_DISTANCE_PIXELS
+        }, frames);
+
+        target = new Coordinate(DimensionsC.CANVAS_HEIGHT_PIXELS - DimensionsC.MAZE_CELL_SIZE_PIXELS, 0);
+    }
+
+
+    private Image[] loadSprites() {
+        final String frame1Path = String.format(SpriteFileNameC.GHOST_SPRITE_PATH_TEMPLATE, SpriteFileNameC.CLYDE_FOLDER, SpriteFileNameC.CLYDE_FRAME_1_FILE_NAME);
+        final String frame2Path = String.format(SpriteFileNameC.GHOST_SPRITE_PATH_TEMPLATE, SpriteFileNameC.CLYDE_FOLDER, SpriteFileNameC.CLYDE_FRAME_2_FILE_NAME);
+        return loadSprites(new String[]{frame1Path, frame2Path});
+    }
+}

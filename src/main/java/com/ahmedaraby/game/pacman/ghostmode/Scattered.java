@@ -10,7 +10,12 @@ import com.ahmedaraby.game.pacman.util.ghost.GhostUtil;
 import com.ahmedaraby.jengine.animation.Animator;
 import com.ahmedaraby.jengine.entity.Coordinate;
 import com.ahmedaraby.jengine.sprite.SpriteRegistry;
+import javafx.scene.canvas.Canvas;
+import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public abstract class Scattered extends TemporalGhostMode {
     protected GhostNavigator navigator;
@@ -22,6 +27,12 @@ public abstract class Scattered extends TemporalGhostMode {
     }
 
     @Override
+    public void render(Canvas canvas) {
+        final GraphicsContext con = canvas.getGraphicsContext2D();
+        con.drawImage(animator.getFrame(), ghost.getCol(), ghost.getRow());
+    }
+
+    @Override
     public void move() {
         final DirectionsE newDir = navigator.nextMoveDirection(ghost.getTopLeftCorner(), target);
         if (newDir != DirectionsE.STILL) {
@@ -30,5 +41,13 @@ public abstract class Scattered extends TemporalGhostMode {
             ghost.setDir(newDir);
             animator.stride(DimensionsC.GHOST_STRIDE_PIXELS / Configs.FRAMES_PER_SEC_FOR_GHOST_STRIDE);
         }
+    }
+
+    protected Image[] loadSprites(String[] frameRelativePaths) {
+        final List<Image> spriteList = new ArrayList<>();
+        for (String path : frameRelativePaths) {
+            spriteList.add(spriteRegistry.get(path));
+        }
+        return spriteList.toArray(new Image[0]);
     }
 }

@@ -37,4 +37,9 @@ public class SpriteFileNameC {
     public static final String PINKY_FOLDER = "pinky";
     public static final String PINKY_FRAME_1_FILE_NAME = "pinky-frame-1.png";
     public static final String PINKY_FRAME_2_FILE_NAME = "pinky-frame-2.png";
+
+    // Clyde, chaser and scatter
+    public static final String CLYDE_FOLDER = "clyde";
+    public static final String CLYDE_FRAME_1_FILE_NAME = "clyde-frame-1.png";
+    public static final String CLYDE_FRAME_2_FILE_NAME = "clyde-frame-2.png";
 }
