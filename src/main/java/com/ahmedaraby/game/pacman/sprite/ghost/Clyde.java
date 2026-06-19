@@ -6,6 +6,7 @@ import com.ahmedaraby.game.pacman.constant.DirectionsE;
 import com.ahmedaraby.game.pacman.constant.SpriteE;
 import com.ahmedaraby.game.pacman.event.Event;
 import com.ahmedaraby.game.pacman.ghostmode.blinky.BlinkyChaser;
+import com.ahmedaraby.game.pacman.ghostmode.clyde.ClydeChaser;
 import com.ahmedaraby.game.pacman.ghostmode.clyde.ClydeScattered;
 import com.ahmedaraby.game.pacman.ghostmode.common.Eaten;
 import com.ahmedaraby.game.pacman.ghostmode.common.Frightened;
@@ -22,8 +23,7 @@ public class Clyde extends Ghost {
         super(gameState, SpriteE.GHOST, -1, -1, DirectionsE.STILL);
         scattered = new ClydeScattered(this, gameState, spriteRegistry,
                 GhostModeActivePeriodsConf.LEVEL_1_SCATTER_ACTIVE_PERIODS);
-        // [TODO] use Clyde Chaser
-        chaser = new BlinkyChaser(this, gameState, spriteRegistry,
+        chaser = new ClydeChaser(this, gameState, spriteRegistry,
                 GhostModeActivePeriodsConf.LEVEL_1_CHASE_ACTIVE_PERIODS);
         frightened = new Frightened(this, gameState, spriteRegistry,
                 GhostModeActivePeriodsConf.ALL_LEVELS_FRIGHTENED_MODE_ACTIVE_PERIODS);
