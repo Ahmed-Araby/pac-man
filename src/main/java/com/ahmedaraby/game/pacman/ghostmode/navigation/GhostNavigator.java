@@ -5,5 +5,6 @@ import com.ahmedaraby.jengine.entity.Coordinate;
 
 public interface GhostNavigator {
 
-    DirectionsE nextMoveDirection(Coordinate ghostCord, Coordinate pacCord);
+    DirectionsE nextMoveDirection(Coordinate source, Coordinate target);
+    double calcDist(Coordinate source, Coordinate target);
 }

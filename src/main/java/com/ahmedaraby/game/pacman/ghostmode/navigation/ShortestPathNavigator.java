@@ -1,6 +1,7 @@
 package com.ahmedaraby.game.pacman.ghostmode.navigation;
 
 import com.ahmedaraby.game.pacman.collision.M2SSpriteCollisionDetector;
+import com.ahmedaraby.game.pacman.constant.DimensionsC;
 import com.ahmedaraby.game.pacman.entity.MazeCell;
 import com.ahmedaraby.game.pacman.model.CollisionReport;
 import com.ahmedaraby.game.pacman.util.SpriteUtil;
@@ -21,11 +22,20 @@ import java.util.List;
 @AllArgsConstructor
 public class ShortestPathNavigator implements GhostNavigator {
 
-    public DirectionsE nextMoveDirection(Coordinate ghostCord, Coordinate targetCord) {
-        if(ghostCord.equals(targetCord)) {
+    // [TODO] TODO take into account the movement direction of the sprites at source and target cord
+    @Override
+    public double calcDist(Coordinate sourceCord, Coordinate targetCord) {
+        MazeCell sourceCell = CanvasUtil.toMazeCoordinate(sourceCord, DirectionsE.STILL);
+        MazeCell targetCell = CanvasUtil.toMazeCoordinate(targetCord, DirectionsE.STILL);
+        return calcDist(sourceCell, targetCell) * DimensionsC.MAZE_CELL_SIZE_PIXELS;
+    }
+
+    @Override
+    public DirectionsE nextMoveDirection(Coordinate source, Coordinate target) {
+        if(source.equals(target)) {
             return DirectionsE.STILL;
         }
-        final List<MazeMove> possibleMoves = getCandidateMoves(ghostCord, targetCord);
+        final List<MazeMove> possibleMoves = getCandidateMoves(source, target);
         return possibleMoves
                 .stream()
                 .sorted()
@@ -38,7 +48,7 @@ public class ShortestPathNavigator implements GhostNavigator {
                 })
                 .map(move -> {
                     final Coordinate candidateNextCord = MazeUtil.getCanvasCord(move.getCell());
-                    return CanvasUtil.getMovementDir(ghostCord, candidateNextCord);
+                    return CanvasUtil.getMovementDir(source, candidateNextCord);
                 })
                 .findFirst()
                 .orElse(DirectionsE.STILL);
@@ -51,14 +61,14 @@ public class ShortestPathNavigator implements GhostNavigator {
         return candidateNextMazeCell
                 .stream()
                 .map(interestingCell -> {
-                    final int dist = getDistToPacCell(interestingCell, targetCell);
+                    final int dist = calcDist(interestingCell, targetCell);
                     return new MazeMove(interestingCell, dist);
                 })
                 .toList();
     }
 
-    private int getDistToPacCell(MazeCell sourceCell, MazeCell targetCell) {
-        final int[][] dist = BfsUtil.getDistMat(sourceCell, targetCell);
-        return dist[targetCell.getRow()][targetCell.getCol()];
+    private int calcDist(MazeCell source, MazeCell target) {
+        final int[][] dist = BfsUtil.getDistMat(source, target);
+        return dist[target.getRow()][target.getCol()];
     }
 }
