@@ -13,8 +13,6 @@ import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
 
-import java.net.URL;
-
 public class InkyScattered extends Scattered {
     public InkyScattered(Ghost ghost, GameState gameState, SpriteRegistry<String, Image> spriteRegistry, int[] activePeriodsSec) {
         super(ghost, gameState, spriteRegistry, activePeriodsSec);
@@ -36,10 +34,10 @@ public class InkyScattered extends Scattered {
     }
 
     private Image[] loadSprites() {
-        final URL frame1Url = getClass().getResource(String.format(SpriteFileNameC.GHOST_SPRITE_PATH_TEMPLATE, SpriteFileNameC.INKY_FOLDER, SpriteFileNameC.INKY_FRAME_1_FILE_NAME));
-        final URL frame2Url = getClass().getResource(String.format(SpriteFileNameC.GHOST_SPRITE_PATH_TEMPLATE, SpriteFileNameC.INKY_FOLDER, SpriteFileNameC.INKY_FRAME_2_FILE_NAME));
-        final Image frame1 = new Image(frame1Url.toString());
-        final Image frame2 = new Image(frame2Url.toString());
+        final String frame1Path = String.format(SpriteFileNameC.GHOST_SPRITE_PATH_TEMPLATE, SpriteFileNameC.INKY_FOLDER, SpriteFileNameC.INKY_FRAME_1_FILE_NAME);
+        final String frame2Path = String.format(SpriteFileNameC.GHOST_SPRITE_PATH_TEMPLATE, SpriteFileNameC.INKY_FOLDER, SpriteFileNameC.INKY_FRAME_2_FILE_NAME);
+        final Image frame1 = spriteRegistry.get(frame1Path);
+        final Image frame2 = spriteRegistry.get(frame2Path);
         return new Image[] {frame1, frame2};
     }
 }

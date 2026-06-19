@@ -13,8 +13,6 @@ import com.ahmedaraby.jengine.entity.Coordinate;
 import com.ahmedaraby.game.pacman.ghostmode.Scattered;
 import com.ahmedaraby.game.pacman.ghostmode.navigation.ShortestPathNavigator;
 
-import java.net.URL;
-
 public class BlinkyScattered extends Scattered {
 
     public BlinkyScattered(Ghost ghost, GameState gameState, SpriteRegistry<String, Image> spriteRegistry, int[] activePeridosSec) {

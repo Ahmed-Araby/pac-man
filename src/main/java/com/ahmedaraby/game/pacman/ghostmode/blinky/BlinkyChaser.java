@@ -17,8 +17,6 @@ import com.ahmedaraby.game.pacman.ghostmode.navigation.GhostNavigator;
 import com.ahmedaraby.game.pacman.ghostmode.navigation.ShortestPathNavigator;
 import com.ahmedaraby.game.pacman.util.ghost.GhostUtil;
 
-import java.net.URL;
-
 public class BlinkyChaser extends Chaser {
 
     private final Animator animator;
@@ -59,8 +57,8 @@ public class BlinkyChaser extends Chaser {
     private Image[] loadSprites() {
         final String frame1Path = String.format(SpriteFileNameC.GHOST_SPRITE_PATH_TEMPLATE, SpriteFileNameC.BLINKY_FOLDER, SpriteFileNameC.BLINKY_FRAME_1_FILE_NAME);
         final String frame2Path = String.format(SpriteFileNameC.GHOST_SPRITE_PATH_TEMPLATE, SpriteFileNameC.BLINKY_FOLDER, SpriteFileNameC.BLINKY_FRAME_2_FILE_NAME);
-        final Image frame1 = spriteRegistry.get(frame1Path);;
-        final Image frame2 = spriteRegistry.get(frame2Path);;
+        final Image frame1 = spriteRegistry.get(frame1Path);
+        final Image frame2 = spriteRegistry.get(frame2Path);
         return new Image[]{frame1, frame2};
     }
 }

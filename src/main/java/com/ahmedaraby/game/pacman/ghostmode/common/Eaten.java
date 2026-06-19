@@ -18,7 +18,6 @@ import com.ahmedaraby.game.pacman.constant.DirectionsE;
 import com.ahmedaraby.game.pacman.ghostmode.GhostMode;
 import com.ahmedaraby.game.pacman.util.ghost.GhostUtil;
 
-import java.net.URL;
 import java.util.AbstractMap;
 import java.util.Map;
 
@@ -80,15 +79,15 @@ public class Eaten extends GhostMode {
     private Map<Vector, Image[]> loadSprites() {
         // [TODO] move sprites loading into a class that provide caching
 
-        final URL eatenUpFrameUrl = getClass().getResource(String.format(SpriteFileNameC.GHOST_SPRITE_PATH_TEMPLATE, SpriteFileNameC.GHOST_EATEN_FOLDER, SpriteFileNameC.GHOST_EATEN_UP_FRAME_FILE_NAME));
-        final URL eatenRightFrameUrl = getClass().getResource(String.format(SpriteFileNameC.GHOST_SPRITE_PATH_TEMPLATE, SpriteFileNameC.GHOST_EATEN_FOLDER, SpriteFileNameC.GHOST_EATEN_RIGHT_FRAME_FILE_NAME));
-        final URL eatenDownFrameUrl = getClass().getResource(String.format(SpriteFileNameC.GHOST_SPRITE_PATH_TEMPLATE, SpriteFileNameC.GHOST_EATEN_FOLDER, SpriteFileNameC.GHOST_EATEN_DOWN_FRAME_FILE_NAME));
-        final URL eatenLeftFrameUrl = getClass().getResource(String.format(SpriteFileNameC.GHOST_SPRITE_PATH_TEMPLATE, SpriteFileNameC.GHOST_EATEN_FOLDER, SpriteFileNameC.GHOST_EATEN_LEFT_FRAME_FILE_NAME));
+        final String eatenUpFramePath = String.format(SpriteFileNameC.GHOST_SPRITE_PATH_TEMPLATE, SpriteFileNameC.GHOST_EATEN_FOLDER, SpriteFileNameC.GHOST_EATEN_UP_FRAME_FILE_NAME);
+        final String eatenRightFramePath = String.format(SpriteFileNameC.GHOST_SPRITE_PATH_TEMPLATE, SpriteFileNameC.GHOST_EATEN_FOLDER, SpriteFileNameC.GHOST_EATEN_RIGHT_FRAME_FILE_NAME);
+        final String eatenDownFramePath = String.format(SpriteFileNameC.GHOST_SPRITE_PATH_TEMPLATE, SpriteFileNameC.GHOST_EATEN_FOLDER, SpriteFileNameC.GHOST_EATEN_DOWN_FRAME_FILE_NAME);
+        final String eatenLeftFramePath = String.format(SpriteFileNameC.GHOST_SPRITE_PATH_TEMPLATE, SpriteFileNameC.GHOST_EATEN_FOLDER, SpriteFileNameC.GHOST_EATEN_LEFT_FRAME_FILE_NAME);
 
-        final Image up = new Image(eatenUpFrameUrl.toString());
-        final Image right = new Image(eatenRightFrameUrl.toString());
-        final Image down = new Image(eatenDownFrameUrl.toString());
-        final Image left = new Image(eatenLeftFrameUrl.toString());
+        final Image up = spriteRegistry.get(eatenUpFramePath);
+        final Image right = spriteRegistry.get(eatenRightFramePath);
+        final Image down = spriteRegistry.get(eatenDownFramePath);
+        final Image left = spriteRegistry.get(eatenLeftFramePath);
 
         return Map.ofEntries(
                 new AbstractMap.SimpleEntry<>(Vector.UP, new Image[]{up}),
