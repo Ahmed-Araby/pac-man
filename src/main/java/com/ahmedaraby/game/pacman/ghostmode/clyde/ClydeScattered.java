@@ -16,7 +16,9 @@ public class ClydeScattered extends Scattered {
     public ClydeScattered(Ghost ghost, GameState gameState, SpriteRegistry<String, Image> spriteRegistry, int[] activePeriodsSec) {
         super(ghost, gameState, spriteRegistry, activePeriodsSec);
 
-        final Image[] frames = loadSprites();
+        final String frame1Path = String.format(SpriteFileNameC.GHOST_SPRITE_PATH_TEMPLATE, SpriteFileNameC.CLYDE_FOLDER, SpriteFileNameC.CLYDE_FRAME_1_FILE_NAME);
+        final String frame2Path = String.format(SpriteFileNameC.GHOST_SPRITE_PATH_TEMPLATE, SpriteFileNameC.CLYDE_FOLDER, SpriteFileNameC.CLYDE_FRAME_2_FILE_NAME);
+        final Image[] frames = loadSprites(new String[]{frame1Path, frame2Path});
 
         super.navigator = new ShortestPathNavigator();
         super.animator = new DistanceBasedAnimator(new double[]{
@@ -25,12 +27,5 @@ public class ClydeScattered extends Scattered {
         }, frames);
 
         target = new Coordinate(DimensionsC.CANVAS_HEIGHT_PIXELS - DimensionsC.MAZE_CELL_SIZE_PIXELS, 0);
-    }
-
-
-    private Image[] loadSprites() {
-        final String frame1Path = String.format(SpriteFileNameC.GHOST_SPRITE_PATH_TEMPLATE, SpriteFileNameC.CLYDE_FOLDER, SpriteFileNameC.CLYDE_FRAME_1_FILE_NAME);
-        final String frame2Path = String.format(SpriteFileNameC.GHOST_SPRITE_PATH_TEMPLATE, SpriteFileNameC.CLYDE_FOLDER, SpriteFileNameC.CLYDE_FRAME_2_FILE_NAME);
-        return loadSprites(new String[]{frame1Path, frame2Path});
     }
 }
