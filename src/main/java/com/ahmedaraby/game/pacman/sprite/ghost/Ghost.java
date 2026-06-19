@@ -58,7 +58,7 @@ public abstract class Ghost extends MovingSprite implements Subscriber<EventType
             previousMode = temporalActiveMode;
             temporalActiveMode = frightened;
             temporalActiveMode.enter();
-        } else if (temporalActiveMode.ended() && temporalActiveMode instanceof Scattered) {
+        } else if (temporalActiveMode.ended()) {
             temporalActiveMode.exit();
             temporalActiveMode = chaser;
             temporalActiveMode.enter();
@@ -73,7 +73,7 @@ public abstract class Ghost extends MovingSprite implements Subscriber<EventType
             previousMode = temporalActiveMode;
             temporalActiveMode = frightened;
             temporalActiveMode.enter();
-        } else if (temporalActiveMode.ended() && temporalActiveMode instanceof Chaser) {
+        } else if (temporalActiveMode.ended()) {
             temporalActiveMode.exit();
             temporalActiveMode = scattered;
             temporalActiveMode.enter();
