@@ -16,18 +16,17 @@ import com.ahmedaraby.jengine.animation.DistanceBasedAnimator;
 import com.ahmedaraby.jengine.entity.Coordinate;
 import com.ahmedaraby.jengine.entity.Line;
 import com.ahmedaraby.jengine.entity.Vector;
+import com.ahmedaraby.jengine.sprite.SpriteRegistry;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
-
-import java.net.URL;
 
 public class PinkyChaser extends Chaser {
     private final Animator animator;
     private final GhostNavigator navigator;
 
-    public PinkyChaser(Ghost ghost, GameState gameState, int[] activePeriodsSec) {
-        super(ghost, gameState, activePeriodsSec);
+    public PinkyChaser(Ghost ghost, GameState gameState, SpriteRegistry<String, Image> spriteRegistry, int[] activePeriodsSec) {
+        super(ghost, gameState, spriteRegistry, activePeriodsSec);
 
         final Image[] frames = loadSprites();
         animator = new DistanceBasedAnimator(new double[]{
@@ -64,10 +63,10 @@ public class PinkyChaser extends Chaser {
     }
 
     private Image[] loadSprites() {
-        final URL frame1Url = getClass().getResource(String.format(SpriteFileNameC.GHOST_SPRITE_PATH_TEMPLATE, SpriteFileNameC.PINKY_FOLDER, SpriteFileNameC.PINKY_FRAME_1_FILE_NAME));
-        final URL frame2Url = getClass().getResource(String.format(SpriteFileNameC.GHOST_SPRITE_PATH_TEMPLATE, SpriteFileNameC.PINKY_FOLDER, SpriteFileNameC.PINKY_FRAME_2_FILE_NAME));
-        final Image frame1 = new Image(frame1Url.toString());
-        final Image frame2 = new Image(frame2Url.toString());
+        final String frame1Path = String.format(SpriteFileNameC.GHOST_SPRITE_PATH_TEMPLATE, SpriteFileNameC.PINKY_FOLDER, SpriteFileNameC.PINKY_FRAME_1_FILE_NAME);
+        final String frame2Path = String.format(SpriteFileNameC.GHOST_SPRITE_PATH_TEMPLATE, SpriteFileNameC.PINKY_FOLDER, SpriteFileNameC.PINKY_FRAME_2_FILE_NAME);
+        final Image frame1 = spriteRegistry.get(frame1Path);
+        final Image frame2 = spriteRegistry.get(frame2Path);
         return new Image[] {frame1, frame2};
     }
 }

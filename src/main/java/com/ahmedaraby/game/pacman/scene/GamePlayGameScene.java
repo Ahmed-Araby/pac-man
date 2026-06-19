@@ -8,9 +8,12 @@ import com.ahmedaraby.game.pacman.sprite.ghost.Pinky;
 import com.ahmedaraby.game.pacman.sprite.playground.GhostHouseS;
 import com.ahmedaraby.game.pacman.sprite.playground.Maze;
 import com.ahmedaraby.game.pacman.sprite.playground.Sugar;
+import com.ahmedaraby.game.pacman.util.FxSpriteRegistry;
+import com.ahmedaraby.jengine.sprite.SpriteRegistry;
 import javafx.scene.Scene;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
+import javafx.scene.image.Image;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import com.ahmedaraby.game.pacman.config.GameConfig;
@@ -30,6 +33,7 @@ import com.ahmedaraby.game.pacman.util.debug.DebugUtil;
 
 public class GamePlayGameScene implements GameScene {
     private final GameState gameState = new GameState();
+    private final SpriteRegistry<String, Image> spriteRegistry = new FxSpriteRegistry();
 
     // sprites
     GhostHouseS ghostHouseS;
@@ -97,9 +101,9 @@ public class GamePlayGameScene implements GameScene {
     }
 
     private void createGhostsSprites() {
-        blinky = new Blinky(gameState);
-        inky = new Inky(gameState);
-        pinky = new Pinky(gameState);
+        blinky = new Blinky(gameState, spriteRegistry);
+        inky = new Inky(gameState, spriteRegistry);
+        pinky = new Pinky(gameState, spriteRegistry);
     }
 
     private void setGameState() {

@@ -9,15 +9,16 @@ import com.ahmedaraby.game.pacman.sprite.ghost.Ghost;
 import com.ahmedaraby.game.pacman.util.ghost.GhostUtil;
 import com.ahmedaraby.jengine.animation.Animator;
 import com.ahmedaraby.jengine.entity.Coordinate;
-import lombok.Setter;
+import com.ahmedaraby.jengine.sprite.SpriteRegistry;
+import javafx.scene.image.Image;
 
 public abstract class Scattered extends TemporalGhostMode {
     protected GhostNavigator navigator;
     protected Animator animator;
     protected Coordinate target;
 
-    public Scattered(Ghost ghost, GameState gameState, int[] activePeriodsSec) {
-        super(ghost, gameState, activePeriodsSec);
+    public Scattered(Ghost ghost, GameState gameState, SpriteRegistry<String, Image> spriteRegistry, int[] activePeriodsSec) {
+        super(ghost, gameState, spriteRegistry, activePeriodsSec);
     }
 
     @Override

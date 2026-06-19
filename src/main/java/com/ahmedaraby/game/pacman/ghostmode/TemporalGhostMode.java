@@ -2,6 +2,9 @@ package com.ahmedaraby.game.pacman.ghostmode;
 
 import com.ahmedaraby.game.pacman.model.GameState;
 import com.ahmedaraby.game.pacman.sprite.ghost.Ghost;
+import com.ahmedaraby.jengine.sprite.SpriteRegistry;
+import javafx.scene.image.Image;
+
 import java.time.Instant;
 
 
@@ -12,8 +15,8 @@ public abstract class TemporalGhostMode extends GhostMode {
     private int activePeriodIndex;
 
 
-    public TemporalGhostMode(Ghost ghost, GameState gameState, int[] activePeriodsSec) {
-        super(ghost, gameState);
+    public TemporalGhostMode(Ghost ghost, GameState gameState, SpriteRegistry<String, Image> spriteRegistry, int[] activePeriodsSec) {
+        super(ghost, gameState, spriteRegistry);
         this.activePeriodsSec = activePeriodsSec;
     }
 

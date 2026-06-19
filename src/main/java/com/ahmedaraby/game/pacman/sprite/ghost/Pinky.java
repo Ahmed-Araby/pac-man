@@ -10,16 +10,18 @@ import com.ahmedaraby.game.pacman.ghostmode.common.Frightened;
 import com.ahmedaraby.game.pacman.ghostmode.pinky.PinkyChaser;
 import com.ahmedaraby.game.pacman.ghostmode.pinky.PinkyScattered;
 import com.ahmedaraby.game.pacman.model.GameState;
+import com.ahmedaraby.jengine.sprite.SpriteRegistry;
 import javafx.scene.canvas.Canvas;
+import javafx.scene.image.Image;
 
 public class Pinky extends Ghost {
 
-    public Pinky(GameState gameState) {
+    public Pinky(GameState gameState, SpriteRegistry<String, Image> spriteRegistry) {
         super(gameState, SpriteE.GHOST, -1, -1, DirectionsE.STILL);
-        scattered = new PinkyScattered(this, gameState, GhostModeActivePeriodsConf.LEVEL_1_SCATTER_ACTIVE_PERIODS);
-        chaser = new PinkyChaser(this, gameState, GhostModeActivePeriodsConf.LEVEL_1_CHASE_ACTIVE_PERIODS);
-        frightened = new Frightened(this, gameState, GhostModeActivePeriodsConf.ALL_LEVELS_FRIGHTENED_MODE_ACTIVE_PERIODS);
-        eaten = new Eaten(this, gameState);
+        scattered = new PinkyScattered(this, gameState, spriteRegistry, GhostModeActivePeriodsConf.LEVEL_1_SCATTER_ACTIVE_PERIODS);
+        chaser = new PinkyChaser(this, gameState, spriteRegistry, GhostModeActivePeriodsConf.LEVEL_1_CHASE_ACTIVE_PERIODS);
+        frightened = new Frightened(this, gameState, spriteRegistry, GhostModeActivePeriodsConf.ALL_LEVELS_FRIGHTENED_MODE_ACTIVE_PERIODS);
+        eaten = new Eaten(this, gameState, spriteRegistry);
 
         this.activeMode = scattered;
         scattered.enter();

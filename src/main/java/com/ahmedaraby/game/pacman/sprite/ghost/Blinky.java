@@ -7,6 +7,7 @@ import com.ahmedaraby.game.pacman.event.EventType;
 import com.ahmedaraby.game.pacman.event.collision.PacMan2GhostCollisionEvent;
 import com.ahmedaraby.game.pacman.model.GameState;
 import com.ahmedaraby.game.pacman.sprite.playground.GhostHouseS;
+import com.ahmedaraby.jengine.sprite.SpriteRegistry;
 import javafx.scene.canvas.Canvas;
 import com.ahmedaraby.game.pacman.config.GhostModeActivePeriodsConf;
 import com.ahmedaraby.game.pacman.event.Event;
@@ -15,17 +16,18 @@ import com.ahmedaraby.game.pacman.ghostmode.blinky.BlinkyChaser;
 import com.ahmedaraby.game.pacman.ghostmode.common.Eaten;
 import com.ahmedaraby.game.pacman.ghostmode.common.Frightened;
 import com.ahmedaraby.game.pacman.ghostmode.blinky.BlinkyScattered;
+import javafx.scene.image.Image;
 
 public class Blinky extends Ghost {
 
-    public Blinky(GameState gameState) {
+    public Blinky(GameState gameState, SpriteRegistry<String, Image> spriteRegistry) {
         super(gameState, SpriteE.GHOST, 0, 0, DirectionsE.STILL);
 
         // ghost modes
-        this.chaser = new BlinkyChaser(this, gameState, GhostModeActivePeriodsConf.LEVEL_1_CHASE_ACTIVE_PERIODS);
-        this.scattered = new BlinkyScattered(this, gameState, GhostModeActivePeriodsConf.LEVEL_1_SCATTER_ACTIVE_PERIODS);
-        this.frightened = new Frightened(this, gameState, GhostModeActivePeriodsConf.ALL_LEVELS_FRIGHTENED_MODE_ACTIVE_PERIODS);
-        this.eaten = new Eaten(this, gameState);
+        this.chaser = new BlinkyChaser(this, gameState, spriteRegistry, GhostModeActivePeriodsConf.LEVEL_1_CHASE_ACTIVE_PERIODS);
+        this.scattered = new BlinkyScattered(this, gameState, spriteRegistry, GhostModeActivePeriodsConf.LEVEL_1_SCATTER_ACTIVE_PERIODS);
+        this.frightened = new Frightened(this, gameState, spriteRegistry, GhostModeActivePeriodsConf.ALL_LEVELS_FRIGHTENED_MODE_ACTIVE_PERIODS);
+        this.eaten = new Eaten(this, gameState, spriteRegistry);
 
         scattered.enter();
         this.activeMode = scattered;

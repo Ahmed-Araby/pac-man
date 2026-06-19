@@ -15,20 +15,19 @@ import com.ahmedaraby.game.pacman.model.GameState;
 import com.ahmedaraby.game.pacman.sprite.ghost.Blinky;
 import com.ahmedaraby.game.pacman.sprite.ghost.Ghost;
 import com.ahmedaraby.game.pacman.util.ghost.GhostUtil;
+import com.ahmedaraby.jengine.sprite.SpriteRegistry;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
 import com.ahmedaraby.game.pacman.ghostmode.Chaser;
-
-import java.net.URL;
 
 public class InkyChaser extends Chaser {
 
     private final GhostNavigator navigator;
     private final DistanceBasedAnimator animator;
 
-    public InkyChaser(Ghost ghost, GameState gameState, int[] activePeriodsSec) {
-        super(ghost, gameState, activePeriodsSec);
+    public InkyChaser(Ghost ghost, GameState gameState, SpriteRegistry<String, Image> spriteRegistry, int[] activePeriodsSec) {
+        super(ghost, gameState, spriteRegistry, activePeriodsSec);
         final Image[] frames = loadSprites();
         navigator = new ShortestPathNavigator();
         animator = new DistanceBasedAnimator(
@@ -95,10 +94,10 @@ public class InkyChaser extends Chaser {
     }
 
     private Image[] loadSprites() {
-        final URL frame1Url = getClass().getResource(String.format(SpriteFileNameC.GHOST_SPRITE_PATH_TEMPLATE, SpriteFileNameC.INKY_FOLDER, SpriteFileNameC.INKY_FRAME_1_FILE_NAME));
-        final URL frame2Url = getClass().getResource(String.format(SpriteFileNameC.GHOST_SPRITE_PATH_TEMPLATE, SpriteFileNameC.INKY_FOLDER, SpriteFileNameC.INKY_FRAME_2_FILE_NAME));
-        final Image frame1 = new Image(frame1Url.toString());
-        final Image frame2 = new Image(frame2Url.toString());
+        final String frame1Path = String.format(SpriteFileNameC.GHOST_SPRITE_PATH_TEMPLATE, SpriteFileNameC.INKY_FOLDER, SpriteFileNameC.INKY_FRAME_1_FILE_NAME);
+        final String frame2Path = String.format(SpriteFileNameC.GHOST_SPRITE_PATH_TEMPLATE, SpriteFileNameC.INKY_FOLDER, SpriteFileNameC.INKY_FRAME_2_FILE_NAME);
+        final Image frame1 = spriteRegistry.get(frame1Path);
+        final Image frame2 = spriteRegistry.get(frame2Path);
         return new Image[] {frame1, frame2};
     }
 }

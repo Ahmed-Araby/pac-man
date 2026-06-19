@@ -3,6 +3,7 @@ package com.ahmedaraby.game.pacman.ghostmode.common;
 import com.ahmedaraby.jengine.entity.Vector;
 import com.ahmedaraby.game.pacman.model.GameState;
 import com.ahmedaraby.game.pacman.sprite.ghost.Ghost;
+import com.ahmedaraby.jengine.sprite.SpriteRegistry;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.image.Image;
 import com.ahmedaraby.jengine.animation.Animator;
@@ -18,7 +19,6 @@ import com.ahmedaraby.game.pacman.util.ghost.GhostUtil;
 import com.ahmedaraby.game.pacman.util.VectorUtil;
 import com.ahmedaraby.game.pacman.util.ghost.FrightenedGhostUtil;
 
-import java.net.URL;
 import java.util.List;
 
 
@@ -27,8 +27,8 @@ public class Frightened extends TemporalGhostMode {
     private final Animator animator;
     private final EnrichedThreadLocalRandom random;
 
-    public Frightened(Ghost ghost, GameState gameState, int[] activePeriodsSec) {
-        super(ghost, gameState, activePeriodsSec);
+    public Frightened(Ghost ghost, GameState gameState, SpriteRegistry<String, Image> spriteRegistry, int[] activePeriodsSec) {
+        super(ghost, gameState, spriteRegistry, activePeriodsSec);
 
         Image[] frames = loadSprites();
         this.animator = new DistanceBasedAnimator(new double[]{DimensionsC.GHOST_FIRST_LEG_MOVEMENT_DISTANCE_PIXELS, DimensionsC.GHOST_SECOND_LEG_MOVEMENT_DISTANCE_PIXELS}, frames);
@@ -76,10 +76,10 @@ public class Frightened extends TemporalGhostMode {
     }
 
     private Image[] loadSprites() {
-        final URL frame1Url = getClass().getResource(String.format(SpriteFileNameC.GHOST_SPRITE_PATH_TEMPLATE, SpriteFileNameC.GHOST_FRIGHTENED_FOLDER, SpriteFileNameC.GHOST_FRIGHTENED_FRAME_1_FILE_NAME));
-        final URL frame2Url = getClass().getResource(String.format(SpriteFileNameC.GHOST_SPRITE_PATH_TEMPLATE, SpriteFileNameC.GHOST_FRIGHTENED_FOLDER, SpriteFileNameC.GHOST_FRIGHTENED_FRAME_2_FILE_NAME));
-        final Image frame1 = new Image(frame1Url.toString());
-        final Image frame2 = new Image(frame2Url.toString());
+        final String frame1Path = String.format(SpriteFileNameC.GHOST_SPRITE_PATH_TEMPLATE, SpriteFileNameC.GHOST_FRIGHTENED_FOLDER, SpriteFileNameC.GHOST_FRIGHTENED_FRAME_1_FILE_NAME);
+        final String frame2Path = String.format(SpriteFileNameC.GHOST_SPRITE_PATH_TEMPLATE, SpriteFileNameC.GHOST_FRIGHTENED_FOLDER, SpriteFileNameC.GHOST_FRIGHTENED_FRAME_2_FILE_NAME);
+        final Image frame1 = spriteRegistry.get(frame1Path);
+        final Image frame2 = spriteRegistry.get(frame2Path);
         return new Image[]{frame1, frame2};
     }
 
