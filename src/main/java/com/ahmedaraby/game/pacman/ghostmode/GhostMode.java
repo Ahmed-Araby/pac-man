@@ -7,6 +7,9 @@ import javafx.scene.canvas.Canvas;
 import javafx.scene.image.Image;
 import lombok.AllArgsConstructor;
 
+import java.util.ArrayList;
+import java.util.List;
+
 @AllArgsConstructor
 public abstract class GhostMode {
 
@@ -22,4 +25,12 @@ public abstract class GhostMode {
     }
     public abstract void enter();
     public abstract boolean ended();
+
+    protected Image[] loadSprites(String[] frameRelativePaths) {
+        final List<Image> spriteList = new ArrayList<>();
+        for (String path : frameRelativePaths) {
+            spriteList.add(spriteRegistry.get(path));
+        }
+        return spriteList.toArray(new Image[0]);
+    }
 }
