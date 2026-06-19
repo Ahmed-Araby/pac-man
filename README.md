@@ -178,11 +178,12 @@ if the turn is still not possible and Pac-Man is now in the next Cell (in respec
 - [X] play sound when pac man eat sugar, use the observer design pattern for SoundPlayer class to get notified about detected collisions between pac man and sugar
 - [X] code refactor: use events (observer pattern) for the interactions between the different game components (i.e. collision detection and side effects of this collisions in maze, sounds, pac man mouse animation, etc....)
 - [X] write documenntation and turotial for the work completed so far.
-- [ ] Ghosts
+- [X] Ghosts
   - [X] Blinky
   - [X] Inky
   - [X] Pinky
-  - [ ] Clyde
+  - [X] Clyde
+- [ ] Frozen, Ghost Mode
 - [ ] Refactoring
   - [X] Collision Detection
   - [ ] combine data with its behaviour when appropriate (tell, don't ask prinsible)
@@ -193,6 +194,8 @@ if the turn is still not possible and Pac-Man is now in the next Cell (in respec
   - [ ] Ghost Utility classes
   - [ ] maze vs canvas
   - [ ] logging
+  - [ ] unify Scattered Modes
+  - [ ] use builder pattern instead of constructors
 - [ ] Dynamic Maze Generation
   - [X] Fix Bug: make sure the maze is a connected graph, i.e. Pac Man and Ghosts can reach any place in the maze
   - [X] put Ghost house in the playground

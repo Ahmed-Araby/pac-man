@@ -4,6 +4,7 @@ import com.ahmedaraby.game.pacman.collision.CollisionSystem;
 import com.ahmedaraby.game.pacman.event.Event;
 import com.ahmedaraby.game.pacman.model.GameState;
 import com.ahmedaraby.game.pacman.sprite.ghost.Blinky;
+import com.ahmedaraby.game.pacman.sprite.ghost.Clyde;
 import com.ahmedaraby.game.pacman.sprite.ghost.Pinky;
 import com.ahmedaraby.game.pacman.sprite.playground.GhostHouseS;
 import com.ahmedaraby.game.pacman.sprite.playground.Maze;
@@ -46,6 +47,7 @@ public class GamePlayGameScene implements GameScene {
     private Blinky blinky;
     private Inky inky;
     private Pinky pinky;
+    private Clyde clyde;
 
     // javaFX
     final Pane pane;
@@ -104,15 +106,19 @@ public class GamePlayGameScene implements GameScene {
         blinky = new Blinky(gameState, spriteRegistry);
         inky = new Inky(gameState, spriteRegistry);
         pinky = new Pinky(gameState, spriteRegistry);
+        clyde = new Clyde(gameState, spriteRegistry);
     }
 
     private void setGameState() {
         gameState.setMaze(maze);
         gameState.setPacMan(pacMan);
         gameState.setGhostHouseS(ghostHouseS);
+
+        // track ghosts
         gameState.addGhost(blinky);
         gameState.addGhost(inky);
         gameState.addGhost(pinky);
+        gameState.addGhost(clyde);
     }
 
     private void registerEventSubscribers() {
@@ -129,10 +135,12 @@ public class GamePlayGameScene implements GameScene {
         syncEventManager.subscribe(EventType.PAC_MAN_SUPER_SUGAR_COLLISION, blinky);
         syncEventManager.subscribe(EventType.PAC_MAN_SUPER_SUGAR_COLLISION, inky);
         syncEventManager.subscribe(EventType.PAC_MAN_SUPER_SUGAR_COLLISION, pinky);
+        syncEventManager.subscribe(EventType.PAC_MAN_SUPER_SUGAR_COLLISION, clyde);
 
         syncEventManager.subscribe(EventType.PAC_MAN_GHOST_COLLISION, blinky);
         syncEventManager.subscribe(EventType.PAC_MAN_GHOST_COLLISION, inky);
         syncEventManager.subscribe(EventType.PAC_MAN_GHOST_COLLISION, pinky);
+        syncEventManager.subscribe(EventType.PAC_MAN_GHOST_COLLISION, clyde);
     }
 
     private void registerSubscribersForSyncEvents() {
@@ -154,6 +162,7 @@ public class GamePlayGameScene implements GameScene {
         blinky.init();
         inky.init();
         pinky.init();
+        clyde.init();
     }
 
     @Override
@@ -181,6 +190,7 @@ public class GamePlayGameScene implements GameScene {
         blinky.render(canvas);
         inky.render(canvas);
         pinky.render(canvas);
+        clyde.render(canvas);
     }
 
     @Override
@@ -189,6 +199,7 @@ public class GamePlayGameScene implements GameScene {
         blinky.move(null);
         inky.move(null);
         pinky.move(null);
+        clyde.move(null);
 
         collisionSystem.detect();
     }

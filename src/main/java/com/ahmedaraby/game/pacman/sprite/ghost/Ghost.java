@@ -44,25 +44,38 @@ public abstract class Ghost extends MovingSprite implements Subscriber<EventType
             frightenedTransition(event);
         } else if (activeMode instanceof Eaten) {
             eatenTransition(activeMode);
-        } else if (activeMode instanceof Scattered || activeMode instanceof Chaser) {
-            ScatterOrChaserModeTransition(event);
+        } else if (activeMode instanceof Scattered) {
+            scatteredTransition(event);
+        } else if (activeMode instanceof Chaser) {
+            chaserTransition(event);
         }
     }
 
-    protected void ScatterOrChaserModeTransition(Event event) {
+    protected void scatteredTransition(Event event) {
         TemporalGhostMode temporalActiveMode = (TemporalGhostMode) activeMode;
         if (event != null && EventType.PAC_MAN_SUPER_SUGAR_COLLISION.equals(event.getType())) {
             temporalActiveMode.pause();
             previousMode = temporalActiveMode;
             temporalActiveMode = frightened;
             temporalActiveMode.enter();
-        } else if (temporalActiveMode.ended() && temporalActiveMode instanceof Chaser) {
-            temporalActiveMode.exit();
-            temporalActiveMode = scattered;
-            temporalActiveMode.enter();
-        } else if (temporalActiveMode.ended() && temporalActiveMode instanceof Scattered) {
+        } else if (temporalActiveMode.ended()) {
             temporalActiveMode.exit();
             temporalActiveMode = chaser;
+            temporalActiveMode.enter();
+        }
+        activeMode = temporalActiveMode;
+    }
+
+    protected void chaserTransition(Event event) {
+        TemporalGhostMode temporalActiveMode = (TemporalGhostMode) activeMode;
+        if (event != null && EventType.PAC_MAN_SUPER_SUGAR_COLLISION.equals(event.getType())) {
+            temporalActiveMode.pause();
+            previousMode = temporalActiveMode;
+            temporalActiveMode = frightened;
+            temporalActiveMode.enter();
+        } else if (temporalActiveMode.ended()) {
+            temporalActiveMode.exit();
+            temporalActiveMode = scattered;
             temporalActiveMode.enter();
         }
         activeMode = temporalActiveMode;

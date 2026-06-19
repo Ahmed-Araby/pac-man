@@ -10,7 +10,7 @@ import java.util.Queue;
 public class BfsUtil {
 
 
-    public static int[][] getDistMat(MazeCell sCord, MazeCell tCord) {
+    public static int[][] getDistMat(MazeCell source, MazeCell target) {
         // init
         final int[][] dist = new int[Playground.height()][Playground.width()];
         for(int r=0; r < dist.length; r++) {
@@ -20,15 +20,15 @@ public class BfsUtil {
         }
 
         final Queue<MazeCell> cords = new LinkedList<>();
-        cords.add(sCord);
-        dist[sCord.getRow()][sCord.getCol()] = 0;
+        cords.add(source);
+        dist[source.getRow()][source.getCol()] = 0;
         boolean targetReached = false;
         while(!cords.isEmpty() && !targetReached) {
             final MazeCell cCell = cords.poll();
 
             final List<MazeCell> ninetyDegMoves = MazeUtil.get90DegMoves(cCell);
             for (MazeCell nextCell: ninetyDegMoves) {
-                if(nextCell.equals(tCord)) {
+                if(nextCell.equals(target)) {
                     dist[nextCell.getRow()][nextCell.getCol()] = Math.min(dist[nextCell.getRow()][nextCell.getCol()],
                             1 + dist[cCell.getRow()][cCell.getCol()]);
                     targetReached = true;
