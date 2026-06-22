@@ -1,0 +1,78 @@
+canvas:
+  width: 1050
+  height: 1050
+
+playground:
+  cellSize: 50
+  wallColor: !color BLUE
+  backgroundColor: !color BLACK
+
+pacman:
+  speed: 50
+  color: !color YELLOW
+  diameter: 50
+  mouth:
+    animation:
+      completeDist: 50
+      percentages:
+        - 0.5
+        - 0.5
+    open:
+      arcExtentDeg: 270
+      rightStartAngle: 45
+      upStartAngle: 135
+      leftStartAngle: 225
+      downStartAngle: 315
+    closed:
+      arcExtentDeg: 360
+      rightStartAngle: 0
+      upStartAngle: 0
+      leftStartAngle: 0
+      downStartAngle: 0
+
+ghost:
+  width: 50
+  height: 50
+  blinky:
+    speed: 30
+    animation:
+      completeDist: 30
+      percentages:
+        - 0.5
+        - 0.5
+  inky:
+    speed: 35
+    animation:
+      completeDist: 35
+      percentages:
+        - 0.5
+        - 0.5
+  pinky:
+    speed: 40
+    animation:
+      completeDist: 40
+      percentages:
+        - 0.5
+        - 0.5
+  clyde:
+    speed: 45
+    animation:
+      completeDist: 45
+      percentages:
+        - 0.5
+        - 0.5
+
+ghostHouse:
+  wallColor: !color CYAN
+
+sugar:
+  color: !color WHITE
+  diameter: 7.5
+
+superSugar:
+  color: !color WHITE
+  diameter: 30
+  percentage: 3
+
+sound:
+  pacmanEatSugarPath: "/assets/sounds/eat_sugar.wav"
