@@ -1,6 +1,8 @@
 package com.ahmedaraby.game.pacman.scene;
 
 import com.ahmedaraby.game.pacman.collision.CollisionSystem;
+import com.ahmedaraby.game.pacman.config.ConfigsLoader;
+import com.ahmedaraby.game.pacman.config.intConfigs.ConfigsEx;
 import com.ahmedaraby.game.pacman.event.Event;
 import com.ahmedaraby.game.pacman.model.GameState;
 import com.ahmedaraby.game.pacman.sprite.ghost.Blinky;
@@ -31,8 +33,12 @@ import com.ahmedaraby.game.pacman.sprite.ghost.Inky;
 import com.ahmedaraby.game.pacman.sprite.playground.SuperSugar;
 import com.ahmedaraby.game.pacman.util.debug.DebugUtil;
 
+import java.io.FileNotFoundException;
+import java.net.URISyntaxException;
+
 
 public class GamePlayGameScene implements GameScene {
+    private final ConfigsEx configs;
     private final GameState gameState = new GameState();
     private final SpriteRegistry<String, Image> spriteRegistry = new FxSpriteRegistry();
 
@@ -63,7 +69,10 @@ public class GamePlayGameScene implements GameScene {
     // collision detection
     private final CollisionSystem collisionSystem;
 
-    public GamePlayGameScene() {
+    public GamePlayGameScene() throws FileNotFoundException, URISyntaxException {
+        configs = new ConfigsLoader().load();
+        gameState.setConfigs(configs);
+
         // init
         Playground.init();
 
@@ -119,6 +128,7 @@ public class GamePlayGameScene implements GameScene {
         gameState.addGhost(inky);
         gameState.addGhost(pinky);
         gameState.addGhost(clyde);
+
     }
 
     private void registerEventSubscribers() {

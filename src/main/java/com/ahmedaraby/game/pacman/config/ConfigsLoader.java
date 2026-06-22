@@ -11,8 +11,9 @@ import java.io.FileNotFoundException;
 import java.net.URISyntaxException;
 import java.net.URL;
 
-class ConfigsLoader {
+public class ConfigsLoader {
     public ConfigsEx load() throws FileNotFoundException, URISyntaxException {
+        // [TODO] return default configs if failed to load the file
         // read configs file
         final URL url = getClass().getResource("/configs.yaml");
         final File configFile = new File(url.toURI());

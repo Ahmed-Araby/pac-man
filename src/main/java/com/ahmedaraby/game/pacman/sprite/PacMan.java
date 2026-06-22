@@ -5,7 +5,6 @@ import com.ahmedaraby.game.pacman.constant.DimensionsC;
 import com.ahmedaraby.game.pacman.constant.SpriteE;
 import com.ahmedaraby.game.pacman.event.EventType;
 import com.ahmedaraby.game.pacman.util.pacman.TurnBuffer;
-import com.ahmedaraby.jengine.animation.GPixelStrideTracker;
 import com.ahmedaraby.jengine.entity.Coordinate;
 import com.ahmedaraby.jengine.entity.Rectangle;
 import com.ahmedaraby.game.pacman.event.Event;
@@ -22,7 +21,6 @@ import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import com.ahmedaraby.game.pacman.constant.DirectionsE;
 import com.ahmedaraby.game.pacman.playground.Playground;
-import javafx.scene.image.Image;
 
 public class PacMan extends MovingSprite implements Subscriber<EventType> {
 
@@ -31,7 +29,12 @@ public class PacMan extends MovingSprite implements Subscriber<EventType> {
     private Vector dir; // [TODO] move this to MovingSprite later
 
     public PacMan(GameState gameState) {
-        super(gameState, SpriteE.PAC_MAN, null, DimensionsC.PAC_MAN_DIAMETER_PIXELS, DimensionsC.PAC_MAN_DIAMETER_PIXELS, DirectionsE.STILL);
+        super(gameState, SpriteE.PAC_MAN, null,
+                gameState.getConfigs().getPacman().getDiameter(),
+                gameState.getConfigs().getPacman().getDiameter(),
+                DirectionsE.STILL
+        );
+
         dir = Vector.STILL;
 
         final Coordinate emptyCellPos = Playground.getEmptyMazePosition();
@@ -39,7 +42,9 @@ public class PacMan extends MovingSprite implements Subscriber<EventType> {
 
         this.turnBuffer = new TurnBuffer(DimensionsC.PAC_MAN_STRIDE_PIXELS * 2);
         this.mouthAnimationTracker = new PacManMouthAnimationTracker(
-                DimensionsC.PAC_MAN_OPEN_MOUSE_DISTANCE_PIXELS, DimensionsC.PAC_MAN_CLOSED_MOUSE_DISTANCE_PIXELS);
+               gameState.getConfigs().getPacman().getMouth().getAnimation().getPercentages().get(0) *
+                       gameState.getConfigs().getPacman().getMouth().getAnimation().getCompleteDist(),
+                DimensionsC.PAC_MAN_CLOSED_MOUSE_DISTANCE_PIXELS);
     }
 
     @Override
@@ -93,8 +98,9 @@ public class PacMan extends MovingSprite implements Subscriber<EventType> {
             return false;
         }
 
-        final double newCol = getCol() + event.getDir().getX() * DimensionsC.PAC_MAN_STRIDE_PIXELS / Configs.FRAMES_PER_SEC_FOR_PAC_MAN_STRIDE;
-        final double newRow = getRow() + event.getDir().getY() * DimensionsC.PAC_MAN_STRIDE_PIXELS / Configs.FRAMES_PER_SEC_FOR_PAC_MAN_STRIDE;
+        final double speed = gameState.getConfigs().getPacman().getSpeed();
+        final double newCol = getCol() + event.getDir().getX() * speed / Configs.FRAMES_PER_SEC_FOR_PAC_MAN_STRIDE;
+        final double newRow = getRow() + event.getDir().getY() * speed / Configs.FRAMES_PER_SEC_FOR_PAC_MAN_STRIDE;
 
         final Coordinate nextCord = new Coordinate(newRow, newCol);
         final Rectangle virtualPacManRect = new Rectangle(nextCord, DimensionsC.PAC_MAN_DIAMETER_PIXELS, DimensionsC.PAC_MAN_DIAMETER_PIXELS);

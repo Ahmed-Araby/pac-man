@@ -1,5 +1,6 @@
 package com.ahmedaraby.game.pacman.model;
 
+import com.ahmedaraby.game.pacman.config.intConfigs.ConfigsEx;
 import com.ahmedaraby.game.pacman.sprite.ghost.Ghost;
 import com.ahmedaraby.game.pacman.sprite.playground.GhostHouseS;
 import com.ahmedaraby.game.pacman.sprite.playground.Maze;
@@ -21,6 +22,8 @@ public class GameState {
     @Setter(AccessLevel.NONE)
     private List<Ghost> ghosts = new ArrayList<>();
     private GhostHouseS ghostHouseS;
+
+    private ConfigsEx configs;
 
     public void addGhost(Ghost ghost) {
         ghosts.add(ghost);
