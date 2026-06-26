@@ -59,6 +59,14 @@ public class ConfigsEx {
         return pacman.getMouth().getAnimation().getPercentages();
     }
 
+    public double PACMAN_MOUTH_OPEN_DISTANCE()  {
+        return PACMAN_MOUTH_ANIMATION_COMPLETE_DIST() * PACMAN_MOUTH_ANIMATION_PERCENTAGES().get(0);
+    }
+
+    public double PACMAN_MOUTH_CLOSED_DISTANCE()  {
+        return PACMAN_MOUTH_ANIMATION_COMPLETE_DIST() * PACMAN_MOUTH_ANIMATION_PERCENTAGES().get(1);
+    }
+
     public double PACMAN_MOUTH_OPEN_ARC_EXTENT_DEG() {
         return pacman.getMouth().getOpen().getArcExtentDeg();
     }

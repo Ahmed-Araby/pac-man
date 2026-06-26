@@ -42,9 +42,8 @@ public class PacMan extends MovingSprite implements Subscriber<EventType> {
 
         this.turnBuffer = new TurnBuffer(DimensionsC.PAC_MAN_STRIDE_PIXELS * 2);
         this.mouthAnimationTracker = new PacManMouthAnimationTracker(
-               gameState.getConfigs().PACMAN_MOUTH_ANIMATION_PERCENTAGES().get(0) *
-                       gameState.getConfigs().PACMAN_MOUTH_ANIMATION_COMPLETE_DIST(),
-                DimensionsC.PAC_MAN_CLOSED_MOUSE_DISTANCE_PIXELS);
+               gameState.getConfigs().PACMAN_MOUTH_OPEN_DISTANCE(),
+                gameState.getConfigs().PACMAN_MOUTH_CLOSED_DISTANCE());
     }
 
     @Override
