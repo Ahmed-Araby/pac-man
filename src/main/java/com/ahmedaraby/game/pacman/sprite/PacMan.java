@@ -30,8 +30,8 @@ public class PacMan extends MovingSprite implements Subscriber<EventType> {
 
     public PacMan(GameState gameState) {
         super(gameState, SpriteE.PAC_MAN, null,
-                gameState.getConfigs().getPacman().getDiameter(),
-                gameState.getConfigs().getPacman().getDiameter(),
+                gameState.getConfigs().PACMAN_DIAMETER(),
+                gameState.getConfigs().PACMAN_DIAMETER(),
                 DirectionsE.STILL
         );
 
@@ -42,8 +42,8 @@ public class PacMan extends MovingSprite implements Subscriber<EventType> {
 
         this.turnBuffer = new TurnBuffer(DimensionsC.PAC_MAN_STRIDE_PIXELS * 2);
         this.mouthAnimationTracker = new PacManMouthAnimationTracker(
-               gameState.getConfigs().getPacman().getMouth().getAnimation().getPercentages().get(0) *
-                       gameState.getConfigs().getPacman().getMouth().getAnimation().getCompleteDist(),
+               gameState.getConfigs().PACMAN_MOUTH_ANIMATION_PERCENTAGES().get(0) *
+                       gameState.getConfigs().PACMAN_MOUTH_ANIMATION_COMPLETE_DIST(),
                 DimensionsC.PAC_MAN_CLOSED_MOUSE_DISTANCE_PIXELS);
     }
 
@@ -98,7 +98,7 @@ public class PacMan extends MovingSprite implements Subscriber<EventType> {
             return false;
         }
 
-        final double speed = gameState.getConfigs().getPacman().getSpeed();
+        final double speed = gameState.getConfigs().PACMAN_SPEED();
         final double newCol = getCol() + event.getDir().getX() * speed / Configs.FRAMES_PER_SEC_FOR_PAC_MAN_STRIDE;
         final double newRow = getRow() + event.getDir().getY() * speed / Configs.FRAMES_PER_SEC_FOR_PAC_MAN_STRIDE;
 
