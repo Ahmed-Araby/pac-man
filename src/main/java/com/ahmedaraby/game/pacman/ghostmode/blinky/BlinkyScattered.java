@@ -1,5 +1,6 @@
 package com.ahmedaraby.game.pacman.ghostmode.blinky;
 
+import com.ahmedaraby.game.pacman.config.intConfigs.ConfigsEx;
 import com.ahmedaraby.game.pacman.model.GameState;
 import com.ahmedaraby.game.pacman.sprite.ghost.Ghost;
 import com.ahmedaraby.jengine.sprite.SpriteRegistry;
@@ -15,8 +16,8 @@ import com.ahmedaraby.game.pacman.ghostmode.navigation.ShortestPathNavigator;
 
 public class BlinkyScattered extends Scattered {
 
-    public BlinkyScattered(Ghost ghost, GameState gameState, SpriteRegistry<String, Image> spriteRegistry, int[] activePeridosSec) {
-        super(ghost, gameState, spriteRegistry, activePeridosSec);
+    public BlinkyScattered(Ghost ghost, GameState gameState, ConfigsEx configs, SpriteRegistry<String, Image> spriteRegistry, int[] activePeriodsSec) {
+        super(ghost, gameState, configs, spriteRegistry, activePeriodsSec);
         this.target = new Coordinate(
                 0,
                 DimensionsC.CANVAS_WIDTH_PIXELS - 1

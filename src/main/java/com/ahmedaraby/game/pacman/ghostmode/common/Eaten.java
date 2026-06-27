@@ -1,5 +1,6 @@
 package com.ahmedaraby.game.pacman.ghostmode.common;
 
+import com.ahmedaraby.game.pacman.config.intConfigs.ConfigsEx;
 import com.ahmedaraby.game.pacman.constant.SpriteFileNameC;
 import com.ahmedaraby.jengine.animation.Animator;
 import com.ahmedaraby.jengine.animation.DistanceBasedAnimator;
@@ -27,8 +28,8 @@ public class Eaten extends GhostMode {
     private final Animator animator;
     private Coordinate ghostHouseEmptyLoc;
 
-    public Eaten(Ghost ghost, GameState gameState, SpriteRegistry<String, Image> spriteRegistry) {
-        super(ghost, gameState, spriteRegistry);
+    public Eaten(Ghost ghost, GameState gameState, ConfigsEx configs, SpriteRegistry<String, Image> spriteRegistry) {
+        super(ghost, gameState, configs, spriteRegistry);
         this.navigator = new ShortestPathNavigator();
 
         final Map<Vector, Image[]> sprites = loadSprites();

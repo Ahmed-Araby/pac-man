@@ -29,14 +29,14 @@ public class Clyde extends Ghost {
     public Clyde(GameState gameState, ConfigsEx configs, SpriteRegistry<String, Image> spriteRegistry) {
         super(gameState, configs, SpriteE.GHOST, -1, -1, DirectionsE.STILL);
 
-        scattered = new ClydeScattered(this, gameState, spriteRegistry,
+        scattered = new ClydeScattered(this, gameState, configs, spriteRegistry,
                 GhostModeActivePeriodsConf.LEVEL_1_SCATTER_ACTIVE_PERIODS);
-        chaser = new ClydeChaser(this, gameState, spriteRegistry,
+        chaser = new ClydeChaser(this, gameState, configs, spriteRegistry,
                 GhostModeActivePeriodsConf.LEVEL_1_CHASE_ACTIVE_PERIODS);
-        frightened = new Frightened(this, gameState, spriteRegistry,
+        frightened = new Frightened(this, gameState, configs, spriteRegistry,
                 GhostModeActivePeriodsConf.ALL_LEVELS_FRIGHTENED_MODE_ACTIVE_PERIODS);
-        eaten = new Eaten(this, gameState, spriteRegistry);
-        scaredChaser = new ClydeScaredChaser(this, gameState, spriteRegistry);
+        eaten = new Eaten(this, gameState, configs, spriteRegistry);
+        scaredChaser = new ClydeScaredChaser(this, gameState, configs, spriteRegistry);
 
         navigator = new ShortestPathNavigator();
 

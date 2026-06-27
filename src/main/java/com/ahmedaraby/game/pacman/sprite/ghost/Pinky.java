@@ -19,10 +19,10 @@ public class Pinky extends Ghost {
 
     public Pinky(GameState gameState, ConfigsEx configs, SpriteRegistry<String, Image> spriteRegistry) {
         super(gameState, configs, SpriteE.GHOST, -1, -1, DirectionsE.STILL);
-        scattered = new PinkyScattered(this, gameState, spriteRegistry, GhostModeActivePeriodsConf.LEVEL_1_SCATTER_ACTIVE_PERIODS);
-        chaser = new PinkyChaser(this, gameState, spriteRegistry, GhostModeActivePeriodsConf.LEVEL_1_CHASE_ACTIVE_PERIODS);
-        frightened = new Frightened(this, gameState, spriteRegistry, GhostModeActivePeriodsConf.ALL_LEVELS_FRIGHTENED_MODE_ACTIVE_PERIODS);
-        eaten = new Eaten(this, gameState, spriteRegistry);
+        scattered = new PinkyScattered(this, gameState, configs, spriteRegistry, GhostModeActivePeriodsConf.LEVEL_1_SCATTER_ACTIVE_PERIODS);
+        chaser = new PinkyChaser(this, gameState, configs, spriteRegistry, GhostModeActivePeriodsConf.LEVEL_1_CHASE_ACTIVE_PERIODS);
+        frightened = new Frightened(this, gameState, configs, spriteRegistry, GhostModeActivePeriodsConf.ALL_LEVELS_FRIGHTENED_MODE_ACTIVE_PERIODS);
+        eaten = new Eaten(this, gameState, configs, spriteRegistry);
 
         this.activeMode = scattered;
         scattered.enter();

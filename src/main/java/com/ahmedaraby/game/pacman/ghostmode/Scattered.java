@@ -1,6 +1,7 @@
 package com.ahmedaraby.game.pacman.ghostmode;
 
 import com.ahmedaraby.game.pacman.config.Configs;
+import com.ahmedaraby.game.pacman.config.intConfigs.ConfigsEx;
 import com.ahmedaraby.game.pacman.constant.DimensionsC;
 import com.ahmedaraby.game.pacman.constant.DirectionsE;
 import com.ahmedaraby.game.pacman.ghostmode.navigation.GhostNavigator;
@@ -22,8 +23,8 @@ public abstract class Scattered extends TemporalGhostMode {
     protected Animator animator;
     protected Coordinate target;
 
-    public Scattered(Ghost ghost, GameState gameState, SpriteRegistry<String, Image> spriteRegistry, int[] activePeriodsSec) {
-        super(ghost, gameState, spriteRegistry, activePeriodsSec);
+    public Scattered(Ghost ghost, GameState gameState, ConfigsEx configs, SpriteRegistry<String, Image> spriteRegistry, int[] activePeriodsSec) {
+        super(ghost, gameState, configs, spriteRegistry, activePeriodsSec);
     }
 
     @Override

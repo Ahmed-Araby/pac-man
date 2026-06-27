@@ -1,5 +1,6 @@
 package com.ahmedaraby.game.pacman.ghostmode.clyde;
 
+import com.ahmedaraby.game.pacman.config.intConfigs.ConfigsEx;
 import com.ahmedaraby.game.pacman.constant.DimensionsC;
 import com.ahmedaraby.game.pacman.constant.SpriteFileNameC;
 import com.ahmedaraby.game.pacman.ghostmode.Scattered;
@@ -13,8 +14,8 @@ import javafx.scene.image.Image;
 
 public class ClydeScattered extends Scattered {
 
-    public ClydeScattered(Ghost ghost, GameState gameState, SpriteRegistry<String, Image> spriteRegistry, int[] activePeriodsSec) {
-        super(ghost, gameState, spriteRegistry, activePeriodsSec);
+    public ClydeScattered(Ghost ghost, GameState gameState, ConfigsEx configs, SpriteRegistry<String, Image> spriteRegistry, int[] activePeriodsSec) {
+        super(ghost, gameState, configs, spriteRegistry, activePeriodsSec);
 
         final String frame1Path = String.format(SpriteFileNameC.GHOST_SPRITE_PATH_TEMPLATE, SpriteFileNameC.CLYDE_FOLDER, SpriteFileNameC.CLYDE_FRAME_1_FILE_NAME);
         final String frame2Path = String.format(SpriteFileNameC.GHOST_SPRITE_PATH_TEMPLATE, SpriteFileNameC.CLYDE_FOLDER, SpriteFileNameC.CLYDE_FRAME_2_FILE_NAME);

@@ -1,5 +1,6 @@
 package com.ahmedaraby.game.pacman.ghostmode.Inky;
 
+import com.ahmedaraby.game.pacman.config.intConfigs.ConfigsEx;
 import com.ahmedaraby.jengine.animation.DistanceBasedAnimator;
 import com.ahmedaraby.game.pacman.constant.DimensionsC;
 import com.ahmedaraby.game.pacman.constant.SpriteFileNameC;
@@ -14,8 +15,8 @@ import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
 
 public class InkyScattered extends Scattered {
-    public InkyScattered(Ghost ghost, GameState gameState, SpriteRegistry<String, Image> spriteRegistry, int[] activePeriodsSec) {
-        super(ghost, gameState, spriteRegistry, activePeriodsSec);
+    public InkyScattered(Ghost ghost, GameState gameState, ConfigsEx configs, SpriteRegistry<String, Image> spriteRegistry, int[] activePeriodsSec) {
+        super(ghost, gameState, configs, spriteRegistry, activePeriodsSec);
         this.target = new Coordinate(  // bottom right corner
                 DimensionsC.CANVAS_HEIGHT_PIXELS - DimensionsC.MAZE_CELL_SIZE_PIXELS,
                 DimensionsC.CANVAS_WIDTH_PIXELS - DimensionsC.MAZE_CELL_SIZE_PIXELS

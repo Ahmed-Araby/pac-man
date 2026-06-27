@@ -1,5 +1,6 @@
 package com.ahmedaraby.game.pacman.ghostmode.common;
 
+import com.ahmedaraby.game.pacman.config.intConfigs.ConfigsEx;
 import com.ahmedaraby.jengine.entity.Vector;
 import com.ahmedaraby.game.pacman.model.GameState;
 import com.ahmedaraby.game.pacman.sprite.ghost.Ghost;
@@ -27,8 +28,8 @@ public class Frightened extends TemporalGhostMode {
     private final Animator animator;
     private final EnrichedThreadLocalRandom random;
 
-    public Frightened(Ghost ghost, GameState gameState, SpriteRegistry<String, Image> spriteRegistry, int[] activePeriodsSec) {
-        super(ghost, gameState, spriteRegistry, activePeriodsSec);
+    public Frightened(Ghost ghost, GameState gameState, ConfigsEx configs, SpriteRegistry<String, Image> spriteRegistry, int[] activePeriodsSec) {
+        super(ghost, gameState, configs, spriteRegistry, activePeriodsSec);
 
         Image[] frames = loadSprites();
         this.animator = new DistanceBasedAnimator(new double[]{DimensionsC.GHOST_FIRST_LEG_MOVEMENT_DISTANCE_PIXELS, DimensionsC.GHOST_SECOND_LEG_MOVEMENT_DISTANCE_PIXELS}, frames);

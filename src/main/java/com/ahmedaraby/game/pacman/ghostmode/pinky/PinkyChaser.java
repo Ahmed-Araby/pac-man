@@ -1,6 +1,7 @@
 package com.ahmedaraby.game.pacman.ghostmode.pinky;
 
 import com.ahmedaraby.game.pacman.config.Configs;
+import com.ahmedaraby.game.pacman.config.intConfigs.ConfigsEx;
 import com.ahmedaraby.game.pacman.constant.DimensionsC;
 import com.ahmedaraby.game.pacman.constant.DirectionsE;
 import com.ahmedaraby.game.pacman.constant.SpriteFileNameC;
@@ -25,8 +26,8 @@ public class PinkyChaser extends Chaser {
     private final Animator animator;
     private final GhostNavigator navigator;
 
-    public PinkyChaser(Ghost ghost, GameState gameState, SpriteRegistry<String, Image> spriteRegistry, int[] activePeriodsSec) {
-        super(ghost, gameState, spriteRegistry, activePeriodsSec);
+    public PinkyChaser(Ghost ghost, GameState gameState, ConfigsEx configs, SpriteRegistry<String, Image> spriteRegistry, int[] activePeriodsSec) {
+        super(ghost, gameState, configs, spriteRegistry, activePeriodsSec);
 
         final Image[] frames = loadSprites();
         animator = new DistanceBasedAnimator(new double[]{

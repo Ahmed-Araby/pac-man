@@ -1,5 +1,6 @@
 package com.ahmedaraby.game.pacman.ghostmode.Inky;
 
+import com.ahmedaraby.game.pacman.config.intConfigs.ConfigsEx;
 import com.ahmedaraby.jengine.animation.DistanceBasedAnimator;
 import com.ahmedaraby.game.pacman.config.Configs;
 import com.ahmedaraby.game.pacman.constant.DimensionsC;
@@ -26,8 +27,8 @@ public class InkyChaser extends Chaser {
     private final GhostNavigator navigator;
     private final DistanceBasedAnimator animator;
 
-    public InkyChaser(Ghost ghost, GameState gameState, SpriteRegistry<String, Image> spriteRegistry, int[] activePeriodsSec) {
-        super(ghost, gameState, spriteRegistry, activePeriodsSec);
+    public InkyChaser(Ghost ghost, GameState gameState, ConfigsEx configs, SpriteRegistry<String, Image> spriteRegistry, int[] activePeriodsSec) {
+        super(ghost, gameState, configs, spriteRegistry, activePeriodsSec);
         final Image[] frames = loadSprites();
         navigator = new ShortestPathNavigator();
         animator = new DistanceBasedAnimator(

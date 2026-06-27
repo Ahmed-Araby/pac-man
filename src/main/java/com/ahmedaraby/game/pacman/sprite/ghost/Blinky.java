@@ -25,10 +25,10 @@ public class Blinky extends Ghost {
         super(gameState, configs, SpriteE.GHOST, 0, 0, DirectionsE.STILL);
 
         // ghost modes
-        this.chaser = new BlinkyChaser(this, gameState, spriteRegistry, GhostModeActivePeriodsConf.LEVEL_1_CHASE_ACTIVE_PERIODS);
-        this.scattered = new BlinkyScattered(this, gameState, spriteRegistry, GhostModeActivePeriodsConf.LEVEL_1_SCATTER_ACTIVE_PERIODS);
-        this.frightened = new Frightened(this, gameState, spriteRegistry, GhostModeActivePeriodsConf.ALL_LEVELS_FRIGHTENED_MODE_ACTIVE_PERIODS);
-        this.eaten = new Eaten(this, gameState, spriteRegistry);
+        this.chaser = new BlinkyChaser(this, gameState, configs, spriteRegistry, GhostModeActivePeriodsConf.LEVEL_1_CHASE_ACTIVE_PERIODS);
+        this.scattered = new BlinkyScattered(this, gameState, configs, spriteRegistry, GhostModeActivePeriodsConf.LEVEL_1_SCATTER_ACTIVE_PERIODS);
+        this.frightened = new Frightened(this, gameState, configs, spriteRegistry, GhostModeActivePeriodsConf.ALL_LEVELS_FRIGHTENED_MODE_ACTIVE_PERIODS);
+        this.eaten = new Eaten(this, gameState, configs, spriteRegistry);
 
         scattered.enter();
         this.activeMode = scattered;
