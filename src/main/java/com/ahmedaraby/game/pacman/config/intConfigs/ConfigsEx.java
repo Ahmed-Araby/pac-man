@@ -1,5 +1,6 @@
 package com.ahmedaraby.game.pacman.config.intConfigs;
 
+import com.ahmedaraby.jengine.event.Publisher;
 import javafx.scene.paint.Color;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -29,6 +30,14 @@ public class ConfigsEx {
 
     public double PLAYGROUND_CELL_SIZE() {
         return playground.getCellSize();
+    }
+
+    public int PLAYGROUND_WIDTH() {
+        return (int) (CANVAS_WIDTH() / PLAYGROUND_CELL_SIZE());
+    }
+
+    public int PLAYGROUND_HEIGHT() {
+        return (int) (CANVAS_HEIGHT() / PLAYGROUND_CELL_SIZE());
     }
 
     public Color PLAYGROUND_WALL_COLOR() {
@@ -115,6 +124,26 @@ public class ConfigsEx {
         return ghost.getHeight();
     }
 
+    public double GHOST_SPEED() {
+        return ghost.getSpeed();
+    }
+
+    public double GHOST_ANIMATION_COMPLETE_DIST() {
+        return ghost.getAnimation().getCompleteDist();
+    }
+
+    public List<Double> GHOST_ANIMATION_PERCENTAGES() {
+        return ghost.getAnimation().getPercentages();
+    }
+
+    public double GHOST_FIRST_FRAME_DISTANCE() {
+        return GHOST_ANIMATION_COMPLETE_DIST() * GHOST_ANIMATION_PERCENTAGES().get(0);
+    }
+
+    public double GHOST_SECOND_FRAME_DISTANCE() {
+        return GHOST_ANIMATION_COMPLETE_DIST() * GHOST_ANIMATION_PERCENTAGES().get(1);
+    }
+
     public double GHOST_BLINKY_SPEED() {
         return ghost.getBlinky().getSpeed();
     }
@@ -125,6 +154,14 @@ public class ConfigsEx {
 
     public List<Double> GHOST_BLINKY_ANIMATION_PERCENTAGES() {
         return ghost.getBlinky().getAnimation().getPercentages();
+    }
+
+    public double GHOST_BLINK_FIRST_FRAME_DISTANCE() {
+        return GHOST_BLINKY_ANIMATION_COMPLETE_DIST() * GHOST_BLINKY_ANIMATION_PERCENTAGES().get(0);
+    }
+
+    public double GHOST_BLINK_SECOND_FRAME_DISTANCE() {
+        return GHOST_BLINKY_ANIMATION_COMPLETE_DIST() * GHOST_BLINKY_ANIMATION_PERCENTAGES().get(1);
     }
 
     public double GHOST_INKY_SPEED() {
@@ -139,6 +176,14 @@ public class ConfigsEx {
         return ghost.getInky().getAnimation().getPercentages();
     }
 
+    public double GHOST_INKY_FIRST_FRAME_DISTANCE() {
+        return GHOST_INKY_ANIMATION_COMPLETE_DIST() * GHOST_INKY_ANIMATION_PERCENTAGES().get(0);
+    }
+
+    public double GHOST_INKY_SECOND_FRAME_DISTANCE() {
+        return GHOST_INKY_ANIMATION_COMPLETE_DIST() * GHOST_INKY_ANIMATION_PERCENTAGES().get(1);
+    }
+
     public double GHOST_PINKY_SPEED() {
         return ghost.getPinky().getSpeed();
     }
@@ -151,6 +196,13 @@ public class ConfigsEx {
         return ghost.getPinky().getAnimation().getPercentages();
     }
 
+    public double GHOST_PINKY_FIRST_FRAME_DISTANCE() {
+        return GHOST_PINKY_ANIMATION_COMPLETE_DIST() * GHOST_PINKY_ANIMATION_PERCENTAGES().get(0);
+    }
+    public double GHOST_PINKY_SECOND_FRAME_DISTANCE() {
+        return GHOST_PINKY_ANIMATION_COMPLETE_DIST() * GHOST_PINKY_ANIMATION_PERCENTAGES().get(1);
+    }
+
     public double GHOST_CLYDE_SPEED() {
         return ghost.getClyde().getSpeed();
     }
@@ -161,6 +213,14 @@ public class ConfigsEx {
 
     public List<Double> GHOST_CLYDE_ANIMATION_PERCENTAGES() {
         return ghost.getClyde().getAnimation().getPercentages();
+    }
+
+    public double GHOST_CLYDE_FIRST_FRAME_DISTANCE() {
+        return GHOST_CLYDE_ANIMATION_COMPLETE_DIST() * GHOST_CLYDE_ANIMATION_PERCENTAGES().get(0);
+    }
+
+    public double GHOST_CLYDE_SECOND_FRAME_DISTANCE() {
+        return GHOST_CLYDE_ANIMATION_COMPLETE_DIST() * GHOST_CLYDE_ANIMATION_PERCENTAGES().get(1);
     }
 
     public Color GHOST_HOUSE_WALL_COLOR() {

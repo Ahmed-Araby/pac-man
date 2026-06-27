@@ -14,7 +14,6 @@ import com.ahmedaraby.jengine.sprite.SpriteRegistry;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.image.Image;
 import com.ahmedaraby.game.pacman.config.Configs;
-import com.ahmedaraby.game.pacman.constant.DimensionsC;
 import com.ahmedaraby.game.pacman.constant.DirectionsE;
 import com.ahmedaraby.game.pacman.ghostmode.GhostMode;
 import com.ahmedaraby.game.pacman.util.ghost.GhostUtil;
@@ -34,7 +33,7 @@ public class Eaten extends GhostMode {
 
         final Map<Vector, Image[]> sprites = loadSprites();
         this.animator = new DistanceBasedAnimator(
-                new double[]{DimensionsC.GHOST_STRIDE_PIXELS},
+                new double[]{configs.GHOST_ANIMATION_COMPLETE_DIST()},
                 sprites.get(Vector.UP)
         );
     }
@@ -43,7 +42,7 @@ public class Eaten extends GhostMode {
     public void init() {
         final double ghostHERow = gameState.getGhostHouseS().getERow();;
         final double ghostHSCol = gameState.getGhostHouseS().getCol();
-        ghostHouseEmptyLoc = new Coordinate(ghostHERow - DimensionsC.MAZE_CELL_SIZE_PIXELS, ghostHSCol + DimensionsC.MAZE_CELL_SIZE_PIXELS);
+        ghostHouseEmptyLoc = new Coordinate(ghostHERow - configs.PLAYGROUND_CELL_SIZE(), ghostHSCol + configs.PLAYGROUND_CELL_SIZE());
     }
 
     @Override
@@ -73,7 +72,7 @@ public class Eaten extends GhostMode {
         ghost.setCol(newCord.getCol());
 
         if (newDir != DirectionsE.STILL) {
-            this.animator.stride(DimensionsC.GHOST_STRIDE_PIXELS / Configs.FRAMES_PER_SEC_FOR_GHOST_STRIDE);
+            this.animator.stride(configs.GHOST_SPEED() / Configs.FRAMES_PER_SEC_FOR_GHOST_STRIDE);
         }
     }
 

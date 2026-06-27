@@ -35,6 +35,7 @@ import com.ahmedaraby.game.pacman.util.debug.DebugUtil;
 
 import java.io.FileNotFoundException;
 import java.net.URISyntaxException;
+import java.rmi.ConnectIOException;
 
 
 public class GamePlayGameScene implements GameScene {
@@ -73,7 +74,7 @@ public class GamePlayGameScene implements GameScene {
         configs = new ConfigsLoader().load();
 
         // init
-        Playground.init();
+        Playground.init(configs);
 
         // game engine
         syncEventManager = new SyncEventManager();
@@ -93,7 +94,7 @@ public class GamePlayGameScene implements GameScene {
         initGhostSprites();
 
         // javaFX setup
-        canvas = new Canvas(DimensionsC.CANVAS_WIDTH_PIXELS, DimensionsC.CANVAS_HEIGHT_PIXELS);
+        canvas = new Canvas(configs.CANVAS_WIDTH(), configs.CANVAS_HEIGHT());
         pane = new Pane(canvas);
         scene = new Scene(pane);
         scene.setOnKeyPressed((event) -> {
@@ -183,7 +184,7 @@ public class GamePlayGameScene implements GameScene {
     public void render() {
         final GraphicsContext context = canvas.getGraphicsContext2D();
         context.setFill(ColorC.CANVAS_COLOR);
-        context.fillRect(0, 0, DimensionsC.CANVAS_WIDTH_PIXELS, DimensionsC.CANVAS_HEIGHT_PIXELS);
+        context.fillRect(0, 0, configs.CANVAS_WIDTH(), configs.CANVAS_HEIGHT());
 
 
         maze.render(canvas);
@@ -192,7 +193,7 @@ public class GamePlayGameScene implements GameScene {
         superSugar.render(canvas);
 
         if(GameConfig.isDebugModeOn()) {
-            DebugUtil.drawDummyPacman(context, 0, 0, DimensionsC.PAC_MAN_DIAMETER_PIXELS, DimensionsC.PAC_MAN_DIAMETER_PIXELS, Color.GRAY);
+            DebugUtil.drawDummyPacman(context, 0, 0, configs.PACMAN_DIAMETER(), configs.PACMAN_DIAMETER(), Color.GRAY);
         }
 
         pacMan.render(canvas);

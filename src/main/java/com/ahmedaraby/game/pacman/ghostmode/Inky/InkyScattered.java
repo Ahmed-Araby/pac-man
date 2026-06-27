@@ -2,7 +2,6 @@ package com.ahmedaraby.game.pacman.ghostmode.Inky;
 
 import com.ahmedaraby.game.pacman.config.intConfigs.ConfigsEx;
 import com.ahmedaraby.jengine.animation.DistanceBasedAnimator;
-import com.ahmedaraby.game.pacman.constant.DimensionsC;
 import com.ahmedaraby.game.pacman.constant.SpriteFileNameC;
 import com.ahmedaraby.jengine.entity.Coordinate;
 import com.ahmedaraby.game.pacman.ghostmode.Scattered;
@@ -18,13 +17,13 @@ public class InkyScattered extends Scattered {
     public InkyScattered(Ghost ghost, GameState gameState, ConfigsEx configs, SpriteRegistry<String, Image> spriteRegistry, int[] activePeriodsSec) {
         super(ghost, gameState, configs, spriteRegistry, activePeriodsSec);
         this.target = new Coordinate(  // bottom right corner
-                DimensionsC.CANVAS_HEIGHT_PIXELS - DimensionsC.MAZE_CELL_SIZE_PIXELS,
-                DimensionsC.CANVAS_WIDTH_PIXELS - DimensionsC.MAZE_CELL_SIZE_PIXELS
+                configs.CANVAS_HEIGHT() - configs.PLAYGROUND_CELL_SIZE(),
+                configs.CANVAS_WIDTH() - configs.PLAYGROUND_CELL_SIZE()
         );
         final Image[] frames = loadSprites();
         navigator = new ShortestPathNavigator();
         animator = new DistanceBasedAnimator(
-                new double[]{DimensionsC.GHOST_FIRST_LEG_MOVEMENT_DISTANCE_PIXELS, DimensionsC.GHOST_SECOND_LEG_MOVEMENT_DISTANCE_PIXELS}
+                new double[]{configs.GHOST_INKY_FIRST_FRAME_DISTANCE(), configs.GHOST_INKY_SECOND_FRAME_DISTANCE()}
                 ,frames
         );
     }

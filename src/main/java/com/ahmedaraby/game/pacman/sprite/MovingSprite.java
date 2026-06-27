@@ -5,7 +5,6 @@ import com.ahmedaraby.game.pacman.config.intConfigs.ConfigsEx;
 import com.ahmedaraby.game.pacman.util.SpriteUtil;
 import lombok.Getter;
 import lombok.Setter;
-import com.ahmedaraby.game.pacman.constant.DimensionsC;
 import com.ahmedaraby.game.pacman.constant.DirectionsE;
 import com.ahmedaraby.game.pacman.constant.SpriteE;
 import com.ahmedaraby.jengine.entity.Coordinate;
@@ -33,8 +32,8 @@ public abstract class MovingSprite extends Sprite {
 
     // [TODO] this method need to be generic, i.e. handle sprites with different Dimensions, to do this we need to define the dimensions within the sprite calling this method
     protected boolean isGoingOutOfCanvas(Coordinate topLeftCorner) {
-        return topLeftCorner.getRow() < 0 || topLeftCorner.getRow() > DimensionsC.CANVAS_HEIGHT_PIXELS - DimensionsC.GHOST_HEIGHT_PIXELS ||
-                topLeftCorner.getCol() < 0 || topLeftCorner.getCol() > DimensionsC.CANVAS_WIDTH_PIXELS - DimensionsC.GHOST_WIDTH_PIXELS;
+        return topLeftCorner.getRow() < 0 || topLeftCorner.getRow() > configs.CANVAS_HEIGHT() - getHeight() ||
+                topLeftCorner.getCol() < 0 || topLeftCorner.getCol() > configs.CANVAS_WIDTH() - getWidth();
     }
 
     protected boolean isCollidingWithWallOrGhostHWall(Coordinate topLeftCorner) {

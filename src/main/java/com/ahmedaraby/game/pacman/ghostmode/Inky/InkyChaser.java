@@ -3,7 +3,6 @@ package com.ahmedaraby.game.pacman.ghostmode.Inky;
 import com.ahmedaraby.game.pacman.config.intConfigs.ConfigsEx;
 import com.ahmedaraby.jengine.animation.DistanceBasedAnimator;
 import com.ahmedaraby.game.pacman.config.Configs;
-import com.ahmedaraby.game.pacman.constant.DimensionsC;
 import com.ahmedaraby.game.pacman.constant.DirectionsE;
 import com.ahmedaraby.game.pacman.constant.SpriteFileNameC;
 import com.ahmedaraby.jengine.entity.Coordinate;
@@ -32,7 +31,7 @@ public class InkyChaser extends Chaser {
         final Image[] frames = loadSprites();
         navigator = new ShortestPathNavigator();
         animator = new DistanceBasedAnimator(
-                new double[]{DimensionsC.GHOST_FIRST_LEG_MOVEMENT_DISTANCE_PIXELS, DimensionsC.GHOST_SECOND_LEG_MOVEMENT_DISTANCE_PIXELS}
+                new double[]{configs.GHOST_INKY_FIRST_FRAME_DISTANCE(), configs.GHOST_INKY_SECOND_FRAME_DISTANCE()}
                 ,frames
         );
     }
@@ -54,7 +53,7 @@ public class InkyChaser extends Chaser {
         DirectionsE newDir = navigator.nextMoveDirection(ghost.getTopLeftCorner(), target);
 
         if (newDir != null) {
-            animator.stride(DimensionsC.GHOST_STRIDE_PIXELS / Configs.FRAMES_PER_SEC_FOR_GHOST_STRIDE);
+            animator.stride(configs.GHOST_INKY_SPEED() / Configs.FRAMES_PER_SEC_FOR_GHOST_STRIDE);
 
             final Coordinate newCord = GhostUtil.move(ghost.getTopLeftCorner(), newDir);
 
@@ -68,8 +67,8 @@ public class InkyChaser extends Chaser {
         final Coordinate pacManCord = gameState.getPacMan().getTopLeftCorner();
         final Vector pacManDir = gameState.getPacMan().getDir().toVector();
         return pacManCord.add(
-                DimensionsC.PAC_MAN_STRIDE_PIXELS * 2 * pacManDir.getX(),
-                DimensionsC.PAC_MAN_STRIDE_PIXELS * 2 * pacManDir.getY()
+                configs.PLAYGROUND_CELL_SIZE() * 2 * pacManDir.getX(),
+                configs.PLAYGROUND_CELL_SIZE() * 2 * pacManDir.getY()
         );
 
     }
@@ -87,7 +86,7 @@ public class InkyChaser extends Chaser {
 
     private Coordinate calculateTheTargetCoordinate(Line blinky2InterTileLine) {
         final Rectangle wholePLayGround = new Rectangle(
-                new Coordinate(0, 0), DimensionsC.CANVAS_WIDTH_PIXELS, DimensionsC.CANVAS_HEIGHT_PIXELS);
+                new Coordinate(0, 0), configs.CANVAS_WIDTH(), configs.CANVAS_HEIGHT());
         return blinky2InterTileLine
                 .scale(2) // double the line in the direction from blinky to the Intermediate tile
                 .trim(wholePLayGround) // then trim the line such that the line endpoint are within the playground

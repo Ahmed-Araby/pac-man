@@ -10,6 +10,8 @@ import lombok.Setter;
 public class GhostConfig {
     private double width;
     private double height;
+    private double speed;
+    private AnimationConfig animation;
     private InternalGhost blinky;
     private InternalGhost inky;
     private InternalGhost pinky;

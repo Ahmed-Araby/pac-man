@@ -1,7 +1,6 @@
 package com.ahmedaraby.game.pacman.ghostmode.clyde;
 
 import com.ahmedaraby.game.pacman.config.intConfigs.ConfigsEx;
-import com.ahmedaraby.game.pacman.constant.DimensionsC;
 import com.ahmedaraby.game.pacman.constant.SpriteFileNameC;
 import com.ahmedaraby.game.pacman.ghostmode.Scattered;
 import com.ahmedaraby.game.pacman.ghostmode.navigation.ShortestPathNavigator;
@@ -23,10 +22,10 @@ public class ClydeScattered extends Scattered {
 
         super.navigator = new ShortestPathNavigator();
         super.animator = new DistanceBasedAnimator(new double[]{
-                DimensionsC.GHOST_FIRST_LEG_MOVEMENT_DISTANCE_PIXELS,
-                DimensionsC.GHOST_SECOND_LEG_MOVEMENT_DISTANCE_PIXELS
+                configs.GHOST_CLYDE_FIRST_FRAME_DISTANCE(),
+                configs.GHOST_CLYDE_SECOND_FRAME_DISTANCE()
         }, frames);
 
-        target = new Coordinate(DimensionsC.CANVAS_HEIGHT_PIXELS - DimensionsC.MAZE_CELL_SIZE_PIXELS, 0);
+        target = new Coordinate(configs.CANVAS_HEIGHT() - configs.PLAYGROUND_CELL_SIZE(), 0);
     }
 }

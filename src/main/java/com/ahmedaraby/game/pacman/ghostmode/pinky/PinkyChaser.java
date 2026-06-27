@@ -2,11 +2,9 @@ package com.ahmedaraby.game.pacman.ghostmode.pinky;
 
 import com.ahmedaraby.game.pacman.config.Configs;
 import com.ahmedaraby.game.pacman.config.intConfigs.ConfigsEx;
-import com.ahmedaraby.game.pacman.constant.DimensionsC;
 import com.ahmedaraby.game.pacman.constant.DirectionsE;
 import com.ahmedaraby.game.pacman.constant.SpriteFileNameC;
 import com.ahmedaraby.game.pacman.ghostmode.Chaser;
-import com.ahmedaraby.game.pacman.ghostmode.Scattered;
 import com.ahmedaraby.game.pacman.ghostmode.navigation.GhostNavigator;
 import com.ahmedaraby.game.pacman.ghostmode.navigation.ShortestPathNavigator;
 import com.ahmedaraby.game.pacman.model.GameState;
@@ -31,8 +29,8 @@ public class PinkyChaser extends Chaser {
 
         final Image[] frames = loadSprites();
         animator = new DistanceBasedAnimator(new double[]{
-                DimensionsC.GHOST_FIRST_LEG_MOVEMENT_DISTANCE_PIXELS,
-                DimensionsC.GHOST_SECOND_LEG_MOVEMENT_DISTANCE_PIXELS
+                configs.GHOST_PINKY_FIRST_FRAME_DISTANCE(),
+                configs.GHOST_PINKY_SECOND_FRAME_DISTANCE()
         }, frames);
         navigator = new ShortestPathNavigator();
     }
@@ -59,7 +57,7 @@ public class PinkyChaser extends Chaser {
             final Coordinate newCord = GhostUtil.move(ghost.getTopLeftCorner(), newDir);
             ghost.setTopLeftCorner(newCord);
             ghost.setDir(newDir);
-            animator.stride(DimensionsC.GHOST_STRIDE_PIXELS / Configs.FRAMES_PER_SEC_FOR_GHOST_STRIDE);
+            animator.stride(configs.GHOST_SPEED() / Configs.FRAMES_PER_SEC_FOR_GHOST_STRIDE);
         }
     }
 

@@ -9,7 +9,6 @@ import javafx.scene.image.Image;
 import com.ahmedaraby.jengine.animation.Animator;
 import com.ahmedaraby.jengine.animation.DistanceBasedAnimator;
 import com.ahmedaraby.game.pacman.config.Configs;
-import com.ahmedaraby.game.pacman.constant.DimensionsC;
 import com.ahmedaraby.game.pacman.constant.DirectionsE;
 import com.ahmedaraby.game.pacman.constant.SpriteFileNameC;
 import com.ahmedaraby.jengine.entity.Coordinate;
@@ -28,7 +27,7 @@ public class BlinkyChaser extends Chaser {
 
         final Image[] frames = loadSprites();
         this.animator = new DistanceBasedAnimator(
-                new double[]{DimensionsC.GHOST_FIRST_LEG_MOVEMENT_DISTANCE_PIXELS, DimensionsC.GHOST_SECOND_LEG_MOVEMENT_DISTANCE_PIXELS}, frames);
+                new double[]{configs.GHOST_BLINK_FIRST_FRAME_DISTANCE(), configs.GHOST_BLINK_SECOND_FRAME_DISTANCE()}, frames);
         this.navigator = new ShortestPathNavigator();
     }
 
@@ -49,7 +48,7 @@ public class BlinkyChaser extends Chaser {
         ghost.setCol(ghostNewCord.getCol());
 
         if(directionsE != DirectionsE.STILL) {
-            animator.stride(DimensionsC.GHOST_STRIDE_PIXELS / Configs.FRAMES_PER_SEC_FOR_GHOST_STRIDE);
+            animator.stride(configs.GHOST_BLINKY_SPEED() / Configs.FRAMES_PER_SEC_FOR_GHOST_STRIDE);
         }
 
     }

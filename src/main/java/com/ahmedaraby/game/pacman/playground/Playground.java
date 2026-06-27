@@ -1,6 +1,6 @@
 package com.ahmedaraby.game.pacman.playground;
 
-import com.ahmedaraby.game.pacman.constant.DimensionsC;
+import com.ahmedaraby.game.pacman.config.intConfigs.ConfigsEx;
 import com.ahmedaraby.game.pacman.constant.SpriteE;
 import com.ahmedaraby.jengine.entity.Coordinate;
 import com.ahmedaraby.game.pacman.entity.MazeCell;
@@ -11,13 +11,16 @@ public class Playground {
 
     private static SpriteE[][] maze;
 
-    public static void init() {
+    public static void init(ConfigsEx configs) {
         final MazeGenerator randomizedDfs = new RandomizedDFSMazeGenerator();
-        final boolean[][] booleanMaze = randomizedDfs.gen(DimensionsC.MAZE_HEIGHT, DimensionsC.MAZE_WIDTH);
+        final int PLAYGROUND_HEIGHT = configs.PLAYGROUND_HEIGHT();
+        final int PLAYGROUND_WIDTH = configs.PLAYGROUND_WIDTH();
 
-        maze = new SpriteE[DimensionsC.MAZE_HEIGHT][DimensionsC.MAZE_WIDTH];
-        for(int mazeRow = 0; mazeRow< DimensionsC.MAZE_HEIGHT; mazeRow++) {
-            for(int mazeCol = 0; mazeCol< DimensionsC.MAZE_WIDTH; mazeCol++) {
+        final boolean[][] booleanMaze = randomizedDfs.gen(PLAYGROUND_HEIGHT, PLAYGROUND_WIDTH);
+
+        maze = new SpriteE[PLAYGROUND_HEIGHT][PLAYGROUND_WIDTH];
+        for(int mazeRow = 0; mazeRow< PLAYGROUND_HEIGHT; mazeRow++) {
+            for(int mazeCol = 0; mazeCol< PLAYGROUND_WIDTH; mazeCol++) {
                 if (booleanMaze[mazeRow][mazeCol]) {
                     maze[mazeRow][mazeCol] = SpriteE.WALL;
                 } else {

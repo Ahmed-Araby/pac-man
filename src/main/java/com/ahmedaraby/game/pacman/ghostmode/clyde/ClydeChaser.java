@@ -2,7 +2,6 @@ package com.ahmedaraby.game.pacman.ghostmode.clyde;
 
 import com.ahmedaraby.game.pacman.config.Configs;
 import com.ahmedaraby.game.pacman.config.intConfigs.ConfigsEx;
-import com.ahmedaraby.game.pacman.constant.DimensionsC;
 import com.ahmedaraby.game.pacman.constant.DirectionsE;
 import com.ahmedaraby.game.pacman.constant.SpriteFileNameC;
 import com.ahmedaraby.game.pacman.ghostmode.Chaser;
@@ -31,8 +30,8 @@ public class ClydeChaser extends Chaser {
         final String frame2Path = String.format(SpriteFileNameC.GHOST_SPRITE_PATH_TEMPLATE, SpriteFileNameC.CLYDE_FOLDER, SpriteFileNameC.CLYDE_FRAME_2_FILE_NAME);
         final Image[] frames = loadSprites(new String[]{frame1Path, frame2Path});
         animator = new DistanceBasedAnimator(new double[]{
-                DimensionsC.GHOST_FIRST_LEG_MOVEMENT_DISTANCE_PIXELS,
-                DimensionsC.GHOST_SECOND_LEG_MOVEMENT_DISTANCE_PIXELS
+                configs.GHOST_CLYDE_FIRST_FRAME_DISTANCE(),
+                configs.GHOST_CLYDE_SECOND_FRAME_DISTANCE()
         }, frames);
         navigator = new ShortestPathNavigator();
     }
@@ -55,7 +54,7 @@ public class ClydeChaser extends Chaser {
         ghost.setDir(newDir);
 
         if (newDir != DirectionsE.STILL) {
-            animator.stride(DimensionsC.GHOST_STRIDE_PIXELS / Configs.FRAMES_PER_SEC_FOR_GHOST_STRIDE);
+            animator.stride(configs.GHOST_CLYDE_SPEED() / Configs.FRAMES_PER_SEC_FOR_GHOST_STRIDE);
         }
     }
 

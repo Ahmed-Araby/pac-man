@@ -40,7 +40,7 @@ public abstract class Scattered extends TemporalGhostMode {
             final Coordinate newCord = GhostUtil.move(ghost.getTopLeftCorner(), newDir);
             ghost.setTopLeftCorner(newCord);
             ghost.setDir(newDir);
-            animator.stride(DimensionsC.GHOST_STRIDE_PIXELS / Configs.FRAMES_PER_SEC_FOR_GHOST_STRIDE);
+            animator.stride(configs.GHOST_SPEED() / Configs.FRAMES_PER_SEC_FOR_GHOST_STRIDE);
         }
     }
 

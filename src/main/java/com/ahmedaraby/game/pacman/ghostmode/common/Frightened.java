@@ -10,7 +10,6 @@ import javafx.scene.image.Image;
 import com.ahmedaraby.jengine.animation.Animator;
 import com.ahmedaraby.jengine.animation.DistanceBasedAnimator;
 import com.ahmedaraby.game.pacman.config.Configs;
-import com.ahmedaraby.game.pacman.constant.DimensionsC;
 import com.ahmedaraby.game.pacman.constant.DirectionsE;
 import com.ahmedaraby.game.pacman.constant.SpriteFileNameC;
 import com.ahmedaraby.jengine.entity.Coordinate;
@@ -32,7 +31,7 @@ public class Frightened extends TemporalGhostMode {
         super(ghost, gameState, configs, spriteRegistry, activePeriodsSec);
 
         Image[] frames = loadSprites();
-        this.animator = new DistanceBasedAnimator(new double[]{DimensionsC.GHOST_FIRST_LEG_MOVEMENT_DISTANCE_PIXELS, DimensionsC.GHOST_SECOND_LEG_MOVEMENT_DISTANCE_PIXELS}, frames);
+        this.animator = new DistanceBasedAnimator(new double[]{configs.GHOST_FIRST_FRAME_DISTANCE(), configs.GHOST_SECOND_FRAME_DISTANCE()}, frames);
         this.random = new EnrichedThreadLocalRandom();
     }
 
@@ -68,7 +67,7 @@ public class Frightened extends TemporalGhostMode {
         ghost.setRow(nCord.getRow());
         ghost.setCol(nCord.getCol());
 
-        animator.stride(DimensionsC.GHOST_STRIDE_PIXELS / Configs.FRAMES_PER_SEC_FOR_GHOST_STRIDE);
+        animator.stride(configs.GHOST_SPEED() / Configs.FRAMES_PER_SEC_FOR_GHOST_STRIDE);
     }
 
     @Override
