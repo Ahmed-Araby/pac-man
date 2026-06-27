@@ -31,7 +31,7 @@ public class Rectangle {
     }
 
     public Coordinate topRightCorner() {
-       return new Coordinate(topLeftCorner.getRow(), width - 1);
+       return new Coordinate(topLeftCorner.getRow(), topLeftCorner.getCol() + width - 1);
     }
 
     public Coordinate bottomRightCorner() {
