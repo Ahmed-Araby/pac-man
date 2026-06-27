@@ -44,6 +44,22 @@ public enum DirectionsE {
         }
     }
 
+    public static DirectionsE fromVector(Vector dir) {
+        if (Vector.RIGHT.equals(dir)) {
+            return DirectionsE.RIGHT;
+        } else if (Vector.UP.equals(dir)) {
+            return DirectionsE.UP;
+        } else if (Vector.LEFT.equals(dir)) {
+            return DirectionsE.LEFT;
+        } else if (Vector.DOWN.equals(dir)) {
+            return DirectionsE.DOWN;
+        } else if (Vector.STILL.equals(dir)) {
+            return DirectionsE.STILL;
+        } else {
+            throw new IllegalStateException("unhandled Vector : " + dir);
+        }
+    }
+
     public Vector toVector() {
         switch (this) {
             case RIGHT:

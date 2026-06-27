@@ -4,7 +4,6 @@ import com.ahmedaraby.game.pacman.constant.DimensionsC;
 import com.ahmedaraby.game.pacman.constant.DirectionsE;
 import com.ahmedaraby.jengine.entity.Coordinate;
 import com.ahmedaraby.game.pacman.entity.MazeCell;
-import com.ahmedaraby.game.pacman.util.canvas.CanvasUtil;
 import com.ahmedaraby.game.pacman.playground.Playground;
 
 public class SugarUtil {
@@ -23,12 +22,12 @@ public class SugarUtil {
     }
 
     public static boolean isCanvasCellHasSugar(Coordinate cellTopLeftCornerCanvas) {
-        final MazeCell cell = CanvasUtil.toMazeCoordinate(cellTopLeftCornerCanvas, DirectionsE.STILL);
+        final MazeCell cell = cellTopLeftCornerCanvas.toCell(DirectionsE.STILL.toVector());
         return Playground.hasSugar(cell);
     }
 
     public static boolean isCanvasCellHasSuperSugar(Coordinate cellTopLeftCornerCanvas) {
-        final MazeCell cell = CanvasUtil.toMazeCoordinate(cellTopLeftCornerCanvas, DirectionsE.STILL);
+        final MazeCell cell = cellTopLeftCornerCanvas.toCell(DirectionsE.STILL.toVector());
         return Playground.hasSuperSugar(cell);
     }
 }

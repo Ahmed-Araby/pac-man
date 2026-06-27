@@ -14,7 +14,6 @@ import com.ahmedaraby.game.pacman.model.GameState;
 import com.ahmedaraby.game.pacman.sprite.Sprite;
 import com.ahmedaraby.game.pacman.util.MazeUtil;
 import com.ahmedaraby.game.pacman.util.SugarUtil;
-import com.ahmedaraby.game.pacman.util.canvas.CanvasUtil;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import com.ahmedaraby.game.pacman.playground.Playground;
@@ -62,7 +61,7 @@ public class SuperSugar extends Sprite implements Subscriber<EventType> {
     }
 
     public void removeSugar(Rectangle rect) {
-        final MazeCell sugarCellMazeTopLeftCornerCoordinate = CanvasUtil.toMazeCoordinate(rect.getTopLeftCorner(), DirectionsE.STILL);
+        final MazeCell sugarCellMazeTopLeftCornerCoordinate = rect.getTopLeftCorner().toCell(DirectionsE.STILL.toVector());
         Playground.set(sugarCellMazeTopLeftCornerCoordinate.getRow(), sugarCellMazeTopLeftCornerCoordinate.getCol(), SpriteE.EMPTY);
     }
 }

@@ -4,8 +4,8 @@ import com.ahmedaraby.game.pacman.config.Configs;
 import com.ahmedaraby.game.pacman.constant.DimensionsC;
 import com.ahmedaraby.jengine.entity.Coordinate;
 import com.ahmedaraby.game.pacman.entity.MazeCell;
+import com.ahmedaraby.jengine.entity.Rectangle;
 import com.ahmedaraby.jengine.entity.Vector;
-import com.ahmedaraby.game.pacman.util.canvas.CanvasUtil;
 import com.ahmedaraby.game.pacman.constant.DirectionsE;
 import com.ahmedaraby.game.pacman.playground.Playground;
 
@@ -43,15 +43,27 @@ public class GhostUtil {
 
     public static List<MazeCell> getCandidateNextCells(Coordinate cord) {
         List<MazeCell> candidateNextCells = null;
-        candidateNextCells = CanvasUtil.getIntersectingMazeCells(cord);
+        candidateNextCells = getIntersectingMazeCells(cord);
         System.out.println("interestingMazeCells = " + candidateNextCells);
         if (candidateNextCells.size() == 1) {
             // ghost lies completely in a maze cell
-            candidateNextCells = CanvasUtil.get90DegAdjMazeCells(cord);
+            MazeCell cell = cord.toCell(Vector.STILL);
+            candidateNextCells = cell.getAdjCells(DimensionsC.MAZE_WIDTH, DimensionsC.MAZE_HEIGHT);
         }
         return candidateNextCells
                 .stream()
                 .filter(cell -> !Playground.isWall(cell) && !Playground.isGhostHWall(cell))
+                .toList();
+    }
+
+    private static List<MazeCell> getIntersectingMazeCells(Coordinate cord) {
+        final Rectangle rectangle = new Rectangle(cord, DimensionsC.MAZE_CELL_SIZE_PIXELS, DimensionsC.MAZE_CELL_SIZE_PIXELS);
+        final List<Coordinate> rectCorners = rectangle.corners();
+        return rectCorners
+                .stream()
+                .map(corner -> Playground.getRectContainingPoint(DimensionsC.MAZE_CELL_SIZE_PIXELS, DimensionsC.MAZE_CELL_SIZE_PIXELS, corner).topLeftCorner())
+                .map(topLeftCorner -> topLeftCorner.toCell(DirectionsE.STILL.toVector()))
+                .distinct()
                 .toList();
     }
 }

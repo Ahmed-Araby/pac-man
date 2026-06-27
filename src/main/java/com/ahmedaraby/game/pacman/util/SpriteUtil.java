@@ -7,7 +7,6 @@ import com.ahmedaraby.jengine.entity.Coordinate;
 import com.ahmedaraby.jengine.entity.Rectangle;
 import com.ahmedaraby.game.pacman.entity.MazeCell;
 import com.ahmedaraby.game.pacman.playground.Playground;
-import com.ahmedaraby.game.pacman.util.canvas.CanvasUtil;
 
 public class SpriteUtil {
     private SpriteUtil() {}
@@ -39,7 +38,7 @@ public class SpriteUtil {
     }
 
     public static SpriteE getSpriteType(Coordinate cord) {
-        final MazeCell cell = CanvasUtil.toMazeCoordinate(cord, DirectionsE.STILL);
+        final MazeCell cell = cord.toCell(DirectionsE.STILL.toVector());
         return Playground.get(cell);
     }
 

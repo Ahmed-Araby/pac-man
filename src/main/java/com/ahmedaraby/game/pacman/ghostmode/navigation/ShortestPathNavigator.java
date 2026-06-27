@@ -5,7 +5,6 @@ import com.ahmedaraby.game.pacman.constant.DimensionsC;
 import com.ahmedaraby.game.pacman.entity.MazeCell;
 import com.ahmedaraby.game.pacman.model.CollisionReport;
 import com.ahmedaraby.game.pacman.util.SpriteUtil;
-import com.ahmedaraby.game.pacman.util.canvas.CanvasUtil;
 import lombok.AllArgsConstructor;
 import com.ahmedaraby.game.pacman.constant.DirectionsE;
 import com.ahmedaraby.game.pacman.constant.SpriteE;
@@ -25,8 +24,8 @@ public class ShortestPathNavigator implements GhostNavigator {
     // [TODO] TODO take into account the movement direction of the sprites at source and target cord
     @Override
     public double calcDist(Coordinate sourceCord, Coordinate targetCord) {
-        MazeCell sourceCell = CanvasUtil.toMazeCoordinate(sourceCord, DirectionsE.STILL);
-        MazeCell targetCell = CanvasUtil.toMazeCoordinate(targetCord, DirectionsE.STILL);
+        MazeCell sourceCell = sourceCord.toCell(DirectionsE.STILL.toVector());
+        MazeCell targetCell = targetCord.toCell(DirectionsE.STILL.toVector());
         return calcDist(sourceCell, targetCell) * DimensionsC.MAZE_CELL_SIZE_PIXELS;
     }
 
@@ -48,15 +47,16 @@ public class ShortestPathNavigator implements GhostNavigator {
                 })
                 .map(move -> {
                     final Coordinate candidateNextCord = MazeUtil.getCanvasCord(move.getCell());
-                    return CanvasUtil.getMovementDir(source, candidateNextCord);
+                    return source.getMovementDir(candidateNextCord);
                 })
                 .findFirst()
+                .map(DirectionsE::fromVector)
                 .orElse(DirectionsE.STILL);
     }
 
     private List<MazeMove> getCandidateMoves(Coordinate ghostCord, Coordinate targetCord) {
         // this work can be parallelized
-        final MazeCell targetCell = CanvasUtil.toMazeCoordinate(targetCord, DirectionsE.STILL);
+        final MazeCell targetCell = targetCord.toCell(DirectionsE.STILL.toVector());
         final List<MazeCell> candidateNextMazeCell = GhostUtil.getCandidateNextCells(ghostCord);
         return candidateNextMazeCell
                 .stream()

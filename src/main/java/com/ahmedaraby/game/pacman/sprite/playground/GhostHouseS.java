@@ -12,7 +12,6 @@ import com.ahmedaraby.game.pacman.entity.MazeCell;
 import com.ahmedaraby.game.pacman.playground.Playground;
 import com.ahmedaraby.game.pacman.model.GameState;
 import com.ahmedaraby.game.pacman.sprite.Sprite;
-import com.ahmedaraby.game.pacman.util.canvas.CanvasUtil;
 
 @Getter
 @Setter
@@ -46,7 +45,7 @@ public class GhostHouseS extends Sprite {
         final double sRow = getRow();
         for (double i = sRow; i<=eRow; i+=configs.PLAYGROUND_CELL_SIZE()) {
             for (double j = sCol; j<=eCol; j+=configs.PLAYGROUND_CELL_SIZE()) {
-                MazeCell cell = CanvasUtil.toMazeCoordinate(new Coordinate(i, j), DirectionsE.STILL);
+                MazeCell cell = new Coordinate(i, j).toCell(DirectionsE.STILL.toVector());
                 SpriteE spriteType;
                 if (cell.equals(doorCell)) {
                     spriteType = SpriteE.GHOST_HOUSE_DOOR;
@@ -70,7 +69,7 @@ public class GhostHouseS extends Sprite {
 
         for (double i = sRow; i<=eRow; i+=configs.PLAYGROUND_CELL_SIZE()) {
             for (double j = sCol; j<=eCol; j+=configs.PLAYGROUND_CELL_SIZE()) {
-                MazeCell cell = CanvasUtil.toMazeCoordinate(new Coordinate(i, j), DirectionsE.STILL);
+                MazeCell cell = new Coordinate(i, j).toCell(DirectionsE.STILL.toVector());
                 if (cell.equals(doorCell)) {
                     continue;
                 }
@@ -92,7 +91,7 @@ public class GhostHouseS extends Sprite {
 
     private MazeCell calcDoorCel() {
         final Coordinate cord = new Coordinate(calcDoorRow(), calcDoorCol());
-        return CanvasUtil.toMazeCoordinate(cord, DirectionsE.STILL);
+        return cord.toCell(DirectionsE.STILL.toVector());
     }
 
 }

@@ -1,4 +1,5 @@
 package com.ahmedaraby.game.pacman.util;
+import com.ahmedaraby.game.pacman.constant.DimensionsC;
 import com.ahmedaraby.game.pacman.entity.MazeCell;
 import com.ahmedaraby.game.pacman.playground.Playground;
 
@@ -26,7 +27,7 @@ public class BfsUtil {
         while(!cords.isEmpty() && !targetReached) {
             final MazeCell cCell = cords.poll();
 
-            final List<MazeCell> ninetyDegMoves = MazeUtil.get90DegMoves(cCell);
+            final List<MazeCell> ninetyDegMoves = cCell.getAdjCells(DimensionsC.MAZE_WIDTH, DimensionsC.MAZE_HEIGHT);
             for (MazeCell nextCell: ninetyDegMoves) {
                 if(nextCell.equals(target)) {
                     dist[nextCell.getRow()][nextCell.getCol()] = Math.min(dist[nextCell.getRow()][nextCell.getCol()],
@@ -55,7 +56,7 @@ public class BfsUtil {
         List<MazeCell> path = new ArrayList<>();
         path.add(tCord);
         while(!cord.equals(sCord)) {
-            final List<MazeCell> ninetyDegMoves = MazeUtil.get90DegMoves(cord);
+            final List<MazeCell> ninetyDegMoves = cord.getAdjCells(DimensionsC.MAZE_WIDTH, DimensionsC.MAZE_HEIGHT);
             int minDist = dist[cord.getRow()][cord.getCol()];
 
             for(MazeCell nextCord : ninetyDegMoves) {
