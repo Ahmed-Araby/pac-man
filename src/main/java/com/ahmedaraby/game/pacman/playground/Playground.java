@@ -4,11 +4,13 @@ import com.ahmedaraby.game.pacman.config.intConfigs.ConfigsEx;
 import com.ahmedaraby.game.pacman.constant.SpriteE;
 import com.ahmedaraby.jengine.entity.Coordinate;
 import com.ahmedaraby.game.pacman.entity.MazeCell;
+import com.ahmedaraby.jengine.entity.Rectangle;
 import com.ahmedaraby.jengine.maze.MazeGenerator;
 import com.ahmedaraby.jengine.maze.RandomizedDFSMazeGenerator;
 
 public class Playground {
 
+    // [TODO] use instance of this class instead of treating it as a util of static method
     private static SpriteE[][] maze;
 
     public static void init(ConfigsEx configs) {
@@ -93,5 +95,12 @@ public class Playground {
             }
         }
         return null;
+    }
+
+
+    public static Rectangle getRectContainingPoint(double rectWidth, double rectHeight, Coordinate point) {
+        final double topLeftCornerRow = point.getRow() - point.getRow() % rectHeight;
+        final double topLeftCornerCol = point.getCol() - point.getCol() % rectWidth;
+        return new Rectangle(new Coordinate(topLeftCornerRow, topLeftCornerCol), rectWidth, rectHeight);
     }
 }
