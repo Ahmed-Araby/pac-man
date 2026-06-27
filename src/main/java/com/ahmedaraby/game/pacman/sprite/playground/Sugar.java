@@ -17,7 +17,6 @@ import com.ahmedaraby.jengine.event.Subscriber;
 import com.ahmedaraby.game.pacman.playground.Playground;
 import com.ahmedaraby.game.pacman.sprite.Sprite;
 import com.ahmedaraby.game.pacman.util.EnrichedThreadLocalRandom;
-import com.ahmedaraby.game.pacman.util.MazeUtil;
 import com.ahmedaraby.game.pacman.util.SugarUtil;
 
 public class Sugar extends Sprite implements Subscriber<EventType> {
@@ -46,7 +45,7 @@ public class Sugar extends Sprite implements Subscriber<EventType> {
         for (int row = 0; row < Playground.height(); row++) {
             for (int col = 0; col < Playground.width(); col++) {
                 if (Playground.hasSugar(row, col)) {
-                    final Coordinate cellTopLeftCornerCanvas = MazeUtil.getCanvasCord(row, col);
+                    final Coordinate cellTopLeftCornerCanvas = new MazeCell(row, col).toCord(configs.PLAYGROUND_CELL_SIZE(), configs.PLAYGROUND_CELL_SIZE());
                     final Coordinate sugarCellTopLeftCornerCanvas = SugarUtil.getSugarTopLeftCornerCanvas(cellTopLeftCornerCanvas);
                     con.fillRect(sugarCellTopLeftCornerCanvas.getCol(), sugarCellTopLeftCornerCanvas.getRow(), configs.SUGAR_DIAMETER(), configs.SUGAR_DIAMETER());
                 }

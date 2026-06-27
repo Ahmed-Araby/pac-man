@@ -12,7 +12,6 @@ import com.ahmedaraby.jengine.event.Subscriber;
 import com.ahmedaraby.game.pacman.event.collision.PacMan2SugarCollisionEvent;
 import com.ahmedaraby.game.pacman.model.GameState;
 import com.ahmedaraby.game.pacman.sprite.Sprite;
-import com.ahmedaraby.game.pacman.util.MazeUtil;
 import com.ahmedaraby.game.pacman.util.SugarUtil;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
@@ -41,7 +40,7 @@ public class SuperSugar extends Sprite implements Subscriber<EventType> {
         for (int row = 0; row < Playground.height(); row++) {
             for (int col = 0; col < Playground.width(); col++) {
                 if (Playground.hasSuperSugar(row, col)) {
-                    final Coordinate cellTopLeftCornerCanvas = MazeUtil.getCanvasCord(row, col);
+                    final Coordinate cellTopLeftCornerCanvas = new MazeCell(row, col).toCord(configs.PLAYGROUND_CELL_SIZE(), configs.PLAYGROUND_CELL_SIZE());
                     final Coordinate sugarCellTopLeftCornerCanvas = SugarUtil.getSuperSugarTopLeftCornerCanvas(cellTopLeftCornerCanvas);
                     con.fillOval(sugarCellTopLeftCornerCanvas.getCol(), sugarCellTopLeftCornerCanvas.getRow(), configs.SUPER_SUGAR_DIAMETER(), configs.SUPER_SUGAR_DIAMETER());
                 }

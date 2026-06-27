@@ -1,5 +1,6 @@
 package com.ahmedaraby.game.pacman.entity;
 
+import com.ahmedaraby.jengine.entity.Coordinate;
 import lombok.AllArgsConstructor;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
@@ -32,5 +33,9 @@ public class MazeCell {
 
 
         return ninetyDegMoves;
+    }
+
+    public Coordinate toCord(double cellWidth, double cellHeight) {
+        return new Coordinate(row * cellHeight, col * cellWidth);
     }
 }

@@ -13,7 +13,6 @@ import com.ahmedaraby.jengine.entity.Rectangle;
 import com.ahmedaraby.game.pacman.entity.MazeMove;
 import com.ahmedaraby.game.pacman.util.BfsUtil;
 import com.ahmedaraby.game.pacman.util.ghost.GhostUtil;
-import com.ahmedaraby.game.pacman.util.MazeUtil;
 
 import java.util.List;
 
@@ -40,13 +39,13 @@ public class ShortestPathNavigator implements GhostNavigator {
                 .sorted()
                 .filter(move -> move.getDist2Target() < Integer.MAX_VALUE)
                 .filter(move -> {
-                    final Coordinate candidateNextCord = MazeUtil.getCanvasCord(move.getCell());
+                    final Coordinate candidateNextCord = move.getCell().toCord(DimensionsC.MAZE_CELL_SIZE_PIXELS, DimensionsC.MAZE_CELL_SIZE_PIXELS);
                     final Rectangle rect = SpriteUtil.toRect(candidateNextCord, SpriteE.GHOST);
                     final List<CollisionReport> collisionReportOpt = M2SSpriteCollisionDetector.detect(rect, List.of(SpriteE.WALL, SpriteE.GHOST_HOUSE_WALL));
                     return collisionReportOpt.isEmpty();
                 })
                 .map(move -> {
-                    final Coordinate candidateNextCord = MazeUtil.getCanvasCord(move.getCell());
+                    final Coordinate candidateNextCord = move.getCell().toCord(DimensionsC.MAZE_CELL_SIZE_PIXELS, DimensionsC.MAZE_CELL_SIZE_PIXELS);
                     return source.getMovementDir(candidateNextCord);
                 })
                 .findFirst()
