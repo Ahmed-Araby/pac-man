@@ -9,7 +9,6 @@ import com.ahmedaraby.jengine.entity.Vector;
 import com.ahmedaraby.game.pacman.model.CollisionReport;
 import com.ahmedaraby.game.pacman.util.SpriteUtil;
 import com.ahmedaraby.game.pacman.constant.DirectionsE;
-import com.ahmedaraby.game.pacman.util.VectorUtil;
 
 import java.util.List;
 
@@ -18,7 +17,7 @@ public class FrightenedGhostUtil {
     public static List<Vector> getAllowedDirections(Vector currDir) {
         return Vector.fourD
                 .stream()
-                .filter(dir -> !VectorUtil.isOpposite(dir, currDir))
+                .filter(dir -> !currDir.isOpposite(dir))
                 .toList();
     }
 
@@ -27,7 +26,7 @@ public class FrightenedGhostUtil {
         return allowedDirections
                 .stream()
                 .filter(allowedDir -> {
-                    final DirectionsE allowedDirectionE = VectorUtil.toDirection(allowedDir);
+                    final DirectionsE allowedDirectionE = DirectionsE.fromVector(allowedDir);
                     final Coordinate candidateNextCord = GhostUtil.move(cord, allowedDirectionE);
                     if (isGoingOutOfCanvas(candidateNextCord))  {
                         return false;

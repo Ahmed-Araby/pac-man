@@ -16,7 +16,6 @@ import com.ahmedaraby.jengine.entity.Coordinate;
 import com.ahmedaraby.game.pacman.ghostmode.TemporalGhostMode;
 import com.ahmedaraby.game.pacman.util.EnrichedThreadLocalRandom;
 import com.ahmedaraby.game.pacman.util.ghost.GhostUtil;
-import com.ahmedaraby.game.pacman.util.VectorUtil;
 import com.ahmedaraby.game.pacman.util.ghost.FrightenedGhostUtil;
 
 import java.util.List;
@@ -49,18 +48,18 @@ public class Frightened extends TemporalGhostMode {
     @Override
     public void move() {
         final Coordinate sCord = new Coordinate(ghost.getRow(), ghost.getCol());
-        final Vector currDir = VectorUtil.toVector(ghost.getDir());
+        final Vector currDir = ghost.getDir().toVector();
 
         final List<Vector> eligibleDirections = FrightenedGhostUtil.getEligibleDirections(sCord, currDir);
         Vector newDirV;
         if (eligibleDirections.isEmpty()) {
-            newDirV = VectorUtil.flip180(currDir);
+            newDirV = currDir.flip180();
         } else {
             final int randIndex = random.nextIntStartInclEndExcl(0, eligibleDirections.size());
             newDirV = eligibleDirections.get(randIndex);
         }
 
-        final DirectionsE newDirE = VectorUtil.toDirection(newDirV);
+        final DirectionsE newDirE =  DirectionsE.fromVector(newDirV);
         final Coordinate nCord = GhostUtil.move(sCord, newDirE);
 
         ghost.setDir(newDirE);
@@ -84,10 +83,9 @@ public class Frightened extends TemporalGhostMode {
     }
 
     private void turnAround(Ghost ghost) {
-        final DirectionsE currDirE = ghost.getDir();
-        final Vector dir = VectorUtil.toVector(currDirE);
-        final Vector oppositeDir = VectorUtil.flip180(dir);
-        final DirectionsE oppositeDirE = VectorUtil.toDirection(oppositeDir);
+        final Vector dir = ghost.getDir().toVector();
+        final Vector oppositeDir = dir.flip180();
+        final DirectionsE oppositeDirE = DirectionsE.fromVector(oppositeDir);
         ghost.setDir(oppositeDirE);
     }
 }
