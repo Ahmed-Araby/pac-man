@@ -2,7 +2,6 @@ package com.ahmedaraby.game.pacman.sprite.ghost;
 
 import com.ahmedaraby.game.pacman.config.GhostModeActivePeriodsConf;
 import com.ahmedaraby.game.pacman.config.intConfigs.ConfigsEx;
-import com.ahmedaraby.game.pacman.constant.DimensionsC;
 import com.ahmedaraby.game.pacman.constant.DirectionsE;
 import com.ahmedaraby.game.pacman.constant.SpriteE;
 import com.ahmedaraby.game.pacman.event.Event;
@@ -49,8 +48,8 @@ public class Clyde extends Ghost {
         super.init();
         // place yourself in the ghost house
         final GhostHouseS ghostHouseS = gameState.getGhostHouseS();
-        final double col = ghostHouseS.getCol() + 4 * DimensionsC.MAZE_CELL_SIZE_PIXELS;
-        final double row = ghostHouseS.getERow() - DimensionsC.MAZE_CELL_SIZE_PIXELS;
+        final double col = ghostHouseS.getCol() + 4 * configs.PLAYGROUND_CELL_SIZE();
+        final double row = ghostHouseS.getERow() - configs.PLAYGROUND_CELL_SIZE();
         setTopLeftCorner(new Coordinate(row, col));
     }
 
@@ -87,7 +86,7 @@ public class Clyde extends Ghost {
             final Coordinate pacManCord = gameState.getPacMan().getTopLeftCorner();
             final double distToPacManInPixels = navigator.calcDist(getTopLeftCorner(), pacManCord);
             // [TODO] provide the number 8 as a configuration
-            if (distToPacManInPixels >= 8 * DimensionsC.MAZE_CELL_SIZE_PIXELS) {
+            if (distToPacManInPixels >= 8 * configs.PLAYGROUND_CELL_SIZE()) {
                 chaser.enter();
                 activeMode = chaser;
             }
@@ -105,7 +104,7 @@ public class Clyde extends Ghost {
         final Coordinate pacManCord = gameState.getPacMan().getTopLeftCorner();
         final double distToPacManInPixels = navigator.calcDist(getTopLeftCorner(), pacManCord);
         // [TODO] provide the number 8 as a configuration
-        if (distToPacManInPixels < 8 * DimensionsC.MAZE_CELL_SIZE_PIXELS) {
+        if (distToPacManInPixels < 8 * configs.PLAYGROUND_CELL_SIZE()) {
             activeMode = scaredChaser;
         }
     }

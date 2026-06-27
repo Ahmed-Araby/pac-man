@@ -1,7 +1,6 @@
 package com.ahmedaraby.game.pacman.sprite.ghost;
 
 import com.ahmedaraby.game.pacman.config.intConfigs.ConfigsEx;
-import com.ahmedaraby.game.pacman.constant.DimensionsC;
 import com.ahmedaraby.game.pacman.constant.DirectionsE;
 import com.ahmedaraby.game.pacman.constant.SpriteE;
 import com.ahmedaraby.game.pacman.event.collision.PacMan2GhostCollisionEvent;
@@ -29,7 +28,7 @@ public abstract class Ghost extends MovingSprite implements Subscriber<EventType
 
 
     public Ghost(GameState gameState, ConfigsEx configs, SpriteE type, double col, double row, DirectionsE dir) {
-        super(gameState, configs, type, new Coordinate(row, col), DimensionsC.GHOST_WIDTH_PIXELS, DimensionsC.GHOST_HEIGHT_PIXELS, dir);
+        super(gameState, configs, type, new Coordinate(row, col), configs.GHOST_WIDTH(), configs.GHOST_HEIGHT(), dir);
     }
 
     @Override

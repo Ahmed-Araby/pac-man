@@ -1,13 +1,9 @@
 package com.ahmedaraby.game.pacman.sprite.ghost;
 
 import com.ahmedaraby.game.pacman.config.intConfigs.ConfigsEx;
-import com.ahmedaraby.game.pacman.constant.DimensionsC;
 import com.ahmedaraby.game.pacman.constant.DirectionsE;
 import com.ahmedaraby.game.pacman.constant.SpriteE;
 import com.ahmedaraby.game.pacman.event.Event;
-import com.ahmedaraby.game.pacman.event.EventType;
-import com.ahmedaraby.jengine.event.Subscriber;
-import com.ahmedaraby.game.pacman.event.collision.PacMan2GhostCollisionEvent;
 import com.ahmedaraby.game.pacman.ghostmode.common.Eaten;
 import com.ahmedaraby.game.pacman.ghostmode.common.Frightened;
 import com.ahmedaraby.game.pacman.model.GameState;
@@ -37,8 +33,8 @@ public class Inky extends Ghost {
     public void init() {
         super.init();
         final GhostHouseS ghostHouseS = gameState.getGhostHouseS();
-        final double col = ghostHouseS.getCol() + 2 * DimensionsC.MAZE_CELL_SIZE_PIXELS;
-        final double row = ghostHouseS.getERow() - DimensionsC.MAZE_CELL_SIZE_PIXELS;
+        final double col = ghostHouseS.getCol() + 2 * configs.PLAYGROUND_CELL_SIZE();
+        final double row = ghostHouseS.getERow() - configs.PLAYGROUND_CELL_SIZE();
         setCol(col);
         setRow(row);
     }

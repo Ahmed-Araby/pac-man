@@ -1,8 +1,6 @@
 package com.ahmedaraby.game.pacman.sprite.playground;
 
 import com.ahmedaraby.game.pacman.config.intConfigs.ConfigsEx;
-import com.ahmedaraby.game.pacman.constant.ColorC;
-import com.ahmedaraby.game.pacman.constant.DimensionsC;
 import com.ahmedaraby.game.pacman.constant.DirectionsE;
 import com.ahmedaraby.game.pacman.constant.SpriteE;
 import com.ahmedaraby.game.pacman.event.EventType;
@@ -24,7 +22,7 @@ import com.ahmedaraby.game.pacman.playground.Playground;
 public class SuperSugar extends Sprite implements Subscriber<EventType> {
 
     public SuperSugar(GameState gameState, ConfigsEx configs) {
-        super(gameState, configs, SpriteE.SUPER_SUGAR, null, DimensionsC.SUPER_SUGAR_DIAMETER_PIXELS, DimensionsC.SUPER_SUGAR_DIAMETER_PIXELS);
+        super(gameState, configs, SpriteE.SUPER_SUGAR, null, configs.SUPER_SUGAR_DIAMETER(), configs.SUPER_SUGAR_DIAMETER());
 
         for(int row = 0; row < Playground.height(); row++) {
             for (int col = 0; col < Playground.width(); col++) {
@@ -39,14 +37,14 @@ public class SuperSugar extends Sprite implements Subscriber<EventType> {
     public void render(Canvas canvas) {
         final GraphicsContext con = canvas.getGraphicsContext2D();
 
-        con.setFill(ColorC.SUPER_SUGAR_COLOR);
+        con.setFill(configs.SUPER_SUGAR_COLOR());
 
         for (int row = 0; row < Playground.height(); row++) {
             for (int col = 0; col < Playground.width(); col++) {
                 if (Playground.hasSuperSugar(row, col)) {
                     final Coordinate cellTopLeftCornerCanvas = MazeUtil.getCanvasCord(row, col);
                     final Coordinate sugarCellTopLeftCornerCanvas = SugarUtil.getSuperSugarTopLeftCornerCanvas(cellTopLeftCornerCanvas);
-                    con.fillOval(sugarCellTopLeftCornerCanvas.getCol(), sugarCellTopLeftCornerCanvas.getRow(), DimensionsC.SUPER_SUGAR_DIAMETER_PIXELS, DimensionsC.SUPER_SUGAR_DIAMETER_PIXELS);
+                    con.fillOval(sugarCellTopLeftCornerCanvas.getCol(), sugarCellTopLeftCornerCanvas.getRow(), configs.SUPER_SUGAR_DIAMETER(), configs.SUPER_SUGAR_DIAMETER());
                 }
             }
         }

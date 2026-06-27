@@ -1,8 +1,6 @@
 package com.ahmedaraby.game.pacman.sprite.playground;
 
 import com.ahmedaraby.game.pacman.config.intConfigs.ConfigsEx;
-import com.ahmedaraby.game.pacman.constant.ColorC;
-import com.ahmedaraby.game.pacman.constant.DimensionsC;
 import com.ahmedaraby.game.pacman.constant.DirectionsE;
 import com.ahmedaraby.game.pacman.constant.SpriteE;
 import com.ahmedaraby.game.pacman.event.EventType;
@@ -27,7 +25,7 @@ public class Sugar extends Sprite implements Subscriber<EventType> {
     private final EnrichedThreadLocalRandom enrichedRandom = new EnrichedThreadLocalRandom();
 
     public Sugar(GameState gameState, ConfigsEx configs) {
-        super(gameState, configs, SpriteE.SUGAR, null, DimensionsC.SUGAR_CELL_SIZE_PIXELS, DimensionsC.SUGAR_CELL_SIZE_PIXELS);
+        super(gameState, configs, SpriteE.SUGAR, null, configs.SUPER_SUGAR_DIAMETER(), configs.SUPER_SUGAR_DIAMETER());
 
         for(int row = 0; row < Playground.height(); row++) {
             for (int col = 0; col < Playground.width(); col++) {
@@ -44,14 +42,14 @@ public class Sugar extends Sprite implements Subscriber<EventType> {
     public void render(Canvas canvas) {
         final GraphicsContext con = canvas.getGraphicsContext2D();
 
-        con.setFill(ColorC.SUGAR_COLOR);
+        con.setFill(configs.SUGAR_COLOR());
 
         for (int row = 0; row < Playground.height(); row++) {
             for (int col = 0; col < Playground.width(); col++) {
                 if (Playground.hasSugar(row, col)) {
                     final Coordinate cellTopLeftCornerCanvas = MazeUtil.getCanvasCord(row, col);
                     final Coordinate sugarCellTopLeftCornerCanvas = SugarUtil.getSugarTopLeftCornerCanvas(cellTopLeftCornerCanvas);
-                    con.fillRect(sugarCellTopLeftCornerCanvas.getCol(), sugarCellTopLeftCornerCanvas.getRow(), DimensionsC.SUGAR_CELL_SIZE_PIXELS, DimensionsC.SUGAR_CELL_SIZE_PIXELS);
+                    con.fillRect(sugarCellTopLeftCornerCanvas.getCol(), sugarCellTopLeftCornerCanvas.getRow(), configs.SUGAR_DIAMETER(), configs.SUGAR_DIAMETER());
                 }
             }
         }

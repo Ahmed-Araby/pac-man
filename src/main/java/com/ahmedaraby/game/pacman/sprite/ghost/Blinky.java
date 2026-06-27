@@ -1,18 +1,14 @@
 package com.ahmedaraby.game.pacman.sprite.ghost;
 
 import com.ahmedaraby.game.pacman.config.intConfigs.ConfigsEx;
-import com.ahmedaraby.game.pacman.constant.DimensionsC;
 import com.ahmedaraby.game.pacman.constant.DirectionsE;
 import com.ahmedaraby.game.pacman.constant.SpriteE;
-import com.ahmedaraby.game.pacman.event.EventType;
-import com.ahmedaraby.game.pacman.event.collision.PacMan2GhostCollisionEvent;
 import com.ahmedaraby.game.pacman.model.GameState;
 import com.ahmedaraby.game.pacman.sprite.playground.GhostHouseS;
 import com.ahmedaraby.jengine.sprite.SpriteRegistry;
 import javafx.scene.canvas.Canvas;
 import com.ahmedaraby.game.pacman.config.GhostModeActivePeriodsConf;
 import com.ahmedaraby.game.pacman.event.Event;
-import com.ahmedaraby.jengine.event.Subscriber;
 import com.ahmedaraby.game.pacman.ghostmode.blinky.BlinkyChaser;
 import com.ahmedaraby.game.pacman.ghostmode.common.Eaten;
 import com.ahmedaraby.game.pacman.ghostmode.common.Frightened;
@@ -38,8 +34,8 @@ public class Blinky extends Ghost {
     public void init() {
         super.init();
         final GhostHouseS ghostHouseS = gameState.getGhostHouseS();
-        final double col = ghostHouseS.getCol() + DimensionsC.MAZE_CELL_SIZE_PIXELS;
-        final double row = ghostHouseS.getERow() - DimensionsC.MAZE_CELL_SIZE_PIXELS;
+        final double col = ghostHouseS.getCol() + configs.PLAYGROUND_CELL_SIZE();
+        final double row = ghostHouseS.getERow() - configs.PLAYGROUND_CELL_SIZE();
         setCol(col);
         setRow(row);
     }

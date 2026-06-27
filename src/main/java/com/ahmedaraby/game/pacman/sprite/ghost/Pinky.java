@@ -2,7 +2,6 @@ package com.ahmedaraby.game.pacman.sprite.ghost;
 
 import com.ahmedaraby.game.pacman.config.GhostModeActivePeriodsConf;
 import com.ahmedaraby.game.pacman.config.intConfigs.ConfigsEx;
-import com.ahmedaraby.game.pacman.constant.DimensionsC;
 import com.ahmedaraby.game.pacman.constant.DirectionsE;
 import com.ahmedaraby.game.pacman.constant.SpriteE;
 import com.ahmedaraby.game.pacman.event.Event;
@@ -32,8 +31,8 @@ public class Pinky extends Ghost {
     public void init() {
         super.init();
         // put the ghost at it's position in the ghost house
-        final double col = gameState.getGhostHouseS().getCol() + DimensionsC.MAZE_CELL_SIZE_PIXELS * 3;
-        final double row = gameState.getGhostHouseS().getERow() - DimensionsC.MAZE_CELL_SIZE_PIXELS;
+        final double col = gameState.getGhostHouseS().getCol() + configs.PLAYGROUND_CELL_SIZE() * 3;
+        final double row = gameState.getGhostHouseS().getERow() - configs.PLAYGROUND_CELL_SIZE();
         setCol(col);
         setRow(row);
     }

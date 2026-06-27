@@ -71,7 +71,6 @@ public class GamePlayGameScene implements GameScene {
 
     public GamePlayGameScene() throws FileNotFoundException, URISyntaxException {
         configs = new ConfigsLoader().load();
-        gameState.setConfigs(configs);
 
         // init
         Playground.init();
