@@ -1,5 +1,6 @@
 package com.ahmedaraby.game.pacman.sprite.ghost;
 
+import com.ahmedaraby.game.pacman.config.intConfigs.ConfigsEx;
 import com.ahmedaraby.game.pacman.constant.DimensionsC;
 import com.ahmedaraby.game.pacman.constant.DirectionsE;
 import com.ahmedaraby.game.pacman.constant.SpriteE;
@@ -21,8 +22,8 @@ import javafx.scene.image.Image;
 public class Inky extends Ghost {
 
 
-    public Inky(GameState gameState, SpriteRegistry<String, Image> spriteRegistry) {
-        super(gameState, SpriteE.GHOST , 0, 0, DirectionsE.STILL);
+    public Inky(GameState gameState, ConfigsEx configs, SpriteRegistry<String, Image> spriteRegistry) {
+        super(gameState, configs, SpriteE.GHOST , 0, 0, DirectionsE.STILL);
         scattered = new InkyScattered(this, gameState, spriteRegistry, GhostModeActivePeriodsConf.LEVEL_1_SCATTER_ACTIVE_PERIODS);
         chaser = new InkyChaser(this, gameState, spriteRegistry, GhostModeActivePeriodsConf.LEVEL_1_CHASE_ACTIVE_PERIODS);
         frightened = new Frightened(this, gameState, spriteRegistry, GhostModeActivePeriodsConf.ALL_LEVELS_FRIGHTENED_MODE_ACTIVE_PERIODS);

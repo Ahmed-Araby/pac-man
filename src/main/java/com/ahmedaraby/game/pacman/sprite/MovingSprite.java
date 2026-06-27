@@ -1,6 +1,7 @@
 package com.ahmedaraby.game.pacman.sprite;
 
 import com.ahmedaraby.game.pacman.collision.M2SSpriteCollisionDetector;
+import com.ahmedaraby.game.pacman.config.intConfigs.ConfigsEx;
 import com.ahmedaraby.game.pacman.util.SpriteUtil;
 import lombok.Getter;
 import lombok.Setter;
@@ -22,8 +23,8 @@ public abstract class MovingSprite extends Sprite {
 
     protected DirectionsE dir;
 
-    public MovingSprite(GameState gameState, SpriteE type, Coordinate cord, double width, double height, DirectionsE dir) {
-        super(gameState, type, cord, width, height);
+    public MovingSprite(GameState gameState, ConfigsEx configs, SpriteE type, Coordinate cord, double width, double height, DirectionsE dir) {
+        super(gameState, configs, type, cord, width, height);
         this.dir = dir;
     }
 

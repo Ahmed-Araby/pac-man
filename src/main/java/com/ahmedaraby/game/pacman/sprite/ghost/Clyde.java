@@ -1,6 +1,7 @@
 package com.ahmedaraby.game.pacman.sprite.ghost;
 
 import com.ahmedaraby.game.pacman.config.GhostModeActivePeriodsConf;
+import com.ahmedaraby.game.pacman.config.intConfigs.ConfigsEx;
 import com.ahmedaraby.game.pacman.constant.DimensionsC;
 import com.ahmedaraby.game.pacman.constant.DirectionsE;
 import com.ahmedaraby.game.pacman.constant.SpriteE;
@@ -25,8 +26,8 @@ public class Clyde extends Ghost {
     private final ClydeScaredChaser scaredChaser;
     private final ShortestPathNavigator navigator;
 
-    public Clyde(GameState gameState, SpriteRegistry<String, Image> spriteRegistry) {
-        super(gameState, SpriteE.GHOST, -1, -1, DirectionsE.STILL);
+    public Clyde(GameState gameState, ConfigsEx configs, SpriteRegistry<String, Image> spriteRegistry) {
+        super(gameState, configs, SpriteE.GHOST, -1, -1, DirectionsE.STILL);
 
         scattered = new ClydeScattered(this, gameState, spriteRegistry,
                 GhostModeActivePeriodsConf.LEVEL_1_SCATTER_ACTIVE_PERIODS);

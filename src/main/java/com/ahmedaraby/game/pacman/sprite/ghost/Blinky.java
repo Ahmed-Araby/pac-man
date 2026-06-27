@@ -1,5 +1,6 @@
 package com.ahmedaraby.game.pacman.sprite.ghost;
 
+import com.ahmedaraby.game.pacman.config.intConfigs.ConfigsEx;
 import com.ahmedaraby.game.pacman.constant.DimensionsC;
 import com.ahmedaraby.game.pacman.constant.DirectionsE;
 import com.ahmedaraby.game.pacman.constant.SpriteE;
@@ -20,8 +21,8 @@ import javafx.scene.image.Image;
 
 public class Blinky extends Ghost {
 
-    public Blinky(GameState gameState, SpriteRegistry<String, Image> spriteRegistry) {
-        super(gameState, SpriteE.GHOST, 0, 0, DirectionsE.STILL);
+    public Blinky(GameState gameState, ConfigsEx configs, SpriteRegistry<String, Image> spriteRegistry) {
+        super(gameState, configs, SpriteE.GHOST, 0, 0, DirectionsE.STILL);
 
         // ghost modes
         this.chaser = new BlinkyChaser(this, gameState, spriteRegistry, GhostModeActivePeriodsConf.LEVEL_1_CHASE_ACTIVE_PERIODS);

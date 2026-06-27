@@ -1,6 +1,6 @@
 package com.ahmedaraby.game.pacman.sprite.playground;
 
-import com.ahmedaraby.game.pacman.config.Configs;
+import com.ahmedaraby.game.pacman.config.intConfigs.ConfigsEx;
 import com.ahmedaraby.game.pacman.model.GameState;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
@@ -18,8 +18,8 @@ import com.ahmedaraby.game.pacman.util.debug.DebugUtil;
 public class Maze extends Sprite {
 
 
-    public Maze(GameState gameState) {
-        super(gameState, SpriteE.MAZE, new Coordinate(0, 0), DimensionsC.CANVAS_WIDTH_PIXELS, DimensionsC.CANVAS_HEIGHT_PIXELS);
+    public Maze(GameState gameState, ConfigsEx configs) {
+        super(gameState, configs, SpriteE.MAZE, new Coordinate(0, 0), DimensionsC.CANVAS_WIDTH_PIXELS, DimensionsC.CANVAS_HEIGHT_PIXELS);
     }
 
     @Override

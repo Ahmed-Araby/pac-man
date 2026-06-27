@@ -1,5 +1,6 @@
 package com.ahmedaraby.game.pacman.sprite.ghost;
 
+import com.ahmedaraby.game.pacman.config.intConfigs.ConfigsEx;
 import com.ahmedaraby.game.pacman.constant.DimensionsC;
 import com.ahmedaraby.game.pacman.constant.DirectionsE;
 import com.ahmedaraby.game.pacman.constant.SpriteE;
@@ -27,8 +28,8 @@ public abstract class Ghost extends MovingSprite implements Subscriber<EventType
     protected TemporalGhostMode previousMode;
 
 
-    public Ghost(GameState gameState, SpriteE type, double col, double row, DirectionsE dir) {
-        super(gameState, type, new Coordinate(row, col), DimensionsC.GHOST_WIDTH_PIXELS, DimensionsC.GHOST_HEIGHT_PIXELS, dir);
+    public Ghost(GameState gameState, ConfigsEx configs, SpriteE type, double col, double row, DirectionsE dir) {
+        super(gameState, configs, type, new Coordinate(row, col), DimensionsC.GHOST_WIDTH_PIXELS, DimensionsC.GHOST_HEIGHT_PIXELS, dir);
     }
 
     @Override

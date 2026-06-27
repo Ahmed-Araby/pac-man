@@ -1,5 +1,6 @@
 package com.ahmedaraby.game.pacman.sprite.playground;
 
+import com.ahmedaraby.game.pacman.config.intConfigs.ConfigsEx;
 import com.ahmedaraby.game.pacman.constant.ColorC;
 import com.ahmedaraby.game.pacman.constant.DimensionsC;
 import com.ahmedaraby.game.pacman.constant.DirectionsE;
@@ -22,8 +23,8 @@ import com.ahmedaraby.game.pacman.playground.Playground;
 
 public class SuperSugar extends Sprite implements Subscriber<EventType> {
 
-    public SuperSugar(GameState gameState) {
-        super(gameState, SpriteE.SUPER_SUGAR, null, DimensionsC.SUPER_SUGAR_DIAMETER_PIXELS, DimensionsC.SUPER_SUGAR_DIAMETER_PIXELS);
+    public SuperSugar(GameState gameState, ConfigsEx configs) {
+        super(gameState, configs, SpriteE.SUPER_SUGAR, null, DimensionsC.SUPER_SUGAR_DIAMETER_PIXELS, DimensionsC.SUPER_SUGAR_DIAMETER_PIXELS);
 
         for(int row = 0; row < Playground.height(); row++) {
             for (int col = 0; col < Playground.width(); col++) {

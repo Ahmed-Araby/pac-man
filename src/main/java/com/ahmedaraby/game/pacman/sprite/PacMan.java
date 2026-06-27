@@ -1,6 +1,7 @@
 package com.ahmedaraby.game.pacman.sprite;
 
 import com.ahmedaraby.game.pacman.config.Configs;
+import com.ahmedaraby.game.pacman.config.intConfigs.ConfigsEx;
 import com.ahmedaraby.game.pacman.constant.DimensionsC;
 import com.ahmedaraby.game.pacman.constant.SpriteE;
 import com.ahmedaraby.game.pacman.event.EventType;
@@ -28,8 +29,8 @@ public class PacMan extends MovingSprite implements Subscriber<EventType> {
     private final PacManMouthAnimationTracker mouthAnimationTracker;
     private Vector dir; // [TODO] move this to MovingSprite later
 
-    public PacMan(GameState gameState) {
-        super(gameState, SpriteE.PAC_MAN, null,
+    public PacMan(GameState gameState, ConfigsEx configs) {
+        super(gameState, configs, SpriteE.PAC_MAN, null,
                 gameState.getConfigs().PACMAN_DIAMETER(),
                 gameState.getConfigs().PACMAN_DIAMETER(),
                 DirectionsE.STILL

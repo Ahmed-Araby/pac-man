@@ -1,5 +1,6 @@
 package com.ahmedaraby.game.pacman.sprite.playground;
 
+import com.ahmedaraby.game.pacman.config.intConfigs.ConfigsEx;
 import com.ahmedaraby.game.pacman.constant.ColorC;
 import com.ahmedaraby.game.pacman.constant.DimensionsC;
 import com.ahmedaraby.game.pacman.constant.DirectionsE;
@@ -25,8 +26,8 @@ import com.ahmedaraby.game.pacman.util.SugarUtil;
 public class Sugar extends Sprite implements Subscriber<EventType> {
     private final EnrichedThreadLocalRandom enrichedRandom = new EnrichedThreadLocalRandom();
 
-    public Sugar(GameState gameState) {
-        super(gameState, SpriteE.SUGAR, null, DimensionsC.SUGAR_CELL_SIZE_PIXELS, DimensionsC.SUGAR_CELL_SIZE_PIXELS);
+    public Sugar(GameState gameState, ConfigsEx configs) {
+        super(gameState, configs, SpriteE.SUGAR, null, DimensionsC.SUGAR_CELL_SIZE_PIXELS, DimensionsC.SUGAR_CELL_SIZE_PIXELS);
 
         for(int row = 0; row < Playground.height(); row++) {
             for (int col = 0; col < Playground.width(); col++) {

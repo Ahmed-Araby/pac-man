@@ -103,19 +103,19 @@ public class GamePlayGameScene implements GameScene {
     }
 
     private void createNonGhostSprites() {
-        ghostHouseS = new GhostHouseS(gameState);
-        maze = new Maze(gameState);
-        pacMan = new PacMan(gameState);
+        ghostHouseS = new GhostHouseS(gameState, configs);
+        maze = new Maze(gameState, configs);
+        pacMan = new PacMan(gameState, configs);
         // sugar Sprite has to be instantiated before SuperSugar Sprite
-        sugar = new Sugar(gameState);
-        superSugar = new SuperSugar(gameState);
+        sugar = new Sugar(gameState, configs);
+        superSugar = new SuperSugar(gameState, configs);
     }
 
     private void createGhostsSprites() {
-        blinky = new Blinky(gameState, spriteRegistry);
-        inky = new Inky(gameState, spriteRegistry);
-        pinky = new Pinky(gameState, spriteRegistry);
-        clyde = new Clyde(gameState, spriteRegistry);
+        blinky = new Blinky(gameState, configs, spriteRegistry);
+        inky = new Inky(gameState, configs, spriteRegistry);
+        pinky = new Pinky(gameState, configs, spriteRegistry);
+        clyde = new Clyde(gameState, configs, spriteRegistry);
     }
 
     private void setGameState() {

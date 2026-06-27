@@ -1,5 +1,6 @@
 package com.ahmedaraby.game.pacman.sprite.playground;
 
+import com.ahmedaraby.game.pacman.config.intConfigs.ConfigsEx;
 import com.ahmedaraby.game.pacman.constant.ColorC;
 import com.ahmedaraby.game.pacman.constant.DimensionsC;
 import com.ahmedaraby.game.pacman.constant.DirectionsE;
@@ -22,8 +23,8 @@ public class GhostHouseS extends Sprite {
     private final double eRow;
 
 
-    public GhostHouseS(GameState gameState) {
-        super(gameState, SpriteE.GHOST_HOUSE);
+    public GhostHouseS(GameState gameState, ConfigsEx configs) {
+        super(gameState, configs, SpriteE.GHOST_HOUSE);
 
         final int mazeWidth = (int) (DimensionsC.CANVAS_WIDTH_PIXELS / DimensionsC.MAZE_CELL_SIZE_PIXELS);
         final int mazeHeight = (int) (DimensionsC.CANVAS_HEIGHT_PIXELS / DimensionsC.MAZE_CELL_SIZE_PIXELS);
