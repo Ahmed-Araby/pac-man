@@ -1,6 +1,12 @@
 package com.ahmedaraby.game.pacman.ghostmode.common;
 
+import com.ahmedaraby.game.pacman.collision.M2SSpriteCollisionDetector;
 import com.ahmedaraby.game.pacman.config.intConfigs.ConfigsEx;
+import com.ahmedaraby.game.pacman.constant.DimensionsC;
+import com.ahmedaraby.game.pacman.constant.SpriteE;
+import com.ahmedaraby.game.pacman.model.CollisionReport;
+import com.ahmedaraby.game.pacman.util.SpriteUtil;
+import com.ahmedaraby.jengine.entity.Rectangle;
 import com.ahmedaraby.jengine.entity.Vector;
 import com.ahmedaraby.game.pacman.model.GameState;
 import com.ahmedaraby.game.pacman.sprite.ghost.Ghost;
@@ -16,7 +22,6 @@ import com.ahmedaraby.jengine.entity.Coordinate;
 import com.ahmedaraby.game.pacman.ghostmode.TemporalGhostMode;
 import com.ahmedaraby.game.pacman.util.EnrichedThreadLocalRandom;
 import com.ahmedaraby.game.pacman.util.ghost.GhostUtil;
-import com.ahmedaraby.game.pacman.util.ghost.FrightenedGhostUtil;
 
 import java.util.List;
 
@@ -50,7 +55,7 @@ public class Frightened extends TemporalGhostMode {
         final Coordinate sCord = new Coordinate(ghost.getRow(), ghost.getCol());
         final Vector currDir = ghost.getDir().toVector();
 
-        final List<Vector> eligibleDirections = FrightenedGhostUtil.getEligibleDirections(sCord, currDir);
+        final List<Vector> eligibleDirections = getEligibleDirections(sCord, currDir);
         Vector newDirV;
         if (eligibleDirections.isEmpty()) {
             newDirV = currDir.flip180();
@@ -87,5 +92,34 @@ public class Frightened extends TemporalGhostMode {
         final Vector oppositeDir = dir.flip180();
         final DirectionsE oppositeDirE = DirectionsE.fromVector(oppositeDir);
         ghost.setDir(oppositeDirE);
+    }
+
+    private List<Vector> getEligibleDirections(Coordinate cord, Vector dir) {
+        final List<Vector> allowedDirections = getAllowedDirections(dir);
+        return allowedDirections
+                .stream()
+                .filter(allowedDir -> {
+                    final DirectionsE allowedDirectionE = DirectionsE.fromVector(allowedDir);
+                    final Coordinate candidateNextCord = GhostUtil.move(cord, allowedDirectionE);
+                    if (isGoingOutOfCanvas(candidateNextCord))  {
+                        return false;
+                    }
+                    final Rectangle rect = SpriteUtil.toRect(candidateNextCord, SpriteE.GHOST);
+                    final List<CollisionReport> collisionReportOpt = M2SSpriteCollisionDetector.detect(rect, List.of(SpriteE.WALL, SpriteE.GHOST_HOUSE_WALL));
+                    return collisionReportOpt.isEmpty();
+                })
+                .toList();
+    }
+
+    private List<Vector> getAllowedDirections(Vector currDir) {
+        return Vector.fourD
+                .stream()
+                .filter(dir -> !currDir.isOpposite(dir))
+                .toList();
+    }
+
+    private boolean isGoingOutOfCanvas(Coordinate topLeftCorner) {
+        return topLeftCorner.getRow() < 0 || topLeftCorner.getRow() > DimensionsC.CANVAS_HEIGHT_PIXELS - DimensionsC.GHOST_HEIGHT_PIXELS ||
+                topLeftCorner.getCol() < 0 || topLeftCorner.getCol() > DimensionsC.CANVAS_WIDTH_PIXELS - DimensionsC.GHOST_WIDTH_PIXELS;
     }
 }
