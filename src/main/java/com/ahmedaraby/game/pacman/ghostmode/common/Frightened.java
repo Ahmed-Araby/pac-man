@@ -50,10 +50,10 @@ public class Frightened extends TemporalGhostMode {
 
     @Override
     public void move() {
-        final Coordinate sCord = new Coordinate(ghost.getRow(), ghost.getCol());
+        final Coordinate currCord = ghost.getTopLeftCorner();
         final Vector currDir = ghost.getDir().toVector();
 
-        final List<Vector> eligibleDirections = getEligibleDirections(sCord, currDir);
+        final List<Vector> eligibleDirections = getEligibleDirections(currDir);
         Vector newDirV;
         if (eligibleDirections.isEmpty()) {
             newDirV = currDir.flip180();
@@ -63,7 +63,7 @@ public class Frightened extends TemporalGhostMode {
         }
 
         final DirectionsE newDirE =  DirectionsE.fromVector(newDirV);
-        final Coordinate nCord = GhostUtil.move(sCord, newDirE);
+        final Coordinate nCord = GhostUtil.move(currCord, newDirE);
 
         ghost.setDir(newDirE);
         ghost.setRow(nCord.getRow());
@@ -92,7 +92,7 @@ public class Frightened extends TemporalGhostMode {
         ghost.setDir(oppositeDirE);
     }
 
-    private List<Vector> getEligibleDirections(Coordinate cord, Vector dir) {
+    private List<Vector> getEligibleDirections(Vector dir) {
         final List<Vector> allowedDirections = getAllowedDirections(dir);
         return allowedDirections
                 .stream()
