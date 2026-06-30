@@ -20,14 +20,4 @@ public class SugarUtil {
         final double sugarTopLeftCornerCol =  (DimensionsC.MAZE_CELL_SIZE_PIXELS - DimensionsC.SUPER_SUGAR_DIAMETER_PIXELS) / 2 + cellTopLeftCornerCanvas.getCol();
         return new Coordinate(sugarTopLeftCornerRow, sugarTopLeftCornerCol);
     }
-
-    public static boolean isCanvasCellHasSugar(Coordinate cellTopLeftCornerCanvas) {
-        final MazeCell cell = cellTopLeftCornerCanvas.toCell(DirectionsE.STILL.toVector());
-        return Playground.hasSugar(cell);
-    }
-
-    public static boolean isCanvasCellHasSuperSugar(Coordinate cellTopLeftCornerCanvas) {
-        final MazeCell cell = cellTopLeftCornerCanvas.toCell(DirectionsE.STILL.toVector());
-        return Playground.hasSuperSugar(cell);
-    }
 }
