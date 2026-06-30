@@ -30,12 +30,6 @@ public abstract class MovingSprite extends Sprite {
 
     public abstract void move(Event event);
 
-    // [TODO] this method need to be generic, i.e. handle sprites with different Dimensions, to do this we need to define the dimensions within the sprite calling this method
-    protected boolean isGoingOutOfCanvas(Coordinate topLeftCorner) {
-        return topLeftCorner.getRow() < 0 || topLeftCorner.getRow() > configs.CANVAS_HEIGHT() - getHeight() ||
-                topLeftCorner.getCol() < 0 || topLeftCorner.getCol() > configs.CANVAS_WIDTH() - getWidth();
-    }
-
     protected boolean isCollidingWithWallOrGhostHWall(Coordinate topLeftCorner) {
         final Rectangle rect = SpriteUtil.toRect(topLeftCorner, type);
         List<CollisionReport> collisionReports = M2SSpriteCollisionDetector.detect(rect, List.of(SpriteE.WALL, SpriteE.GHOST_HOUSE_WALL));

@@ -2,10 +2,8 @@ package com.ahmedaraby.game.pacman.ghostmode.common;
 
 import com.ahmedaraby.game.pacman.collision.M2SSpriteCollisionDetector;
 import com.ahmedaraby.game.pacman.config.intConfigs.ConfigsEx;
-import com.ahmedaraby.game.pacman.constant.DimensionsC;
 import com.ahmedaraby.game.pacman.constant.SpriteE;
 import com.ahmedaraby.game.pacman.model.CollisionReport;
-import com.ahmedaraby.game.pacman.util.SpriteUtil;
 import com.ahmedaraby.jengine.entity.Rectangle;
 import com.ahmedaraby.jengine.entity.Vector;
 import com.ahmedaraby.game.pacman.model.GameState;
@@ -98,17 +96,19 @@ public class Frightened extends TemporalGhostMode {
         final List<Vector> allowedDirections = getAllowedDirections(dir);
         return allowedDirections
                 .stream()
-                .filter(allowedDir -> {
-                    final DirectionsE allowedDirectionE = DirectionsE.fromVector(allowedDir);
-                    final Coordinate candidateNextCord = GhostUtil.move(cord, allowedDirectionE);
-                    if (isGoingOutOfCanvas(candidateNextCord))  {
-                        return false;
-                    }
-                    final Rectangle rect = SpriteUtil.toRect(candidateNextCord, SpriteE.GHOST);
-                    final List<CollisionReport> collisionReportOpt = M2SSpriteCollisionDetector.detect(rect, List.of(SpriteE.WALL, SpriteE.GHOST_HOUSE_WALL));
-                    return collisionReportOpt.isEmpty();
-                })
+                .filter(this::isValidDir)
                 .toList();
+    }
+
+    private boolean isValidDir(Vector dir) {
+        final DirectionsE dirE = DirectionsE.fromVector(dir);
+        final Coordinate candidateNextCord = GhostUtil.move(ghost.getTopLeftCorner(), dirE);
+        final Rectangle gVRect = new Rectangle(candidateNextCord, ghost.getWidth(), ghost.getHeight());
+        if (!gVRect.within(gameState.getMaze().getRect()))  {
+            return false;
+        }
+        final List<CollisionReport> collisionReportOpt = M2SSpriteCollisionDetector.detect(gVRect, List.of(SpriteE.WALL, SpriteE.GHOST_HOUSE_WALL));
+        return collisionReportOpt.isEmpty();
     }
 
     private List<Vector> getAllowedDirections(Vector currDir) {
@@ -116,10 +116,5 @@ public class Frightened extends TemporalGhostMode {
                 .stream()
                 .filter(dir -> !currDir.isOpposite(dir))
                 .toList();
-    }
-
-    private boolean isGoingOutOfCanvas(Coordinate topLeftCorner) {
-        return topLeftCorner.getRow() < 0 || topLeftCorner.getRow() > DimensionsC.CANVAS_HEIGHT_PIXELS - DimensionsC.GHOST_HEIGHT_PIXELS ||
-                topLeftCorner.getCol() < 0 || topLeftCorner.getCol() > DimensionsC.CANVAS_WIDTH_PIXELS - DimensionsC.GHOST_WIDTH_PIXELS;
     }
 }
