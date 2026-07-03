@@ -36,9 +36,9 @@ public class Coordinate {
 
     public Cell toCell(Vector dir) {
         if (Vector.RIGHT.equals(dir) || Vector.DOWN.equals(dir)) {
-            return toCellFlooring();
-        } else if (Vector.LEFT.equals(dir) || Vector.UP.equals(dir)) {
             return toCellCeiling();
+        } else if (Vector.LEFT.equals(dir) || Vector.UP.equals(dir)) {
+            return toCellFlooring();
         } else {
             return toCellFlooring();
         }
