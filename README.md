@@ -8,6 +8,8 @@ pac man game using javaFX.
 # Table Of Contents
 - [Sprites Class Structure](#sprites-class-structure)
 - [Ghost Mode Class Structure](#ghost-mode-class-structure)
+- [State Machine for Blinky Inky and Pinky](#state-machine-for-blinky-inky-and-pinky)
+- [State Machine for Clyde](#state-machine-for-clyde)
 - [Drawing Pac Man with open and closed Mouth using simple circle and Arc Math.](#drawing-pac-man-with-open-and-closed-mouth-using-simple-circle-and-arc-math)
 - [Pac Man open and close mouth animation](#pac-man-open-and-close-mouth-animation)
 - [Generating the Maze Programmatically](#generating-the-maze-programmatically)
@@ -30,6 +32,12 @@ pac man game using javaFX.
 ## Ghost Mode Class Structure
 ![Ghost Mode Class Structure](https://github.com/Ahmed-Araby/pac-man/blob/main/documentation/imgs/ghost-mode-class-structure.png)
 
+<br><br>
+## State Machine for Blinky Inky and Pinky
+![State Machine for Blinky, Inky and Pinky](https://github.com/Ahmed-Araby/pac-man/blob/configuration/documentation/imgs/ghosts/state-machine/state%20machine%20for%20Blinky%2C%20Inky%20and%20Pinky.png)
+
+## State Machine for Clyde
+![State Machine for Clyde](https://github.com/Ahmed-Araby/pac-man/blob/configuration/documentation/imgs/ghosts/state-machine/state%20machine%20for%20Clyde.png)
 <br><br>
 ## Drawing Pac Man with open and closed Mouth using simple circle and Arc Math.
 Pac-Man with open mouth is just an Arc on a Circle. an Arc on a Circle is defined by the circle diameter, the start and end angles and drawing direction from the start angle to the end angle.
