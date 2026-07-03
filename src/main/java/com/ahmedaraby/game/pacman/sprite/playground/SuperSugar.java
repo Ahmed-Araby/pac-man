@@ -4,6 +4,7 @@ import com.ahmedaraby.game.pacman.config.intConfigs.ConfigsEx;
 import com.ahmedaraby.game.pacman.constant.DirectionsE;
 import com.ahmedaraby.game.pacman.constant.SpriteE;
 import com.ahmedaraby.game.pacman.event.EventType;
+import com.ahmedaraby.game.pacman.util.SpriteUtil;
 import com.ahmedaraby.jengine.entity.Coordinate;
 import com.ahmedaraby.jengine.entity.Rectangle;
 import com.ahmedaraby.game.pacman.entity.MazeCell;
@@ -12,7 +13,6 @@ import com.ahmedaraby.jengine.event.Subscriber;
 import com.ahmedaraby.game.pacman.event.collision.PacMan2SugarCollisionEvent;
 import com.ahmedaraby.game.pacman.model.GameState;
 import com.ahmedaraby.game.pacman.sprite.Sprite;
-import com.ahmedaraby.game.pacman.util.SugarUtil;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import com.ahmedaraby.game.pacman.playground.Playground;
@@ -41,7 +41,7 @@ public class SuperSugar extends Sprite implements Subscriber<EventType> {
             for (int col = 0; col < Playground.width(); col++) {
                 if (Playground.hasSuperSugar(row, col)) {
                     final Coordinate cellTopLeftCornerCanvas = new MazeCell(row, col).toCord(configs.PLAYGROUND_CELL_SIZE(), configs.PLAYGROUND_CELL_SIZE());
-                    final Coordinate sugarCellTopLeftCornerCanvas = SugarUtil.getSuperSugarTopLeftCornerCanvas(cellTopLeftCornerCanvas);
+                    final Coordinate sugarCellTopLeftCornerCanvas = SpriteUtil.c2STopLeftCorner(cellTopLeftCornerCanvas, SpriteE.SUPER_SUGAR);;
                     con.fillOval(sugarCellTopLeftCornerCanvas.getCol(), sugarCellTopLeftCornerCanvas.getRow(), configs.SUPER_SUGAR_DIAMETER(), configs.SUPER_SUGAR_DIAMETER());
                 }
             }

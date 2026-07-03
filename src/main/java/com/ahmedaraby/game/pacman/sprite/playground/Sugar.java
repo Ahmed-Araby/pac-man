@@ -6,6 +6,7 @@ import com.ahmedaraby.game.pacman.constant.SpriteE;
 import com.ahmedaraby.game.pacman.event.EventType;
 import com.ahmedaraby.game.pacman.event.collision.PacMan2SugarCollisionEvent;
 import com.ahmedaraby.game.pacman.model.GameState;
+import com.ahmedaraby.game.pacman.util.SpriteUtil;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import com.ahmedaraby.game.pacman.config.Configs;
@@ -17,7 +18,6 @@ import com.ahmedaraby.jengine.event.Subscriber;
 import com.ahmedaraby.game.pacman.playground.Playground;
 import com.ahmedaraby.game.pacman.sprite.Sprite;
 import com.ahmedaraby.game.pacman.util.EnrichedThreadLocalRandom;
-import com.ahmedaraby.game.pacman.util.SugarUtil;
 
 public class Sugar extends Sprite implements Subscriber<EventType> {
     private final EnrichedThreadLocalRandom enrichedRandom = new EnrichedThreadLocalRandom();
@@ -46,7 +46,7 @@ public class Sugar extends Sprite implements Subscriber<EventType> {
             for (int col = 0; col < Playground.width(); col++) {
                 if (Playground.hasSugar(row, col)) {
                     final Coordinate cellTopLeftCornerCanvas = new MazeCell(row, col).toCord(configs.PLAYGROUND_CELL_SIZE(), configs.PLAYGROUND_CELL_SIZE());
-                    final Coordinate sugarCellTopLeftCornerCanvas = SugarUtil.getSugarTopLeftCornerCanvas(cellTopLeftCornerCanvas);
+                    final Coordinate sugarCellTopLeftCornerCanvas = SpriteUtil.c2STopLeftCorner(cellTopLeftCornerCanvas, SpriteE.SUGAR);
                     con.fillRect(sugarCellTopLeftCornerCanvas.getCol(), sugarCellTopLeftCornerCanvas.getRow(), configs.SUGAR_DIAMETER(), configs.SUGAR_DIAMETER());
                 }
             }
