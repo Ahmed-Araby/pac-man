@@ -41,7 +41,7 @@ public class M2SSpriteCollisionDetector {
 
     private static Coordinate toTopLeftCornerOfRectContainingPoint(Coordinate point) {
         return Playground
-                .getRectContainingPoint(DimensionsC.MAZE_CELL_SIZE_PIXELS, DimensionsC.MAZE_CELL_SIZE_PIXELS, point)
+                .getRectContainingPoint(point)
                 .topLeftCorner();
     }
     private static boolean isTarget(Coordinate topLeftCornerCord, SpriteE targetSpriteType) {

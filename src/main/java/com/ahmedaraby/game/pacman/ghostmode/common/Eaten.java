@@ -16,7 +16,6 @@ import javafx.scene.image.Image;
 import com.ahmedaraby.game.pacman.config.Configs;
 import com.ahmedaraby.game.pacman.constant.DirectionsE;
 import com.ahmedaraby.game.pacman.ghostmode.GhostMode;
-import com.ahmedaraby.game.pacman.util.ghost.GhostUtil;
 
 import java.util.AbstractMap;
 import java.util.Map;
@@ -63,9 +62,8 @@ public class Eaten extends GhostMode {
 
     @Override
     public void move() {
-        final Coordinate currCord = new Coordinate(ghost.getRow(), ghost.getCol());
-        final DirectionsE newDir = this.navigator.nextMoveDirection(currCord, ghostHouseEmptyLoc);
-        final Coordinate newCord = GhostUtil.move(currCord, newDir);
+        final DirectionsE newDir = this.navigator.calcDir(ghost, ghostHouseEmptyLoc);
+        final Coordinate newCord = ghost.calculateNextCord(newDir.toVector());
 
         ghost.setDir(newDir);
         ghost.setRow(newCord.getRow());

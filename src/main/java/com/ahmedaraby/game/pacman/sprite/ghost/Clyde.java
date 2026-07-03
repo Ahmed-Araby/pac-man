@@ -75,6 +75,7 @@ public class Clyde extends Ghost {
         }
     }
 
+    // [TODO] debug, Clyde never leaves teh scared chaser mode
     private void scaredChaserTransition(Event event) {
         if (event != null && EventType.PAC_MAN_SUPER_SUGAR_COLLISION.equals(event.getType())) {
             chaser.pause();
@@ -84,7 +85,7 @@ public class Clyde extends Ghost {
             activeMode = frightened;
         } else {
             final Coordinate pacManCord = gameState.getPacMan().getTopLeftCorner();
-            final double distToPacManInPixels = navigator.calcDist(getTopLeftCorner(), pacManCord);
+            final double distToPacManInPixels = navigator.calcDist(this, pacManCord);
             // [TODO] provide the number 8 as a configuration
             if (distToPacManInPixels >= 8 * configs.PLAYGROUND_CELL_SIZE()) {
                 chaser.enter();
@@ -102,7 +103,7 @@ public class Clyde extends Ghost {
         }
 
         final Coordinate pacManCord = gameState.getPacMan().getTopLeftCorner();
-        final double distToPacManInPixels = navigator.calcDist(getTopLeftCorner(), pacManCord);
+        final double distToPacManInPixels = navigator.calcDist(this, pacManCord);
         // [TODO] provide the number 8 as a configuration
         if (distToPacManInPixels < 8 * configs.PLAYGROUND_CELL_SIZE()) {
             activeMode = scaredChaser;

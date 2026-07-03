@@ -1,6 +1,8 @@
 package com.ahmedaraby.game.pacman.sprite.ghost;
 
+import com.ahmedaraby.game.pacman.config.Configs;
 import com.ahmedaraby.game.pacman.config.intConfigs.ConfigsEx;
+import com.ahmedaraby.game.pacman.constant.DimensionsC;
 import com.ahmedaraby.game.pacman.constant.DirectionsE;
 import com.ahmedaraby.game.pacman.constant.SpriteE;
 import com.ahmedaraby.game.pacman.event.collision.PacMan2GhostCollisionEvent;
@@ -15,6 +17,7 @@ import com.ahmedaraby.game.pacman.ghostmode.common.Eaten;
 import com.ahmedaraby.game.pacman.ghostmode.common.Frightened;
 import com.ahmedaraby.game.pacman.model.GameState;
 import com.ahmedaraby.game.pacman.sprite.MovingSprite;
+import com.ahmedaraby.jengine.entity.Vector;
 import com.ahmedaraby.jengine.event.Subscriber;
 
 public abstract class Ghost extends MovingSprite implements Subscriber<EventType> {
@@ -37,6 +40,16 @@ public abstract class Ghost extends MovingSprite implements Subscriber<EventType
         chaser.init();
         frightened.init();
         eaten.init();
+    }
+
+    // [TODO] make the method generic enough to work on any sprite
+    // [TODO] move the method to "MovingSprite" class
+    // [TODO] refer to the dynamically loaded configs
+    public Coordinate calculateNextCord(Vector dir) {
+        final Coordinate currCord = super.getTopLeftCorner();
+        final double newX = currCord.getCol() + dir.getX() * (DimensionsC.GHOST_STRIDE_PIXELS / Configs.FRAMES_PER_SEC_FOR_GHOST_STRIDE);
+        final double newY = currCord.getRow() + dir.getY() * (DimensionsC.GHOST_STRIDE_PIXELS / Configs.FRAMES_PER_SEC_FOR_GHOST_STRIDE);
+        return new Coordinate(newY, newX);
     }
 
     protected void transitionMode(Event event) {

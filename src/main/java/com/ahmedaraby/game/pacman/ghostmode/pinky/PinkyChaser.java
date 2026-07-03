@@ -9,7 +9,6 @@ import com.ahmedaraby.game.pacman.ghostmode.navigation.GhostNavigator;
 import com.ahmedaraby.game.pacman.ghostmode.navigation.ShortestPathNavigator;
 import com.ahmedaraby.game.pacman.model.GameState;
 import com.ahmedaraby.game.pacman.sprite.ghost.Ghost;
-import com.ahmedaraby.game.pacman.util.ghost.GhostUtil;
 import com.ahmedaraby.jengine.animation.Animator;
 import com.ahmedaraby.jengine.animation.DistanceBasedAnimator;
 import com.ahmedaraby.jengine.entity.Coordinate;
@@ -52,9 +51,9 @@ public class PinkyChaser extends Chaser {
         final Line lookAheadLine = new Line(pacManCord, lookAheadCord).trim(gameState.getMaze().getRect());
         final Coordinate target = lookAheadLine.getEnd();
 
-        final DirectionsE newDir = navigator.nextMoveDirection(ghost.getTopLeftCorner(), target);
+        final DirectionsE newDir = navigator.calcDir(ghost, target);
         if (newDir != DirectionsE.STILL) {
-            final Coordinate newCord = GhostUtil.move(ghost.getTopLeftCorner(), newDir);
+            final Coordinate newCord = ghost.calculateNextCord(newDir.toVector());
             ghost.setTopLeftCorner(newCord);
             ghost.setDir(newDir);
             animator.stride(configs.GHOST_SPEED() / Configs.FRAMES_PER_SEC_FOR_GHOST_STRIDE);

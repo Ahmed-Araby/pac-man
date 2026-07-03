@@ -63,7 +63,7 @@ public class Frightened extends TemporalGhostMode {
         }
 
         final DirectionsE newDirE =  DirectionsE.fromVector(newDirV);
-        final Coordinate nCord = GhostUtil.move(currCord, newDirE);
+        final Coordinate nCord = ghost.calculateNextCord(newDirE.toVector());
 
         ghost.setDir(newDirE);
         ghost.setRow(nCord.getRow());
@@ -102,7 +102,7 @@ public class Frightened extends TemporalGhostMode {
 
     private boolean isValidDir(Vector dir) {
         final DirectionsE dirE = DirectionsE.fromVector(dir);
-        final Coordinate candidateNextCord = GhostUtil.move(ghost.getTopLeftCorner(), dirE);
+        final Coordinate candidateNextCord = ghost.calculateNextCord(dirE.toVector());
         final Rectangle gVRect = new Rectangle(candidateNextCord, ghost.getWidth(), ghost.getHeight());
         if (!gVRect.within(gameState.getMaze().getRect()))  {
             return false;

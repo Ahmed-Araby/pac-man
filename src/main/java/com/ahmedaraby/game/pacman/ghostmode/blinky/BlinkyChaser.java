@@ -15,7 +15,6 @@ import com.ahmedaraby.jengine.entity.Coordinate;
 import com.ahmedaraby.game.pacman.ghostmode.Chaser;
 import com.ahmedaraby.game.pacman.ghostmode.navigation.GhostNavigator;
 import com.ahmedaraby.game.pacman.ghostmode.navigation.ShortestPathNavigator;
-import com.ahmedaraby.game.pacman.util.ghost.GhostUtil;
 
 public class BlinkyChaser extends Chaser {
 
@@ -38,10 +37,9 @@ public class BlinkyChaser extends Chaser {
 
     @Override
     public void move() {
-        final Coordinate ghostCurrCord = new Coordinate(ghost.getRow(), ghost.getCol());
         final Coordinate pacmanCurrCord = gameState.getPacMan().getTopLeftCorner();
-        final DirectionsE directionsE = navigator.nextMoveDirection(ghostCurrCord, pacmanCurrCord);
-        final Coordinate ghostNewCord = GhostUtil.move(ghostCurrCord, directionsE);
+        final DirectionsE directionsE = navigator.calcDir(ghost, pacmanCurrCord);
+        final Coordinate ghostNewCord = ghost.calculateNextCord(directionsE.toVector());
 
         ghost.setDir(directionsE);
         ghost.setRow(ghostNewCord.getRow());

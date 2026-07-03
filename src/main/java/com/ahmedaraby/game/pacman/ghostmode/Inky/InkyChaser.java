@@ -14,7 +14,6 @@ import com.ahmedaraby.game.pacman.ghostmode.navigation.ShortestPathNavigator;
 import com.ahmedaraby.game.pacman.model.GameState;
 import com.ahmedaraby.game.pacman.sprite.ghost.Blinky;
 import com.ahmedaraby.game.pacman.sprite.ghost.Ghost;
-import com.ahmedaraby.game.pacman.util.ghost.GhostUtil;
 import com.ahmedaraby.jengine.sprite.SpriteRegistry;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
@@ -50,12 +49,12 @@ public class InkyChaser extends Chaser {
         final Coordinate target = calculateTheTargetCoordinate(blinky2InterTileLine);
 
         // navigate the ghost to the target
-        DirectionsE newDir = navigator.nextMoveDirection(ghost.getTopLeftCorner(), target);
+        DirectionsE newDir = navigator.calcDir(ghost, target);
 
         if (newDir != null) {
             animator.stride(configs.GHOST_INKY_SPEED() / Configs.FRAMES_PER_SEC_FOR_GHOST_STRIDE);
 
-            final Coordinate newCord = GhostUtil.move(ghost.getTopLeftCorner(), newDir);
+            final Coordinate newCord = ghost.calculateNextCord(newDir.toVector());
 
             ghost.setDir(newDir);
             ghost.setCol(newCord.getCol());

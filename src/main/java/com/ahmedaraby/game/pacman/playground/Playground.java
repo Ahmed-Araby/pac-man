@@ -1,6 +1,7 @@
 package com.ahmedaraby.game.pacman.playground;
 
 import com.ahmedaraby.game.pacman.config.intConfigs.ConfigsEx;
+import com.ahmedaraby.game.pacman.constant.DimensionsC;
 import com.ahmedaraby.game.pacman.constant.SpriteE;
 import com.ahmedaraby.jengine.entity.Coordinate;
 import com.ahmedaraby.game.pacman.entity.MazeCell;
@@ -98,9 +99,9 @@ public class Playground {
     }
 
 
-    public static Rectangle getRectContainingPoint(double rectWidth, double rectHeight, Coordinate point) {
-        final double topLeftCornerRow = point.getRow() - point.getRow() % rectHeight;
-        final double topLeftCornerCol = point.getCol() - point.getCol() % rectWidth;
-        return new Rectangle(new Coordinate(topLeftCornerRow, topLeftCornerCol), rectWidth, rectHeight);
+    public static Rectangle getRectContainingPoint(Coordinate point) {
+        final double topLeftCornerRow = point.getRow() - point.getRow() % DimensionsC.MAZE_CELL_SIZE_PIXELS;
+        final double topLeftCornerCol = point.getCol() - point.getCol() % DimensionsC.MAZE_CELL_SIZE_PIXELS;
+        return new Rectangle(new Coordinate(topLeftCornerRow, topLeftCornerCol), DimensionsC.MAZE_CELL_SIZE_PIXELS, DimensionsC.MAZE_CELL_SIZE_PIXELS);
     }
 }

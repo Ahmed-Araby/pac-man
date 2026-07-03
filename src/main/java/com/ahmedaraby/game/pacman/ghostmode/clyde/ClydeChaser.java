@@ -9,7 +9,6 @@ import com.ahmedaraby.game.pacman.ghostmode.navigation.GhostNavigator;
 import com.ahmedaraby.game.pacman.ghostmode.navigation.ShortestPathNavigator;
 import com.ahmedaraby.game.pacman.model.GameState;
 import com.ahmedaraby.game.pacman.sprite.ghost.Ghost;
-import com.ahmedaraby.game.pacman.util.ghost.GhostUtil;
 import com.ahmedaraby.jengine.animation.Animator;
 import com.ahmedaraby.jengine.animation.DistanceBasedAnimator;
 import com.ahmedaraby.jengine.entity.Coordinate;
@@ -45,11 +44,10 @@ public class ClydeChaser extends Chaser {
     @Override
     public void move() {
         final Coordinate targetCord = gameState.getPacMan().getTopLeftCorner();
-        final Coordinate ghostCord = ghost.getTopLeftCorner();
 
-        final DirectionsE newDir = navigator.nextMoveDirection(ghostCord, targetCord);
+        final DirectionsE newDir = navigator.calcDir(ghost, targetCord);
 
-        final Coordinate ghostNewCord = GhostUtil.move(ghostCord, newDir.toVector());
+        final Coordinate ghostNewCord = ghost.calculateNextCord(newDir.toVector());
         ghost.setTopLeftCorner(ghostNewCord);
         ghost.setDir(newDir);
 
