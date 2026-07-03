@@ -5,8 +5,6 @@ import com.ahmedaraby.game.pacman.config.intConfigs.ConfigsEx;
 import com.ahmedaraby.game.pacman.constant.DirectionsE;
 import com.ahmedaraby.game.pacman.constant.SpriteFileNameC;
 import com.ahmedaraby.game.pacman.ghostmode.Chaser;
-import com.ahmedaraby.game.pacman.ghostmode.navigation.GhostNavigator;
-import com.ahmedaraby.game.pacman.ghostmode.navigation.ShortestPathNavigator;
 import com.ahmedaraby.game.pacman.model.GameState;
 import com.ahmedaraby.game.pacman.sprite.ghost.Ghost;
 import com.ahmedaraby.jengine.animation.Animator;
@@ -21,7 +19,6 @@ import javafx.scene.image.Image;
 
 public class PinkyChaser extends Chaser {
     private final Animator animator;
-    private final GhostNavigator navigator;
 
     public PinkyChaser(Ghost ghost, GameState gameState, ConfigsEx configs, SpriteRegistry<String, Image> spriteRegistry, int[] activePeriodsSec) {
         super(ghost, gameState, configs, spriteRegistry, activePeriodsSec);
@@ -31,7 +28,6 @@ public class PinkyChaser extends Chaser {
                 configs.GHOST_PINKY_FIRST_FRAME_DISTANCE(),
                 configs.GHOST_PINKY_SECOND_FRAME_DISTANCE()
         }, frames);
-        navigator = new ShortestPathNavigator(configs);
     }
 
     @Override

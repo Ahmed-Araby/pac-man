@@ -6,6 +6,7 @@ import com.ahmedaraby.game.pacman.constant.DimensionsC;
 import com.ahmedaraby.game.pacman.constant.DirectionsE;
 import com.ahmedaraby.game.pacman.constant.SpriteE;
 import com.ahmedaraby.game.pacman.event.collision.PacMan2GhostCollisionEvent;
+import com.ahmedaraby.game.pacman.ghostmode.navigation.GhostNavigator;
 import com.ahmedaraby.jengine.entity.Coordinate;
 import com.ahmedaraby.game.pacman.event.Event;
 import com.ahmedaraby.game.pacman.event.EventType;
@@ -21,6 +22,7 @@ import com.ahmedaraby.jengine.entity.Vector;
 import com.ahmedaraby.jengine.event.Subscriber;
 
 public abstract class Ghost extends MovingSprite implements Subscriber<EventType> {
+    // modes
     protected TemporalGhostMode scattered;
     protected TemporalGhostMode chaser;
     protected TemporalGhostMode frightened;

@@ -14,21 +14,23 @@ import com.ahmedaraby.game.pacman.constant.SpriteE;
 import com.ahmedaraby.jengine.entity.Coordinate;
 import com.ahmedaraby.jengine.entity.Rectangle;
 import com.ahmedaraby.game.pacman.entity.MazeMove;
-import com.ahmedaraby.game.pacman.util.BfsUtil;
+import com.ahmedaraby.game.pacman.util.PlaygroundShortestPathNav;
 
 import java.util.List;
+import java.util.Objects;
 
 
 @AllArgsConstructor
 public class ShortestPathNavigator implements GhostNavigator {
 
     private final ConfigsEx configs;
+    private final PlaygroundShortestPathNav playgroundShortestPathNav;
 
     @Override
     public double calcDist(MovingSprite sprite, Coordinate targetCord) {
         Cell sourceCell = sprite.getTopLeftCorner().toCell(sprite.getDir().toVector());
         Cell targetCell = targetCord.toCell(DirectionsE.STILL.toVector());
-        return calcDist(sourceCell, targetCell) * configs.PLAYGROUND_CELL_SIZE();
+        return playgroundShortestPathNav.calcDist(sourceCell, targetCell) * configs.PLAYGROUND_CELL_SIZE();
     }
 
 
@@ -66,15 +68,14 @@ public class ShortestPathNavigator implements GhostNavigator {
         return candidateNextCell
                 .stream()
                 .map(interestingCell -> {
-                    final int dist = calcDist(interestingCell, targetCell);
+                    final int dist = playgroundShortestPathNav.calcDist(interestingCell, targetCell);
+                    if (dist == Integer.MAX_VALUE) {
+                        return null;
+                    }
                     return new MazeMove(interestingCell, dist);
                 })
+                .filter(Objects::nonNull)
                 .toList();
-    }
-
-    private int calcDist(Cell source, Cell target) {
-        final int[][] dist = BfsUtil.getDistMat(source, target);
-        return dist[target.getRow()][target.getCol()];
     }
 
 

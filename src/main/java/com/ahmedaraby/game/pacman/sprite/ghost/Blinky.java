@@ -3,6 +3,7 @@ package com.ahmedaraby.game.pacman.sprite.ghost;
 import com.ahmedaraby.game.pacman.config.intConfigs.ConfigsEx;
 import com.ahmedaraby.game.pacman.constant.DirectionsE;
 import com.ahmedaraby.game.pacman.constant.SpriteE;
+import com.ahmedaraby.game.pacman.ghostmode.navigation.GhostNavigator;
 import com.ahmedaraby.game.pacman.model.GameState;
 import com.ahmedaraby.game.pacman.sprite.playground.GhostHouseS;
 import com.ahmedaraby.jengine.sprite.SpriteRegistry;

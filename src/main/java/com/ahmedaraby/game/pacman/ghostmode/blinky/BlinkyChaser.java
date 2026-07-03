@@ -13,13 +13,10 @@ import com.ahmedaraby.game.pacman.constant.DirectionsE;
 import com.ahmedaraby.game.pacman.constant.SpriteFileNameC;
 import com.ahmedaraby.jengine.entity.Coordinate;
 import com.ahmedaraby.game.pacman.ghostmode.Chaser;
-import com.ahmedaraby.game.pacman.ghostmode.navigation.GhostNavigator;
-import com.ahmedaraby.game.pacman.ghostmode.navigation.ShortestPathNavigator;
 
 public class BlinkyChaser extends Chaser {
 
     private final Animator animator;
-    private final GhostNavigator navigator;
 
     public BlinkyChaser(Ghost ghost, GameState gameState, ConfigsEx configs, SpriteRegistry<String, Image> spriteRegistry, int[] activePeriodsSec) {
         super(ghost, gameState, configs, spriteRegistry, activePeriodsSec);
@@ -27,7 +24,6 @@ public class BlinkyChaser extends Chaser {
         final Image[] frames = loadSprites();
         this.animator = new DistanceBasedAnimator(
                 new double[]{configs.GHOST_BLINK_FIRST_FRAME_DISTANCE(), configs.GHOST_BLINK_SECOND_FRAME_DISTANCE()}, frames);
-        this.navigator = new ShortestPathNavigator(configs);
     }
 
     @Override

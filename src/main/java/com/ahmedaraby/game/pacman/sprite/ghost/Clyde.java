@@ -15,6 +15,7 @@ import com.ahmedaraby.game.pacman.ghostmode.common.Frightened;
 import com.ahmedaraby.game.pacman.ghostmode.navigation.ShortestPathNavigator;
 import com.ahmedaraby.game.pacman.model.GameState;
 import com.ahmedaraby.game.pacman.sprite.playground.GhostHouseS;
+import com.ahmedaraby.game.pacman.util.PlaygroundShortestPathNav;
 import com.ahmedaraby.jengine.entity.Coordinate;
 import com.ahmedaraby.jengine.sprite.SpriteRegistry;
 import javafx.scene.canvas.Canvas;
@@ -37,7 +38,8 @@ public class Clyde extends Ghost {
         eaten = new Eaten(this, gameState, configs, spriteRegistry);
         scaredChaser = new ClydeScaredChaser(this, gameState, configs, spriteRegistry);
 
-        navigator = new ShortestPathNavigator(configs);
+        PlaygroundShortestPathNav playgroundShortestPathNav = new PlaygroundShortestPathNav();
+        navigator = new ShortestPathNavigator(configs, playgroundShortestPathNav);
 
         scattered.enter();
         activeMode = scattered;

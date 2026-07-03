@@ -5,8 +5,6 @@ import com.ahmedaraby.game.pacman.config.intConfigs.ConfigsEx;
 import com.ahmedaraby.game.pacman.constant.DirectionsE;
 import com.ahmedaraby.game.pacman.constant.SpriteFileNameC;
 import com.ahmedaraby.game.pacman.ghostmode.Chaser;
-import com.ahmedaraby.game.pacman.ghostmode.navigation.GhostNavigator;
-import com.ahmedaraby.game.pacman.ghostmode.navigation.ShortestPathNavigator;
 import com.ahmedaraby.game.pacman.model.GameState;
 import com.ahmedaraby.game.pacman.sprite.ghost.Ghost;
 import com.ahmedaraby.jengine.animation.Animator;
@@ -19,7 +17,6 @@ import javafx.scene.image.Image;
 
 public class ClydeChaser extends Chaser {
 
-    private final GhostNavigator navigator;
     private final Animator animator;
 
     public ClydeChaser(Ghost ghost, GameState gameState, ConfigsEx configs, SpriteRegistry<String, Image> spriteRegistry, int[] activePeriodsSec) {
@@ -32,7 +29,6 @@ public class ClydeChaser extends Chaser {
                 configs.GHOST_CLYDE_FIRST_FRAME_DISTANCE(),
                 configs.GHOST_CLYDE_SECOND_FRAME_DISTANCE()
         }, frames);
-        navigator = new ShortestPathNavigator(configs);
     }
 
     @Override

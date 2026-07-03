@@ -9,8 +9,6 @@ import com.ahmedaraby.jengine.entity.Coordinate;
 import com.ahmedaraby.jengine.entity.Rectangle;
 import com.ahmedaraby.jengine.entity.Line;
 import com.ahmedaraby.jengine.entity.Vector;
-import com.ahmedaraby.game.pacman.ghostmode.navigation.GhostNavigator;
-import com.ahmedaraby.game.pacman.ghostmode.navigation.ShortestPathNavigator;
 import com.ahmedaraby.game.pacman.model.GameState;
 import com.ahmedaraby.game.pacman.sprite.ghost.Blinky;
 import com.ahmedaraby.game.pacman.sprite.ghost.Ghost;
@@ -22,13 +20,11 @@ import com.ahmedaraby.game.pacman.ghostmode.Chaser;
 
 public class InkyChaser extends Chaser {
 
-    private final GhostNavigator navigator;
     private final DistanceBasedAnimator animator;
 
     public InkyChaser(Ghost ghost, GameState gameState, ConfigsEx configs, SpriteRegistry<String, Image> spriteRegistry, int[] activePeriodsSec) {
         super(ghost, gameState, configs, spriteRegistry, activePeriodsSec);
         final Image[] frames = loadSprites();
-        navigator = new ShortestPathNavigator(configs);
         animator = new DistanceBasedAnimator(
                 new double[]{configs.GHOST_INKY_FIRST_FRAME_DISTANCE(), configs.GHOST_INKY_SECOND_FRAME_DISTANCE()}
                 ,frames

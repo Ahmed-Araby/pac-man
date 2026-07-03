@@ -5,7 +5,6 @@ import com.ahmedaraby.jengine.animation.DistanceBasedAnimator;
 import com.ahmedaraby.game.pacman.constant.SpriteFileNameC;
 import com.ahmedaraby.jengine.entity.Coordinate;
 import com.ahmedaraby.game.pacman.ghostmode.Scattered;
-import com.ahmedaraby.game.pacman.ghostmode.navigation.ShortestPathNavigator;
 import com.ahmedaraby.game.pacman.model.GameState;
 import com.ahmedaraby.game.pacman.sprite.ghost.Ghost;
 import com.ahmedaraby.jengine.sprite.SpriteRegistry;
@@ -21,7 +20,6 @@ public class InkyScattered extends Scattered {
                 configs.CANVAS_WIDTH() - configs.PLAYGROUND_CELL_SIZE()
         );
         final Image[] frames = loadSprites();
-        navigator = new ShortestPathNavigator(configs);
         animator = new DistanceBasedAnimator(
                 new double[]{configs.GHOST_INKY_FIRST_FRAME_DISTANCE(), configs.GHOST_INKY_SECOND_FRAME_DISTANCE()}
                 ,frames
