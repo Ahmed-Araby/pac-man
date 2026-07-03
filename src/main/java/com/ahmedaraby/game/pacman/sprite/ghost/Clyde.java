@@ -88,7 +88,6 @@ public class Clyde extends Ghost {
             final double distToPacManInPixels = navigator.calcDist(this, pacManCord);
             // [TODO] provide the number 8 as a configuration
             if (distToPacManInPixels >= 8 * configs.PLAYGROUND_CELL_SIZE()) {
-                chaser.enter();
                 activeMode = chaser;
             }
         }
