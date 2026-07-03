@@ -24,10 +24,9 @@ public class ShortestPathNavigator implements GhostNavigator {
 
     private final ConfigsEx configs;
 
-    // [TODO] TODO take into account the movement direction of the sprites at source and target cord
     @Override
     public double calcDist(MovingSprite sprite, Coordinate targetCord) {
-        Cell sourceCell = sprite.getTopLeftCorner().toCell(DirectionsE.STILL.toVector());
+        Cell sourceCell = sprite.getTopLeftCorner().toCell(sprite.getDir().toVector());
         Cell targetCell = targetCord.toCell(DirectionsE.STILL.toVector());
         return calcDist(sourceCell, targetCell) * configs.PLAYGROUND_CELL_SIZE();
     }
