@@ -27,7 +27,7 @@ public class BlinkyChaser extends Chaser {
         final Image[] frames = loadSprites();
         this.animator = new DistanceBasedAnimator(
                 new double[]{configs.GHOST_BLINK_FIRST_FRAME_DISTANCE(), configs.GHOST_BLINK_SECOND_FRAME_DISTANCE()}, frames);
-        this.navigator = new ShortestPathNavigator();
+        this.navigator = new ShortestPathNavigator(configs);
     }
 
     @Override

@@ -31,7 +31,7 @@ public class PinkyChaser extends Chaser {
                 configs.GHOST_PINKY_FIRST_FRAME_DISTANCE(),
                 configs.GHOST_PINKY_SECOND_FRAME_DISTANCE()
         }, frames);
-        navigator = new ShortestPathNavigator();
+        navigator = new ShortestPathNavigator(configs);
     }
 
     @Override

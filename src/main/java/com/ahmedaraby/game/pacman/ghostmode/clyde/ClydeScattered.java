@@ -20,7 +20,7 @@ public class ClydeScattered extends Scattered {
         final String frame2Path = String.format(SpriteFileNameC.GHOST_SPRITE_PATH_TEMPLATE, SpriteFileNameC.CLYDE_FOLDER, SpriteFileNameC.CLYDE_FRAME_2_FILE_NAME);
         final Image[] frames = loadSprites(new String[]{frame1Path, frame2Path});
 
-        super.navigator = new ShortestPathNavigator();
+        super.navigator = new ShortestPathNavigator(configs);
         super.animator = new DistanceBasedAnimator(new double[]{
                 configs.GHOST_CLYDE_FIRST_FRAME_DISTANCE(),
                 configs.GHOST_CLYDE_SECOND_FRAME_DISTANCE()

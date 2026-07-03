@@ -1,7 +1,7 @@
 package com.ahmedaraby.game.pacman.ghostmode.navigation;
 
 import com.ahmedaraby.game.pacman.collision.M2SSpriteCollisionDetector;
-import com.ahmedaraby.game.pacman.constant.DimensionsC;
+import com.ahmedaraby.game.pacman.config.intConfigs.ConfigsEx;
 import com.ahmedaraby.game.pacman.entity.Cell;
 import com.ahmedaraby.game.pacman.model.CollisionReport;
 import com.ahmedaraby.game.pacman.playground.Playground;
@@ -22,12 +22,14 @@ import java.util.List;
 @AllArgsConstructor
 public class ShortestPathNavigator implements GhostNavigator {
 
+    private final ConfigsEx configs;
+
     // [TODO] TODO take into account the movement direction of the sprites at source and target cord
     @Override
     public double calcDist(MovingSprite sprite, Coordinate targetCord) {
         Cell sourceCell = sprite.getTopLeftCorner().toCell(DirectionsE.STILL.toVector());
         Cell targetCell = targetCord.toCell(DirectionsE.STILL.toVector());
-        return calcDist(sourceCell, targetCell) * DimensionsC.MAZE_CELL_SIZE_PIXELS;
+        return calcDist(sourceCell, targetCell) * configs.PLAYGROUND_CELL_SIZE();
     }
 
 
@@ -43,13 +45,13 @@ public class ShortestPathNavigator implements GhostNavigator {
                 .sorted()
                 .filter(move -> move.getDist2Target() < Integer.MAX_VALUE)
                 .filter(move -> {
-                    final Coordinate candidateNextCord = move.getCell().toCord(DimensionsC.MAZE_CELL_SIZE_PIXELS, DimensionsC.MAZE_CELL_SIZE_PIXELS);
+                    final Coordinate candidateNextCord = move.getCell().toCord(configs.PLAYGROUND_CELL_SIZE(), configs.PLAYGROUND_CELL_SIZE());
                     final Rectangle rect = SpriteUtil.toRect(candidateNextCord, SpriteE.GHOST);
                     final List<CollisionReport> collisionReportOpt = M2SSpriteCollisionDetector.detect(rect, List.of(SpriteE.WALL, SpriteE.GHOST_HOUSE_WALL));
                     return collisionReportOpt.isEmpty();
                 })
                 .map(move -> {
-                    final Coordinate candidateNextCord = move.getCell().toCord(DimensionsC.MAZE_CELL_SIZE_PIXELS, DimensionsC.MAZE_CELL_SIZE_PIXELS);
+                    final Coordinate candidateNextCord = move.getCell().toCord(configs.PLAYGROUND_CELL_SIZE(), configs.PLAYGROUND_CELL_SIZE());
                     return source.getMovementDir(candidateNextCord);
                 })
                 .findFirst()
@@ -82,7 +84,7 @@ public class ShortestPathNavigator implements GhostNavigator {
         if (candidateNextCells.size() == 1) {
             // ghost lies completely in a maze cell
             Cell cell = sprite.getTopLeftCorner().toCell(Vector.STILL);
-            candidateNextCells = cell.getAdjCells(DimensionsC.MAZE_WIDTH, DimensionsC.MAZE_HEIGHT);
+            candidateNextCells = cell.getAdjCells(configs.PLAYGROUND_WIDTH(), configs.PLAYGROUND_HEIGHT());
         }
         return candidateNextCells
                 .stream()

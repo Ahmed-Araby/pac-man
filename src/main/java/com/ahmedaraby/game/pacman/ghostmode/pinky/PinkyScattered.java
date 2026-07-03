@@ -24,7 +24,7 @@ public class PinkyScattered extends Scattered {
                 configs.GHOST_PINKY_FIRST_FRAME_DISTANCE(),
                 configs.GHOST_PINKY_SECOND_FRAME_DISTANCE()
         }, frames);
-        this.navigator = new ShortestPathNavigator();
+        this.navigator = new ShortestPathNavigator(configs);
     }
 
     @Override

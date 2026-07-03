@@ -37,7 +37,7 @@ public class Clyde extends Ghost {
         eaten = new Eaten(this, gameState, configs, spriteRegistry);
         scaredChaser = new ClydeScaredChaser(this, gameState, configs, spriteRegistry);
 
-        navigator = new ShortestPathNavigator();
+        navigator = new ShortestPathNavigator(configs);
 
         scattered.enter();
         activeMode = scattered;

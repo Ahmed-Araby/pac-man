@@ -28,7 +28,7 @@ public class Eaten extends GhostMode {
 
     public Eaten(Ghost ghost, GameState gameState, ConfigsEx configs, SpriteRegistry<String, Image> spriteRegistry) {
         super(ghost, gameState, configs, spriteRegistry);
-        this.navigator = new ShortestPathNavigator();
+        this.navigator = new ShortestPathNavigator(configs);
 
         final Map<Vector, Image[]> sprites = loadSprites();
         this.animator = new DistanceBasedAnimator(

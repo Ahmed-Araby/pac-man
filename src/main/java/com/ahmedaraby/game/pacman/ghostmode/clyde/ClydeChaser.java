@@ -32,7 +32,7 @@ public class ClydeChaser extends Chaser {
                 configs.GHOST_CLYDE_FIRST_FRAME_DISTANCE(),
                 configs.GHOST_CLYDE_SECOND_FRAME_DISTANCE()
         }, frames);
-        navigator = new ShortestPathNavigator();
+        navigator = new ShortestPathNavigator(configs);
     }
 
     @Override

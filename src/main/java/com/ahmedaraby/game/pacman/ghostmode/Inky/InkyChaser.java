@@ -28,7 +28,7 @@ public class InkyChaser extends Chaser {
     public InkyChaser(Ghost ghost, GameState gameState, ConfigsEx configs, SpriteRegistry<String, Image> spriteRegistry, int[] activePeriodsSec) {
         super(ghost, gameState, configs, spriteRegistry, activePeriodsSec);
         final Image[] frames = loadSprites();
-        navigator = new ShortestPathNavigator();
+        navigator = new ShortestPathNavigator(configs);
         animator = new DistanceBasedAnimator(
                 new double[]{configs.GHOST_INKY_FIRST_FRAME_DISTANCE(), configs.GHOST_INKY_SECOND_FRAME_DISTANCE()}
                 ,frames

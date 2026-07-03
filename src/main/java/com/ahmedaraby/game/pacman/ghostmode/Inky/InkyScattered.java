@@ -21,7 +21,7 @@ public class InkyScattered extends Scattered {
                 configs.CANVAS_WIDTH() - configs.PLAYGROUND_CELL_SIZE()
         );
         final Image[] frames = loadSprites();
-        navigator = new ShortestPathNavigator();
+        navigator = new ShortestPathNavigator(configs);
         animator = new DistanceBasedAnimator(
                 new double[]{configs.GHOST_INKY_FIRST_FRAME_DISTANCE(), configs.GHOST_INKY_SECOND_FRAME_DISTANCE()}
                 ,frames
