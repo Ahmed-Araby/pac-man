@@ -1,7 +1,7 @@
 package com.ahmedaraby.jengine.entity;
 
 import com.ahmedaraby.game.pacman.constant.DimensionsC;
-import com.ahmedaraby.game.pacman.entity.MazeCell;
+import com.ahmedaraby.game.pacman.entity.Cell;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.ToString;
@@ -34,7 +34,7 @@ public class Coordinate {
                 && row >= rect.topEdgeRow() && row <= rect.bottomEdgeRow();
     }
 
-    public MazeCell toCell(Vector dir) {
+    public Cell toCell(Vector dir) {
         if (Vector.RIGHT.equals(dir) || Vector.DOWN.equals(dir)) {
             return toCellFlooring();
         } else if (Vector.LEFT.equals(dir) || Vector.UP.equals(dir)) {
@@ -44,16 +44,16 @@ public class Coordinate {
         }
     }
 
-    private MazeCell toCellFlooring() {
+    private Cell toCellFlooring() {
         final int mazeRow = (int) Math.floor(row / DimensionsC.MAZE_CELL_SIZE_PIXELS);
         final int mazeCol = (int) Math.floor(col / DimensionsC.MAZE_CELL_SIZE_PIXELS);
-        return new MazeCell(mazeRow, mazeCol);
+        return new Cell(mazeRow, mazeCol);
     }
 
-    private MazeCell toCellCeiling() {
+    private Cell toCellCeiling() {
         final int mazeRow = (int) Math.ceil(row / DimensionsC.MAZE_CELL_SIZE_PIXELS);
         final int mazeCol = (int) Math.ceil(col / DimensionsC.MAZE_CELL_SIZE_PIXELS);
-        return new MazeCell(mazeRow, mazeCol);
+        return new Cell(mazeRow, mazeCol);
     }
 
     public Vector getMovementDir(Coordinate to) {

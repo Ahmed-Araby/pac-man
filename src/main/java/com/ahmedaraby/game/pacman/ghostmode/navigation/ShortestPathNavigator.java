@@ -2,7 +2,7 @@ package com.ahmedaraby.game.pacman.ghostmode.navigation;
 
 import com.ahmedaraby.game.pacman.collision.M2SSpriteCollisionDetector;
 import com.ahmedaraby.game.pacman.constant.DimensionsC;
-import com.ahmedaraby.game.pacman.entity.MazeCell;
+import com.ahmedaraby.game.pacman.entity.Cell;
 import com.ahmedaraby.game.pacman.model.CollisionReport;
 import com.ahmedaraby.game.pacman.playground.Playground;
 import com.ahmedaraby.game.pacman.sprite.MovingSprite;
@@ -25,8 +25,8 @@ public class ShortestPathNavigator implements GhostNavigator {
     // [TODO] TODO take into account the movement direction of the sprites at source and target cord
     @Override
     public double calcDist(MovingSprite sprite, Coordinate targetCord) {
-        MazeCell sourceCell = sprite.getTopLeftCorner().toCell(DirectionsE.STILL.toVector());
-        MazeCell targetCell = targetCord.toCell(DirectionsE.STILL.toVector());
+        Cell sourceCell = sprite.getTopLeftCorner().toCell(DirectionsE.STILL.toVector());
+        Cell targetCell = targetCord.toCell(DirectionsE.STILL.toVector());
         return calcDist(sourceCell, targetCell) * DimensionsC.MAZE_CELL_SIZE_PIXELS;
     }
 
@@ -60,9 +60,9 @@ public class ShortestPathNavigator implements GhostNavigator {
 
     private List<MazeMove> getCandidateMoves(MovingSprite moving, Coordinate target) {
         // this work can be parallelized
-        final MazeCell targetCell = target.toCell(DirectionsE.STILL.toVector());
-        final List<MazeCell> candidateNextMazeCell = getCandidateNextCells(moving);
-        return candidateNextMazeCell
+        final Cell targetCell = target.toCell(DirectionsE.STILL.toVector());
+        final List<Cell> candidateNextCell = getCandidateNextCells(moving);
+        return candidateNextCell
                 .stream()
                 .map(interestingCell -> {
                     final int dist = calcDist(interestingCell, targetCell);
@@ -71,17 +71,17 @@ public class ShortestPathNavigator implements GhostNavigator {
                 .toList();
     }
 
-    private int calcDist(MazeCell source, MazeCell target) {
+    private int calcDist(Cell source, Cell target) {
         final int[][] dist = BfsUtil.getDistMat(source, target);
         return dist[target.getRow()][target.getCol()];
     }
 
 
-    private List<MazeCell> getCandidateNextCells(MovingSprite sprite) {
-        List<MazeCell> candidateNextCells = getIntersectingMazeCells(sprite);
+    private List<Cell> getCandidateNextCells(MovingSprite sprite) {
+        List<Cell> candidateNextCells = getIntersectingMazeCells(sprite);
         if (candidateNextCells.size() == 1) {
             // ghost lies completely in a maze cell
-            MazeCell cell = sprite.getTopLeftCorner().toCell(Vector.STILL);
+            Cell cell = sprite.getTopLeftCorner().toCell(Vector.STILL);
             candidateNextCells = cell.getAdjCells(DimensionsC.MAZE_WIDTH, DimensionsC.MAZE_HEIGHT);
         }
         return candidateNextCells
@@ -91,7 +91,7 @@ public class ShortestPathNavigator implements GhostNavigator {
     }
 
 
-    private List<MazeCell> getIntersectingMazeCells(MovingSprite sprite) {
+    private List<Cell> getIntersectingMazeCells(MovingSprite sprite) {
         final Rectangle rectangle = new Rectangle(sprite.getTopLeftCorner(), sprite.getWidth(), sprite.getHeight());
         final List<Coordinate> rectCorners = rectangle.corners();
         return rectCorners

@@ -1,7 +1,7 @@
 package com.ahmedaraby.game.pacman.sprite.playground;
 
 import com.ahmedaraby.game.pacman.config.intConfigs.ConfigsEx;
-import com.ahmedaraby.game.pacman.entity.MazeCell;
+import com.ahmedaraby.game.pacman.entity.Cell;
 import com.ahmedaraby.game.pacman.model.GameState;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
@@ -34,7 +34,7 @@ public class Maze extends Sprite {
 
         for (int mazeRow = 0; mazeRow< Playground.height(); mazeRow++) {
             for(int mazeCol = 0; mazeCol< Playground.width(); mazeCol++) {
-                final Coordinate canvasCord = new MazeCell(mazeRow, mazeCol).toCord(MAZE_CELL_SIZE, MAZE_CELL_SIZE);
+                final Coordinate canvasCord = new Cell(mazeRow, mazeCol).toCord(MAZE_CELL_SIZE, MAZE_CELL_SIZE);
                 if (Playground.get(mazeRow, mazeCol) == SpriteE.WALL) {
                     // map from the abstract maze scale to the graphical maze scale
 

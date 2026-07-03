@@ -1,6 +1,6 @@
 package com.ahmedaraby.jengine.maze;
 
-import com.ahmedaraby.game.pacman.entity.MazeCell;
+import com.ahmedaraby.game.pacman.entity.Cell;
 import com.ahmedaraby.jengine.entity.Vector;
 
 import java.util.ArrayList;
@@ -25,12 +25,12 @@ public class RandomizedDFSMazeGenerator implements MazeGenerator{
             }
         }
 
-        final Stack<MazeCell> cells = new Stack<>();
+        final Stack<Cell> cells = new Stack<>();
         visited[0][0] = true;
-        cells.push(new MazeCell(0, 0));
+        cells.push(new Cell(0, 0));
 
         while(!cells.isEmpty()) {
-            final MazeCell currCell = cells.pop();
+            final Cell currCell = cells.pop();
             List<Vector> eligibleDirections = getEligibleDirections(currCell, visited);
             if(eligibleDirections.isEmpty()) {
                 // dead end
@@ -43,8 +43,8 @@ public class RandomizedDFSMazeGenerator implements MazeGenerator{
             Vector dir = eligibleDirections.get(index);
 
 
-            MazeCell nextEmptyCell = new MazeCell(currCell.getRow() + (int)dir.getY() * 2, currCell.getCol() + (int)dir.getX() * 2);
-            MazeCell nextWall = new MazeCell(currCell.getRow() + (int)dir.getY() , currCell.getCol() + (int)dir.getX());
+            Cell nextEmptyCell = new Cell(currCell.getRow() + (int)dir.getY() * 2, currCell.getCol() + (int)dir.getX() * 2);
+            Cell nextWall = new Cell(currCell.getRow() + (int)dir.getY() , currCell.getCol() + (int)dir.getX());
 
             // open the wall
             maze[nextWall.getRow()][nextWall.getCol()] = false;
@@ -57,7 +57,7 @@ public class RandomizedDFSMazeGenerator implements MazeGenerator{
     }
 
 
-    private List<Vector> getEligibleDirections(MazeCell currCell, boolean[][] visited) {
+    private List<Vector> getEligibleDirections(Cell currCell, boolean[][] visited) {
         final int width = visited[0].length;
         final int height = visited.length;
 

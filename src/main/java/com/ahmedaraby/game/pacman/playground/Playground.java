@@ -4,7 +4,7 @@ import com.ahmedaraby.game.pacman.config.intConfigs.ConfigsEx;
 import com.ahmedaraby.game.pacman.constant.DimensionsC;
 import com.ahmedaraby.game.pacman.constant.SpriteE;
 import com.ahmedaraby.jengine.entity.Coordinate;
-import com.ahmedaraby.game.pacman.entity.MazeCell;
+import com.ahmedaraby.game.pacman.entity.Cell;
 import com.ahmedaraby.jengine.entity.Rectangle;
 import com.ahmedaraby.jengine.maze.MazeGenerator;
 import com.ahmedaraby.jengine.maze.RandomizedDFSMazeGenerator;
@@ -33,7 +33,7 @@ public class Playground {
         }
     }
 
-    public static SpriteE get(MazeCell cell) {
+    public static SpriteE get(Cell cell) {
         return get(cell.getRow(), cell.getCol());
     }
 
@@ -49,28 +49,28 @@ public class Playground {
         return maze[row][col] == SpriteE.EMPTY;
     }
 
-    public static boolean hasSugar(MazeCell cell) {
+    public static boolean hasSugar(Cell cell) {
         return hasSugar(cell.getRow(), cell.getCol());
     }
     public static boolean hasSugar(int row, int col) {
         return maze[row][col] == SpriteE.SUGAR;
     }
 
-    public static boolean hasSuperSugar(MazeCell cell) {
+    public static boolean hasSuperSugar(Cell cell) {
         return hasSuperSugar(cell.getRow(), cell.getCol());
     }
     public static boolean hasSuperSugar(int row, int col) {
         return maze[row][col] == SpriteE.SUPER_SUGAR;
     }
 
-    public static boolean isWall(MazeCell cell) {
+    public static boolean isWall(Cell cell) {
         return isWall(cell.getRow(), cell.getCol());
     }
     public static boolean isWall(int row, int col) {
         return maze[row][col] == SpriteE.WALL;
     }
 
-    public static boolean isGhostHWall(MazeCell cell) {
+    public static boolean isGhostHWall(Cell cell) {
         return isGhostHWall(cell.getRow(), cell.getCol());
     }
     public static boolean isGhostHWall(int row, int col) {

@@ -12,7 +12,7 @@ import javafx.scene.canvas.GraphicsContext;
 import com.ahmedaraby.game.pacman.config.Configs;
 import com.ahmedaraby.jengine.entity.Coordinate;
 import com.ahmedaraby.jengine.entity.Rectangle;
-import com.ahmedaraby.game.pacman.entity.MazeCell;
+import com.ahmedaraby.game.pacman.entity.Cell;
 import com.ahmedaraby.game.pacman.event.Event;
 import com.ahmedaraby.jengine.event.Subscriber;
 import com.ahmedaraby.game.pacman.playground.Playground;
@@ -45,7 +45,7 @@ public class Sugar extends Sprite implements Subscriber<EventType> {
         for (int row = 0; row < Playground.height(); row++) {
             for (int col = 0; col < Playground.width(); col++) {
                 if (Playground.hasSugar(row, col)) {
-                    final Coordinate cellTopLeftCornerCanvas = new MazeCell(row, col).toCord(configs.PLAYGROUND_CELL_SIZE(), configs.PLAYGROUND_CELL_SIZE());
+                    final Coordinate cellTopLeftCornerCanvas = new Cell(row, col).toCord(configs.PLAYGROUND_CELL_SIZE(), configs.PLAYGROUND_CELL_SIZE());
                     final Coordinate sugarCellTopLeftCornerCanvas = SpriteUtil.c2STopLeftCorner(cellTopLeftCornerCanvas, SpriteE.SUGAR);
                     con.fillRect(sugarCellTopLeftCornerCanvas.getCol(), sugarCellTopLeftCornerCanvas.getRow(), configs.SUGAR_DIAMETER(), configs.SUGAR_DIAMETER());
                 }
@@ -66,7 +66,7 @@ public class Sugar extends Sprite implements Subscriber<EventType> {
     }
 
     public void removeSugar(Rectangle rect) {
-        final MazeCell sugarCellMazeTopLeftCornerCoordinate = rect.getTopLeftCorner().toCell(DirectionsE.STILL.toVector());
+        final Cell sugarCellMazeTopLeftCornerCoordinate = rect.getTopLeftCorner().toCell(DirectionsE.STILL.toVector());
         Playground.set(sugarCellMazeTopLeftCornerCoordinate.getRow(), sugarCellMazeTopLeftCornerCoordinate.getCol(), SpriteE.EMPTY);
     }
 }
