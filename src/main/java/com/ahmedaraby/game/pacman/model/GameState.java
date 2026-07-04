@@ -21,8 +21,11 @@ public class GameState {
     @Setter(AccessLevel.NONE)
     private List<Ghost> ghosts = new ArrayList<>();
     private GhostHouseS ghostHouseS;
+    private Long prevFrameEndNanos;
+    private Long currFrameStartNanos;
 
     public void addGhost(Ghost ghost) {
+
         ghosts.add(ghost);
     }
 }
