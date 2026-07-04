@@ -4,8 +4,10 @@ import com.ahmedaraby.game.pacman.event.Event;
 import com.ahmedaraby.game.pacman.event.EventType;
 import com.ahmedaraby.jengine.entity.Vector;
 import lombok.Getter;
+import lombok.ToString;
 
 @Getter
+@ToString
 public class PacManMovementRequestEvent extends Event<EventType> {
     private final Vector dir;
     private final Object source;

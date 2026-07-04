@@ -1,6 +1,5 @@
 package com.ahmedaraby.game.pacman.sprite;
 
-import com.ahmedaraby.game.pacman.config.Configs;
 import com.ahmedaraby.game.pacman.config.intConfigs.ConfigsEx;
 import com.ahmedaraby.game.pacman.constant.SpriteE;
 import com.ahmedaraby.game.pacman.event.EventType;
@@ -44,6 +43,11 @@ public class PacMan extends MovingSprite implements Subscriber<EventType> {
         this.mouthAnimationTracker = new PacManMouthAnimationTracker(
                configs.PACMAN_MOUTH_OPEN_DISTANCE(),
                 configs.PACMAN_MOUTH_CLOSED_DISTANCE());
+    }
+
+    @Override
+    public double getSpeed() {
+        return configs.PACMAN_SPEED();
     }
 
     @Override
@@ -99,33 +103,45 @@ public class PacMan extends MovingSprite implements Subscriber<EventType> {
             return false;
         }
 
-        final double speed = configs.PACMAN_SPEED();
-        final double newCol = getCol() + event.getDir().getX() * speed / Configs.FRAMES_PER_SEC_FOR_PAC_MAN_STRIDE;
-        final double newRow = getRow() + event.getDir().getY() * speed / Configs.FRAMES_PER_SEC_FOR_PAC_MAN_STRIDE;
+        // frame independent calculation of the next coordinates
+        final double originalStride = calculateStride();
+        final double calibratedStride = calibrateStride(originalStride, event.getDir());
+        if (calibratedStride == 0) {
+            return false;
+        }
 
+        final double newCol = getCol() + event.getDir().getX() * calibratedStride;
+        final double newRow = getRow() + event.getDir().getY() * calibratedStride;
         final Coordinate nextCord = new Coordinate(newRow, newCol);
-        final Rectangle virtualPacManRect = new Rectangle(nextCord, configs.PACMAN_DIAMETER(), configs.PACMAN_DIAMETER());
 
-        if (!virtualPacManRect.within(gameState.getMaze().getRect())
-                || isCollidingWithWallOrGhostHWall(nextCord)
-        ) {
+        if (!isValidPosition(nextCord)) {
             final PacManMovementAttemptDeniedEvent deniedEvent = new PacManMovementAttemptDeniedEvent(nextCord, event.getDir(), event.getSource());
             handleDeniedMovementAttempt(deniedEvent);
             return false;
         } else {
             final PacManMovementAttemptApprovedEvent approvedEvent = new PacManMovementAttemptApprovedEvent(
-                    getTopLeftCorner(), nextCord, event.getDir(), event.getSource()
+                    getTopLeftCorner(), calibratedStride, nextCord, event.getDir(), event.getSource()
             );
             handleApprovedMovementAttempt(approvedEvent);
             return true;
         }
     }
 
+    private boolean isValidPosition(Coordinate nextCord) {
+        // only 1 dimension can have fraction at a time.
+        final Coordinate nextCeildCord = new Coordinate(Math.ceil(nextCord.getRow()), Math.ceil(nextCord.getCol()));
+        final Rectangle nextCeildPacManRect = new Rectangle(nextCeildCord, getWidth(), getHeight());
+        return nextCeildPacManRect.within(gameState.getMaze().getRect()) && !isCollidingWithWallOrGhostHWall(nextCord);
+    }
+
     private void handleApprovedMovementAttempt(PacManMovementAttemptApprovedEvent event) {
+        // apply move
         setRow(event.getRequestedPacManCanvasRectTopLeftCorner().getRow());
         setCol(event.getRequestedPacManCanvasRectTopLeftCorner().getCol());
         dir = event.getRequestedDir();
-        mouthAnimationTracker.stride(configs.PACMAN_MOUTH_ANIMATION_COMPLETE_DIST() / Configs.FRAMES_PER_SEC_FOR_PAC_MAN_MOUSE_OPEN_CLOSED_ANIMATION);
+
+
+        mouthAnimationTracker.stride(event.getCalibratedStride());
 
         if (event.getMovementAttemptSource() instanceof Scene
                 || event.getMovementAttemptSource() instanceof TurnBuffer) {
@@ -133,7 +149,7 @@ public class PacMan extends MovingSprite implements Subscriber<EventType> {
             turnBuffer.clear();
         } else if (event.getMovementAttemptSource() instanceof PacMan) {
             // automated straight line movement
-            turnBuffer.stride(configs.PACMAN_SPEED() / Configs.FRAMES_PER_SEC_FOR_PAC_MAN_STRIDE);
+            turnBuffer.stride(event.getCalibratedStride());
         }
     }
 

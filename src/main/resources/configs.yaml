@@ -8,7 +8,7 @@ playground:
   backgroundColor: !color BLACK
 
 pacman:
-  speed: 50
+  speed: 200
   color: !color YELLOW
   diameter: 50
   mouth:

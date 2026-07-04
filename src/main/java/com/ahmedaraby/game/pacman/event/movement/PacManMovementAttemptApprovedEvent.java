@@ -10,13 +10,15 @@ import lombok.Getter;
 @Getter
 public class PacManMovementAttemptApprovedEvent extends Event<EventType> {
     private Coordinate currentPacManCanvasRectTopLeftCorner;
+    private final double calibratedStride;
     private Coordinate requestedPacManCanvasRectTopLeftCorner;
     private Vector requestedDir;
     private Object movementAttemptSource;
 
-    public PacManMovementAttemptApprovedEvent(Coordinate currentPacManCanvasRectTopLeftCorner, Coordinate requestedPacManCanvasRectTopLeftCorner, Vector requestedDir, Object movementAttemptSource) {
+    public PacManMovementAttemptApprovedEvent(Coordinate currentPacManCanvasRectTopLeftCorner, double calibratedStride, Coordinate requestedPacManCanvasRectTopLeftCorner, Vector requestedDir, Object movementAttemptSource) {
         super(EventType.PAC_MAN_MOVEMENT_ATTEMPT_APPROVED);
         this.currentPacManCanvasRectTopLeftCorner = currentPacManCanvasRectTopLeftCorner;
+        this.calibratedStride = calibratedStride;
         this.requestedPacManCanvasRectTopLeftCorner = requestedPacManCanvasRectTopLeftCorner;
         this.requestedDir = requestedDir;
         this.movementAttemptSource = movementAttemptSource;
