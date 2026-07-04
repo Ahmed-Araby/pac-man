@@ -1,5 +1,6 @@
 package com.ahmedaraby.game.pacman.util;
-import com.ahmedaraby.game.pacman.entity.MazeCell;
+import com.ahmedaraby.game.pacman.constant.DimensionsC;
+import com.ahmedaraby.game.pacman.entity.Cell;
 import com.ahmedaraby.game.pacman.playground.Playground;
 
 import java.util.ArrayList;
@@ -7,10 +8,15 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Queue;
 
-public class BfsUtil {
+public class PlaygroundShortestPathNav {
 
 
-    public static int[][] getDistMat(MazeCell source, MazeCell target) {
+    public int calcDist(Cell source, Cell target) {
+        final int[][] dist = calcBfsBasedDistMatrix(source, target);
+        return dist[target.getRow()][target.getCol()];
+    }
+
+    private int[][] calcBfsBasedDistMatrix(Cell source, Cell target) {
         // init
         final int[][] dist = new int[Playground.height()][Playground.width()];
         for(int r=0; r < dist.length; r++) {
@@ -19,15 +25,16 @@ public class BfsUtil {
             }
         }
 
-        final Queue<MazeCell> cords = new LinkedList<>();
+        // BFS
+        final Queue<Cell> cords = new LinkedList<>();
         cords.add(source);
         dist[source.getRow()][source.getCol()] = 0;
         boolean targetReached = false;
         while(!cords.isEmpty() && !targetReached) {
-            final MazeCell cCell = cords.poll();
+            final Cell cCell = cords.poll();
 
-            final List<MazeCell> ninetyDegMoves = MazeUtil.get90DegMoves(cCell);
-            for (MazeCell nextCell: ninetyDegMoves) {
+            final List<Cell> ninetyDegMoves = cCell.getAdjCells(DimensionsC.MAZE_WIDTH, DimensionsC.MAZE_HEIGHT);
+            for (Cell nextCell: ninetyDegMoves) {
                 if(nextCell.equals(target)) {
                     dist[nextCell.getRow()][nextCell.getCol()] = Math.min(dist[nextCell.getRow()][nextCell.getCol()],
                             1 + dist[cCell.getRow()][cCell.getCol()]);
@@ -46,19 +53,19 @@ public class BfsUtil {
     }
 
 
-    public static List<MazeCell> constructPath(MazeCell sCord, MazeCell tCord, int[][] dist) {
+    public static List<Cell> constructPath(Cell sCord, Cell tCord, int[][] dist) {
         if (sCord.equals(tCord)) {
             return List.of(sCord);
         }
 
-        MazeCell cord = tCord;
-        List<MazeCell> path = new ArrayList<>();
+        Cell cord = tCord;
+        List<Cell> path = new ArrayList<>();
         path.add(tCord);
         while(!cord.equals(sCord)) {
-            final List<MazeCell> ninetyDegMoves = MazeUtil.get90DegMoves(cord);
+            final List<Cell> ninetyDegMoves = cord.getAdjCells(DimensionsC.MAZE_WIDTH, DimensionsC.MAZE_HEIGHT);
             int minDist = dist[cord.getRow()][cord.getCol()];
 
-            for(MazeCell nextCord : ninetyDegMoves) {
+            for(Cell nextCord : ninetyDegMoves) {
                 if(dist[nextCord.getRow()][nextCord.getCol()] < minDist) {
                     minDist = dist[nextCord.getRow()][nextCord.getCol()];
                     cord = nextCord;

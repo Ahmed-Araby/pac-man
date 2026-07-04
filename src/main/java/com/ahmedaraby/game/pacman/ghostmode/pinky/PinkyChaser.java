@@ -1,16 +1,12 @@
 package com.ahmedaraby.game.pacman.ghostmode.pinky;
 
 import com.ahmedaraby.game.pacman.config.Configs;
-import com.ahmedaraby.game.pacman.constant.DimensionsC;
+import com.ahmedaraby.game.pacman.config.intConfigs.ConfigsEx;
 import com.ahmedaraby.game.pacman.constant.DirectionsE;
 import com.ahmedaraby.game.pacman.constant.SpriteFileNameC;
 import com.ahmedaraby.game.pacman.ghostmode.Chaser;
-import com.ahmedaraby.game.pacman.ghostmode.Scattered;
-import com.ahmedaraby.game.pacman.ghostmode.navigation.GhostNavigator;
-import com.ahmedaraby.game.pacman.ghostmode.navigation.ShortestPathNavigator;
 import com.ahmedaraby.game.pacman.model.GameState;
 import com.ahmedaraby.game.pacman.sprite.ghost.Ghost;
-import com.ahmedaraby.game.pacman.util.ghost.GhostUtil;
 import com.ahmedaraby.jengine.animation.Animator;
 import com.ahmedaraby.jengine.animation.DistanceBasedAnimator;
 import com.ahmedaraby.jengine.entity.Coordinate;
@@ -23,17 +19,15 @@ import javafx.scene.image.Image;
 
 public class PinkyChaser extends Chaser {
     private final Animator animator;
-    private final GhostNavigator navigator;
 
-    public PinkyChaser(Ghost ghost, GameState gameState, SpriteRegistry<String, Image> spriteRegistry, int[] activePeriodsSec) {
-        super(ghost, gameState, spriteRegistry, activePeriodsSec);
+    public PinkyChaser(Ghost ghost, GameState gameState, ConfigsEx configs, SpriteRegistry<String, Image> spriteRegistry, int[] activePeriodsSec) {
+        super(ghost, gameState, configs, spriteRegistry, activePeriodsSec);
 
         final Image[] frames = loadSprites();
         animator = new DistanceBasedAnimator(new double[]{
-                DimensionsC.GHOST_FIRST_LEG_MOVEMENT_DISTANCE_PIXELS,
-                DimensionsC.GHOST_SECOND_LEG_MOVEMENT_DISTANCE_PIXELS
+                configs.GHOST_PINKY_FIRST_FRAME_DISTANCE(),
+                configs.GHOST_PINKY_SECOND_FRAME_DISTANCE()
         }, frames);
-        navigator = new ShortestPathNavigator();
     }
 
     @Override
@@ -53,12 +47,12 @@ public class PinkyChaser extends Chaser {
         final Line lookAheadLine = new Line(pacManCord, lookAheadCord).trim(gameState.getMaze().getRect());
         final Coordinate target = lookAheadLine.getEnd();
 
-        final DirectionsE newDir = navigator.nextMoveDirection(ghost.getTopLeftCorner(), target);
+        final DirectionsE newDir = navigator.calcDir(ghost, target);
         if (newDir != DirectionsE.STILL) {
-            final Coordinate newCord = GhostUtil.move(ghost.getTopLeftCorner(), newDir);
+            final Coordinate newCord = ghost.calculateNextCord(newDir.toVector());
             ghost.setTopLeftCorner(newCord);
             ghost.setDir(newDir);
-            animator.stride(DimensionsC.GHOST_STRIDE_PIXELS / Configs.FRAMES_PER_SEC_FOR_GHOST_STRIDE);
+            animator.stride(configs.GHOST_SPEED() / Configs.FRAMES_PER_SEC_FOR_GHOST_STRIDE);
         }
     }
 

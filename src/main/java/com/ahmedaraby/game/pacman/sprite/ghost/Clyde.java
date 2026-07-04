@@ -1,7 +1,7 @@
 package com.ahmedaraby.game.pacman.sprite.ghost;
 
 import com.ahmedaraby.game.pacman.config.GhostModeActivePeriodsConf;
-import com.ahmedaraby.game.pacman.constant.DimensionsC;
+import com.ahmedaraby.game.pacman.config.intConfigs.ConfigsEx;
 import com.ahmedaraby.game.pacman.constant.DirectionsE;
 import com.ahmedaraby.game.pacman.constant.SpriteE;
 import com.ahmedaraby.game.pacman.event.Event;
@@ -15,6 +15,7 @@ import com.ahmedaraby.game.pacman.ghostmode.common.Frightened;
 import com.ahmedaraby.game.pacman.ghostmode.navigation.ShortestPathNavigator;
 import com.ahmedaraby.game.pacman.model.GameState;
 import com.ahmedaraby.game.pacman.sprite.playground.GhostHouseS;
+import com.ahmedaraby.game.pacman.util.PlaygroundShortestPathNav;
 import com.ahmedaraby.jengine.entity.Coordinate;
 import com.ahmedaraby.jengine.sprite.SpriteRegistry;
 import javafx.scene.canvas.Canvas;
@@ -25,19 +26,20 @@ public class Clyde extends Ghost {
     private final ClydeScaredChaser scaredChaser;
     private final ShortestPathNavigator navigator;
 
-    public Clyde(GameState gameState, SpriteRegistry<String, Image> spriteRegistry) {
-        super(gameState, SpriteE.GHOST, -1, -1, DirectionsE.STILL);
+    public Clyde(GameState gameState, ConfigsEx configs, SpriteRegistry<String, Image> spriteRegistry) {
+        super(gameState, configs, SpriteE.GHOST, -1, -1, DirectionsE.STILL);
 
-        scattered = new ClydeScattered(this, gameState, spriteRegistry,
+        scattered = new ClydeScattered(this, gameState, configs, spriteRegistry,
                 GhostModeActivePeriodsConf.LEVEL_1_SCATTER_ACTIVE_PERIODS);
-        chaser = new ClydeChaser(this, gameState, spriteRegistry,
+        chaser = new ClydeChaser(this, gameState, configs, spriteRegistry,
                 GhostModeActivePeriodsConf.LEVEL_1_CHASE_ACTIVE_PERIODS);
-        frightened = new Frightened(this, gameState, spriteRegistry,
+        frightened = new Frightened(this, gameState, configs, spriteRegistry,
                 GhostModeActivePeriodsConf.ALL_LEVELS_FRIGHTENED_MODE_ACTIVE_PERIODS);
-        eaten = new Eaten(this, gameState, spriteRegistry);
-        scaredChaser = new ClydeScaredChaser(this, gameState, spriteRegistry);
+        eaten = new Eaten(this, gameState, configs, spriteRegistry);
+        scaredChaser = new ClydeScaredChaser(this, gameState, configs, spriteRegistry);
 
-        navigator = new ShortestPathNavigator();
+        PlaygroundShortestPathNav playgroundShortestPathNav = new PlaygroundShortestPathNav();
+        navigator = new ShortestPathNavigator(configs, playgroundShortestPathNav);
 
         scattered.enter();
         activeMode = scattered;
@@ -48,8 +50,8 @@ public class Clyde extends Ghost {
         super.init();
         // place yourself in the ghost house
         final GhostHouseS ghostHouseS = gameState.getGhostHouseS();
-        final double col = ghostHouseS.getCol() + 4 * DimensionsC.MAZE_CELL_SIZE_PIXELS;
-        final double row = ghostHouseS.getERow() - DimensionsC.MAZE_CELL_SIZE_PIXELS;
+        final double col = ghostHouseS.getCol() + 4 * configs.PLAYGROUND_CELL_SIZE();
+        final double row = ghostHouseS.getERow() - configs.PLAYGROUND_CELL_SIZE();
         setTopLeftCorner(new Coordinate(row, col));
     }
 
@@ -75,6 +77,7 @@ public class Clyde extends Ghost {
         }
     }
 
+    // [TODO] debug, Clyde never leaves teh scared chaser mode
     private void scaredChaserTransition(Event event) {
         if (event != null && EventType.PAC_MAN_SUPER_SUGAR_COLLISION.equals(event.getType())) {
             chaser.pause();
@@ -84,11 +87,12 @@ public class Clyde extends Ghost {
             activeMode = frightened;
         } else {
             final Coordinate pacManCord = gameState.getPacMan().getTopLeftCorner();
-            final double distToPacManInPixels = navigator.calcDist(getTopLeftCorner(), pacManCord);
+            final double distToPacManInPixels = navigator.calcDist(this, pacManCord);
             // [TODO] provide the number 8 as a configuration
-            if (distToPacManInPixels >= 8 * DimensionsC.MAZE_CELL_SIZE_PIXELS) {
-                chaser.enter();
+            if (distToPacManInPixels >= 8 * configs.PLAYGROUND_CELL_SIZE()) {
                 activeMode = chaser;
+            } else if (chaser.ended()) {
+                super.chaserTransition(event);
             }
         }
     }
@@ -102,9 +106,9 @@ public class Clyde extends Ghost {
         }
 
         final Coordinate pacManCord = gameState.getPacMan().getTopLeftCorner();
-        final double distToPacManInPixels = navigator.calcDist(getTopLeftCorner(), pacManCord);
+        final double distToPacManInPixels = navigator.calcDist(this, pacManCord);
         // [TODO] provide the number 8 as a configuration
-        if (distToPacManInPixels < 8 * DimensionsC.MAZE_CELL_SIZE_PIXELS) {
+        if (distToPacManInPixels < 8 * configs.PLAYGROUND_CELL_SIZE()) {
             activeMode = scaredChaser;
         }
     }

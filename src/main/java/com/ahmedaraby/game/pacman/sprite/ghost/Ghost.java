@@ -1,5 +1,7 @@
 package com.ahmedaraby.game.pacman.sprite.ghost;
 
+import com.ahmedaraby.game.pacman.config.Configs;
+import com.ahmedaraby.game.pacman.config.intConfigs.ConfigsEx;
 import com.ahmedaraby.game.pacman.constant.DimensionsC;
 import com.ahmedaraby.game.pacman.constant.DirectionsE;
 import com.ahmedaraby.game.pacman.constant.SpriteE;
@@ -15,9 +17,11 @@ import com.ahmedaraby.game.pacman.ghostmode.common.Eaten;
 import com.ahmedaraby.game.pacman.ghostmode.common.Frightened;
 import com.ahmedaraby.game.pacman.model.GameState;
 import com.ahmedaraby.game.pacman.sprite.MovingSprite;
+import com.ahmedaraby.jengine.entity.Vector;
 import com.ahmedaraby.jengine.event.Subscriber;
 
 public abstract class Ghost extends MovingSprite implements Subscriber<EventType> {
+    // modes
     protected TemporalGhostMode scattered;
     protected TemporalGhostMode chaser;
     protected TemporalGhostMode frightened;
@@ -27,8 +31,8 @@ public abstract class Ghost extends MovingSprite implements Subscriber<EventType
     protected TemporalGhostMode previousMode;
 
 
-    public Ghost(GameState gameState, SpriteE type, double col, double row, DirectionsE dir) {
-        super(gameState, type, new Coordinate(row, col), DimensionsC.GHOST_WIDTH_PIXELS, DimensionsC.GHOST_HEIGHT_PIXELS, dir);
+    public Ghost(GameState gameState, ConfigsEx configs, SpriteE type, double col, double row, DirectionsE dir) {
+        super(gameState, configs, type, new Coordinate(row, col), configs.GHOST_WIDTH(), configs.GHOST_HEIGHT(), dir);
     }
 
     @Override
@@ -37,6 +41,16 @@ public abstract class Ghost extends MovingSprite implements Subscriber<EventType
         chaser.init();
         frightened.init();
         eaten.init();
+    }
+
+    // [TODO] make the method generic enough to work on any sprite
+    // [TODO] move the method to "MovingSprite" class
+    // [TODO] refer to the dynamically loaded configs
+    public Coordinate calculateNextCord(Vector dir) {
+        final Coordinate currCord = super.getTopLeftCorner();
+        final double newX = currCord.getCol() + dir.getX() * (DimensionsC.GHOST_STRIDE_PIXELS / Configs.FRAMES_PER_SEC_FOR_GHOST_STRIDE);
+        final double newY = currCord.getRow() + dir.getY() * (DimensionsC.GHOST_STRIDE_PIXELS / Configs.FRAMES_PER_SEC_FOR_GHOST_STRIDE);
+        return new Coordinate(newY, newX);
     }
 
     protected void transitionMode(Event event) {

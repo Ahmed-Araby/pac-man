@@ -39,4 +39,15 @@ public class Vector {
     public Vector scale(double scalar) {
         return new Vector(x * scalar, y * scalar);
     }
+
+    public Vector flip180() {
+        final double newX = x == 0 ? 0 : -x;
+        final double newY = y == 0 ? 0 : -y;
+        return new Vector(newX, newY);
+    }
+    public boolean isOpposite(Vector v) {
+        return flip180().equals(v);
+    }
+
+
 }

@@ -1,7 +1,6 @@
 package com.ahmedaraby.game.pacman.sprite.playground;
 
-import com.ahmedaraby.game.pacman.constant.ColorC;
-import com.ahmedaraby.game.pacman.constant.DimensionsC;
+import com.ahmedaraby.game.pacman.config.intConfigs.ConfigsEx;
 import com.ahmedaraby.game.pacman.constant.DirectionsE;
 import com.ahmedaraby.game.pacman.constant.SpriteE;
 import javafx.scene.canvas.Canvas;
@@ -9,11 +8,10 @@ import javafx.scene.canvas.GraphicsContext;
 import lombok.Getter;
 import lombok.Setter;
 import com.ahmedaraby.jengine.entity.Coordinate;
-import com.ahmedaraby.game.pacman.entity.MazeCell;
+import com.ahmedaraby.game.pacman.entity.Cell;
 import com.ahmedaraby.game.pacman.playground.Playground;
 import com.ahmedaraby.game.pacman.model.GameState;
 import com.ahmedaraby.game.pacman.sprite.Sprite;
-import com.ahmedaraby.game.pacman.util.canvas.CanvasUtil;
 
 @Getter
 @Setter
@@ -22,17 +20,17 @@ public class GhostHouseS extends Sprite {
     private final double eRow;
 
 
-    public GhostHouseS(GameState gameState) {
-        super(gameState, SpriteE.GHOST_HOUSE);
+    public GhostHouseS(GameState gameState, ConfigsEx configs) {
+        super(gameState, configs, SpriteE.GHOST_HOUSE);
 
-        final int mazeWidth = (int) (DimensionsC.CANVAS_WIDTH_PIXELS / DimensionsC.MAZE_CELL_SIZE_PIXELS);
-        final int mazeHeight = (int) (DimensionsC.CANVAS_HEIGHT_PIXELS / DimensionsC.MAZE_CELL_SIZE_PIXELS);
+        final int mazeWidth = (int) (configs.CANVAS_WIDTH() / configs.PLAYGROUND_CELL_SIZE());
+        final int mazeHeight = (int) (configs.CANVAS_HEIGHT() / configs.PLAYGROUND_CELL_SIZE());
 
-        final double sCol = (mazeWidth / 2 - 3) * DimensionsC.MAZE_CELL_SIZE_PIXELS;
-        final double sRow = (mazeHeight / 2 - 3) * DimensionsC.MAZE_CELL_SIZE_PIXELS;
+        final double sCol = (mazeWidth / 2 - 3) * configs.PLAYGROUND_CELL_SIZE();
+        final double sRow = (mazeHeight / 2 - 3) * configs.PLAYGROUND_CELL_SIZE();
 
-        this.eCol = (mazeWidth / 2 + 3) * DimensionsC.MAZE_CELL_SIZE_PIXELS;
-        this.eRow = (mazeHeight / 2) * DimensionsC.MAZE_CELL_SIZE_PIXELS;
+        this.eCol = (mazeWidth / 2 + 3) * configs.PLAYGROUND_CELL_SIZE();
+        this.eRow = (mazeHeight / 2) * configs.PLAYGROUND_CELL_SIZE();
 
         setTopLeftCorner(new Coordinate(sRow, sCol));
         setWidth(eCol - sCol + 1);
@@ -42,12 +40,12 @@ public class GhostHouseS extends Sprite {
     }
 
     private void putGhostHouse() {
-        final MazeCell doorCell = calcDoorCel();
+        final Cell doorCell = calcDoorCel();
         final double sCol = getCol();
         final double sRow = getRow();
-        for (double i = sRow; i<=eRow; i+=DimensionsC.MAZE_CELL_SIZE_PIXELS) {
-            for (double j = sCol; j<=eCol; j+=DimensionsC.MAZE_CELL_SIZE_PIXELS) {
-                MazeCell cell = CanvasUtil.toMazeCoordinate(new Coordinate(i, j), DirectionsE.STILL);
+        for (double i = sRow; i<=eRow; i+=configs.PLAYGROUND_CELL_SIZE()) {
+            for (double j = sCol; j<=eCol; j+=configs.PLAYGROUND_CELL_SIZE()) {
+                Cell cell = new Coordinate(i, j).toCell(DirectionsE.STILL.toVector());
                 SpriteE spriteType;
                 if (cell.equals(doorCell)) {
                     spriteType = SpriteE.GHOST_HOUSE_DOOR;
@@ -65,19 +63,19 @@ public class GhostHouseS extends Sprite {
     public void render(Canvas canvas) {
         final GraphicsContext con = canvas.getGraphicsContext2D();
 
-        final MazeCell doorCell = calcDoorCel();
+        final Cell doorCell = calcDoorCel();
         final double sCol = getCol();
         final double sRow = getRow();
 
-        for (double i = sRow; i<=eRow; i+=DimensionsC.MAZE_CELL_SIZE_PIXELS) {
-            for (double j = sCol; j<=eCol; j+=DimensionsC.MAZE_CELL_SIZE_PIXELS) {
-                MazeCell cell = CanvasUtil.toMazeCoordinate(new Coordinate(i, j), DirectionsE.STILL);
+        for (double i = sRow; i<=eRow; i+=configs.PLAYGROUND_CELL_SIZE()) {
+            for (double j = sCol; j<=eCol; j+=configs.PLAYGROUND_CELL_SIZE()) {
+                Cell cell = new Coordinate(i, j).toCell(DirectionsE.STILL.toVector());
                 if (cell.equals(doorCell)) {
                     continue;
                 }
                 if (i == sRow || i == eRow || j == sCol || j == eCol) {
-                    con.setFill(ColorC.GHOST_HOUSE_WALL_COLOR);
-                    con.fillRect(j, i, DimensionsC.MAZE_CELL_SIZE_PIXELS, DimensionsC.MAZE_CELL_SIZE_PIXELS);
+                    con.setFill(configs.GHOST_HOUSE_WALL_COLOR());
+                    con.fillRect(j, i, configs.PLAYGROUND_CELL_SIZE(), configs.PLAYGROUND_CELL_SIZE());
                 }
             }
         }
@@ -91,9 +89,9 @@ public class GhostHouseS extends Sprite {
         return (eCol - getCol()) / 2 + getCol();
     }
 
-    private MazeCell calcDoorCel() {
+    private Cell calcDoorCel() {
         final Coordinate cord = new Coordinate(calcDoorRow(), calcDoorCol());
-        return CanvasUtil.toMazeCoordinate(cord, DirectionsE.STILL);
+        return cord.toCell(DirectionsE.STILL.toVector());
     }
 
 }

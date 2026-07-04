@@ -1,5 +1,6 @@
 package com.ahmedaraby.game.pacman.ghostmode.blinky;
 
+import com.ahmedaraby.game.pacman.config.intConfigs.ConfigsEx;
 import com.ahmedaraby.game.pacman.model.GameState;
 import com.ahmedaraby.game.pacman.sprite.ghost.Ghost;
 import com.ahmedaraby.jengine.sprite.SpriteRegistry;
@@ -8,27 +9,21 @@ import javafx.scene.image.Image;
 import com.ahmedaraby.jengine.animation.Animator;
 import com.ahmedaraby.jengine.animation.DistanceBasedAnimator;
 import com.ahmedaraby.game.pacman.config.Configs;
-import com.ahmedaraby.game.pacman.constant.DimensionsC;
 import com.ahmedaraby.game.pacman.constant.DirectionsE;
 import com.ahmedaraby.game.pacman.constant.SpriteFileNameC;
 import com.ahmedaraby.jengine.entity.Coordinate;
 import com.ahmedaraby.game.pacman.ghostmode.Chaser;
-import com.ahmedaraby.game.pacman.ghostmode.navigation.GhostNavigator;
-import com.ahmedaraby.game.pacman.ghostmode.navigation.ShortestPathNavigator;
-import com.ahmedaraby.game.pacman.util.ghost.GhostUtil;
 
 public class BlinkyChaser extends Chaser {
 
     private final Animator animator;
-    private final GhostNavigator navigator;
 
-    public BlinkyChaser(Ghost ghost, GameState gameState, SpriteRegistry<String, Image> spriteRegistry, int[] activePeriodsSec) {
-        super(ghost, gameState, spriteRegistry, activePeriodsSec);
+    public BlinkyChaser(Ghost ghost, GameState gameState, ConfigsEx configs, SpriteRegistry<String, Image> spriteRegistry, int[] activePeriodsSec) {
+        super(ghost, gameState, configs, spriteRegistry, activePeriodsSec);
 
         final Image[] frames = loadSprites();
         this.animator = new DistanceBasedAnimator(
-                new double[]{DimensionsC.GHOST_FIRST_LEG_MOVEMENT_DISTANCE_PIXELS, DimensionsC.GHOST_SECOND_LEG_MOVEMENT_DISTANCE_PIXELS}, frames);
-        this.navigator = new ShortestPathNavigator();
+                new double[]{configs.GHOST_BLINK_FIRST_FRAME_DISTANCE(), configs.GHOST_BLINK_SECOND_FRAME_DISTANCE()}, frames);
     }
 
     @Override
@@ -38,17 +33,16 @@ public class BlinkyChaser extends Chaser {
 
     @Override
     public void move() {
-        final Coordinate ghostCurrCord = new Coordinate(ghost.getRow(), ghost.getCol());
         final Coordinate pacmanCurrCord = gameState.getPacMan().getTopLeftCorner();
-        final DirectionsE directionsE = navigator.nextMoveDirection(ghostCurrCord, pacmanCurrCord);
-        final Coordinate ghostNewCord = GhostUtil.move(ghostCurrCord, directionsE);
+        final DirectionsE directionsE = navigator.calcDir(ghost, pacmanCurrCord);
+        final Coordinate ghostNewCord = ghost.calculateNextCord(directionsE.toVector());
 
         ghost.setDir(directionsE);
         ghost.setRow(ghostNewCord.getRow());
         ghost.setCol(ghostNewCord.getCol());
 
         if(directionsE != DirectionsE.STILL) {
-            animator.stride(DimensionsC.GHOST_STRIDE_PIXELS / Configs.FRAMES_PER_SEC_FOR_GHOST_STRIDE);
+            animator.stride(configs.GHOST_BLINKY_SPEED() / Configs.FRAMES_PER_SEC_FOR_GHOST_STRIDE);
         }
 
     }

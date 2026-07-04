@@ -1,5 +1,6 @@
 package com.ahmedaraby.game.pacman.ghostmode.blinky;
 
+import com.ahmedaraby.game.pacman.config.intConfigs.ConfigsEx;
 import com.ahmedaraby.game.pacman.model.GameState;
 import com.ahmedaraby.game.pacman.sprite.ghost.Ghost;
 import com.ahmedaraby.jengine.sprite.SpriteRegistry;
@@ -7,24 +8,21 @@ import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
 import com.ahmedaraby.jengine.animation.DistanceBasedAnimator;
-import com.ahmedaraby.game.pacman.constant.DimensionsC;
 import com.ahmedaraby.game.pacman.constant.SpriteFileNameC;
 import com.ahmedaraby.jengine.entity.Coordinate;
 import com.ahmedaraby.game.pacman.ghostmode.Scattered;
-import com.ahmedaraby.game.pacman.ghostmode.navigation.ShortestPathNavigator;
 
 public class BlinkyScattered extends Scattered {
 
-    public BlinkyScattered(Ghost ghost, GameState gameState, SpriteRegistry<String, Image> spriteRegistry, int[] activePeridosSec) {
-        super(ghost, gameState, spriteRegistry, activePeridosSec);
+    public BlinkyScattered(Ghost ghost, GameState gameState, ConfigsEx configs, SpriteRegistry<String, Image> spriteRegistry, int[] activePeriodsSec) {
+        super(ghost, gameState, configs, spriteRegistry, activePeriodsSec);
         this.target = new Coordinate(
                 0,
-                DimensionsC.CANVAS_WIDTH_PIXELS - 1
+                configs.CANVAS_WIDTH() - 1
         );
         final Image[] frames = loadSprites();
         this.animator = new DistanceBasedAnimator(
-                new double[]{DimensionsC.GHOST_FIRST_LEG_MOVEMENT_DISTANCE_PIXELS, DimensionsC.GHOST_SECOND_LEG_MOVEMENT_DISTANCE_PIXELS}, frames);
-        this.navigator = new ShortestPathNavigator();
+                new double[]{configs.GHOST_BLINK_FIRST_FRAME_DISTANCE(), configs.GHOST_BLINK_SECOND_FRAME_DISTANCE()}, frames);
     }
 
     @Override

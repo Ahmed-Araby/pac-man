@@ -4,6 +4,8 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.ToString;
 
+import java.util.List;
+
 @AllArgsConstructor
 @Getter
 @ToString
@@ -31,7 +33,7 @@ public class Rectangle {
     }
 
     public Coordinate topRightCorner() {
-       return new Coordinate(topLeftCorner.getRow(), width - 1);
+       return new Coordinate(topLeftCorner.getRow(), topLeftCorner.getCol() + width - 1);
     }
 
     public Coordinate bottomRightCorner() {
@@ -40,6 +42,15 @@ public class Rectangle {
 
     public Coordinate bottomLeftCorner() {
         return new Coordinate(topLeftCorner.getRow() + height - 1, topLeftCorner.getCol());
+    }
+
+    public List<Coordinate> corners() {
+        return List.of(
+                topLeftCorner(),
+                topRightCorner(),
+                bottomRightCorner(),
+                bottomLeftCorner()
+        );
     }
 
 

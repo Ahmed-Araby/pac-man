@@ -1,5 +1,6 @@
 package com.ahmedaraby.game.pacman.sprite;
 
+import com.ahmedaraby.game.pacman.config.intConfigs.ConfigsEx;
 import com.ahmedaraby.jengine.entity.Rectangle;
 import com.ahmedaraby.game.pacman.model.GameState;
 import javafx.scene.canvas.Canvas;
@@ -15,13 +16,17 @@ import com.ahmedaraby.jengine.entity.Coordinate;
 @AllArgsConstructor
 public abstract class Sprite {
     protected GameState gameState;
+    protected ConfigsEx configs;
+
     protected SpriteE type;
     protected Coordinate topLeftCorner;
     protected double width;
     protected double height;
 
-    public Sprite(GameState gameState, SpriteE type) {
+    public Sprite(GameState gameState, ConfigsEx configs, SpriteE type) {
         this.gameState = gameState;
+        this.configs = configs;
+
         this.type = type;
     }
 
