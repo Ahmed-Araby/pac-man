@@ -131,7 +131,7 @@ public class PacMan extends MovingSprite implements Subscriber<EventType> {
         // only 1 dimension can have fraction at a time.
         final Coordinate nextCeildCord = new Coordinate(Math.ceil(nextCord.getRow()), Math.ceil(nextCord.getCol()));
         final Rectangle nextCeildPacManRect = new Rectangle(nextCeildCord, getWidth(), getHeight());
-        return nextCeildPacManRect.within(gameState.getMaze().getRect()) && !isCollidingWithWallOrGhostHWall(nextCord);
+        return nextCeildPacManRect.within(gameState.getMaze().getRect()) && !isCollidingWithWallOrGhostHWall(nextCeildCord);
     }
 
     private void handleApprovedMovementAttempt(PacManMovementAttemptApprovedEvent event) {
