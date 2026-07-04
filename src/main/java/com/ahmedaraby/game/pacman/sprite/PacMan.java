@@ -77,7 +77,7 @@ public class PacMan extends MovingSprite implements Subscriber<EventType> {
             return;
         }
 
-        // automated and buffered movement attempt
+        // buffered movement attempt
         if (!turnBuffer.isEmpty()) {
             boolean moved = attemptMovement(new PacManMovementRequestEvent(turnBuffer.getDir(), turnBuffer));
             if (turnBuffer.exceededBufferDist()) {
@@ -87,6 +87,8 @@ public class PacMan extends MovingSprite implements Subscriber<EventType> {
                 return;
             }
         }
+        
+        // automated movement attempt
         attemptMovement(new PacManMovementRequestEvent(dir, this));
 
     }
