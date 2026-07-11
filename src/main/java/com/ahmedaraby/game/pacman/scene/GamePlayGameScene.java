@@ -103,6 +103,8 @@ public class GamePlayGameScene implements GameScene {
         scene.setOnKeyPressed((event) -> {
             javaFXInputHandler.handleKeyPressedEvent(event);
         });
+
+        gameState.setPrevFrameEndedAt(System.nanoTime());
     }
 
     private void createNonGhostSprites() {
@@ -204,10 +206,14 @@ public class GamePlayGameScene implements GameScene {
         inky.render(canvas);
         pinky.render(canvas);
         clyde.render(canvas);
+
+        gameState.setPrevFrameEndedAt(System.nanoTime());
     }
 
     @Override
     public void update() {
+        gameState.setCurrFrameStartedAt(System.nanoTime());
+
         pacMan.move(null);
         blinky.move(null);
         inky.move(null);
