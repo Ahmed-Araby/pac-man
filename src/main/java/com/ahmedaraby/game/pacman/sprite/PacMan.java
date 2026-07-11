@@ -9,8 +9,6 @@ import com.ahmedaraby.jengine.entity.Coordinate;
 import com.ahmedaraby.game.pacman.event.Event;
 import com.ahmedaraby.jengine.entity.Vector;
 import com.ahmedaraby.jengine.event.Subscriber;
-import com.ahmedaraby.game.pacman.event.movement.PacManMovementAttemptApprovedEvent;
-import com.ahmedaraby.game.pacman.event.movement.PacManMovementAttemptDeniedEvent;
 import com.ahmedaraby.game.pacman.event.movement.PacManMovementRequestEvent;
 import com.ahmedaraby.game.pacman.model.GameState;
 import com.ahmedaraby.game.pacman.util.pacman.PacManGraphicsUtil;
@@ -101,13 +99,9 @@ public class PacMan extends MovingSprite implements Subscriber<EventType> {
     private boolean attemptMovementInSameDir(PacManMovementRequestEvent event) {
         final boolean moved = attemptMovementInSameDir();
         if (moved) {
-            final PacManMovementAttemptApprovedEvent approvedEvent = new PacManMovementAttemptApprovedEvent(
-                    event.getDir(), event.getSource()
-            );
-            updateAnimatorAndTurnBuffer(approvedEvent);
-            return true;
+            updateAnimatorAndTurnBuffer(event.getDir(), event.getSource());
         }
-        return false;
+        return moved;
     }
 
     private boolean attemptMovementInNewDir(PacManMovementRequestEvent event) {
@@ -119,37 +113,31 @@ public class PacMan extends MovingSprite implements Subscriber<EventType> {
         final boolean moved = attemptMovementInNewDir(event.getDir());
 
         if (moved) {
-            final PacManMovementAttemptApprovedEvent approvedEvent = new PacManMovementAttemptApprovedEvent(
-                    event.getDir(), event.getSource()
-            );
-            updateAnimatorAndTurnBuffer(approvedEvent);
-            return true;
+            updateAnimatorAndTurnBuffer(event.getDir(), event.getSource());
         } else {
-            final PacManMovementAttemptDeniedEvent deniedEvent = new PacManMovementAttemptDeniedEvent(event.getDir(), event.getSource());
-            handleDeniedMovementAttempt(deniedEvent);
-            return false;
+            handleDeniedMovementAttempt(event.getDir(), event.getSource());
         }
+        return moved;
     }
 
 
-    private void updateAnimatorAndTurnBuffer(PacManMovementAttemptApprovedEvent event) {
-        final double stride = calcStride(event.getRequestedDir());
+    private void updateAnimatorAndTurnBuffer(Vector dir, Object movementSource) {
+        final double stride = calcStride(dir);
         mouthAnimationTracker.stride(stride);
 
-        if (event.getMovementAttemptSource() instanceof Scene
-                || event.getMovementAttemptSource() instanceof TurnBuffer) {
+        if (movementSource instanceof Scene || movementSource instanceof TurnBuffer) {
             // user input or turn buffer automated move
             turnBuffer.clear();
-        } else if (event.getMovementAttemptSource() instanceof PacMan) {
+        } else if (movementSource instanceof PacMan) {
             // automated straight line movement
             turnBuffer.stride(stride);
         }
     }
 
-    private void handleDeniedMovementAttempt(PacManMovementAttemptDeniedEvent event) {
-        if (event.getMovementAttemptSource() instanceof Scene) {
+    private void handleDeniedMovementAttempt(Vector dir, Object movementSource) {
+        if (movementSource instanceof Scene) {
             // buffer denied user movement
-            turnBuffer.buffer(event.getRequestedDir());
+            turnBuffer.buffer(dir);
         }
     }
 
