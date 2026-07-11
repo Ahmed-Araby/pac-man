@@ -36,6 +36,12 @@ public abstract class MovingSprite extends Sprite {
         List<CollisionReport> collisionReports = M2SSpriteCollisionDetector.detect(rect, List.of(SpriteE.WALL, SpriteE.GHOST_HOUSE_WALL));
         return !collisionReports.isEmpty();
     }
+    protected boolean isCollidingWithWallOrGhostHWall(double stride, Vector dir) {
+        final Coordinate nextCord = calcNextCord(stride, dir);
+        final Rectangle nextRect = new Rectangle(nextCord, getWidth(), getHeight());
+        List<CollisionReport> collisionReports = M2SSpriteCollisionDetector.detect(nextRect, List.of(SpriteE.WALL, SpriteE.GHOST_HOUSE_WALL));
+        return !collisionReports.isEmpty();
+    }
 
     protected boolean isGoingOutOfCanvas(double stride, Vector dir) {
         final Coordinate nextCord = calcNextCord(stride, dir);
@@ -55,6 +61,8 @@ public abstract class MovingSprite extends Sprite {
         double refinedStride = originalStride;
         if (isGoingOutOfCanvas(originalStride, dir)) {
             refinedStride = originalStride + calcStrideCorrectiveOffsetToPreventGoingOut(originalStride, dir);
+        } else if (isCollidingWithWallOrGhostHWall(originalStride, dir)) {
+            refinedStride = originalStride + calcStrideCorrectiveOffsetToUnblockWallStuck(originalStride, dir);
         }
         return refinedStride;
     }
@@ -73,8 +81,18 @@ public abstract class MovingSprite extends Sprite {
         return 0;
     }
 
-    private double calibrateToUnblock() {
-        throw new IllegalStateException("not implemented");
+    private double calcStrideCorrectiveOffsetToUnblockWallStuck(double stride, Vector dir) {
+        final Coordinate nextCord = calcNextCord(stride, dir);
+        if (Vector.RIGHT == dir) {
+            return nextCord.getCol() % configs.PLAYGROUND_CELL_SIZE();
+        } else if (Vector.LEFT == dir) {
+            return configs.PLAYGROUND_CELL_SIZE() - (nextCord.getCol() % configs.PLAYGROUND_CELL_SIZE());
+        } else if (Vector.UP == dir) {
+            return configs.PLAYGROUND_CELL_SIZE() - (nextCord.getRow() % configs.PLAYGROUND_CELL_SIZE());
+        } else if (Vector.DOWN == dir) {
+            return nextCord.getRow() % configs.PLAYGROUND_CELL_SIZE();
+        }
+        return 0;
     }
 
 
