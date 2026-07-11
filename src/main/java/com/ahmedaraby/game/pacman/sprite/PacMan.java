@@ -102,7 +102,7 @@ public class PacMan extends MovingSprite implements Subscriber<EventType> {
         final boolean moved = attemptMovementInSameDir();
         if (moved) {
             final PacManMovementAttemptApprovedEvent approvedEvent = new PacManMovementAttemptApprovedEvent(
-                    getTopLeftCorner(), null, event.getDir(), event.getSource()
+                    event.getDir(), event.getSource()
             );
             updateAnimatorAndTurnBuffer(approvedEvent);
             return true;
@@ -119,12 +119,12 @@ public class PacMan extends MovingSprite implements Subscriber<EventType> {
         final boolean moved = attemptMovementInNewDir(event.getDir());
 
         if (!moved) {
-            final PacManMovementAttemptDeniedEvent deniedEvent = new PacManMovementAttemptDeniedEvent(null, event.getDir(), event.getSource());
+            final PacManMovementAttemptDeniedEvent deniedEvent = new PacManMovementAttemptDeniedEvent(event.getDir(), event.getSource());
             handleDeniedMovementAttempt(deniedEvent);
             return false;
         } else {
             final PacManMovementAttemptApprovedEvent approvedEvent = new PacManMovementAttemptApprovedEvent(
-                    getTopLeftCorner(), null, event.getDir(), event.getSource()
+                    event.getDir(), event.getSource()
             );
             updateAnimatorAndTurnBuffer(approvedEvent);
             return true;
