@@ -2,7 +2,6 @@ package com.ahmedaraby.game.pacman.sprite;
 
 import com.ahmedaraby.game.pacman.collision.M2SSpriteCollisionDetector;
 import com.ahmedaraby.game.pacman.config.intConfigs.ConfigsEx;
-import com.ahmedaraby.game.pacman.event.movement.PacManMovementRequestEvent;
 import com.ahmedaraby.jengine.entity.Vector;
 import lombok.Getter;
 import lombok.Setter;
@@ -38,14 +37,46 @@ public abstract class MovingSprite extends Sprite {
         return !collisionReports.isEmpty();
     }
 
+    protected boolean isGoingOutOfCanvas(double stride, Vector dir) {
+        final Coordinate nextCord = calcNextCord(stride, dir);
+        final Rectangle nextRect = new Rectangle(nextCord, getWidth(), getHeight());
+        return !nextRect.within(gameState.getMaze().getRect());
+    }
+
     protected double getSpeed() {
         throw new IllegalStateException("getSpeed in sprite " + getClass().getSimpleName() +  " is not implemented");
     }
 
-    protected double calcStride() {
+    protected double calcStride(Vector dir) {
         final double elapsedTime = Math.abs(gameState.getPrevFrameEndedAt() - gameState.getCurrFrameStartedAt()) / 1_000_000_000.0;
-        return getSpeed() * elapsedTime;
+        final double originalStride = getSpeed() * elapsedTime;
+
+        // refine stride
+        double refinedStride = originalStride;
+        if (isGoingOutOfCanvas(originalStride, dir)) {
+            refinedStride = originalStride + calcStrideCorrectiveOffsetToPreventGoingOut(originalStride, dir);
+        }
+        return refinedStride;
     }
+
+    private double calcStrideCorrectiveOffsetToPreventGoingOut(double stride, Vector dir) {
+        final Coordinate nextCord = calcNextCord(stride, dir);
+        if (Vector.RIGHT == dir) {
+            return (configs.CANVAS_WIDTH() - getWidth()) - nextCord.getCol();
+        } else if (Vector.LEFT == dir) {
+            return nextCord.getCol();
+        } else if (Vector.UP == dir) {
+            return nextCord.getRow();
+        } else if (Vector.DOWN == dir) {
+            return (configs.CANVAS_HEIGHT() - getHeight()) - nextCord.getRow();
+        }
+        return 0;
+    }
+
+    private double calibrateToUnblock() {
+        throw new IllegalStateException("not implemented");
+    }
+
 
     protected Coordinate calcNextCord(double stride, Vector dir) {
         final double newCol = getCol() + dir.getX() * stride;
@@ -53,15 +84,24 @@ public abstract class MovingSprite extends Sprite {
         return new Coordinate(newRow, newCol);
     }
 
-    protected boolean attemptMovement(PacManMovementRequestEvent event) {
-        final double stride = calcStride();
-        final Coordinate nextCord = calcNextCord(stride, event.getDir());
-        final Rectangle nextRect = new Rectangle(nextCord, getWidth(), getHeight());
+    protected boolean attemptMovementInSameDir(Vector dir) {
+        final double stride = calcStride(dir);
+        return attemptMovement(stride, dir);
+    }
 
-        if (nextRect.within(gameState.getMaze().getRect()) && !isCollidingWithWallOrGhostHWall(nextCord)) {
+    protected boolean attemptMovementInNewDir(Vector dir) {
+        return attemptMovement(2, dir);
+    }
+
+    protected boolean attemptMovement(double calibratedStride, Vector dir) {
+        final Coordinate calibratedNextCord = calcNextCord(calibratedStride, dir);
+
+        if (!isGoingOutOfCanvas(calibratedStride, dir) && !isCollidingWithWallOrGhostHWall(calibratedNextCord)) {
+            final double originalStride = calcStride(dir);
+            final Coordinate nextCord = calcNextCord(originalStride, dir);
             setTopLeftCorner(nextCord);
-            setDir(DirectionsE.fromVector(event.getDir()));
-            setDirV(event.getDir());
+            setDir(DirectionsE.fromVector(dir));
+            setDirV(dir);
             return true;
         }
         return false;

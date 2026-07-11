@@ -69,6 +69,7 @@ public class PacMan extends MovingSprite implements Subscriber<EventType> {
 
     @Override
     public void move(Event event) {
+        System.out.println("pacManTopLeftCorner = " + topLeftCorner);
         if (event != null) {
             // movement attempt made by user
             if (((PacManMovementRequestEvent)event).getDir() != dirV) {
@@ -98,7 +99,7 @@ public class PacMan extends MovingSprite implements Subscriber<EventType> {
     }
 
     private boolean attemptMovementInSameDir(PacManMovementRequestEvent event) {
-        final boolean moved = attemptMovement(event);
+        final boolean moved = attemptMovementInSameDir(event.getDir());
         if (moved) {
             final PacManMovementAttemptApprovedEvent approvedEvent = new PacManMovementAttemptApprovedEvent(
                     getTopLeftCorner(), null, event.getDir(), event.getSource()
@@ -115,7 +116,7 @@ public class PacMan extends MovingSprite implements Subscriber<EventType> {
             return false;
         }
 
-        final boolean moved = attemptMovement(event);
+        final boolean moved = attemptMovementInNewDir(event.getDir());
 
         if (!moved) {
             final PacManMovementAttemptDeniedEvent deniedEvent = new PacManMovementAttemptDeniedEvent(null, event.getDir(), event.getSource());
