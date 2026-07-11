@@ -118,16 +118,16 @@ public class PacMan extends MovingSprite implements Subscriber<EventType> {
 
         final boolean moved = attemptMovementInNewDir(event.getDir());
 
-        if (!moved) {
-            final PacManMovementAttemptDeniedEvent deniedEvent = new PacManMovementAttemptDeniedEvent(event.getDir(), event.getSource());
-            handleDeniedMovementAttempt(deniedEvent);
-            return false;
-        } else {
+        if (moved) {
             final PacManMovementAttemptApprovedEvent approvedEvent = new PacManMovementAttemptApprovedEvent(
                     event.getDir(), event.getSource()
             );
             updateAnimatorAndTurnBuffer(approvedEvent);
             return true;
+        } else {
+            final PacManMovementAttemptDeniedEvent deniedEvent = new PacManMovementAttemptDeniedEvent(event.getDir(), event.getSource());
+            handleDeniedMovementAttempt(deniedEvent);
+            return false;
         }
     }
 
