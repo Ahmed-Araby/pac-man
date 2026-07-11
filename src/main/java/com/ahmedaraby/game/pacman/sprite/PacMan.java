@@ -147,13 +147,8 @@ public class PacMan extends MovingSprite implements Subscriber<EventType> {
     }
 
     private void handleDeniedMovementAttempt(PacManMovementAttemptDeniedEvent event) {
-        if (!(event.getMovementAttemptSource() instanceof Scene)) {
-            // do nothing for denied automated movements
-            return;
-        }
-
-        // buffer denied user movement
-        if(dirV != event.getRequestedDir()) {
+        if (event.getMovementAttemptSource() instanceof Scene) {
+            // buffer denied user movement
             turnBuffer.buffer(event.getRequestedDir());
         }
     }
