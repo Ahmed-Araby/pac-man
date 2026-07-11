@@ -31,7 +31,7 @@ public abstract class MovingSprite extends Sprite {
     public abstract void move(Event event);
 
     protected boolean isCollidingWithWallOrGhostHWall(Coordinate topLeftCorner) {
-        final Rectangle rect = SpriteUtil.toRect(topLeftCorner, type);
+        final Rectangle rect = new Rectangle(topLeftCorner, getWidth(), getHeight());
         List<CollisionReport> collisionReports = M2SSpriteCollisionDetector.detect(rect, List.of(SpriteE.WALL, SpriteE.GHOST_HOUSE_WALL));
         return !collisionReports.isEmpty();
     }
