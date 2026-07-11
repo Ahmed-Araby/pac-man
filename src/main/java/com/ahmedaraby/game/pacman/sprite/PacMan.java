@@ -99,7 +99,7 @@ public class PacMan extends MovingSprite implements Subscriber<EventType> {
     }
 
     private boolean attemptMovementInSameDir(PacManMovementRequestEvent event) {
-        final boolean moved = attemptMovementInSameDir(event.getDir());
+        final boolean moved = attemptMovementInSameDir();
         if (moved) {
             final PacManMovementAttemptApprovedEvent approvedEvent = new PacManMovementAttemptApprovedEvent(
                     getTopLeftCorner(), null, event.getDir(), event.getSource()

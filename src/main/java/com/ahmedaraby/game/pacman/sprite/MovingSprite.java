@@ -85,10 +85,10 @@ public abstract class MovingSprite extends Sprite {
     }
 
     // [TODO] remove the dir argument
-    protected boolean attemptMovementInSameDir(Vector dir) {
-        final double stride = calcStride(dir);
-        if (isPossibleMove(stride, dir)) {
-            move(stride, dir);
+    protected boolean attemptMovementInSameDir() {
+        final double stride = calcStride(dirV);
+        if (isPossibleMove(stride, dirV)) {
+            move(stride, dirV);
             return true;
         }
         return false;
@@ -116,7 +116,7 @@ public abstract class MovingSprite extends Sprite {
     protected void move(double stride, Vector dir) {
         final Coordinate nextCord = calcNextCord(stride, dir);
         setTopLeftCorner(nextCord);
-        setDir(DirectionsE.fromVector(dir));
+        setDir(DirectionsE.fromVector(dir)); // [TODO] remove this line, after replacing the DirectionE instances by the Vector 
         setDirV(dir);
     }
 }
