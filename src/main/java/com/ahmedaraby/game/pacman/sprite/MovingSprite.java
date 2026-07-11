@@ -84,26 +84,39 @@ public abstract class MovingSprite extends Sprite {
         return new Coordinate(newRow, newCol);
     }
 
+    // [TODO] remove the dir argument
     protected boolean attemptMovementInSameDir(Vector dir) {
         final double stride = calcStride(dir);
-        return attemptMovement(stride, dir);
-    }
-
-    protected boolean attemptMovementInNewDir(Vector dir) {
-        return attemptMovement(2, dir);
-    }
-
-    protected boolean attemptMovement(double calibratedStride, Vector dir) {
-        final Coordinate calibratedNextCord = calcNextCord(calibratedStride, dir);
-
-        if (!isGoingOutOfCanvas(calibratedStride, dir) && !isCollidingWithWallOrGhostHWall(calibratedNextCord)) {
-            final double originalStride = calcStride(dir);
-            final Coordinate nextCord = calcNextCord(originalStride, dir);
-            setTopLeftCorner(nextCord);
-            setDir(DirectionsE.fromVector(dir));
-            setDirV(dir);
+        if (isPossibleMove(stride, dir)) {
+            move(stride, dir);
             return true;
         }
         return false;
+    }
+
+    protected boolean attemptMovementInNewDir(Vector dir) {
+        /**
+         * when moving in a new direction, the validity of the move is checked with the static
+         * stride = 2, because this helps prevents the sprite from moving between walls on the sub pixel level.
+         * however, if the movement is valid, the actual movement applied on the sprite happens using the original stride.
+         */
+        if (isPossibleMove(2, dir)) {
+            final double stride = calcStride(dir);
+            move(stride, dir);
+            return true;
+        }
+        return false;
+    }
+
+    protected boolean isPossibleMove(double stride, Vector dir) {
+        final Coordinate calibratedNextCord = calcNextCord(stride, dir);
+        return !isGoingOutOfCanvas(stride, dir) && !isCollidingWithWallOrGhostHWall(calibratedNextCord);
+    }
+
+    protected void move(double stride, Vector dir) {
+        final Coordinate nextCord = calcNextCord(stride, dir);
+        setTopLeftCorner(nextCord);
+        setDir(DirectionsE.fromVector(dir));
+        setDirV(dir);
     }
 }
