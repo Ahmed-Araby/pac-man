@@ -55,4 +55,18 @@ public abstract class Sprite {
     public void setRow(double row) {
         topLeftCorner = new Coordinate(row, topLeftCorner.getCol());
     }
+
+    public double calcHEmptySpaceInPlaygroundCell() {
+        final double spriteToCellSizeDiff = configs.PLAYGROUND_CELL_SIZE() - getWidth();
+        final double leftGutterSize = 1; // almost
+        final double rightGutterSize = 1; // almost
+        return Math.ceil(leftGutterSize + rightGutterSize + spriteToCellSizeDiff);
+    }
+
+    public double calcVEmptySpaceInPlaygroundCell() {
+        final double spriteToCellSizeDiff = configs.PLAYGROUND_CELL_SIZE() - getHeight();
+        final double topGutterSize = 1; // almost
+        final double bottomGutterSize = 1; // almost
+        return Math.ceil(topGutterSize + bottomGutterSize + spriteToCellSizeDiff);
+    }
 }
