@@ -49,5 +49,13 @@ public class Vector {
         return flip180().equals(v);
     }
 
+    public boolean isVertical() {
+        return this == UP || this == DOWN;
+    }
+
+    public boolean isHorizontal() {
+        return this == RIGHT || this == LEFT;
+    }
+
 
 }

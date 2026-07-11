@@ -114,14 +114,17 @@ public abstract class MovingSprite extends Sprite {
 
     protected boolean attemptMovementInNewDir(Vector dir) {
         /**
-         * when moving in a new direction, the validity of the move is checked with the static
-         * stride = 2, because this helps prevents the sprite from moving between walls on the sub pixel level.
+         * when moving in a new direction, the validity of the move is checked with the static stride.
+         * the static stride is equal to the empty space that the sprite can move in within a cell without colliding with a wall,
+         * because this helps to prevent the sprite from moving between walls on the sub pixel level.
          * however, if the movement is valid, the actual movement applied on the sprite happens using the original stride.
          */
-        final double spriteToCellSizeDiff = configs.PLAYGROUND_CELL_SIZE() - getWidth();
-        final double leftGutterSize = 1; // almost
-        final double rightGutterSize = 1; // almost
-        final double emptySpace = Math.ceil(leftGutterSize + rightGutterSize + spriteToCellSizeDiff);
+        double emptySpace;
+        if (dir.isVertical()) {
+            emptySpace = calcVEmptySpaceInPlaygroundCell();
+        } else {
+            emptySpace = calcHEmptySpaceInPlaygroundCell();
+        }
         if (isPossibleMove(emptySpace, dir)) {
             final double stride = calcStride(dir);
             move(stride, dir);
