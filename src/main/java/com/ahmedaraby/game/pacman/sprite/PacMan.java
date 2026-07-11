@@ -6,7 +6,6 @@ import com.ahmedaraby.game.pacman.constant.SpriteE;
 import com.ahmedaraby.game.pacman.event.EventType;
 import com.ahmedaraby.game.pacman.util.pacman.TurnBuffer;
 import com.ahmedaraby.jengine.entity.Coordinate;
-import com.ahmedaraby.jengine.entity.Rectangle;
 import com.ahmedaraby.game.pacman.event.Event;
 import com.ahmedaraby.jengine.entity.Vector;
 import com.ahmedaraby.jengine.event.Subscriber;
@@ -26,7 +25,6 @@ public class PacMan extends MovingSprite implements Subscriber<EventType> {
 
     private final TurnBuffer turnBuffer;
     private final PacManMouthAnimationTracker mouthAnimationTracker;
-    private Vector dir; // [TODO] move this to MovingSprite later
 
     public PacMan(GameState gameState, ConfigsEx configs) {
         super(gameState, configs, SpriteE.PAC_MAN, null,
@@ -35,7 +33,7 @@ public class PacMan extends MovingSprite implements Subscriber<EventType> {
                 DirectionsE.STILL
         );
 
-        dir = Vector.STILL;
+        dirV = Vector.STILL;
 
         final Coordinate emptyCellPos = Playground.getEmptyMazePosition();
         setTopLeftCorner(emptyCellPos);
@@ -55,15 +53,15 @@ public class PacMan extends MovingSprite implements Subscriber<EventType> {
 
         if (mouthAnimationTracker.isClosed()) {
             PacManGraphicsUtil.drawClosedMousePacMan(con, col, row);
-        } else if (dir == Vector.RIGHT) {
+        } else if (dirV == Vector.RIGHT) {
             PacManGraphicsUtil.drawRightOpenMousePacMan(con, col, row);
-        } else if (dir == Vector.UP) {
+        } else if (dirV == Vector.UP) {
             PacManGraphicsUtil.drawUpOpenMousePacMan(con, col, row);
-        } else if (dir == Vector.LEFT) {
+        } else if (dirV == Vector.LEFT) {
             PacManGraphicsUtil.drawLeftOpenMousePacMan(con, col, row);
-        } else if (dir == Vector.DOWN) {
+        } else if (dirV == Vector.DOWN) {
             PacManGraphicsUtil.drawDownOpenMousePacMan(con, col, row);
-        } else if (dir == Vector.STILL) {
+        } else if (dirV == Vector.STILL) {
             PacManGraphicsUtil.drawClosedMousePacMan(con, col, row);
         }
     }
@@ -73,7 +71,7 @@ public class PacMan extends MovingSprite implements Subscriber<EventType> {
     public void move(Event event) {
         if (event != null) {
             // movement attempt made by user
-            if (((PacManMovementRequestEvent)event).getDir() != dir) {
+            if (((PacManMovementRequestEvent)event).getDir() != dirV) {
                 attemptMovementInNewDir((PacManMovementRequestEvent) event);
             } else {
                 attemptMovementInSameDir((PacManMovementRequestEvent) event);
@@ -91,59 +89,49 @@ public class PacMan extends MovingSprite implements Subscriber<EventType> {
                 return;
             }
         }
-        attemptMovementInSameDir(new PacManMovementRequestEvent(dir, this));
+        attemptMovementInSameDir(new PacManMovementRequestEvent(dirV, this));
+    }
+
+    @Override
+    protected double getSpeed() {
+        return configs.PACMAN_SPEED();
     }
 
     private boolean attemptMovementInSameDir(PacManMovementRequestEvent event) {
-        final double speed = configs.PACMAN_SPEED();
-        final double newCol = getCol() + event.getDir().getX() * speed / Configs.FRAMES_PER_SEC_FOR_PAC_MAN_STRIDE;
-        final double newRow = getRow() + event.getDir().getY() * speed / Configs.FRAMES_PER_SEC_FOR_PAC_MAN_STRIDE;
-        final Coordinate nextCord = new Coordinate(newRow, newCol);
-        final Rectangle virtualPacManRect = new Rectangle(nextCord, configs.PACMAN_DIAMETER(), configs.PACMAN_DIAMETER());
-
-        if (virtualPacManRect.within(gameState.getMaze().getRect()) && !isCollidingWithWallOrGhostHWall(nextCord)) {
+        final boolean moved = attemptMovement(event);
+        if (moved) {
             final PacManMovementAttemptApprovedEvent approvedEvent = new PacManMovementAttemptApprovedEvent(
-                    getTopLeftCorner(), nextCord, event.getDir(), event.getSource()
+                    getTopLeftCorner(), null, event.getDir(), event.getSource()
             );
-            handleApprovedMovementAttempt(approvedEvent);
+            updateAnimatorAndTurnBuffer(approvedEvent);
             return true;
         }
-
         return false;
     }
 
     private boolean attemptMovementInNewDir(PacManMovementRequestEvent event) {
         if (Vector.STILL == event.getDir()) {
-            dir = event.getDir();
+            dirV = event.getDir();
             return false;
         }
 
-        final double speed = configs.PACMAN_SPEED();
-        final double newCol = getCol() + event.getDir().getX() * speed / Configs.FRAMES_PER_SEC_FOR_PAC_MAN_STRIDE;
-        final double newRow = getRow() + event.getDir().getY() * speed / Configs.FRAMES_PER_SEC_FOR_PAC_MAN_STRIDE;
-        final Coordinate nextCord = new Coordinate(newRow, newCol);
-        final Rectangle virtualPacManRect = new Rectangle(nextCord, configs.PACMAN_DIAMETER(), configs.PACMAN_DIAMETER());
+        final boolean moved = attemptMovement(event);
 
-        if (!virtualPacManRect.within(gameState.getMaze().getRect())
-                || isCollidingWithWallOrGhostHWall(nextCord)
-        ) {
-            final PacManMovementAttemptDeniedEvent deniedEvent = new PacManMovementAttemptDeniedEvent(nextCord, event.getDir(), event.getSource());
+        if (!moved) {
+            final PacManMovementAttemptDeniedEvent deniedEvent = new PacManMovementAttemptDeniedEvent(null, event.getDir(), event.getSource());
             handleDeniedMovementAttempt(deniedEvent);
             return false;
         } else {
             final PacManMovementAttemptApprovedEvent approvedEvent = new PacManMovementAttemptApprovedEvent(
-                    getTopLeftCorner(), nextCord, event.getDir(), event.getSource()
+                    getTopLeftCorner(), null, event.getDir(), event.getSource()
             );
-            handleApprovedMovementAttempt(approvedEvent);
+            updateAnimatorAndTurnBuffer(approvedEvent);
             return true;
         }
     }
 
 
-    private void handleApprovedMovementAttempt(PacManMovementAttemptApprovedEvent event) {
-        setRow(event.getRequestedPacManCanvasRectTopLeftCorner().getRow());
-        setCol(event.getRequestedPacManCanvasRectTopLeftCorner().getCol());
-        dir = event.getRequestedDir();
+    private void updateAnimatorAndTurnBuffer(PacManMovementAttemptApprovedEvent event) {
         mouthAnimationTracker.stride(configs.PACMAN_MOUTH_ANIMATION_COMPLETE_DIST() / Configs.FRAMES_PER_SEC_FOR_PAC_MAN_MOUSE_OPEN_CLOSED_ANIMATION);
 
         if (event.getMovementAttemptSource() instanceof Scene
@@ -163,7 +151,7 @@ public class PacMan extends MovingSprite implements Subscriber<EventType> {
         }
 
         // buffer denied user movement
-        if(dir != event.getRequestedDir()) {
+        if(dirV != event.getRequestedDir()) {
             turnBuffer.buffer(event.getRequestedDir());
         }
     }
