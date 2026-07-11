@@ -1,6 +1,5 @@
 package com.ahmedaraby.game.pacman.sprite;
 
-import com.ahmedaraby.game.pacman.config.Configs;
 import com.ahmedaraby.game.pacman.config.intConfigs.ConfigsEx;
 import com.ahmedaraby.game.pacman.constant.SpriteE;
 import com.ahmedaraby.game.pacman.event.EventType;
@@ -99,7 +98,9 @@ public class PacMan extends MovingSprite implements Subscriber<EventType> {
     private boolean attemptMovementInSameDir(PacManMovementRequestEvent event) {
         final boolean moved = attemptMovementInSameDir();
         if (moved) {
-            updateAnimatorAndTurnBuffer(event.getDir(), event.getSource());
+            final double stride = calcStride(event.getDir());
+            mouthAnimationTracker.stride(stride);
+            updateTurnBuffer(event.getDir(), event.getSource());
         }
         return moved;
     }
@@ -113,31 +114,25 @@ public class PacMan extends MovingSprite implements Subscriber<EventType> {
         final boolean moved = attemptMovementInNewDir(event.getDir());
 
         if (moved) {
-            updateAnimatorAndTurnBuffer(event.getDir(), event.getSource());
-        } else {
-            handleDeniedMovementAttempt(event.getDir(), event.getSource());
+            final double stride = calcStride(event.getDir());
+            mouthAnimationTracker.stride(stride);
+            updateTurnBuffer(event.getDir(), event.getSource());
+        } else if (event.getSource() instanceof Scene) {
+            // buffer denied user movement
+            turnBuffer.buffer(event.getDir());
         }
         return moved;
     }
 
 
-    private void updateAnimatorAndTurnBuffer(Vector dir, Object movementSource) {
-        final double stride = calcStride(dir);
-        mouthAnimationTracker.stride(stride);
-
+    private void updateTurnBuffer(Vector dir, Object movementSource) {
         if (movementSource instanceof Scene || movementSource instanceof TurnBuffer) {
             // user input or turn buffer automated move
             turnBuffer.clear();
         } else if (movementSource instanceof PacMan) {
             // automated straight line movement
+            final double stride = calcStride(dir);
             turnBuffer.stride(stride);
-        }
-    }
-
-    private void handleDeniedMovementAttempt(Vector dir, Object movementSource) {
-        if (movementSource instanceof Scene) {
-            // buffer denied user movement
-            turnBuffer.buffer(dir);
         }
     }
 
