@@ -133,7 +133,8 @@ public class PacMan extends MovingSprite implements Subscriber<EventType> {
 
 
     private void updateAnimatorAndTurnBuffer(PacManMovementAttemptApprovedEvent event) {
-        mouthAnimationTracker.stride(configs.PACMAN_MOUTH_ANIMATION_COMPLETE_DIST() / Configs.FRAMES_PER_SEC_FOR_PAC_MAN_MOUSE_OPEN_CLOSED_ANIMATION);
+        final double stride = calcStride(event.getRequestedDir());
+        mouthAnimationTracker.stride(stride);
 
         if (event.getMovementAttemptSource() instanceof Scene
                 || event.getMovementAttemptSource() instanceof TurnBuffer) {
