@@ -118,7 +118,11 @@ public abstract class MovingSprite extends Sprite {
          * stride = 2, because this helps prevents the sprite from moving between walls on the sub pixel level.
          * however, if the movement is valid, the actual movement applied on the sprite happens using the original stride.
          */
-        if (isPossibleMove(2, dir)) {
+        final double spriteToCellSizeDiff = configs.PLAYGROUND_CELL_SIZE() - getWidth();
+        final double leftGutterSize = 1; // almost
+        final double rightGutterSize = 1; // almost
+        final double emptySpace = Math.ceil(leftGutterSize + rightGutterSize + spriteToCellSizeDiff);
+        if (isPossibleMove(emptySpace, dir)) {
             final double stride = calcStride(dir);
             move(stride, dir);
             return true;
