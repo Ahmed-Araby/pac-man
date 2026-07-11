@@ -142,7 +142,7 @@ public class PacMan extends MovingSprite implements Subscriber<EventType> {
             turnBuffer.clear();
         } else if (event.getMovementAttemptSource() instanceof PacMan) {
             // automated straight line movement
-            turnBuffer.stride(configs.PACMAN_SPEED() / Configs.FRAMES_PER_SEC_FOR_PAC_MAN_STRIDE);
+            turnBuffer.stride(stride);
         }
     }
 
