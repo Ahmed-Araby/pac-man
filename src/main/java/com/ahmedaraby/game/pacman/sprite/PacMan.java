@@ -73,13 +73,17 @@ public class PacMan extends MovingSprite implements Subscriber<EventType> {
     public void move(Event event) {
         if (event != null) {
             // movement attempt made by user
-            attemptMovement((PacManMovementRequestEvent)event);
+            if (((PacManMovementRequestEvent)event).getDir() != dir) {
+                attemptMovementInNewDir((PacManMovementRequestEvent) event);
+            } else {
+                attemptMovementInSameDir((PacManMovementRequestEvent) event);
+            }
             return;
         }
 
         // automated and buffered movement attempt
         if (!turnBuffer.isEmpty()) {
-            boolean moved = attemptMovement(new PacManMovementRequestEvent(turnBuffer.getDir(), turnBuffer));
+            boolean moved = attemptMovementInNewDir(new PacManMovementRequestEvent(turnBuffer.getDir(), turnBuffer));
             if (turnBuffer.exceededBufferDist()) {
                 turnBuffer.clear();
             }
@@ -87,11 +91,28 @@ public class PacMan extends MovingSprite implements Subscriber<EventType> {
                 return;
             }
         }
-        attemptMovement(new PacManMovementRequestEvent(dir, this));
-
+        attemptMovementInSameDir(new PacManMovementRequestEvent(dir, this));
     }
 
-    private boolean attemptMovement(PacManMovementRequestEvent event) {
+    private boolean attemptMovementInSameDir(PacManMovementRequestEvent event) {
+        final double speed = configs.PACMAN_SPEED();
+        final double newCol = getCol() + event.getDir().getX() * speed / Configs.FRAMES_PER_SEC_FOR_PAC_MAN_STRIDE;
+        final double newRow = getRow() + event.getDir().getY() * speed / Configs.FRAMES_PER_SEC_FOR_PAC_MAN_STRIDE;
+        final Coordinate nextCord = new Coordinate(newRow, newCol);
+        final Rectangle virtualPacManRect = new Rectangle(nextCord, configs.PACMAN_DIAMETER(), configs.PACMAN_DIAMETER());
+
+        if (virtualPacManRect.within(gameState.getMaze().getRect()) && !isCollidingWithWallOrGhostHWall(nextCord)) {
+            final PacManMovementAttemptApprovedEvent approvedEvent = new PacManMovementAttemptApprovedEvent(
+                    getTopLeftCorner(), nextCord, event.getDir(), event.getSource()
+            );
+            handleApprovedMovementAttempt(approvedEvent);
+            return true;
+        }
+
+        return false;
+    }
+
+    private boolean attemptMovementInNewDir(PacManMovementRequestEvent event) {
         if (Vector.STILL == event.getDir()) {
             dir = event.getDir();
             return false;
@@ -100,7 +121,6 @@ public class PacMan extends MovingSprite implements Subscriber<EventType> {
         final double speed = configs.PACMAN_SPEED();
         final double newCol = getCol() + event.getDir().getX() * speed / Configs.FRAMES_PER_SEC_FOR_PAC_MAN_STRIDE;
         final double newRow = getRow() + event.getDir().getY() * speed / Configs.FRAMES_PER_SEC_FOR_PAC_MAN_STRIDE;
-
         final Coordinate nextCord = new Coordinate(newRow, newCol);
         final Rectangle virtualPacManRect = new Rectangle(nextCord, configs.PACMAN_DIAMETER(), configs.PACMAN_DIAMETER());
 
@@ -118,6 +138,7 @@ public class PacMan extends MovingSprite implements Subscriber<EventType> {
             return true;
         }
     }
+
 
     private void handleApprovedMovementAttempt(PacManMovementAttemptApprovedEvent event) {
         setRow(event.getRequestedPacManCanvasRectTopLeftCorner().getRow());
