@@ -15,7 +15,6 @@ import com.ahmedaraby.game.pacman.util.pacman.PacManMouthAnimationTracker;
 import javafx.scene.Scene;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
-import com.ahmedaraby.game.pacman.constant.DirectionsE;
 import com.ahmedaraby.game.pacman.playground.Playground;
 
 public class PacMan extends MovingSprite implements Subscriber<EventType> {
@@ -27,10 +26,8 @@ public class PacMan extends MovingSprite implements Subscriber<EventType> {
         super(gameState, configs, SpriteE.PAC_MAN, null,
                 configs.PACMAN_DIAMETER(),
                 configs.PACMAN_DIAMETER(),
-                DirectionsE.STILL
+                Vector.STILL
         );
-
-        dirV = Vector.STILL;
 
         final Coordinate emptyCellPos = Playground.getEmptyMazePosition();
         setTopLeftCorner(emptyCellPos);

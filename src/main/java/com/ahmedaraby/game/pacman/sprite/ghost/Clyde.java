@@ -2,7 +2,6 @@ package com.ahmedaraby.game.pacman.sprite.ghost;
 
 import com.ahmedaraby.game.pacman.config.GhostModeActivePeriodsConf;
 import com.ahmedaraby.game.pacman.config.intConfigs.ConfigsEx;
-import com.ahmedaraby.game.pacman.constant.DirectionsE;
 import com.ahmedaraby.game.pacman.constant.SpriteE;
 import com.ahmedaraby.game.pacman.event.Event;
 import com.ahmedaraby.game.pacman.event.EventType;
@@ -17,6 +16,7 @@ import com.ahmedaraby.game.pacman.model.GameState;
 import com.ahmedaraby.game.pacman.sprite.playground.GhostHouseS;
 import com.ahmedaraby.game.pacman.util.PlaygroundShortestPathNav;
 import com.ahmedaraby.jengine.entity.Coordinate;
+import com.ahmedaraby.jengine.entity.Vector;
 import com.ahmedaraby.jengine.sprite.SpriteRegistry;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.image.Image;
@@ -27,7 +27,7 @@ public class Clyde extends Ghost {
     private final ShortestPathNavigator navigator;
 
     public Clyde(GameState gameState, ConfigsEx configs, SpriteRegistry<String, Image> spriteRegistry) {
-        super(gameState, configs, SpriteE.GHOST, -1, -1, DirectionsE.STILL);
+        super(gameState, configs, SpriteE.GHOST, -1, -1, Vector.STILL);
 
         scattered = new ClydeScattered(this, gameState, configs, spriteRegistry,
                 GhostModeActivePeriodsConf.LEVEL_1_SCATTER_ACTIVE_PERIODS);
@@ -56,6 +56,11 @@ public class Clyde extends Ghost {
     }
 
     @Override
+    public double getSpeed() {
+        return configs.GHOST_CLYDE_SPEED();
+    }
+
+    @Override
     public void move(Event event) {
         transitionMode(event);
         activeMode.move();
@@ -76,6 +81,7 @@ public class Clyde extends Ghost {
             super.transitionMode(event);
         }
     }
+
 
     // [TODO] debug, Clyde never leaves teh scared chaser mode
     private void scaredChaserTransition(Event event) {

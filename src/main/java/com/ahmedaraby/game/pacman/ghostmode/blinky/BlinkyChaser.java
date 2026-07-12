@@ -3,13 +3,12 @@ package com.ahmedaraby.game.pacman.ghostmode.blinky;
 import com.ahmedaraby.game.pacman.config.intConfigs.ConfigsEx;
 import com.ahmedaraby.game.pacman.model.GameState;
 import com.ahmedaraby.game.pacman.sprite.ghost.Ghost;
+import com.ahmedaraby.jengine.entity.Vector;
 import com.ahmedaraby.jengine.sprite.SpriteRegistry;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.image.Image;
 import com.ahmedaraby.jengine.animation.Animator;
 import com.ahmedaraby.jengine.animation.DistanceBasedAnimator;
-import com.ahmedaraby.game.pacman.config.Configs;
-import com.ahmedaraby.game.pacman.constant.DirectionsE;
 import com.ahmedaraby.game.pacman.constant.SpriteFileNameC;
 import com.ahmedaraby.jengine.entity.Coordinate;
 import com.ahmedaraby.game.pacman.ghostmode.Chaser;
@@ -34,15 +33,15 @@ public class BlinkyChaser extends Chaser {
     @Override
     public void move() {
         final Coordinate pacmanCurrCord = gameState.getPacMan().getTopLeftCorner();
-        final DirectionsE directionsE = navigator.calcDir(ghost, pacmanCurrCord);
-        final Coordinate ghostNewCord = ghost.calculateNextCord(directionsE.toVector());
+        final Vector newDir = navigator.calcDir(ghost, pacmanCurrCord);
+        ghost.setDirV(newDir);
 
-        ghost.setDir(directionsE);
-        ghost.setRow(ghostNewCord.getRow());
-        ghost.setCol(ghostNewCord.getCol());
+        if(newDir != Vector.STILL) {
+            final double stride = ghost.calcStride(newDir);
+            final Coordinate nextCord = ghost.calcNextCord(stride, newDir);
 
-        if(directionsE != DirectionsE.STILL) {
-            animator.stride(configs.GHOST_BLINKY_SPEED() / Configs.FRAMES_PER_SEC_FOR_GHOST_STRIDE);
+            ghost.setTopLeftCorner(nextCord);
+            animator.stride(stride);
         }
 
     }

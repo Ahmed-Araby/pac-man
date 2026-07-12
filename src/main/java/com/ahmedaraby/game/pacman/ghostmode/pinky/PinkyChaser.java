@@ -1,8 +1,6 @@
 package com.ahmedaraby.game.pacman.ghostmode.pinky;
 
-import com.ahmedaraby.game.pacman.config.Configs;
 import com.ahmedaraby.game.pacman.config.intConfigs.ConfigsEx;
-import com.ahmedaraby.game.pacman.constant.DirectionsE;
 import com.ahmedaraby.game.pacman.constant.SpriteFileNameC;
 import com.ahmedaraby.game.pacman.ghostmode.Chaser;
 import com.ahmedaraby.game.pacman.model.GameState;
@@ -39,7 +37,7 @@ public class PinkyChaser extends Chaser {
     @Override
     public void move() {
         final Coordinate pacManCord = gameState.getPacMan().getTopLeftCorner();
-        final Vector pacManDir = gameState.getPacMan().getDir().toVector();
+        final Vector pacManDir = gameState.getPacMan().getDirV();
 
         // calculate the tile 4 steps ahead of pacman, and force it to be within the playground
         final Vector pacManDirScaled = pacManDir.scale(4);
@@ -47,12 +45,15 @@ public class PinkyChaser extends Chaser {
         final Line lookAheadLine = new Line(pacManCord, lookAheadCord).trim(gameState.getMaze().getRect());
         final Coordinate target = lookAheadLine.getEnd();
 
-        final DirectionsE newDir = navigator.calcDir(ghost, target);
-        if (newDir != DirectionsE.STILL) {
-            final Coordinate newCord = ghost.calculateNextCord(newDir.toVector());
+        final Vector newDir = navigator.calcDir(ghost, target);
+        ghost.setDirV(newDir);
+
+        if (newDir != Vector.STILL) {
+            final double stride = ghost.calcStride(newDir);
+            final Coordinate newCord = ghost.calcNextCord(stride, newDir);
+
             ghost.setTopLeftCorner(newCord);
-            ghost.setDir(newDir);
-            animator.stride(configs.GHOST_SPEED() / Configs.FRAMES_PER_SEC_FOR_GHOST_STRIDE);
+            animator.stride(stride);
         }
     }
 

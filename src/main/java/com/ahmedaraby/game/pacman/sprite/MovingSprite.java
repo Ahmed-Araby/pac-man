@@ -5,7 +5,6 @@ import com.ahmedaraby.game.pacman.config.intConfigs.ConfigsEx;
 import com.ahmedaraby.jengine.entity.Vector;
 import lombok.Getter;
 import lombok.Setter;
-import com.ahmedaraby.game.pacman.constant.DirectionsE;
 import com.ahmedaraby.game.pacman.constant.SpriteE;
 import com.ahmedaraby.jengine.entity.Coordinate;
 import com.ahmedaraby.jengine.entity.Rectangle;
@@ -20,12 +19,11 @@ import java.util.List;
 @Setter
 public abstract class MovingSprite extends Sprite {
 
-    protected DirectionsE dir;
     protected Vector dirV; // [TODO] move this to MovingSprite later
 
-    public MovingSprite(GameState gameState, ConfigsEx configs, SpriteE type, Coordinate cord, double width, double height, DirectionsE dir) {
+    public MovingSprite(GameState gameState, ConfigsEx configs, SpriteE type, Coordinate cord, double width, double height, Vector dirV) {
         super(gameState, configs, type, cord, width, height);
-        this.dir = dir;
+        this.dirV = dirV;
     }
 
 
@@ -53,7 +51,7 @@ public abstract class MovingSprite extends Sprite {
         throw new IllegalStateException("getSpeed in sprite " + getClass().getSimpleName() +  " is not implemented");
     }
 
-    protected double calcStride(Vector dir) {
+    public double calcStride(Vector dir) {
         final double elapsedTime = Math.abs(gameState.getPrevFrameEndedAt() - gameState.getCurrFrameStartedAt()) / 1_000_000_000.0;
         final double originalStride = getSpeed() * elapsedTime;
 
@@ -96,7 +94,7 @@ public abstract class MovingSprite extends Sprite {
     }
 
 
-    protected Coordinate calcNextCord(double stride, Vector dir) {
+    public Coordinate calcNextCord(double stride, Vector dir) {
         final double newCol = getCol() + dir.getX() * stride;
         final double newRow = getRow() + dir.getY() * stride;
         return new Coordinate(newRow, newCol);
@@ -141,7 +139,6 @@ public abstract class MovingSprite extends Sprite {
     protected void move(double stride, Vector dir) {
         final Coordinate nextCord = calcNextCord(stride, dir);
         setTopLeftCorner(nextCord);
-        setDir(DirectionsE.fromVector(dir)); // [TODO] remove this line, after replacing the DirectionE instances by the Vector 
         setDirV(dir);
     }
 }

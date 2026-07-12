@@ -1,8 +1,6 @@
 package com.ahmedaraby.game.pacman.ghostmode;
 
-import com.ahmedaraby.game.pacman.config.Configs;
 import com.ahmedaraby.game.pacman.config.intConfigs.ConfigsEx;
-import com.ahmedaraby.game.pacman.constant.DirectionsE;
 import com.ahmedaraby.game.pacman.ghostmode.navigation.GhostNavigator;
 import com.ahmedaraby.game.pacman.ghostmode.navigation.ShortestPathNavigator;
 import com.ahmedaraby.game.pacman.model.GameState;
@@ -10,6 +8,7 @@ import com.ahmedaraby.game.pacman.sprite.ghost.Ghost;
 import com.ahmedaraby.game.pacman.util.PlaygroundShortestPathNav;
 import com.ahmedaraby.jengine.animation.Animator;
 import com.ahmedaraby.jengine.entity.Coordinate;
+import com.ahmedaraby.jengine.entity.Vector;
 import com.ahmedaraby.jengine.sprite.SpriteRegistry;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
@@ -37,12 +36,14 @@ public abstract class Scattered extends TemporalGhostMode {
 
     @Override
     public void move() {
-        final DirectionsE newDir = navigator.calcDir(ghost, target);
-        if (newDir != DirectionsE.STILL) {
-            final Coordinate newCord = ghost.calculateNextCord(newDir.toVector());
+        final Vector newDir = navigator.calcDir(ghost, target);
+        if (newDir != Vector.STILL) {
+            final double stride = ghost.calcStride(newDir);
+            final Coordinate newCord = ghost.calcNextCord(stride, newDir);
+
             ghost.setTopLeftCorner(newCord);
-            ghost.setDir(newDir);
-            animator.stride(configs.GHOST_SPEED() / Configs.FRAMES_PER_SEC_FOR_GHOST_STRIDE);
+            ghost.setDirV(newDir);
+            animator.stride(stride);
         }
     }
 

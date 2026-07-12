@@ -28,17 +28,17 @@ public class ShortestPathNavigator implements GhostNavigator {
 
     @Override
     public double calcDist(MovingSprite sprite, Coordinate targetCord) {
-        Cell sourceCell = sprite.getTopLeftCorner().toCell(sprite.getDir().toVector());
-        Cell targetCell = targetCord.toCell(DirectionsE.STILL.toVector());
+        Cell sourceCell = sprite.getTopLeftCorner().toCell(sprite.getDirV());
+        Cell targetCell = targetCord.toCell(Vector.STILL);
         return playgroundShortestPathNav.calcDist(sourceCell, targetCell) * configs.PLAYGROUND_CELL_SIZE();
     }
 
 
     @Override
-    public DirectionsE calcDir(MovingSprite sprite, Coordinate target) {
+    public Vector calcDir(MovingSprite sprite, Coordinate target) {
         final Coordinate source = sprite.getTopLeftCorner();
         if(source.equals(target)) {
-            return DirectionsE.STILL;
+            return Vector.STILL;
         }
         final List<MazeMove> possibleMoves = getCandidateMoves(sprite, target);
         return possibleMoves
@@ -56,14 +56,13 @@ public class ShortestPathNavigator implements GhostNavigator {
                     return source.getMovementDir(candidateNextCord);
                 })
                 .findFirst()
-                .map(DirectionsE::fromVector)
-                .orElse(DirectionsE.STILL);
+                .orElse(Vector.STILL);
     }
 
 
     private List<MazeMove> getCandidateMoves(MovingSprite moving, Coordinate target) {
         // this work can be parallelized
-        final Cell targetCell = target.toCell(DirectionsE.STILL.toVector());
+        final Cell targetCell = target.toCell(Vector.STILL);
         final List<Cell> candidateNextCell = getCandidateNextCells(moving);
         return candidateNextCell
                 .stream()

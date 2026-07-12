@@ -13,13 +13,10 @@ import javafx.scene.canvas.Canvas;
 import javafx.scene.image.Image;
 import com.ahmedaraby.jengine.animation.Animator;
 import com.ahmedaraby.jengine.animation.DistanceBasedAnimator;
-import com.ahmedaraby.game.pacman.config.Configs;
-import com.ahmedaraby.game.pacman.constant.DirectionsE;
 import com.ahmedaraby.game.pacman.constant.SpriteFileNameC;
 import com.ahmedaraby.jengine.entity.Coordinate;
 import com.ahmedaraby.game.pacman.ghostmode.TemporalGhostMode;
 import com.ahmedaraby.game.pacman.util.EnrichedThreadLocalRandom;
-import com.ahmedaraby.game.pacman.util.ghost.GhostUtil;
 
 import java.util.List;
 
@@ -50,8 +47,7 @@ public class Frightened extends TemporalGhostMode {
 
     @Override
     public void move() {
-        final Coordinate currCord = ghost.getTopLeftCorner();
-        final Vector currDir = ghost.getDir().toVector();
+        final Vector currDir = ghost.getDirV();
 
         final List<Vector> eligibleDirections = getEligibleDirections(currDir);
         Vector newDirV;
@@ -62,14 +58,12 @@ public class Frightened extends TemporalGhostMode {
             newDirV = eligibleDirections.get(randIndex);
         }
 
-        final DirectionsE newDirE =  DirectionsE.fromVector(newDirV);
-        final Coordinate nCord = ghost.calculateNextCord(newDirE.toVector());
+        final double stride = ghost.calcStride(newDirV);
+        final Coordinate nextCord = ghost.calcNextCord(stride, newDirV);
 
-        ghost.setDir(newDirE);
-        ghost.setRow(nCord.getRow());
-        ghost.setCol(nCord.getCol());
-
-        animator.stride(configs.GHOST_SPEED() / Configs.FRAMES_PER_SEC_FOR_GHOST_STRIDE);
+        ghost.setDirV(newDirV);
+        ghost.setTopLeftCorner(nextCord);
+        animator.stride(stride);
     }
 
     @Override
@@ -86,10 +80,9 @@ public class Frightened extends TemporalGhostMode {
     }
 
     private void turnAround(Ghost ghost) {
-        final Vector dir = ghost.getDir().toVector();
+        final Vector dir = ghost.getDirV();
         final Vector oppositeDir = dir.flip180();
-        final DirectionsE oppositeDirE = DirectionsE.fromVector(oppositeDir);
-        ghost.setDir(oppositeDirE);
+        ghost.setDirV(oppositeDir);
     }
 
     private List<Vector> getEligibleDirections(Vector dir) {
@@ -101,8 +94,8 @@ public class Frightened extends TemporalGhostMode {
     }
 
     private boolean isValidDir(Vector dir) {
-        final DirectionsE dirE = DirectionsE.fromVector(dir);
-        final Coordinate candidateNextCord = ghost.calculateNextCord(dirE.toVector());
+        final double stride = ghost.calcStride(dir);
+        final Coordinate candidateNextCord = ghost.calcNextCord(stride, dir);
         final Rectangle gVRect = new Rectangle(candidateNextCord, ghost.getWidth(), ghost.getHeight());
         if (!gVRect.within(gameState.getMaze().getRect()))  {
             return false;

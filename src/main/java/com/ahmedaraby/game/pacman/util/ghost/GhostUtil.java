@@ -5,7 +5,6 @@ import com.ahmedaraby.jengine.entity.Coordinate;
 import com.ahmedaraby.game.pacman.entity.Cell;
 import com.ahmedaraby.jengine.entity.Rectangle;
 import com.ahmedaraby.jengine.entity.Vector;
-import com.ahmedaraby.game.pacman.constant.DirectionsE;
 import com.ahmedaraby.game.pacman.playground.Playground;
 
 import java.util.List;
@@ -34,7 +33,7 @@ public class GhostUtil {
         return rectCorners
                 .stream()
                 .map(corner -> Playground.getRectContainingPoint(corner).topLeftCorner())
-                .map(topLeftCorner -> topLeftCorner.toCell(DirectionsE.STILL.toVector()))
+                .map(topLeftCorner -> topLeftCorner.toCell(Vector.STILL))
                 .distinct()
                 .toList();
     }

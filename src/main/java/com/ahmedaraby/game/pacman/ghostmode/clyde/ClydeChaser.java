@@ -1,8 +1,6 @@
 package com.ahmedaraby.game.pacman.ghostmode.clyde;
 
-import com.ahmedaraby.game.pacman.config.Configs;
 import com.ahmedaraby.game.pacman.config.intConfigs.ConfigsEx;
-import com.ahmedaraby.game.pacman.constant.DirectionsE;
 import com.ahmedaraby.game.pacman.constant.SpriteFileNameC;
 import com.ahmedaraby.game.pacman.ghostmode.Chaser;
 import com.ahmedaraby.game.pacman.model.GameState;
@@ -10,6 +8,7 @@ import com.ahmedaraby.game.pacman.sprite.ghost.Ghost;
 import com.ahmedaraby.jengine.animation.Animator;
 import com.ahmedaraby.jengine.animation.DistanceBasedAnimator;
 import com.ahmedaraby.jengine.entity.Coordinate;
+import com.ahmedaraby.jengine.entity.Vector;
 import com.ahmedaraby.jengine.sprite.SpriteRegistry;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
@@ -40,15 +39,16 @@ public class ClydeChaser extends Chaser {
     @Override
     public void move() {
         final Coordinate targetCord = gameState.getPacMan().getTopLeftCorner();
+        final Vector newDir = navigator.calcDir(ghost, targetCord);
+        ghost.setDirV(newDir);
 
-        final DirectionsE newDir = navigator.calcDir(ghost, targetCord);
 
-        final Coordinate ghostNewCord = ghost.calculateNextCord(newDir.toVector());
-        ghost.setTopLeftCorner(ghostNewCord);
-        ghost.setDir(newDir);
+        if (newDir != Vector.STILL) {
+            final double stride = ghost.calcStride(newDir);
+            final Coordinate nextCord = ghost.calcNextCord(stride, newDir);
 
-        if (newDir != DirectionsE.STILL) {
-            animator.stride(configs.GHOST_CLYDE_SPEED() / Configs.FRAMES_PER_SEC_FOR_GHOST_STRIDE);
+            ghost.setTopLeftCorner(nextCord);
+            animator.stride(stride);
         }
     }
 

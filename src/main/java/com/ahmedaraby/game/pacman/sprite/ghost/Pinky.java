@@ -2,7 +2,6 @@ package com.ahmedaraby.game.pacman.sprite.ghost;
 
 import com.ahmedaraby.game.pacman.config.GhostModeActivePeriodsConf;
 import com.ahmedaraby.game.pacman.config.intConfigs.ConfigsEx;
-import com.ahmedaraby.game.pacman.constant.DirectionsE;
 import com.ahmedaraby.game.pacman.constant.SpriteE;
 import com.ahmedaraby.game.pacman.event.Event;
 import com.ahmedaraby.game.pacman.ghostmode.common.Eaten;
@@ -10,6 +9,7 @@ import com.ahmedaraby.game.pacman.ghostmode.common.Frightened;
 import com.ahmedaraby.game.pacman.ghostmode.pinky.PinkyChaser;
 import com.ahmedaraby.game.pacman.ghostmode.pinky.PinkyScattered;
 import com.ahmedaraby.game.pacman.model.GameState;
+import com.ahmedaraby.jengine.entity.Vector;
 import com.ahmedaraby.jengine.sprite.SpriteRegistry;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.image.Image;
@@ -17,7 +17,7 @@ import javafx.scene.image.Image;
 public class Pinky extends Ghost {
 
     public Pinky(GameState gameState, ConfigsEx configs, SpriteRegistry<String, Image> spriteRegistry) {
-        super(gameState, configs, SpriteE.GHOST, -1, -1, DirectionsE.STILL);
+        super(gameState, configs, SpriteE.GHOST, -1, -1, Vector.STILL);
         scattered = new PinkyScattered(this, gameState, configs, spriteRegistry, GhostModeActivePeriodsConf.LEVEL_1_SCATTER_ACTIVE_PERIODS);
         chaser = new PinkyChaser(this, gameState, configs, spriteRegistry, GhostModeActivePeriodsConf.LEVEL_1_CHASE_ACTIVE_PERIODS);
         frightened = new Frightened(this, gameState, configs, spriteRegistry, GhostModeActivePeriodsConf.ALL_LEVELS_FRIGHTENED_MODE_ACTIVE_PERIODS);
@@ -35,6 +35,11 @@ public class Pinky extends Ghost {
         final double row = gameState.getGhostHouseS().getERow() - configs.PLAYGROUND_CELL_SIZE();
         setCol(col);
         setRow(row);
+    }
+
+    @Override
+    public double getSpeed() {
+        return configs.GHOST_PINKY_SPEED();
     }
 
     @Override

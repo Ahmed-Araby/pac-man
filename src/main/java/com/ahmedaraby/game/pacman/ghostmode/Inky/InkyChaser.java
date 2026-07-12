@@ -2,8 +2,6 @@ package com.ahmedaraby.game.pacman.ghostmode.Inky;
 
 import com.ahmedaraby.game.pacman.config.intConfigs.ConfigsEx;
 import com.ahmedaraby.jengine.animation.DistanceBasedAnimator;
-import com.ahmedaraby.game.pacman.config.Configs;
-import com.ahmedaraby.game.pacman.constant.DirectionsE;
 import com.ahmedaraby.game.pacman.constant.SpriteFileNameC;
 import com.ahmedaraby.jengine.entity.Coordinate;
 import com.ahmedaraby.jengine.entity.Rectangle;
@@ -45,22 +43,21 @@ public class InkyChaser extends Chaser {
         final Coordinate target = calculateTheTargetCoordinate(blinky2InterTileLine);
 
         // navigate the ghost to the target
-        DirectionsE newDir = navigator.calcDir(ghost, target);
+        Vector newDir = navigator.calcDir(ghost, target);
+        ghost.setDirV(newDir);
 
-        if (newDir != null) {
-            animator.stride(configs.GHOST_INKY_SPEED() / Configs.FRAMES_PER_SEC_FOR_GHOST_STRIDE);
+        if (newDir != Vector.STILL) {
+            final double stride = ghost.calcStride(newDir);
+            animator.stride(stride);
 
-            final Coordinate newCord = ghost.calculateNextCord(newDir.toVector());
-
-            ghost.setDir(newDir);
-            ghost.setCol(newCord.getCol());
-            ghost.setRow(newCord.getRow());
+            final Coordinate newCord = ghost.calcNextCord(stride, newDir);
+            ghost.setTopLeftCorner(newCord);
         }
     }
 
     private Coordinate calculateIntermediateTile() {
         final Coordinate pacManCord = gameState.getPacMan().getTopLeftCorner();
-        final Vector pacManDir = gameState.getPacMan().getDir().toVector();
+        final Vector pacManDir = gameState.getPacMan().getDirV();
         return pacManCord.add(
                 configs.PLAYGROUND_CELL_SIZE() * 2 * pacManDir.getX(),
                 configs.PLAYGROUND_CELL_SIZE() * 2 * pacManDir.getY()

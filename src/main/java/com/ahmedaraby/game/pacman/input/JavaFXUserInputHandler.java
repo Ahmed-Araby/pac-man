@@ -1,6 +1,5 @@
 package com.ahmedaraby.game.pacman.input;
 
-import com.ahmedaraby.game.pacman.constant.DirectionsE;
 import com.ahmedaraby.game.pacman.event.movement.PacManMovementRequestEvent;
 import com.ahmedaraby.jengine.entity.Vector;
 import com.ahmedaraby.jengine.event.SyncEventManager;

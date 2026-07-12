@@ -1,12 +1,12 @@
 package com.ahmedaraby.game.pacman.util;
 
 import com.ahmedaraby.game.pacman.constant.DimensionsC;
-import com.ahmedaraby.game.pacman.constant.DirectionsE;
 import com.ahmedaraby.game.pacman.constant.SpriteE;
 import com.ahmedaraby.jengine.entity.Coordinate;
 import com.ahmedaraby.jengine.entity.Rectangle;
 import com.ahmedaraby.game.pacman.entity.Cell;
 import com.ahmedaraby.game.pacman.playground.Playground;
+import com.ahmedaraby.jengine.entity.Vector;
 
 public class SpriteUtil {
     private SpriteUtil() {}
@@ -38,7 +38,7 @@ public class SpriteUtil {
     }
 
     public static SpriteE getSpriteType(Coordinate cord) {
-        final Cell cell = cord.toCell(DirectionsE.STILL.toVector());
+        final Cell cell = cord.toCell(Vector.STILL);
         return Playground.get(cell);
     }
 

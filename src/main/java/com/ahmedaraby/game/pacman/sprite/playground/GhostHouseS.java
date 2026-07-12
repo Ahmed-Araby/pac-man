@@ -1,8 +1,8 @@
 package com.ahmedaraby.game.pacman.sprite.playground;
 
 import com.ahmedaraby.game.pacman.config.intConfigs.ConfigsEx;
-import com.ahmedaraby.game.pacman.constant.DirectionsE;
 import com.ahmedaraby.game.pacman.constant.SpriteE;
+import com.ahmedaraby.jengine.entity.Vector;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import lombok.Getter;
@@ -45,7 +45,7 @@ public class GhostHouseS extends Sprite {
         final double sRow = getRow();
         for (double i = sRow; i<=eRow; i+=configs.PLAYGROUND_CELL_SIZE()) {
             for (double j = sCol; j<=eCol; j+=configs.PLAYGROUND_CELL_SIZE()) {
-                Cell cell = new Coordinate(i, j).toCell(DirectionsE.STILL.toVector());
+                Cell cell = new Coordinate(i, j).toCell(Vector.STILL);
                 SpriteE spriteType;
                 if (cell.equals(doorCell)) {
                     spriteType = SpriteE.GHOST_HOUSE_DOOR;
@@ -69,7 +69,7 @@ public class GhostHouseS extends Sprite {
 
         for (double i = sRow; i<=eRow; i+=configs.PLAYGROUND_CELL_SIZE()) {
             for (double j = sCol; j<=eCol; j+=configs.PLAYGROUND_CELL_SIZE()) {
-                Cell cell = new Coordinate(i, j).toCell(DirectionsE.STILL.toVector());
+                Cell cell = new Coordinate(i, j).toCell(Vector.STILL);
                 if (cell.equals(doorCell)) {
                     continue;
                 }
@@ -91,7 +91,7 @@ public class GhostHouseS extends Sprite {
 
     private Cell calcDoorCel() {
         final Coordinate cord = new Coordinate(calcDoorRow(), calcDoorCol());
-        return cord.toCell(DirectionsE.STILL.toVector());
+        return cord.toCell(Vector.STILL);
     }
 
 }

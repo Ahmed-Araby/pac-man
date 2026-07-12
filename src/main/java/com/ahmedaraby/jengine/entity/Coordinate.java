@@ -36,9 +36,9 @@ public class Coordinate {
 
     public Cell toCell(Vector dir) {
         if (Vector.RIGHT.equals(dir) || Vector.DOWN.equals(dir)) {
-            return toCellCeiling();
-        } else if (Vector.LEFT.equals(dir) || Vector.UP.equals(dir)) {
             return toCellFlooring();
+        } else if (Vector.LEFT.equals(dir) || Vector.UP.equals(dir)) {
+            return toCellCeiling();
         } else {
             return toCellFlooring();
         }
@@ -57,13 +57,13 @@ public class Coordinate {
     }
 
     public Vector getMovementDir(Coordinate to) {
-        if(to.getRow() > row) {
+        if(to.getRow() - row >= 1 ) {
             return Vector.DOWN;
-        } else if(to.getRow() < row) {
+        } else if(to.getRow() - row <= -1) {
             return Vector.UP;
-        } else if(to.getCol() > col) {
+        } else if(to.getCol() - col >= 1) {
             return Vector.RIGHT;
-        } else if(to.getCol() < col) {
+        } else if(to.getCol() - col <= -1) {
             return Vector.LEFT;
         } else {
             return Vector.STILL;
