@@ -44,12 +44,6 @@ public class ShortestPathNavigator implements GhostNavigator {
                 .stream()
                 .sorted()
                 .filter(move -> move.getDist2Target() < Integer.MAX_VALUE)
-                .filter(move -> {
-                    final Coordinate candidateNextCord = move.getCell().toCord(configs.PLAYGROUND_CELL_SIZE(), configs.PLAYGROUND_CELL_SIZE());
-                    final Rectangle rect = SpriteUtil.toRect(candidateNextCord, SpriteE.GHOST);
-                    final List<CollisionReport> collisionReportOpt = M2SSpriteCollisionDetector.detect(rect, List.of(SpriteE.WALL, SpriteE.GHOST_HOUSE_WALL));
-                    return collisionReportOpt.isEmpty();
-                })
                 .map(move -> {
                     final Coordinate candidateNextCord = move.getCell().toCord(configs.PLAYGROUND_CELL_SIZE(), configs.PLAYGROUND_CELL_SIZE());
                     return source.getMovementDir(candidateNextCord);
