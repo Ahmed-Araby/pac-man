@@ -9,7 +9,6 @@ import com.ahmedaraby.game.pacman.sprite.MovingSprite;
 import com.ahmedaraby.game.pacman.util.SpriteUtil;
 import com.ahmedaraby.jengine.entity.Vector;
 import lombok.AllArgsConstructor;
-import com.ahmedaraby.game.pacman.constant.DirectionsE;
 import com.ahmedaraby.game.pacman.constant.SpriteE;
 import com.ahmedaraby.jengine.entity.Coordinate;
 import com.ahmedaraby.jengine.entity.Rectangle;
@@ -98,7 +97,7 @@ public class ShortestPathNavigator implements GhostNavigator {
         return rectCorners
                 .stream()
                 .map(corner -> Playground.getRectContainingPoint(corner).topLeftCorner())
-                .map(topLeftCorner -> topLeftCorner.toCell(DirectionsE.STILL.toVector()))
+                .map(topLeftCorner -> topLeftCorner.toCell(Vector.STILL))
                 .distinct()
                 .toList();
     }
