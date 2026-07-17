@@ -1,5 +1,6 @@
 package com.ahmedaraby.game.pacman.entity;
 
+import com.ahmedaraby.jengine.entity.Vector;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.ToString;
@@ -7,13 +8,9 @@ import lombok.ToString;
 @AllArgsConstructor
 @Getter
 @ToString
-public class MazeMove implements Comparable {
-    private Cell cell;
-    private int dist2Target;
+public class MazeMove {
+    private Cell from;
+    private Cell to;
+    private Vector dir;
 
-    @Override
-    public int compareTo(Object o) {
-        final MazeMove otherObj = (MazeMove) o;
-        return dist2Target - otherObj.dist2Target;
-    }
 }

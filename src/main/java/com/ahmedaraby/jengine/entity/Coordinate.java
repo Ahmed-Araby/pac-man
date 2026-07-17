@@ -39,18 +39,4 @@ public class Coordinate {
         final int mazeCol = (int) Math.floor(col / DimensionsC.MAZE_CELL_SIZE_PIXELS);
         return new Cell(mazeRow, mazeCol);
     }
-
-    public Vector getMovementDir(Coordinate to) {
-        if(to.getRow() - row >= 1 ) {
-            return Vector.DOWN;
-        } else if(to.getRow() - row <= -1) {
-            return Vector.UP;
-        } else if(to.getCol() - col >= 1) {
-            return Vector.RIGHT;
-        } else if(to.getCol() - col <= -1) {
-            return Vector.LEFT;
-        } else {
-            return Vector.STILL;
-        }
-    }
 }

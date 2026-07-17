@@ -2,16 +2,15 @@ package com.ahmedaraby.game.pacman.ghostmode.navigation;
 
 import com.ahmedaraby.game.pacman.collision.M2SSpriteCollisionDetector;
 import com.ahmedaraby.game.pacman.config.intConfigs.ConfigsEx;
+import com.ahmedaraby.game.pacman.constant.SpriteE;
 import com.ahmedaraby.game.pacman.entity.Cell;
-import com.ahmedaraby.game.pacman.model.CollisionReport;
+import com.ahmedaraby.game.pacman.entity.MovementPlan;
 import com.ahmedaraby.game.pacman.playground.Playground;
 import com.ahmedaraby.game.pacman.sprite.MovingSprite;
-import com.ahmedaraby.game.pacman.util.SpriteUtil;
+import com.ahmedaraby.jengine.entity.Rectangle;
 import com.ahmedaraby.jengine.entity.Vector;
 import lombok.AllArgsConstructor;
-import com.ahmedaraby.game.pacman.constant.SpriteE;
 import com.ahmedaraby.jengine.entity.Coordinate;
-import com.ahmedaraby.jengine.entity.Rectangle;
 import com.ahmedaraby.game.pacman.entity.MazeMove;
 import com.ahmedaraby.game.pacman.util.PlaygroundShortestPathNav;
 
@@ -27,11 +26,10 @@ public class ShortestPathNavigator implements GhostNavigator {
 
     @Override
     public double calcDist(MovingSprite sprite, Coordinate targetCord) {
-        Cell sourceCell = sprite.getTopLeftCorner().toCell(sprite.getDirV());
-        Cell targetCell = targetCord.toCell(Vector.STILL);
+        Cell sourceCell = sprite.getTopLeftCorner().toCell();
+        Cell targetCell = targetCord.toCell();
         return playgroundShortestPathNav.calcDist(sourceCell, targetCell) * configs.PLAYGROUND_CELL_SIZE();
     }
-
 
     @Override
     public Vector calcDir(MovingSprite sprite, Coordinate target) {
@@ -39,60 +37,50 @@ public class ShortestPathNavigator implements GhostNavigator {
         if(source.equals(target)) {
             return Vector.STILL;
         }
-        final List<MazeMove> possibleMoves = getCandidateMoves(sprite, target);
+
+        final List<MovementPlan> possibleMoves = getCandidateMoves(sprite, target);
         return possibleMoves
                 .stream()
                 .sorted()
-                .filter(move -> move.getDist2Target() < Integer.MAX_VALUE)
-                .map(move -> {
-                    final Coordinate candidateNextCord = move.getCell().toCord(configs.PLAYGROUND_CELL_SIZE(), configs.PLAYGROUND_CELL_SIZE());
-                    return source.getMovementDir(candidateNextCord);
-                })
+                .filter(plan -> plan.getDist2Target() < Integer.MAX_VALUE)
+                .map(MovementPlan::getDir)
                 .findFirst()
                 .orElse(Vector.STILL);
     }
 
 
-    private List<MazeMove> getCandidateMoves(MovingSprite moving, Coordinate target) {
+    private List<MovementPlan> getCandidateMoves(MovingSprite moving, Coordinate target) {
         // this work can be parallelized
-        final Cell targetCell = target.toCell(Vector.STILL);
-        final List<Cell> candidateNextCell = getCandidateNextCells(moving);
+        final Cell targetCell = target.toCell();
+        final List<MazeMove> candidateNextCell = getCandidateNextMoves(moving);
         return candidateNextCell
                 .stream()
-                .map(interestingCell -> {
-                    final int dist = playgroundShortestPathNav.calcDist(interestingCell, targetCell);
+                // make sure that this move won't cause a collision
+                .filter(move -> {
+                    final Coordinate nextCord = moving.calcNextCord(moving.calcHEmptySpaceInPlaygroundCell(), move.getDir());
+                    final Rectangle nextRect = new Rectangle(nextCord, moving.getWidth(), moving.getHeight());
+                    return M2SSpriteCollisionDetector.detect(nextRect, List.of(SpriteE.WALL, SpriteE.GHOST_HOUSE_WALL)).isEmpty();
+                })
+                .map(move -> {
+                    final int dist = playgroundShortestPathNav.calcDist(move.getTo(), targetCell);
                     if (dist == Integer.MAX_VALUE) {
                         return null;
                     }
-                    return new MazeMove(interestingCell, dist);
+                    return new MovementPlan(move.getDir(), dist);
                 })
                 .filter(Objects::nonNull)
                 .toList();
     }
 
 
-    private List<Cell> getCandidateNextCells(MovingSprite sprite) {
-        List<Cell> candidateNextCells = getIntersectingMazeCells(sprite);
-        if (candidateNextCells.size() == 1) {
-            // ghost lies completely in a maze cell
-            Cell cell = sprite.getTopLeftCorner().toCell(Vector.STILL);
-            candidateNextCells = cell.getAdjCells(configs.PLAYGROUND_WIDTH(), configs.PLAYGROUND_HEIGHT());
-        }
+    private List<MazeMove> getCandidateNextMoves(MovingSprite sprite) {
+        Cell spriteCell = sprite.getTopLeftCorner().toCell();
+        List<MazeMove> candidateNextCells = spriteCell.getMoves(configs.PLAYGROUND_WIDTH(), configs.PLAYGROUND_HEIGHT());
+
         return candidateNextCells
                 .stream()
-                .filter(cell -> !Playground.isWall(cell) && !Playground.isGhostHWall(cell))
-                .toList();
-    }
-
-
-    private List<Cell> getIntersectingMazeCells(MovingSprite sprite) {
-        final Rectangle rectangle = new Rectangle(sprite.getTopLeftCorner(), sprite.getWidth(), sprite.getHeight());
-        final List<Coordinate> rectCorners = rectangle.corners();
-        return rectCorners
-                .stream()
-                .map(corner -> Playground.getRectContainingPoint(corner).topLeftCorner())
-                .map(topLeftCorner -> topLeftCorner.toCell(Vector.STILL))
-                .distinct()
+                .filter(move -> !move.getDir().isOpposite(sprite.getDirV()))
+                .filter(move -> !Playground.isWall(move.getTo()) && !Playground.isGhostHWall(move.getTo()))
                 .toList();
     }
 }
