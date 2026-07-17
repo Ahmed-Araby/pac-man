@@ -34,25 +34,9 @@ public class Coordinate {
                 && row >= rect.topEdgeRow() && row <= rect.bottomEdgeRow();
     }
 
-    public Cell toCell(Vector dir) {
-        if (Vector.RIGHT.equals(dir) || Vector.DOWN.equals(dir)) {
-            return toCellFlooring();
-        } else if (Vector.LEFT.equals(dir) || Vector.UP.equals(dir)) {
-            return toCellCeiling();
-        } else {
-            return toCellFlooring();
-        }
-    }
-
-    private Cell toCellFlooring() {
+    public Cell toCell() {
         final int mazeRow = (int) Math.floor(row / DimensionsC.MAZE_CELL_SIZE_PIXELS);
         final int mazeCol = (int) Math.floor(col / DimensionsC.MAZE_CELL_SIZE_PIXELS);
-        return new Cell(mazeRow, mazeCol);
-    }
-
-    private Cell toCellCeiling() {
-        final int mazeRow = (int) Math.ceil(row / DimensionsC.MAZE_CELL_SIZE_PIXELS);
-        final int mazeCol = (int) Math.ceil(col / DimensionsC.MAZE_CELL_SIZE_PIXELS);
         return new Cell(mazeRow, mazeCol);
     }
 

@@ -38,7 +38,7 @@ public class SpriteUtil {
     }
 
     public static SpriteE getSpriteType(Coordinate cord) {
-        final Cell cell = cord.toCell(Vector.STILL);
+        final Cell cell = cord.toCell();
         return Playground.get(cell);
     }
 

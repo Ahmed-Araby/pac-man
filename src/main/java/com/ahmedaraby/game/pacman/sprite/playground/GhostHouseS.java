@@ -45,7 +45,7 @@ public class GhostHouseS extends Sprite {
         final double sRow = getRow();
         for (double i = sRow; i<=eRow; i+=configs.PLAYGROUND_CELL_SIZE()) {
             for (double j = sCol; j<=eCol; j+=configs.PLAYGROUND_CELL_SIZE()) {
-                Cell cell = new Coordinate(i, j).toCell(Vector.STILL);
+                Cell cell = new Coordinate(i, j).toCell();
                 SpriteE spriteType;
                 if (cell.equals(doorCell)) {
                     spriteType = SpriteE.GHOST_HOUSE_DOOR;
@@ -69,7 +69,7 @@ public class GhostHouseS extends Sprite {
 
         for (double i = sRow; i<=eRow; i+=configs.PLAYGROUND_CELL_SIZE()) {
             for (double j = sCol; j<=eCol; j+=configs.PLAYGROUND_CELL_SIZE()) {
-                Cell cell = new Coordinate(i, j).toCell(Vector.STILL);
+                Cell cell = new Coordinate(i, j).toCell();
                 if (cell.equals(doorCell)) {
                     continue;
                 }
@@ -91,7 +91,7 @@ public class GhostHouseS extends Sprite {
 
     private Cell calcDoorCel() {
         final Coordinate cord = new Coordinate(calcDoorRow(), calcDoorCol());
-        return cord.toCell(Vector.STILL);
+        return cord.toCell();
     }
 
 }

@@ -4,7 +4,6 @@ import com.ahmedaraby.game.pacman.constant.DimensionsC;
 import com.ahmedaraby.jengine.entity.Coordinate;
 import com.ahmedaraby.game.pacman.entity.Cell;
 import com.ahmedaraby.jengine.entity.Rectangle;
-import com.ahmedaraby.jengine.entity.Vector;
 import com.ahmedaraby.game.pacman.playground.Playground;
 
 import java.util.List;
@@ -18,7 +17,7 @@ public class GhostUtil {
         System.out.println("interestingMazeCells = " + candidateNextCells);
         if (candidateNextCells.size() == 1) {
             // ghost lies completely in a maze cell
-            Cell cell = cord.toCell(Vector.STILL);
+            Cell cell = cord.toCell();
             candidateNextCells = cell.getAdjCells(DimensionsC.MAZE_WIDTH, DimensionsC.MAZE_HEIGHT);
         }
         return candidateNextCells
@@ -33,7 +32,7 @@ public class GhostUtil {
         return rectCorners
                 .stream()
                 .map(corner -> Playground.getRectContainingPoint(corner).topLeftCorner())
-                .map(topLeftCorner -> topLeftCorner.toCell(Vector.STILL))
+                .map(topLeftCorner -> topLeftCorner.toCell())
                 .distinct()
                 .toList();
     }

@@ -60,7 +60,7 @@ public class SuperSugar extends Sprite implements Subscriber<EventType> {
     }
 
     public void removeSugar(Rectangle rect) {
-        final Cell sugarCellMazeTopLeftCornerCoordinate = rect.getTopLeftCorner().toCell(Vector.STILL);
+        final Cell sugarCellMazeTopLeftCornerCoordinate = rect.getTopLeftCorner().toCell();
         Playground.set(sugarCellMazeTopLeftCornerCoordinate.getRow(), sugarCellMazeTopLeftCornerCoordinate.getCol(), SpriteE.EMPTY);
     }
 }
