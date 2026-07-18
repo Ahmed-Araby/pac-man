@@ -3,6 +3,7 @@ package com.ahmedaraby.game.pacman.sprite.ghost;
 import com.ahmedaraby.game.pacman.config.intConfigs.ConfigsEx;
 import com.ahmedaraby.game.pacman.constant.SpriteE;
 import com.ahmedaraby.game.pacman.event.collision.PacMan2GhostCollisionEvent;
+import com.ahmedaraby.game.pacman.sprite.MachineControlledSprite;
 import com.ahmedaraby.jengine.entity.Coordinate;
 import com.ahmedaraby.game.pacman.event.Event;
 import com.ahmedaraby.game.pacman.event.EventType;
@@ -13,11 +14,10 @@ import com.ahmedaraby.game.pacman.ghostmode.TemporalGhostMode;
 import com.ahmedaraby.game.pacman.ghostmode.common.Eaten;
 import com.ahmedaraby.game.pacman.ghostmode.common.Frightened;
 import com.ahmedaraby.game.pacman.model.GameState;
-import com.ahmedaraby.game.pacman.sprite.MovingSprite;
 import com.ahmedaraby.jengine.entity.Vector;
 import com.ahmedaraby.jengine.event.Subscriber;
 
-public abstract class Ghost extends MovingSprite implements Subscriber<EventType> {
+public abstract class Ghost extends MachineControlledSprite implements Subscriber<EventType> {
     // modes
     protected TemporalGhostMode scattered;
     protected TemporalGhostMode chaser;
