@@ -62,4 +62,16 @@ public abstract class MachineControlledSprite extends MovingSprite {
 
         return possibleDirections;
     }
+
+    @Override
+    protected boolean isPossibleToMoveInSameDir() {
+        if (dirV == Vector.STILL) {
+            return false;
+        }
+        final double stride = calcStride(dirV);
+        if (Math.abs(stride) < 0.001) {
+            return false;
+        }
+        return isPossibleMove(stride, dirV);
+    }
 }
