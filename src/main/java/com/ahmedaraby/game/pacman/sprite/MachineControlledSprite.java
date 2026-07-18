@@ -35,9 +35,9 @@ public abstract class MachineControlledSprite extends MovingSprite {
     }
 
     private List<Vector> get90Directions() {
-        if (Vector.RIGHT == dirV || Vector.LEFT == dirV) {
+        if (Vector.RIGHT.equals(dirV) || Vector.LEFT.equals(dirV)) {
             return List.of(Vector.UP, Vector.DOWN);
-        } else if (Vector.UP == dirV || Vector.DOWN == dirV) {
+        } else if (Vector.UP.equals(dirV) || Vector.DOWN.equals(dirV)) {
             return List.of(Vector.RIGHT, Vector.LEFT);
         }
         // in case the sprite is still
@@ -45,9 +45,8 @@ public abstract class MachineControlledSprite extends MovingSprite {
     }
 
     public List<Vector> getPossibleDirections() {
-
         List<Vector> possibleDirections = new ArrayList<>();
-        if (getDirV() == Vector.STILL) {
+        if (getDirV().equals(Vector.STILL)) {
             Vector.fourD
                     .stream()
                     .filter(this::isPossibleToMoveInNewDir)
