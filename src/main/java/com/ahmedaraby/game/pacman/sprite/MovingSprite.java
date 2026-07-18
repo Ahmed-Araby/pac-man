@@ -56,14 +56,14 @@ public abstract class MovingSprite extends Sprite {
         final double originalStride = getSpeed() * elapsedTime;
 
         // [TODO] return offset with the correct sign from methods calculating the offset
-        // refine stride
-        double refinedStride = originalStride;
+        // calibrate stride
+        double calibratedStride = originalStride;
         if (isGoingOutOfCanvas(originalStride, dir)) {
-            refinedStride = originalStride + calcStrideCorrectiveOffsetToPreventGoingOut(originalStride, dir);
+            calibratedStride = originalStride + calcStrideCorrectiveOffsetToPreventGoingOut(originalStride, dir);
         } else if (isCollidingWithWallOrGhostHWall(originalStride, dir)) {
-            refinedStride = originalStride - calcStrideCorrectiveOffsetToUnblockWallStuck(originalStride, dir);
+            calibratedStride = originalStride - calcStrideCorrectiveOffsetToUnblockWallStuck(originalStride, dir);
         }
-        return refinedStride;
+        return calibratedStride;
     }
 
     private double calcStrideCorrectiveOffsetToPreventGoingOut(double stride, Vector dir) {
