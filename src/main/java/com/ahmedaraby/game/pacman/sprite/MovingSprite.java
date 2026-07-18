@@ -14,12 +14,11 @@ import com.ahmedaraby.game.pacman.model.GameState;
 
 import java.util.List;
 
-
 @Getter
 @Setter
 public abstract class MovingSprite extends Sprite {
 
-    protected Vector dirV; // [TODO] move this to MovingSprite later
+    protected Vector dirV;
 
     public MovingSprite(GameState gameState, ConfigsEx configs, SpriteE type, Coordinate cord, double width, double height, Vector dirV) {
         super(gameState, configs, type, cord, width, height);
