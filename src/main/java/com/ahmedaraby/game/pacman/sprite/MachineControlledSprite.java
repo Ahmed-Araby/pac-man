@@ -9,6 +9,7 @@ import com.ahmedaraby.jengine.entity.Vector;
 import javafx.scene.canvas.Canvas;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 public abstract class MachineControlledSprite extends MovingSprite {
@@ -38,9 +39,8 @@ public abstract class MachineControlledSprite extends MovingSprite {
         } else if (Vector.UP == dirV || Vector.DOWN == dirV) {
             return List.of(Vector.RIGHT, Vector.LEFT);
         }
-
         // in case the sprite is still
-        return List.of(Vector.RIGHT, Vector.UP, Vector.DOWN, Vector.LEFT);
+        return Collections.emptyList();
     }
 
     public List<Vector> getPossibleDirections() {
