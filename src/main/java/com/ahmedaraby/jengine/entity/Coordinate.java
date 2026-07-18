@@ -25,8 +25,8 @@ public class Coordinate {
             return false;
         }
         final Coordinate cord = (Coordinate) o;
-        return Math.abs(col - cord.getCol()) < 0.1
-                && Math.abs(row - cord.getRow()) < 0.1;
+        return Math.abs(col - cord.getCol()) < 0.9
+                && Math.abs(row - cord.getRow()) < 0.9;
     }
 
     public Coordinate add(double colOffset, double rowOffset) {
