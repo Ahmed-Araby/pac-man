@@ -103,11 +103,17 @@ public abstract class MovingSprite extends Sprite {
     }
 
     protected boolean isPossibleToMoveInSameDir() {
+        if (dirV == Vector.STILL) {
+            return false;
+        }
         final double stride = calcStride(dirV);
         return isPossibleMove(stride, dirV);
     }
 
     protected boolean isPossibleToMoveInNewDir(Vector dir) {
+        if (dir == Vector.STILL) {
+            return false;
+        }
         /**
          * when moving in a new direction, the validity of the move is checked with the static stride.
          * the static stride is equal to the empty space that the sprite can move in within a cell without colliding with a wall,
