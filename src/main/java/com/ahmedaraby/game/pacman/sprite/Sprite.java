@@ -79,8 +79,8 @@ public abstract class Sprite {
      * @return Cell
      */
     public Cell calcCell() {
-        final double centerCol = getCol() / 2;
-        final double centerRow = getRow() / 2;
+        final double centerCol = getCol() + (getWidth() / 2);
+        final double centerRow = getRow() + (getHeight() / 2);
         final int cellCol = (int) (centerCol / configs.PLAYGROUND_CELL_SIZE());
         final int cellRow = (int) (centerRow / configs.PLAYGROUND_CELL_SIZE());
         return new Cell(cellRow, cellCol);
