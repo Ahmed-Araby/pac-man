@@ -9,4 +9,5 @@ public interface GhostNavigator {
 
     Vector calcDir(MovingSprite sprite, Coordinate target);
     double calcDist(MovingSprite sprite, Sprite targetSprite);
+    double calcDist(MovingSprite sprite, Coordinate target);
 }

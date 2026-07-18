@@ -33,6 +33,13 @@ public class ShortestPathNavigator implements GhostNavigator {
     }
 
     @Override
+    public double calcDist(MovingSprite movingSprite, Coordinate target) {
+        Cell sourceCell = movingSprite.calcCell();
+        Cell targetCell = target.toCell();
+        return playgroundShortestPathNav.calcDist(sourceCell, targetCell) * configs.PLAYGROUND_CELL_SIZE();
+    }
+
+    @Override
     public Vector calcDir(MovingSprite sprite, Coordinate target) {
         final Coordinate source = sprite.getTopLeftCorner();
         if(source.equals(target)) {
