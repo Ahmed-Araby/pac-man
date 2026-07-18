@@ -93,13 +93,14 @@ public class PacMan extends MovingSprite implements Subscriber<EventType> {
     }
 
     private boolean attemptMovementInSameDir(PacManMovementRequestEvent event) {
-        final boolean moved = attemptMovementInSameDir();
-        if (moved) {
+        final boolean isPossible = isPossibleToMoveInSameDir();
+        if (isPossible) {
             final double stride = calcStride(event.getDir());
+            move(stride, dirV);
             mouthAnimationTracker.stride(stride);
             updateTurnBuffer(event.getDir(), event.getSource());
         }
-        return moved;
+        return isPossible;
     }
 
     private boolean attemptMovementInNewDir(PacManMovementRequestEvent event) {
@@ -108,17 +109,18 @@ public class PacMan extends MovingSprite implements Subscriber<EventType> {
             return false;
         }
 
-        final boolean moved = attemptMovementInNewDir(event.getDir());
+        final boolean isPossible = isPossibleToMoveInNewDir(event.getDir());
 
-        if (moved) {
+        if (isPossible) {
             final double stride = calcStride(event.getDir());
+            move(stride, event.getDir());
             mouthAnimationTracker.stride(stride);
             updateTurnBuffer(event.getDir(), event.getSource());
         } else if (event.getSource() instanceof Scene) {
             // buffer denied user movement
             turnBuffer.buffer(event.getDir());
         }
-        return moved;
+        return isPossible;
     }
 
 

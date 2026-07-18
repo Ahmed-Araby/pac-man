@@ -102,16 +102,12 @@ public abstract class MovingSprite extends Sprite {
     }
 
     // [TODO] remove the dir argument
-    protected boolean attemptMovementInSameDir() {
+    protected boolean isPossibleToMoveInSameDir() {
         final double stride = calcStride(dirV);
-        if (isPossibleMove(stride, dirV)) {
-            move(stride, dirV);
-            return true;
-        }
-        return false;
+        return isPossibleMove(stride, dirV);
     }
 
-    protected boolean attemptMovementInNewDir(Vector dir) {
+    protected boolean isPossibleToMoveInNewDir(Vector dir) {
         /**
          * when moving in a new direction, the validity of the move is checked with the static stride.
          * the static stride is equal to the empty space that the sprite can move in within a cell without colliding with a wall,
@@ -124,12 +120,7 @@ public abstract class MovingSprite extends Sprite {
         } else {
             emptySpace = calcHEmptySpaceInPlaygroundCell();
         }
-        if (isPossibleMove(emptySpace, dir)) {
-            final double stride = calcStride(dir);
-            move(stride, dir);
-            return true;
-        }
-        return false;
+        return isPossibleMove(emptySpace, dir);
     }
 
     protected boolean isPossibleMove(double stride, Vector dir) {
