@@ -44,7 +44,14 @@ public abstract class MachineControlledSprite extends MovingSprite {
     }
 
     public List<Vector> getPossibleDirections() {
+
         List<Vector> possibleDirections = new ArrayList<>();
+        if (getDirV() == Vector.STILL) {
+            Vector.fourD
+                    .stream()
+                    .filter(this::isPossibleToMoveInNewDir)
+                    .forEach(possibleDirections::add);
+        }
         if (isPossibleToMoveInSameDir()) {
             possibleDirections.add(getDirV());
         }
@@ -53,7 +60,6 @@ public abstract class MachineControlledSprite extends MovingSprite {
                 .filter(this::isPossibleToMoveInNewDir)
                 .forEach(possibleDirections::add);
 
-        // if it is not possible to move in any same or perpendicular directions, then turn around.
-        return possibleDirections.isEmpty() ? List.of(getDirV().flip180()) : possibleDirections;
+        return possibleDirections;
     }
 }
