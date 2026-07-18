@@ -52,15 +52,17 @@ public abstract class MovingSprite extends Sprite {
 
     public double calcStride(Vector dir) {
         final double elapsedTime = Math.abs(gameState.getPrevFrameEndedAt() - gameState.getCurrFrameStartedAt()) / 1_000_000_000.0;
-        final double originalStride = getSpeed() * elapsedTime;
+        final double stride = getSpeed() * elapsedTime;
+        return calibrateStride(stride, dir);
+    }
 
+    protected double calibrateStride(double stride, Vector dir) {
         // [TODO] return offset with the correct sign from methods calculating the offset
-        // calibrate stride
-        double calibratedStride = originalStride;
-        if (isGoingOutOfCanvas(originalStride, dir)) {
-            calibratedStride = originalStride + calcStrideCorrectiveOffsetToPreventGoingOut(originalStride, dir);
-        } else if (isCollidingWithWallOrGhostHWall(originalStride, dir)) {
-            calibratedStride = originalStride - calcStrideCorrectiveOffsetToUnblockWallStuck(originalStride, dir);
+        double calibratedStride = stride;
+        if (isGoingOutOfCanvas(stride, dir)) {
+            calibratedStride = stride + calcStrideCorrectiveOffsetToPreventGoingOut(stride, dir);
+        } else if (isCollidingWithWallOrGhostHWall(stride, dir)) {
+            calibratedStride = stride - calcStrideCorrectiveOffsetToUnblockWallStuck(stride, dir);
         }
         return calibratedStride;
     }
