@@ -18,8 +18,9 @@ public abstract class MachineControlledSprite extends MovingSprite {
     }
 
     public MovingSprite buildNextSprite(Vector dir) {
-        final double stride = configs.PLAYGROUND_CELL_SIZE();
-        final Coordinate nextCord = calcNextCord(stride, dir);
+        final double originalStride = configs.PLAYGROUND_CELL_SIZE();
+        final double calibratedStride = calibrateStride(originalStride, dir);
+        final Coordinate nextCord = calcNextCord(calibratedStride, dir);
         return new MachineControlledSprite(gameState, configs, type,nextCord, getWidth(), getHeight(), dir) {
             @Override
             public void move(Event event) {
