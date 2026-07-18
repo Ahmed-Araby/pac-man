@@ -7,6 +7,7 @@ import com.ahmedaraby.game.pacman.entity.Cell;
 import com.ahmedaraby.game.pacman.entity.MovementPlan;
 import com.ahmedaraby.game.pacman.playground.Playground;
 import com.ahmedaraby.game.pacman.sprite.MovingSprite;
+import com.ahmedaraby.game.pacman.sprite.Sprite;
 import com.ahmedaraby.jengine.entity.Rectangle;
 import com.ahmedaraby.jengine.entity.Vector;
 import lombok.AllArgsConstructor;
@@ -25,9 +26,9 @@ public class ShortestPathNavigator implements GhostNavigator {
     private final PlaygroundShortestPathNav playgroundShortestPathNav;
 
     @Override
-    public double calcDist(MovingSprite sprite, Coordinate targetCord) {
-        Cell sourceCell = sprite.getTopLeftCorner().toCell();
-        Cell targetCell = targetCord.toCell();
+    public double calcDist(MovingSprite movingSprite, Sprite targetSprite) {
+        Cell sourceCell = movingSprite.calcCell();
+        Cell targetCell = targetSprite.calcCell();
         return playgroundShortestPathNav.calcDist(sourceCell, targetCell) * configs.PLAYGROUND_CELL_SIZE();
     }
 

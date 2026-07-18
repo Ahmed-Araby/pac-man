@@ -70,4 +70,19 @@ public abstract class Sprite {
         final double bottomGutterSize = 1; // almost
         return Math.ceil(topGutterSize + bottomGutterSize + spriteToCellSizeDiff);
     }
+
+    /**
+     * playground cell to which the sprite belongs is the cell that contains the center point of the sprite.
+     * if the center point lies at the sub pixels between 2 cells, flooring is used,
+     * (i.e. the left cell will be chosen over the right cell and the top cell will be chosen over the bottom cell).
+     *
+     * @return Cell
+     */
+    public Cell calcCell() {
+        final double centerCol = getCol() / 2;
+        final double centerRow = getRow() / 2;
+        final int cellCol = (int) (centerCol / configs.PLAYGROUND_CELL_SIZE());
+        final int cellRow = (int) (centerRow / configs.PLAYGROUND_CELL_SIZE());
+        return new Cell(cellRow, cellCol);
+    }
 }

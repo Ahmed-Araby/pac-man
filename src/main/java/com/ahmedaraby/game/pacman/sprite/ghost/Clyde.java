@@ -92,8 +92,7 @@ public class Clyde extends Ghost {
             frightened.enter();
             activeMode = frightened;
         } else {
-            final Coordinate pacManCord = gameState.getPacMan().getTopLeftCorner();
-            final double distToPacManInPixels = navigator.calcDist(this, pacManCord);
+            final double distToPacManInPixels = navigator.calcDist(this, gameState.getPacMan());
             // [TODO] provide the number 8 as a configuration
             if (distToPacManInPixels >= 8 * configs.PLAYGROUND_CELL_SIZE()) {
                 activeMode = chaser;
@@ -111,8 +110,7 @@ public class Clyde extends Ghost {
             return;
         }
 
-        final Coordinate pacManCord = gameState.getPacMan().getTopLeftCorner();
-        final double distToPacManInPixels = navigator.calcDist(this, pacManCord);
+        final double distToPacManInPixels = navigator.calcDist(this, gameState.getPacMan());
         // [TODO] provide the number 8 as a configuration
         if (distToPacManInPixels < 8 * configs.PLAYGROUND_CELL_SIZE()) {
             activeMode = scaredChaser;
