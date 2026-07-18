@@ -101,7 +101,6 @@ public abstract class MovingSprite extends Sprite {
         return new Coordinate(newRow, newCol);
     }
 
-    // [TODO] remove the dir argument
     protected boolean isPossibleToMoveInSameDir() {
         final double stride = calcStride(dirV);
         return isPossibleMove(stride, dirV);
