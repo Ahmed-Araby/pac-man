@@ -5,7 +5,6 @@ import com.ahmedaraby.game.pacman.constant.SpriteFileNameC;
 import com.ahmedaraby.game.pacman.ghostmode.Chaser;
 import com.ahmedaraby.game.pacman.model.GameState;
 import com.ahmedaraby.game.pacman.sprite.ghost.Ghost;
-import com.ahmedaraby.jengine.animation.Animator;
 import com.ahmedaraby.jengine.animation.DistanceBasedAnimator;
 import com.ahmedaraby.jengine.entity.Coordinate;
 import com.ahmedaraby.jengine.entity.Line;
@@ -16,7 +15,6 @@ import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
 
 public class PinkyChaser extends Chaser {
-    private final Animator animator;
 
     public PinkyChaser(Ghost ghost, GameState gameState, ConfigsEx configs, SpriteRegistry<String, Image> spriteRegistry, int[] activePeriodsSec) {
         super(ghost, gameState, configs, spriteRegistry, activePeriodsSec);
@@ -36,25 +34,17 @@ public class PinkyChaser extends Chaser {
 
     @Override
     public void move() {
+        // calculate target
         final Coordinate pacManCord = gameState.getPacMan().getTopLeftCorner();
         final Vector pacManDir = gameState.getPacMan().getDirV();
-
         // calculate the tile 4 steps ahead of pacman, and force it to be within the playground
+        // [TODO] bug, we scale 4 times the cell size
         final Vector pacManDirScaled = pacManDir.scale(4);
         final Coordinate lookAheadCord = pacManCord.add(pacManDirScaled.getX(), pacManDirScaled.getY());
         final Line lookAheadLine = new Line(pacManCord, lookAheadCord).trim(gameState.getMaze().getRect());
         final Coordinate target = lookAheadLine.getEnd();
 
-        final Vector newDir = navigator.calcDir(ghost, target);
-        ghost.setDirV(newDir);
-
-        if (newDir != Vector.STILL) {
-            final double stride = ghost.calcStride(newDir);
-            final Coordinate newCord = ghost.calcNextCord(stride, newDir);
-
-            ghost.setTopLeftCorner(newCord);
-            animator.stride(stride);
-        }
+        moveTo(target);
     }
 
     private Image[] loadSprites() {

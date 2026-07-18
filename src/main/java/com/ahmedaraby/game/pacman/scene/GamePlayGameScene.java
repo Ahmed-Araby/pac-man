@@ -205,7 +205,7 @@ public class GamePlayGameScene implements GameScene {
         blinky.render(canvas);
         inky.render(canvas);
         pinky.render(canvas);
-        clyde.render(canvas);
+//        clyde.render(canvas);
 
         gameState.setPrevFrameEndedAt(System.nanoTime());
     }
@@ -218,7 +218,7 @@ public class GamePlayGameScene implements GameScene {
         blinky.move(null);
         inky.move(null);
         pinky.move(null);
-        clyde.move(null);
+//        clyde.move(null);
 
         collisionSystem.detect();
     }
