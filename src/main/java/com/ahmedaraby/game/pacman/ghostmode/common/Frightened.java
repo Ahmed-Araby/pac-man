@@ -49,20 +49,17 @@ public class Frightened extends TemporalGhostMode {
     public void move() {
         final Vector currDir = ghost.getDirV();
 
-        final List<Vector> eligibleDirections = getEligibleDirections(currDir);
+        final List<Vector> possibleDirections = ghost.getPossibleDirections();
         Vector newDirV;
-        if (eligibleDirections.isEmpty()) {
+        if (possibleDirections.isEmpty()) {
             newDirV = currDir.flip180();
         } else {
-            final int randIndex = random.nextIntStartInclEndExcl(0, eligibleDirections.size());
-            newDirV = eligibleDirections.get(randIndex);
+            final int randIndex = random.nextIntStartInclEndExcl(0, possibleDirections.size());
+            newDirV = possibleDirections.get(randIndex);
         }
 
         final double stride = ghost.calcStride(newDirV);
-        final Coordinate nextCord = ghost.calcNextCord(stride, newDirV);
-
-        ghost.setDirV(newDirV);
-        ghost.setTopLeftCorner(nextCord);
+        ghost.move(stride, newDirV);
         animator.stride(stride);
     }
 
@@ -83,31 +80,5 @@ public class Frightened extends TemporalGhostMode {
         final Vector dir = ghost.getDirV();
         final Vector oppositeDir = dir.flip180();
         ghost.setDirV(oppositeDir);
-    }
-
-    private List<Vector> getEligibleDirections(Vector dir) {
-        final List<Vector> allowedDirections = getAllowedDirections(dir);
-        return allowedDirections
-                .stream()
-                .filter(this::isValidDir)
-                .toList();
-    }
-
-    private boolean isValidDir(Vector dir) {
-        final double stride = ghost.calcStride(dir);
-        final Coordinate candidateNextCord = ghost.calcNextCord(stride, dir);
-        final Rectangle gVRect = new Rectangle(candidateNextCord, ghost.getWidth(), ghost.getHeight());
-        if (!gVRect.within(gameState.getMaze().getRect()))  {
-            return false;
-        }
-        final List<CollisionReport> collisionReportOpt = M2SSpriteCollisionDetector.detect(gVRect, List.of(SpriteE.WALL, SpriteE.GHOST_HOUSE_WALL));
-        return collisionReportOpt.isEmpty();
-    }
-
-    private List<Vector> getAllowedDirections(Vector currDir) {
-        return Vector.fourD
-                .stream()
-                .filter(dir -> !currDir.isOpposite(dir))
-                .toList();
     }
 }

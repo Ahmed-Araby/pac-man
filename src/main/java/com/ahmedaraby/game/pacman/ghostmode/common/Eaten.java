@@ -2,6 +2,7 @@ package com.ahmedaraby.game.pacman.ghostmode.common;
 
 import com.ahmedaraby.game.pacman.config.intConfigs.ConfigsEx;
 import com.ahmedaraby.game.pacman.constant.SpriteFileNameC;
+import com.ahmedaraby.game.pacman.entity.MovementPlan;
 import com.ahmedaraby.game.pacman.util.PlaygroundShortestPathNav;
 import com.ahmedaraby.jengine.animation.Animator;
 import com.ahmedaraby.jengine.animation.DistanceBasedAnimator;
@@ -17,7 +18,9 @@ import javafx.scene.image.Image;
 import com.ahmedaraby.game.pacman.ghostmode.GhostMode;
 
 import java.util.AbstractMap;
+import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 
 public class Eaten extends GhostMode {
 
@@ -39,7 +42,7 @@ public class Eaten extends GhostMode {
 
     @Override
     public void init() {
-        final double ghostHERow = gameState.getGhostHouseS().getERow();;
+        final double ghostHERow = gameState.getGhostHouseS().getERow();
         final double ghostHSCol = gameState.getGhostHouseS().getCol();
         ghostHouseEmptyLoc = new Coordinate(ghostHERow - configs.PLAYGROUND_CELL_SIZE(), ghostHSCol + configs.PLAYGROUND_CELL_SIZE());
     }
@@ -62,16 +65,30 @@ public class Eaten extends GhostMode {
 
     @Override
     public void move() {
-        final Vector newDir = this.navigator.calcDir(ghost, ghostHouseEmptyLoc);
-        ghost.setDirV(newDir);
-
-        if (newDir != Vector.STILL) {
-            final double stride = ghost.calcStride(newDir);
-            final Coordinate newCord = ghost.calcNextCord(stride, newDir);
-
-            ghost.setTopLeftCorner(newCord);
-            this.animator.stride(stride);
+        List<Vector> possibleDirections = ghost.getPossibleDirections();
+        final List<MovementPlan> movementPlanList = possibleDirections
+                .stream()
+                .map(ghost::buildNextSprite)
+                .filter(Objects::nonNull)
+                .map(nextGhost -> {
+                    final double dist = navigator.calcDist(nextGhost, ghostHouseEmptyLoc);
+                    if (dist < Integer.MAX_VALUE) {
+                        return new MovementPlan(nextGhost.getDirV(), dist);
+                    }
+                    return null;
+                })
+                .filter(Objects::nonNull)
+                .sorted()
+                .toList();
+        if (movementPlanList.isEmpty()) {
+            ghost.setDirV(Vector.STILL);
+            return;
         }
+
+        final Vector newDir = movementPlanList.get(0).getDir();
+        final double stride = ghost.calcStride(newDir);
+        ghost.move(stride, newDir);
+        this.animator.stride(stride);
     }
 
     private Map<Vector, Image[]> loadSprites() {

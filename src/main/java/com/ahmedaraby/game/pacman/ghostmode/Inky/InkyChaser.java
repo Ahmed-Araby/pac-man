@@ -18,7 +18,6 @@ import com.ahmedaraby.game.pacman.ghostmode.Chaser;
 
 public class InkyChaser extends Chaser {
 
-    private final DistanceBasedAnimator animator;
 
     public InkyChaser(Ghost ghost, GameState gameState, ConfigsEx configs, SpriteRegistry<String, Image> spriteRegistry, int[] activePeriodsSec) {
         super(ghost, gameState, configs, spriteRegistry, activePeriodsSec);
@@ -42,17 +41,7 @@ public class InkyChaser extends Chaser {
         final Line blinky2InterTileLine = makeLineFromBlinkyToIntermediateTile(interTile);
         final Coordinate target = calculateTheTargetCoordinate(blinky2InterTileLine);
 
-        // navigate the ghost to the target
-        Vector newDir = navigator.calcDir(ghost, target);
-        ghost.setDirV(newDir);
-
-        if (newDir != Vector.STILL) {
-            final double stride = ghost.calcStride(newDir);
-            animator.stride(stride);
-
-            final Coordinate newCord = ghost.calcNextCord(stride, newDir);
-            ghost.setTopLeftCorner(newCord);
-        }
+        moveTo(target);
     }
 
     private Coordinate calculateIntermediateTile() {

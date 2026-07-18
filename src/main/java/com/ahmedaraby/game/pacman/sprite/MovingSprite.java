@@ -134,7 +134,7 @@ public abstract class MovingSprite extends Sprite {
         return !isGoingOutOfCanvas(stride, dir) && !isCollidingWithWallOrGhostHWall(calibratedNextCord);
     }
 
-    protected void move(double stride, Vector dir) {
+    public void move(double stride, Vector dir) {
         final Coordinate nextCord = calcNextCord(stride, dir);
         setTopLeftCorner(nextCord);
         setDirV(dir);

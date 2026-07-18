@@ -1,6 +1,7 @@
 package com.ahmedaraby.game.pacman.ghostmode;
 
 import com.ahmedaraby.game.pacman.config.intConfigs.ConfigsEx;
+import com.ahmedaraby.game.pacman.entity.MovementPlan;
 import com.ahmedaraby.game.pacman.ghostmode.navigation.GhostNavigator;
 import com.ahmedaraby.game.pacman.ghostmode.navigation.ShortestPathNavigator;
 import com.ahmedaraby.game.pacman.model.GameState;
@@ -16,6 +17,7 @@ import javafx.scene.image.Image;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 public abstract class Scattered extends TemporalGhostMode {
     protected final GhostNavigator navigator;
@@ -36,15 +38,30 @@ public abstract class Scattered extends TemporalGhostMode {
 
     @Override
     public void move() {
-        final Vector newDir = navigator.calcDir(ghost, target);
-        if (newDir != Vector.STILL) {
-            final double stride = ghost.calcStride(newDir);
-            final Coordinate newCord = ghost.calcNextCord(stride, newDir);
-
-            ghost.setTopLeftCorner(newCord);
-            ghost.setDirV(newDir);
-            animator.stride(stride);
+        List<Vector> possibleDirections = ghost.getPossibleDirections();
+        final List<MovementPlan> movementPlanList = possibleDirections
+                .stream()
+                .map(ghost::buildNextSprite)
+                .filter(Objects::nonNull)
+                .map(nextGhost -> {
+                    final double dist = navigator.calcDist(nextGhost, target);
+                    if (dist < Integer.MAX_VALUE) {
+                        return new MovementPlan(nextGhost.getDirV(), dist);
+                    }
+                    return null;
+                })
+                .filter(Objects::nonNull)
+                .sorted()
+                .toList();
+        if (movementPlanList.isEmpty()) {
+            ghost.setDirV(Vector.STILL);
+            return;
         }
+
+        final Vector newDir = movementPlanList.get(0).getDir();
+        final double stride = ghost.calcStride(newDir);
+        ghost.move(stride, newDir);
+        animator.stride(stride);
     }
 
     protected Image[] loadSprites(String[] frameRelativePaths) {
