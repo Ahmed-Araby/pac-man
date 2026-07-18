@@ -17,12 +17,16 @@ public class Coordinate {
         this.row = v.getY();
     }
 
+    // [TODO] this thresh hold need to be configurable
+    // [TODO] calculate a better thresh hold
     @Override
     public boolean equals(Object o) {
         if (o == null || !(o instanceof Coordinate)) {
             return false;
         }
-        return row == ((Coordinate) o).getRow() && col == ((Coordinate) o).getCol();
+        final Coordinate cord = (Coordinate) o;
+        return Math.abs(col - cord.getCol()) < 0.1
+                && Math.abs(row - cord.getRow()) < 0.1;
     }
 
     public Coordinate add(double colOffset, double rowOffset) {
