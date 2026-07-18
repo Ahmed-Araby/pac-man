@@ -35,7 +35,21 @@ public class Cell {
         }
         return moves;
     }
-    
+
+    public List<Cell> getAdjCells(int playgroundWidth, int playgroundHeight) {
+        final List<Cell> cells = new ArrayList<>();
+        int nRow, nCol;
+        for(int i=0; i<4; i++) {
+            nRow = (int) (row + directions[i].getY());
+            nCol = (int) (col + directions[i].getX());
+            if(nRow == -1 || nCol == -1 || nCol == playgroundWidth || nRow == playgroundHeight) {
+                continue;
+            }
+            cells.add(new Cell(nRow, nCol));
+        }
+        return cells;
+    }
+
     public Coordinate toCord(double cellWidth, double cellHeight) {
         return new Coordinate(row * cellHeight, col * cellWidth);
     }
