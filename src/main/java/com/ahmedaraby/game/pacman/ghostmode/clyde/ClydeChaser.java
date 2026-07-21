@@ -5,10 +5,7 @@ import com.ahmedaraby.game.pacman.constant.SpriteFileNameC;
 import com.ahmedaraby.game.pacman.ghostmode.Chaser;
 import com.ahmedaraby.game.pacman.model.GameState;
 import com.ahmedaraby.game.pacman.sprite.ghost.Ghost;
-import com.ahmedaraby.jengine.animation.Animator;
 import com.ahmedaraby.jengine.animation.DistanceBasedAnimator;
-import com.ahmedaraby.jengine.entity.Coordinate;
-import com.ahmedaraby.jengine.entity.Vector;
 import com.ahmedaraby.jengine.sprite.SpriteRegistry;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
@@ -16,7 +13,6 @@ import javafx.scene.image.Image;
 
 public class ClydeChaser extends Chaser {
 
-    private final Animator animator;
 
     public ClydeChaser(Ghost ghost, GameState gameState, ConfigsEx configs, SpriteRegistry<String, Image> spriteRegistry, int[] activePeriodsSec) {
         super(ghost, gameState, configs, spriteRegistry, activePeriodsSec);
@@ -38,18 +34,7 @@ public class ClydeChaser extends Chaser {
 
     @Override
     public void move() {
-        final Coordinate targetCord = gameState.getPacMan().getTopLeftCorner();
-        final Vector newDir = navigator.calcDir(ghost, targetCord);
-        ghost.setDirV(newDir);
-
-
-        if (newDir != Vector.STILL) {
-            final double stride = ghost.calcStride(newDir);
-            final Coordinate nextCord = ghost.calcNextCord(stride, newDir);
-
-            ghost.setTopLeftCorner(nextCord);
-            animator.stride(stride);
-        }
+        moveTo(gameState.getPacMan());
     }
 
 
