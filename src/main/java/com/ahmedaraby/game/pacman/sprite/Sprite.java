@@ -90,13 +90,4 @@ public abstract class Sprite {
         final double centerRow = getRow() + getHeight() / 2;
         return new Coordinate(centerRow, centerCol);
     }
-
-    public static Sprite buildVirtualSprite(Coordinate topLeftCorner, double width, double height, ConfigsEx configs) {
-        return new Sprite(null, configs, SpriteE.VIRTUAL, topLeftCorner, width, height) {
-            @Override
-            public void render(Canvas canvas) {
-                throw new IllegalStateException("virtual target sprite is not supposed to be rendered");
-            }
-        };
-    }
 }

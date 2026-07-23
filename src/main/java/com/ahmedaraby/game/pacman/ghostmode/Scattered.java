@@ -40,8 +40,7 @@ public abstract class Scattered extends TemporalGhostMode {
 
     @Override
     public void move() {
-        final Sprite virtualSprite = Sprite.buildVirtualSprite(target, configs.PLAYGROUND_CELL_SIZE(), configs.PLAYGROUND_CELL_SIZE(), configs);
-        final Vector newDir = targetNavigator.calcDir(ghost, virtualSprite);
+        final Vector newDir = targetNavigator.calcDir(ghost, target);
         final double stride = ghost.calcStride(newDir);
         ghost.move(stride, newDir);
         animator.stride(stride);

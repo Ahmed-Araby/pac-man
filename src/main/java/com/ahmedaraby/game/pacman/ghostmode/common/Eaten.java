@@ -67,8 +67,7 @@ public class Eaten extends GhostMode {
 
     @Override
     public void move() {
-        final Sprite virutalSprite = Sprite.buildVirtualSprite(ghostHouseEmptyLoc, configs.PLAYGROUND_CELL_SIZE(), configs.PLAYGROUND_CELL_SIZE(), configs);
-        final Vector newDir = targetNavigator.calcDir(ghost, virutalSprite);
+        final Vector newDir = targetNavigator.calcDir(ghost, ghostHouseEmptyLoc);
         final double stride = ghost.calcStride(newDir);
         ghost.move(stride, newDir);
         this.animator.stride(stride);
