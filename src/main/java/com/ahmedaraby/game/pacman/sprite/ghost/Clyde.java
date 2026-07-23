@@ -12,6 +12,7 @@ import com.ahmedaraby.game.pacman.ghostmode.clyde.ClydeScattered;
 import com.ahmedaraby.game.pacman.ghostmode.common.Eaten;
 import com.ahmedaraby.game.pacman.ghostmode.common.Frightened;
 import com.ahmedaraby.game.pacman.ghostmode.navigation.ShortestPathNavigator;
+import com.ahmedaraby.game.pacman.ghostmode.navigation.StrideCalculator;
 import com.ahmedaraby.game.pacman.model.GameState;
 import com.ahmedaraby.game.pacman.sprite.playground.GhostHouseS;
 import com.ahmedaraby.game.pacman.util.PlaygroundShortestPathNav;
@@ -26,8 +27,10 @@ public class Clyde extends Ghost {
     private final ClydeScaredChaser scaredChaser;
     private final ShortestPathNavigator navigator;
 
-    public Clyde(GameState gameState, ConfigsEx configs, SpriteRegistry<String, Image> spriteRegistry) {
-        super(gameState, configs, SpriteE.GHOST, -1, -1, Vector.STILL);
+    public Clyde(GameState gameState, ConfigsEx configs, StrideCalculator strideCalc,
+                 SpriteRegistry<String, Image> spriteRegistry) {
+        super(gameState, configs, strideCalc,
+                SpriteE.GHOST, -1, -1, Vector.STILL);
 
         scattered = new ClydeScattered(this, gameState, configs, spriteRegistry,
                 GhostModeActivePeriodsConf.LEVEL_1_SCATTER_ACTIVE_PERIODS);

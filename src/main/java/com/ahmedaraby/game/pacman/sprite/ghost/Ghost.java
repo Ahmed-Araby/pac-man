@@ -3,6 +3,7 @@ package com.ahmedaraby.game.pacman.sprite.ghost;
 import com.ahmedaraby.game.pacman.config.intConfigs.ConfigsEx;
 import com.ahmedaraby.game.pacman.constant.SpriteE;
 import com.ahmedaraby.game.pacman.event.collision.PacMan2GhostCollisionEvent;
+import com.ahmedaraby.game.pacman.ghostmode.navigation.StrideCalculator;
 import com.ahmedaraby.game.pacman.sprite.MachineControlledSprite;
 import com.ahmedaraby.jengine.entity.Coordinate;
 import com.ahmedaraby.game.pacman.event.Event;
@@ -28,8 +29,10 @@ public abstract class Ghost extends MachineControlledSprite implements Subscribe
     protected TemporalGhostMode previousMode;
 
 
-    public Ghost(GameState gameState, ConfigsEx configs, SpriteE type, double col, double row, Vector dir) {
-        super(gameState, configs, type, new Coordinate(row, col), configs.GHOST_WIDTH(), configs.GHOST_HEIGHT(), dir);
+    public Ghost(GameState gameState, ConfigsEx configs, StrideCalculator strideCalc,
+                 SpriteE type, double col, double row, Vector dir) {
+        super(gameState, configs, strideCalc,
+                type, new Coordinate(row, col), configs.GHOST_WIDTH(), configs.GHOST_HEIGHT(), dir);
     }
 
     @Override

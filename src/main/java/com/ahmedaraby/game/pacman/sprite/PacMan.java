@@ -3,6 +3,7 @@ package com.ahmedaraby.game.pacman.sprite;
 import com.ahmedaraby.game.pacman.config.intConfigs.ConfigsEx;
 import com.ahmedaraby.game.pacman.constant.SpriteE;
 import com.ahmedaraby.game.pacman.event.EventType;
+import com.ahmedaraby.game.pacman.ghostmode.navigation.StrideCalculator;
 import com.ahmedaraby.game.pacman.util.pacman.TurnBuffer;
 import com.ahmedaraby.jengine.entity.Coordinate;
 import com.ahmedaraby.game.pacman.event.Event;
@@ -22,10 +23,10 @@ public class PacMan extends MovingSprite implements Subscriber<EventType> {
     private final TurnBuffer turnBuffer;
     private final PacManMouthAnimationTracker mouthAnimationTracker;
 
-    public PacMan(GameState gameState, ConfigsEx configs) {
-        super(gameState, configs, SpriteE.PAC_MAN, null,
-                configs.PACMAN_DIAMETER(),
-                configs.PACMAN_DIAMETER(),
+    public PacMan(GameState gameState, ConfigsEx configs, StrideCalculator strideCalc) {
+        super(gameState, configs, strideCalc,
+                SpriteE.PAC_MAN, null,
+                configs.PACMAN_DIAMETER(), configs.PACMAN_DIAMETER(),
                 Vector.STILL
         );
 
@@ -88,7 +89,7 @@ public class PacMan extends MovingSprite implements Subscriber<EventType> {
     }
 
     @Override
-    protected double getSpeed() {
+    public double getSpeed() {
         return configs.PACMAN_SPEED();
     }
 

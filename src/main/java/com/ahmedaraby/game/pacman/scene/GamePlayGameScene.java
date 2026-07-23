@@ -4,8 +4,7 @@ import com.ahmedaraby.game.pacman.collision.CollisionSystem;
 import com.ahmedaraby.game.pacman.config.ConfigsLoader;
 import com.ahmedaraby.game.pacman.config.intConfigs.ConfigsEx;
 import com.ahmedaraby.game.pacman.event.Event;
-import com.ahmedaraby.game.pacman.ghostmode.navigation.GhostNavigator;
-import com.ahmedaraby.game.pacman.ghostmode.navigation.ShortestPathNavigator;
+import com.ahmedaraby.game.pacman.ghostmode.navigation.StrideCalculator;
 import com.ahmedaraby.game.pacman.model.GameState;
 import com.ahmedaraby.game.pacman.sprite.ghost.Blinky;
 import com.ahmedaraby.game.pacman.sprite.ghost.Clyde;
@@ -14,7 +13,6 @@ import com.ahmedaraby.game.pacman.sprite.playground.GhostHouseS;
 import com.ahmedaraby.game.pacman.sprite.playground.Maze;
 import com.ahmedaraby.game.pacman.sprite.playground.Sugar;
 import com.ahmedaraby.game.pacman.util.FxSpriteRegistry;
-import com.ahmedaraby.game.pacman.util.PlaygroundShortestPathNav;
 import com.ahmedaraby.jengine.sprite.SpriteRegistry;
 import javafx.scene.Scene;
 import javafx.scene.canvas.Canvas;
@@ -24,7 +22,6 @@ import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import com.ahmedaraby.game.pacman.config.GameConfig;
 import com.ahmedaraby.game.pacman.constant.ColorC;
-import com.ahmedaraby.game.pacman.constant.DimensionsC;
 import com.ahmedaraby.game.pacman.event.EventType;
 import com.ahmedaraby.jengine.event.SyncEventManager;
 import com.ahmedaraby.game.pacman.input.JavaFXInputHandler;
@@ -38,13 +35,13 @@ import com.ahmedaraby.game.pacman.util.debug.DebugUtil;
 
 import java.io.FileNotFoundException;
 import java.net.URISyntaxException;
-import java.rmi.ConnectIOException;
 
 
 public class GamePlayGameScene implements GameScene {
     private final ConfigsEx configs;
     private final GameState gameState = new GameState();
     private final SpriteRegistry<String, Image> spriteRegistry = new FxSpriteRegistry();
+    private final StrideCalculator strideCalculator;
 
     // sprites
     GhostHouseS ghostHouseS;
@@ -75,6 +72,7 @@ public class GamePlayGameScene implements GameScene {
 
     public GamePlayGameScene() throws FileNotFoundException, URISyntaxException {
         configs = new ConfigsLoader().load();
+        strideCalculator = new StrideCalculator(gameState, configs);
 
         // init
         Playground.init(configs);
@@ -110,17 +108,17 @@ public class GamePlayGameScene implements GameScene {
     private void createNonGhostSprites() {
         ghostHouseS = new GhostHouseS(gameState, configs);
         maze = new Maze(gameState, configs);
-        pacMan = new PacMan(gameState, configs);
+        pacMan = new PacMan(gameState, configs, strideCalculator);
         // sugar Sprite has to be instantiated before SuperSugar Sprite
         sugar = new Sugar(gameState, configs);
         superSugar = new SuperSugar(gameState, configs);
     }
 
     private void createGhostsSprites() {
-        blinky = new Blinky(gameState, configs, spriteRegistry);
-        inky = new Inky(gameState, configs, spriteRegistry);
-        pinky = new Pinky(gameState, configs, spriteRegistry);
-        clyde = new Clyde(gameState, configs, spriteRegistry);
+        blinky = new Blinky(gameState, configs, strideCalculator, spriteRegistry);
+        inky = new Inky(gameState, configs, strideCalculator, spriteRegistry);
+        pinky = new Pinky(gameState, configs, strideCalculator, spriteRegistry);
+        clyde = new Clyde(gameState, configs, strideCalculator, spriteRegistry);
     }
 
     private void setGameState() {

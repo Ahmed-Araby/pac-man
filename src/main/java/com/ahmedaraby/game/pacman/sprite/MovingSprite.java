@@ -3,6 +3,7 @@ package com.ahmedaraby.game.pacman.sprite;
 import com.ahmedaraby.game.pacman.collision.M2SSpriteCollisionDetector;
 import com.ahmedaraby.game.pacman.config.intConfigs.ConfigsEx;
 import com.ahmedaraby.game.pacman.entity.MazeMove;
+import com.ahmedaraby.game.pacman.ghostmode.navigation.StrideCalculator;
 import com.ahmedaraby.jengine.entity.Vector;
 import lombok.Getter;
 import lombok.Setter;
@@ -20,12 +21,15 @@ import java.util.List;
 public abstract class MovingSprite extends Sprite {
 
     protected Vector dirV;
+    private final StrideCalculator strideCalc;
 
-    public MovingSprite(GameState gameState, ConfigsEx configs, SpriteE type, Coordinate cord, double width, double height, Vector dirV) {
-        super(gameState, configs, type, cord, width, height);
+    public MovingSprite(GameState gameState, ConfigsEx configs, StrideCalculator strideCalc,
+                        SpriteE type, Coordinate cord, double width, double height, Vector dirV) {
+        super(gameState, configs,
+                type, cord, width, height);
         this.dirV = dirV;
+        this.strideCalc = strideCalc;
     }
-
 
     public abstract void move(Event event);
 
@@ -34,74 +38,24 @@ public abstract class MovingSprite extends Sprite {
         List<CollisionReport> collisionReports = M2SSpriteCollisionDetector.detect(rect, List.of(SpriteE.WALL, SpriteE.GHOST_HOUSE_WALL));
         return !collisionReports.isEmpty();
     }
-    protected boolean isCollidingWithWallOrGhostHWall(double stride, Vector dir) {
+    public boolean isCollidingWithWallOrGhostHWall(double stride, Vector dir) {
         final Coordinate nextCord = calcNextCord(stride, dir);
         return isCollidingWithWallOrGhostHWall(nextCord);
     }
 
-    protected boolean isGoingOutOfCanvas(double stride, Vector dir) {
+    public boolean isGoingOutOfCanvas(double stride, Vector dir) {
         final Coordinate nextCord = calcNextCord(stride, dir);
         final Rectangle nextRect = new Rectangle(nextCord, getWidth(), getHeight());
         return !nextRect.within(gameState.getMaze().getRect());
     }
 
-    protected double getSpeed() {
+    // [TODO] make this a property with out of the box getter
+    public double getSpeed() {
         throw new IllegalStateException("getSpeed in sprite " + getClass().getSimpleName() +  " is not implemented");
     }
 
-    public double calcCalibratedStride(Vector dir) {
-        if (dir.equals(Vector.STILL)) {
-            return 0;
-        }
-        final double originalStride = calcStride(dir);
-        return calibrateStride(originalStride, dir);
-    }
-
-    protected double calcStride(Vector dir) {
-        if (dir.equals(Vector.STILL)) {
-            return 0;
-        }
-        final double elapsedTime = Math.abs(gameState.getPrevFrameEndedAt() - gameState.getCurrFrameStartedAt()) / 1_000_000_000.0;
-        return getSpeed() * elapsedTime;
-    }
-
-    protected double calibrateStride(double stride, Vector dir) {
-        // [TODO] return offset with the correct sign from methods calculating the offset
-        double calibratedStride = stride;
-        if (isGoingOutOfCanvas(stride, dir)) {
-            calibratedStride = stride + calcStrideCorrectiveOffsetToPreventGoingOut(stride, dir);
-        } else if (isCollidingWithWallOrGhostHWall(stride, dir)) {
-            calibratedStride = stride - calcStrideCorrectiveOffsetToUnblockWallStuck(stride, dir);
-        }
-        return calibratedStride;
-    }
-
-    private double calcStrideCorrectiveOffsetToPreventGoingOut(double stride, Vector dir) {
-        final Coordinate nextCord = calcNextCord(stride, dir);
-        if (Vector.RIGHT == dir) {
-            return (configs.CANVAS_WIDTH() - getWidth()) - nextCord.getCol();
-        } else if (Vector.LEFT == dir) {
-            return nextCord.getCol();
-        } else if (Vector.UP == dir) {
-            return nextCord.getRow();
-        } else if (Vector.DOWN == dir) {
-            return (configs.CANVAS_HEIGHT() - getHeight()) - nextCord.getRow();
-        }
-        return 0;
-    }
-
-    private double calcStrideCorrectiveOffsetToUnblockWallStuck(double stride, Vector dir) {
-        final Coordinate nextCord = calcNextCord(stride, dir);
-        if (Vector.RIGHT == dir) {
-            return nextCord.getCol() % configs.PLAYGROUND_CELL_SIZE();
-        } else if (Vector.LEFT == dir) {
-            return configs.PLAYGROUND_CELL_SIZE() - (nextCord.getCol() % configs.PLAYGROUND_CELL_SIZE());
-        } else if (Vector.UP == dir) {
-            return configs.PLAYGROUND_CELL_SIZE() - (nextCord.getRow() % configs.PLAYGROUND_CELL_SIZE());
-        } else if (Vector.DOWN == dir) {
-            return nextCord.getRow() % configs.PLAYGROUND_CELL_SIZE();
-        }
-        return 0;
+    public double calcCalibratedStride(Vector newDir) {
+        return strideCalc.calcCalibratedStride(this, newDir);
     }
 
 

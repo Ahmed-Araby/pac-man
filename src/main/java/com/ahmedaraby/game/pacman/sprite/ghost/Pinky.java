@@ -6,6 +6,7 @@ import com.ahmedaraby.game.pacman.constant.SpriteE;
 import com.ahmedaraby.game.pacman.event.Event;
 import com.ahmedaraby.game.pacman.ghostmode.common.Eaten;
 import com.ahmedaraby.game.pacman.ghostmode.common.Frightened;
+import com.ahmedaraby.game.pacman.ghostmode.navigation.StrideCalculator;
 import com.ahmedaraby.game.pacman.ghostmode.pinky.PinkyChaser;
 import com.ahmedaraby.game.pacman.ghostmode.pinky.PinkyScattered;
 import com.ahmedaraby.game.pacman.model.GameState;
@@ -16,8 +17,10 @@ import javafx.scene.image.Image;
 
 public class Pinky extends Ghost {
 
-    public Pinky(GameState gameState, ConfigsEx configs, SpriteRegistry<String, Image> spriteRegistry) {
-        super(gameState, configs, SpriteE.GHOST, -1, -1, Vector.STILL);
+    public Pinky(GameState gameState, ConfigsEx configs, StrideCalculator strideCalc,
+                 SpriteRegistry<String, Image> spriteRegistry) {
+        super(gameState, configs, strideCalc,
+                SpriteE.GHOST, -1, -1, Vector.STILL);
         scattered = new PinkyScattered(this, gameState, configs, spriteRegistry, GhostModeActivePeriodsConf.LEVEL_1_SCATTER_ACTIVE_PERIODS);
         chaser = new PinkyChaser(this, gameState, configs, spriteRegistry, GhostModeActivePeriodsConf.LEVEL_1_CHASE_ACTIVE_PERIODS);
         frightened = new Frightened(this, gameState, configs, spriteRegistry, GhostModeActivePeriodsConf.ALL_LEVELS_FRIGHTENED_MODE_ACTIVE_PERIODS);

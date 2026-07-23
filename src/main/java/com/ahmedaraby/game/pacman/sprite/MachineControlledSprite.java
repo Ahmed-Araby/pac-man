@@ -4,6 +4,7 @@ import com.ahmedaraby.game.pacman.config.intConfigs.ConfigsEx;
 import com.ahmedaraby.game.pacman.constant.SpriteE;
 import com.ahmedaraby.game.pacman.entity.Cell;
 import com.ahmedaraby.game.pacman.entity.MazeMove;
+import com.ahmedaraby.game.pacman.ghostmode.navigation.StrideCalculator;
 import com.ahmedaraby.game.pacman.model.GameState;
 import com.ahmedaraby.game.pacman.playground.Playground;
 import com.ahmedaraby.jengine.entity.Coordinate;
@@ -14,8 +15,10 @@ import java.util.Optional;
 import java.util.stream.Collectors;
 
 public abstract class MachineControlledSprite extends MovingSprite {
-    public MachineControlledSprite(GameState gameState, ConfigsEx configs, SpriteE type, Coordinate cord, double width, double height, Vector dirV) {
-        super(gameState, configs, type, cord, width, height, dirV);
+    public MachineControlledSprite(GameState gameState, ConfigsEx configs, StrideCalculator strideCalc,
+                                   SpriteE type, Coordinate cord, double width, double height, Vector dirV) {
+        super(gameState, configs, strideCalc,
+                type, cord, width, height, dirV);
     }
 
     // [TODO] find a smarter way to implement this method
