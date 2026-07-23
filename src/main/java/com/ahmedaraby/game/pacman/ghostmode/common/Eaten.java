@@ -20,23 +20,19 @@ import com.ahmedaraby.game.pacman.ghostmode.GhostMode;
 import java.util.*;
 
 public class Eaten extends GhostMode {
-
-    private final GhostNavigator navigator;
     private final Animator animator;
     private Coordinate ghostHouseEmptyLoc;
     private TargetNavigator targetNavigator;
 
     public Eaten(Ghost ghost, GameState gameState, ConfigsEx configs, SpriteRegistry<String, Image> spriteRegistry) {
         super(ghost, gameState, configs, spriteRegistry);
-        PlaygroundShortestPathNav playgroundShortestPathNav = new PlaygroundShortestPathNav();
-        this.navigator = new ShortestPathNavigator(configs, playgroundShortestPathNav);
 
         final Map<Vector, Image[]> sprites = loadSprites();
         this.animator = new DistanceBasedAnimator(
                 new double[]{configs.GHOST_ANIMATION_COMPLETE_DIST()},
                 sprites.get(Vector.UP)
         );
-        targetNavigator = new TargetNavigator(configs, navigator);
+        targetNavigator = new TargetNavigator(configs);
     }
 
     @Override

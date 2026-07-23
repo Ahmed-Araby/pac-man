@@ -20,15 +20,4 @@ public class ShortestPathNavigator implements GhostNavigator {
         Cell targetCell = targetSprite.calcCell();
         return playgroundShortestPathNav.calcDist(sourceCell, targetCell) * configs.PLAYGROUND_CELL_SIZE();
     }
-
-    /**
-     *
-     * @param source
-     * @param target
-     * @return distance in terms of Cells
-     */
-    @Override
-    public double calcDist(Cell source, Cell target) {
-        return playgroundShortestPathNav.calcDist(source, target);
-    }
 }

@@ -1,12 +1,9 @@
 package com.ahmedaraby.game.pacman.ghostmode;
 
 import com.ahmedaraby.game.pacman.config.intConfigs.ConfigsEx;
-import com.ahmedaraby.game.pacman.ghostmode.navigation.GhostNavigator;
-import com.ahmedaraby.game.pacman.ghostmode.navigation.ShortestPathNavigator;
 import com.ahmedaraby.game.pacman.ghostmode.navigation.TargetNavigator;
 import com.ahmedaraby.game.pacman.model.GameState;
 import com.ahmedaraby.game.pacman.sprite.ghost.Ghost;
-import com.ahmedaraby.game.pacman.util.PlaygroundShortestPathNav;
 import com.ahmedaraby.jengine.animation.Animator;
 import com.ahmedaraby.jengine.entity.Coordinate;
 import com.ahmedaraby.jengine.entity.Vector;
@@ -19,16 +16,13 @@ import java.util.ArrayList;
 import java.util.List;
 
 public abstract class Scattered extends TemporalGhostMode {
-    protected final GhostNavigator navigator;
     protected Animator animator;
     protected Coordinate target;
     private TargetNavigator targetNavigator;
 
     public Scattered(Ghost ghost, GameState gameState, ConfigsEx configs, SpriteRegistry<String, Image> spriteRegistry, int[] activePeriodsSec) {
         super(ghost, gameState, configs, spriteRegistry, activePeriodsSec);
-        PlaygroundShortestPathNav playgroundShortestPathNav = new PlaygroundShortestPathNav();
-        navigator = new ShortestPathNavigator(configs, playgroundShortestPathNav);
-        targetNavigator = new TargetNavigator(configs, navigator);
+        targetNavigator = new TargetNavigator(configs);
     }
 
     @Override

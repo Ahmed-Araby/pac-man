@@ -7,5 +7,4 @@ import com.ahmedaraby.game.pacman.sprite.Sprite;
 public interface GhostNavigator {
 
     double calcDist(MovingSprite sprite, Sprite targetSprite);
-    double calcDist(Cell source, Cell target);
 }
