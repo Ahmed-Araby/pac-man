@@ -5,7 +5,6 @@ import com.ahmedaraby.game.pacman.ghostmode.navigation.GhostNavigator;
 import com.ahmedaraby.game.pacman.ghostmode.navigation.ShortestPathNavigator;
 import com.ahmedaraby.game.pacman.ghostmode.navigation.TargetNavigator;
 import com.ahmedaraby.game.pacman.model.GameState;
-import com.ahmedaraby.game.pacman.sprite.Sprite;
 import com.ahmedaraby.game.pacman.sprite.ghost.Ghost;
 import com.ahmedaraby.game.pacman.util.PlaygroundShortestPathNav;
 import com.ahmedaraby.jengine.animation.Animator;
@@ -41,7 +40,7 @@ public abstract class Scattered extends TemporalGhostMode {
     @Override
     public void move() {
         final Vector newDir = targetNavigator.calcDir(ghost, target);
-        final double stride = ghost.calcStride(newDir);
+        final double stride = ghost.calcCalibratedStride(newDir);
         ghost.move(stride, newDir);
         animator.stride(stride);
     }

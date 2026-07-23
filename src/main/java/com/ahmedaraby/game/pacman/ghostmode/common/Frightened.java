@@ -55,7 +55,7 @@ public class Frightened extends TemporalGhostMode {
             newDirV = possibleMoves.get(randIndex).getDir();
         }
 
-        final double stride = ghost.calcStride(newDirV);
+        final double stride = ghost.calcCalibratedStride(newDirV);
         ghost.move(stride, newDirV);
         animator.stride(stride);
     }

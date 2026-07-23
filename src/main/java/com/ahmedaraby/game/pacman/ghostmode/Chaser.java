@@ -29,14 +29,14 @@ public abstract class Chaser extends TemporalGhostMode{
     // [TODO] get rid of this duplication
     protected void moveTo(Coordinate target) {
         final Vector newDir = targetNavigator.calcDir(ghost, target);
-        final double stride = ghost.calcStride(newDir);
+        final double stride = ghost.calcCalibratedStride(newDir);
         ghost.move(stride, newDir);
         animator.stride(stride);
     }
 
     protected void moveTo(Sprite target) {
         final Vector newDir = targetNavigator.calcDir(ghost, target);
-        final double stride = ghost.calcStride(newDir);
+        final double stride = ghost.calcCalibratedStride(newDir);
         ghost.move(stride, newDir);
         animator.stride(stride);
     }

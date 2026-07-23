@@ -49,14 +49,20 @@ public abstract class MovingSprite extends Sprite {
         throw new IllegalStateException("getSpeed in sprite " + getClass().getSimpleName() +  " is not implemented");
     }
 
-    public double calcStride(Vector dir) {
+    public double calcCalibratedStride(Vector dir) {
+        if (dir.equals(Vector.STILL)) {
+            return 0;
+        }
+        final double originalStride = calcStride(dir);
+        return calibrateStride(originalStride, dir);
+    }
+
+    protected double calcStride(Vector dir) {
         if (dir.equals(Vector.STILL)) {
             return 0;
         }
         final double elapsedTime = Math.abs(gameState.getPrevFrameEndedAt() - gameState.getCurrFrameStartedAt()) / 1_000_000_000.0;
-        final double stride = getSpeed() * elapsedTime;
-        // [TODO] separate calibration from calculation
-        return calibrateStride(stride, dir);
+        return getSpeed() * elapsedTime;
     }
 
     protected double calibrateStride(double stride, Vector dir) {
@@ -115,7 +121,7 @@ public abstract class MovingSprite extends Sprite {
         if (dirV == Vector.STILL) {
             return false;
         }
-        final double stride = calcStride(dirV);
+        final double stride = calcCalibratedStride(dirV);
         return isPossibleMove(stride, dirV);
     }
 

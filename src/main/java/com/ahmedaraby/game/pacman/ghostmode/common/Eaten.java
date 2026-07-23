@@ -2,9 +2,7 @@ package com.ahmedaraby.game.pacman.ghostmode.common;
 
 import com.ahmedaraby.game.pacman.config.intConfigs.ConfigsEx;
 import com.ahmedaraby.game.pacman.constant.SpriteFileNameC;
-import com.ahmedaraby.game.pacman.entity.MovementPlan;
 import com.ahmedaraby.game.pacman.ghostmode.navigation.TargetNavigator;
-import com.ahmedaraby.game.pacman.sprite.Sprite;
 import com.ahmedaraby.game.pacman.util.PlaygroundShortestPathNav;
 import com.ahmedaraby.jengine.animation.Animator;
 import com.ahmedaraby.jengine.animation.DistanceBasedAnimator;
@@ -15,7 +13,6 @@ import com.ahmedaraby.game.pacman.ghostmode.navigation.ShortestPathNavigator;
 import com.ahmedaraby.game.pacman.model.GameState;
 import com.ahmedaraby.game.pacman.sprite.ghost.Ghost;
 import com.ahmedaraby.jengine.sprite.SpriteRegistry;
-import com.sun.java.accessibility.util.EventID;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.image.Image;
 import com.ahmedaraby.game.pacman.ghostmode.GhostMode;
@@ -68,7 +65,7 @@ public class Eaten extends GhostMode {
     @Override
     public void move() {
         final Vector newDir = targetNavigator.calcDir(ghost, ghostHouseEmptyLoc);
-        final double stride = ghost.calcStride(newDir);
+        final double stride = ghost.calcCalibratedStride(newDir);
         ghost.move(stride, newDir);
         this.animator.stride(stride);
     }

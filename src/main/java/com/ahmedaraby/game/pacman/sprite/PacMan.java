@@ -95,7 +95,7 @@ public class PacMan extends MovingSprite implements Subscriber<EventType> {
     private boolean attemptMovementInSameDir(PacManMovementRequestEvent event) {
         final boolean isPossible = isPossibleToMoveInSameDir();
         if (isPossible) {
-            final double stride = calcStride(event.getDir());
+            final double stride = calcCalibratedStride(event.getDir());
             move(stride, dirV);
             mouthAnimationTracker.stride(stride);
             updateTurnBuffer(event.getDir(), event.getSource());
@@ -112,7 +112,7 @@ public class PacMan extends MovingSprite implements Subscriber<EventType> {
         final boolean isPossible = isPossibleToMoveInNewDir(event.getDir());
 
         if (isPossible) {
-            final double stride = calcStride(event.getDir());
+            final double stride = calcCalibratedStride(event.getDir());
             move(stride, event.getDir());
             mouthAnimationTracker.stride(stride);
             updateTurnBuffer(event.getDir(), event.getSource());
@@ -130,7 +130,7 @@ public class PacMan extends MovingSprite implements Subscriber<EventType> {
             turnBuffer.clear();
         } else if (movementSource instanceof PacMan) {
             // automated straight line movement
-            final double stride = calcStride(dir);
+            final double stride = calcCalibratedStride(dir);
             turnBuffer.stride(stride);
         }
     }
