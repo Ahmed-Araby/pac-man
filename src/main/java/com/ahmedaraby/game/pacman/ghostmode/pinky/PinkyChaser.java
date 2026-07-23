@@ -38,8 +38,7 @@ public class PinkyChaser extends Chaser {
         final Coordinate pacManCord = gameState.getPacMan().getTopLeftCorner();
         final Vector pacManDir = gameState.getPacMan().getDirV();
         // calculate the tile 4 steps ahead of pacman, and force it to be within the playground
-        // [TODO] bug, we scale 4 times the cell size
-        final Vector pacManDirScaled = pacManDir.scale(4);
+        final Vector pacManDirScaled = pacManDir.scale(4 * configs.PLAYGROUND_CELL_SIZE());
         final Coordinate lookAheadCord = pacManCord.add(pacManDirScaled.getX(), pacManDirScaled.getY());
         final Line lookAheadLine = new Line(pacManCord, lookAheadCord).trim(gameState.getMaze().getRect());
         final Coordinate target = lookAheadLine.getEnd();
