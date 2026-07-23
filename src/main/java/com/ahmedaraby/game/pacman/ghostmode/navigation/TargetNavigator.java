@@ -18,7 +18,6 @@ import java.util.Optional;
 public class TargetNavigator {
 
     private final ConfigsEx configs;
-    // [TODO] replace this with the cell based shortest path calculator
     private final PlaygroundShortestPathNav playgroundShortestPathNav = new PlaygroundShortestPathNav();
 
     public Vector calcDir(MachineControlledSprite source, Sprite target) {
