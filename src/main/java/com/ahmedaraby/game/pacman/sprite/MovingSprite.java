@@ -50,6 +50,9 @@ public abstract class MovingSprite extends Sprite {
     }
 
     public double calcStride(Vector dir) {
+        if (dir.equals(Vector.STILL)) {
+            return 0;
+        }
         final double elapsedTime = Math.abs(gameState.getPrevFrameEndedAt() - gameState.getCurrFrameStartedAt()) / 1_000_000_000.0;
         final double stride = getSpeed() * elapsedTime;
         // [TODO] separate calibration from calculation

@@ -57,6 +57,7 @@ public abstract class MachineControlledSprite extends MovingSprite {
 
     @Override
     protected boolean isPossibleMove(double stride, Vector dir) {
+        // [TODO] make this threshold be configured
         if (stride < 0.001) {
             return false;
         }

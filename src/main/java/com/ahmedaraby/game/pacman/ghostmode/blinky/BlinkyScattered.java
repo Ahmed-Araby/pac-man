@@ -16,10 +16,7 @@ public class BlinkyScattered extends Scattered {
 
     public BlinkyScattered(Ghost ghost, GameState gameState, ConfigsEx configs, SpriteRegistry<String, Image> spriteRegistry, int[] activePeriodsSec) {
         super(ghost, gameState, configs, spriteRegistry, activePeriodsSec);
-        this.target = new Coordinate(
-                0,
-                configs.CANVAS_WIDTH() - 1
-        );
+        this.target = new Coordinate(0, configs.CANVAS_WIDTH() - configs.PLAYGROUND_CELL_SIZE()); // top left corner of the top left cell
         final Image[] frames = loadSprites();
         this.animator = new DistanceBasedAnimator(
                 new double[]{configs.GHOST_BLINK_FIRST_FRAME_DISTANCE(), configs.GHOST_BLINK_SECOND_FRAME_DISTANCE()}, frames);

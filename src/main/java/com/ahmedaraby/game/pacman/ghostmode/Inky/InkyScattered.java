@@ -15,7 +15,7 @@ import javafx.scene.image.Image;
 public class InkyScattered extends Scattered {
     public InkyScattered(Ghost ghost, GameState gameState, ConfigsEx configs, SpriteRegistry<String, Image> spriteRegistry, int[] activePeriodsSec) {
         super(ghost, gameState, configs, spriteRegistry, activePeriodsSec);
-        this.target = new Coordinate(  // bottom right corner
+        this.target = new Coordinate(  // top left corner of the bottom right cell
                 configs.CANVAS_HEIGHT() - configs.PLAYGROUND_CELL_SIZE(),
                 configs.CANVAS_WIDTH() - configs.PLAYGROUND_CELL_SIZE()
         );

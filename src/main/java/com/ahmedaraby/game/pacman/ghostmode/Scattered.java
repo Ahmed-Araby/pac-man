@@ -1,10 +1,11 @@
 package com.ahmedaraby.game.pacman.ghostmode;
 
 import com.ahmedaraby.game.pacman.config.intConfigs.ConfigsEx;
-import com.ahmedaraby.game.pacman.entity.MovementPlan;
 import com.ahmedaraby.game.pacman.ghostmode.navigation.GhostNavigator;
 import com.ahmedaraby.game.pacman.ghostmode.navigation.ShortestPathNavigator;
+import com.ahmedaraby.game.pacman.ghostmode.navigation.TargetNavigator;
 import com.ahmedaraby.game.pacman.model.GameState;
+import com.ahmedaraby.game.pacman.sprite.Sprite;
 import com.ahmedaraby.game.pacman.sprite.ghost.Ghost;
 import com.ahmedaraby.game.pacman.util.PlaygroundShortestPathNav;
 import com.ahmedaraby.jengine.animation.Animator;
@@ -17,18 +18,18 @@ import javafx.scene.image.Image;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Objects;
-import java.util.Optional;
 
 public abstract class Scattered extends TemporalGhostMode {
     protected final GhostNavigator navigator;
     protected Animator animator;
     protected Coordinate target;
+    private TargetNavigator targetNavigator;
 
     public Scattered(Ghost ghost, GameState gameState, ConfigsEx configs, SpriteRegistry<String, Image> spriteRegistry, int[] activePeriodsSec) {
         super(ghost, gameState, configs, spriteRegistry, activePeriodsSec);
         PlaygroundShortestPathNav playgroundShortestPathNav = new PlaygroundShortestPathNav();
         navigator = new ShortestPathNavigator(configs, playgroundShortestPathNav);
+        targetNavigator = new TargetNavigator(configs, navigator);
     }
 
     @Override
@@ -39,24 +40,8 @@ public abstract class Scattered extends TemporalGhostMode {
 
     @Override
     public void move() {
-        final Optional<MovementPlan> movementPlan = ghost.getPossibleMazeMoves()
-                .stream()
-                .map(move -> {
-                    final double dist = navigator.calcDist(move.getTo(), target.toCell());
-                    if (dist < Integer.MAX_VALUE) {
-                        return new MovementPlan(move.getDir(), dist);
-                    }
-                    return null;
-                })
-                .filter(Objects::nonNull)
-                .sorted()
-                .findFirst();
-        if (movementPlan.isEmpty()) {
-            ghost.setDirV(Vector.STILL);
-            return;
-        }
-
-        final Vector newDir = movementPlan.get().getDir();
+        final Sprite virtualSprite = Sprite.buildVirtualSprite(target, configs.PLAYGROUND_CELL_SIZE(), configs.PLAYGROUND_CELL_SIZE(), configs);
+        final Vector newDir = targetNavigator.calcDir(ghost, virtualSprite);
         final double stride = ghost.calcStride(newDir);
         ghost.move(stride, newDir);
         animator.stride(stride);

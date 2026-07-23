@@ -24,6 +24,6 @@ public class ClydeScattered extends Scattered {
                 configs.GHOST_CLYDE_SECOND_FRAME_DISTANCE()
         }, frames);
 
-        target = new Coordinate(configs.CANVAS_HEIGHT() - configs.PLAYGROUND_CELL_SIZE(), 0);
+        target = new Coordinate(configs.CANVAS_HEIGHT() - configs.PLAYGROUND_CELL_SIZE(), 0); // top left corner of the bottom left cell
     }
 }

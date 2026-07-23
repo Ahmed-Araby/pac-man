@@ -43,16 +43,13 @@ public class Frightened extends TemporalGhostMode {
 
     @Override
     public void move() {
-        final Vector currDir = ghost.getDirV();
-
-        // [TODO] use the new getPossibleMoves method instead
         final List<MazeMove> possibleMoves = ghost.getPossibleMazeMoves()
                 .stream()
                 .filter(move -> !move.getDir().isOpposite(ghost.getDirV()))
                 .toList();
         Vector newDirV;
         if (possibleMoves.isEmpty()) {
-            newDirV = currDir.flip180();
+            newDirV = ghost.getDirV().flip180();
         } else {
             final int randIndex = random.nextIntStartInclEndExcl(0, possibleMoves.size());
             newDirV = possibleMoves.get(randIndex).getDir();

@@ -19,7 +19,7 @@ public abstract class GhostMode {
     protected final SpriteRegistry<String, Image> spriteRegistry;
 
     public abstract void render(Canvas canvas);
-    public abstract  void move();
+    public abstract void move();
 
     public void init() {
         System.out.println("GhostMode.init() method is not implemented for sprite " + this.getClass().getSimpleName());

@@ -3,6 +3,8 @@ package com.ahmedaraby.game.pacman.ghostmode.common;
 import com.ahmedaraby.game.pacman.config.intConfigs.ConfigsEx;
 import com.ahmedaraby.game.pacman.constant.SpriteFileNameC;
 import com.ahmedaraby.game.pacman.entity.MovementPlan;
+import com.ahmedaraby.game.pacman.ghostmode.navigation.TargetNavigator;
+import com.ahmedaraby.game.pacman.sprite.Sprite;
 import com.ahmedaraby.game.pacman.util.PlaygroundShortestPathNav;
 import com.ahmedaraby.jengine.animation.Animator;
 import com.ahmedaraby.jengine.animation.DistanceBasedAnimator;
@@ -13,6 +15,7 @@ import com.ahmedaraby.game.pacman.ghostmode.navigation.ShortestPathNavigator;
 import com.ahmedaraby.game.pacman.model.GameState;
 import com.ahmedaraby.game.pacman.sprite.ghost.Ghost;
 import com.ahmedaraby.jengine.sprite.SpriteRegistry;
+import com.sun.java.accessibility.util.EventID;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.image.Image;
 import com.ahmedaraby.game.pacman.ghostmode.GhostMode;
@@ -24,6 +27,7 @@ public class Eaten extends GhostMode {
     private final GhostNavigator navigator;
     private final Animator animator;
     private Coordinate ghostHouseEmptyLoc;
+    private TargetNavigator targetNavigator;
 
     public Eaten(Ghost ghost, GameState gameState, ConfigsEx configs, SpriteRegistry<String, Image> spriteRegistry) {
         super(ghost, gameState, configs, spriteRegistry);
@@ -35,6 +39,7 @@ public class Eaten extends GhostMode {
                 new double[]{configs.GHOST_ANIMATION_COMPLETE_DIST()},
                 sprites.get(Vector.UP)
         );
+        targetNavigator = new TargetNavigator(configs, navigator);
     }
 
     @Override
@@ -62,24 +67,8 @@ public class Eaten extends GhostMode {
 
     @Override
     public void move() {
-        final Optional<MovementPlan> movementPlan = ghost.getPossibleMazeMoves()
-                .stream()
-                .map(move -> {
-                    final double dist = navigator.calcDist(move.getTo(), ghostHouseEmptyLoc.toCell());
-                    if (dist < Integer.MAX_VALUE) {
-                        return new MovementPlan(move.getDir(), dist);
-                    }
-                    return null;
-                })
-                .filter(Objects::nonNull)
-                .sorted()
-                .findFirst();
-        if (movementPlan.isEmpty()) {
-            ghost.setDirV(Vector.STILL);
-            return;
-        }
-
-        final Vector newDir = movementPlan.get().getDir();
+        final Sprite virutalSprite = Sprite.buildVirtualSprite(ghostHouseEmptyLoc, configs.PLAYGROUND_CELL_SIZE(), configs.PLAYGROUND_CELL_SIZE(), configs);
+        final Vector newDir = targetNavigator.calcDir(ghost, virutalSprite);
         final double stride = ghost.calcStride(newDir);
         ghost.move(stride, newDir);
         this.animator.stride(stride);
