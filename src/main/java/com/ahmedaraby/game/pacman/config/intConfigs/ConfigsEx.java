@@ -28,6 +28,10 @@ public class ConfigsEx {
         return canvas.getHeight();
     }
 
+    public double CORD_EQ_THRESHOLD() {
+        return canvas.getCoordinateEqualityThreshold();
+    }
+
     public double PLAYGROUND_CELL_SIZE() {
         return playground.getCellSize();
     }

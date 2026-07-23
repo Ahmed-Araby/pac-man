@@ -32,10 +32,10 @@ public class SoundPlayer implements Subscriber<EventType> {
     public void update(Event<EventType> event) {
         switch (event.getType()) {
             case PAC_MAN_SUGAR_COLLISION:
-                playPacManSugarCollisionSound();
+//                playPacManSugarCollisionSound();
                 break;
             case PAC_MAN_SUPER_SUGAR_COLLISION:
-                playPacManSuperSugarCollisionSound();
+//                playPacManSuperSugarCollisionSound();
                 break;
             default:
                 throw new IllegalArgumentException();

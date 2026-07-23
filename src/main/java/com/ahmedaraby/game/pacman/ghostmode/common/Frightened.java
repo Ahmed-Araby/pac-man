@@ -1,10 +1,7 @@
 package com.ahmedaraby.game.pacman.ghostmode.common;
 
-import com.ahmedaraby.game.pacman.collision.M2SSpriteCollisionDetector;
 import com.ahmedaraby.game.pacman.config.intConfigs.ConfigsEx;
-import com.ahmedaraby.game.pacman.constant.SpriteE;
-import com.ahmedaraby.game.pacman.model.CollisionReport;
-import com.ahmedaraby.jengine.entity.Rectangle;
+import com.ahmedaraby.game.pacman.entity.MazeMove;
 import com.ahmedaraby.jengine.entity.Vector;
 import com.ahmedaraby.game.pacman.model.GameState;
 import com.ahmedaraby.game.pacman.sprite.ghost.Ghost;
@@ -14,7 +11,6 @@ import javafx.scene.image.Image;
 import com.ahmedaraby.jengine.animation.Animator;
 import com.ahmedaraby.jengine.animation.DistanceBasedAnimator;
 import com.ahmedaraby.game.pacman.constant.SpriteFileNameC;
-import com.ahmedaraby.jengine.entity.Coordinate;
 import com.ahmedaraby.game.pacman.ghostmode.TemporalGhostMode;
 import com.ahmedaraby.game.pacman.util.EnrichedThreadLocalRandom;
 
@@ -49,13 +45,17 @@ public class Frightened extends TemporalGhostMode {
     public void move() {
         final Vector currDir = ghost.getDirV();
 
-        final List<Vector> possibleDirections = ghost.getPossibleDirections();
+        // [TODO] use the new getPossibleMoves method instead
+        final List<MazeMove> possibleMoves = ghost.getPossibleMazeMoves()
+                .stream()
+                .filter(move -> !move.getDir().isOpposite(ghost.getDirV()))
+                .toList();
         Vector newDirV;
-        if (possibleDirections.isEmpty()) {
+        if (possibleMoves.isEmpty()) {
             newDirV = currDir.flip180();
         } else {
-            final int randIndex = random.nextIntStartInclEndExcl(0, possibleDirections.size());
-            newDirV = possibleDirections.get(randIndex);
+            final int randIndex = random.nextIntStartInclEndExcl(0, possibleMoves.size());
+            newDirV = possibleMoves.get(randIndex).getDir();
         }
 
         final double stride = ghost.calcStride(newDirV);

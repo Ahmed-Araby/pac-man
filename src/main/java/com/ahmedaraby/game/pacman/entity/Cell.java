@@ -22,6 +22,7 @@ public class Cell {
 
     private static final Vector[] directions = {Vector.RIGHT, Vector.UP, Vector.DOWN, Vector.LEFT};
 
+    // [TODO] name it to get legal moves
     public List<MazeMove> getMoves(int playgroundWidth, int playgroundHeight) {
         final List<MazeMove> moves = new ArrayList<>();
         int nRow, nCol;

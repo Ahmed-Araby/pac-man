@@ -202,10 +202,10 @@ public class GamePlayGameScene implements GameScene {
         }
 
         pacMan.render(canvas);
-        blinky.render(canvas);
-        inky.render(canvas);
-        pinky.render(canvas);
-//        clyde.render(canvas);
+//        blinky.render(canvas);
+//        inky.render(canvas);
+//        pinky.render(canvas);
+        clyde.render(canvas);
 
         gameState.setPrevFrameEndedAt(System.nanoTime());
     }
@@ -215,10 +215,10 @@ public class GamePlayGameScene implements GameScene {
         gameState.setCurrFrameStartedAt(System.nanoTime());
 
         pacMan.move(null);
-        blinky.move(null);
-        inky.move(null);
-        pinky.move(null);
-//        clyde.move(null);
+//        blinky.move(null);
+//        inky.move(null);
+//        pinky.move(null);
+        clyde.move(null);
 
         collisionSystem.detect();
     }

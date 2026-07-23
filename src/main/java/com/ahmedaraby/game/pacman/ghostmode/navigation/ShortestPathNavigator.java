@@ -39,6 +39,18 @@ public class ShortestPathNavigator implements GhostNavigator {
         return playgroundShortestPathNav.calcDist(sourceCell, targetCell) * configs.PLAYGROUND_CELL_SIZE();
     }
 
+    /**
+     *
+     * @param source
+     * @param target
+     * @return distance in terms of Cells
+     */
+    @Override
+    public double calcDist(Cell source, Cell target) {
+        return playgroundShortestPathNav.calcDist(source, target);
+    }
+
+    // [TODO] delete
     @Override
     public Vector calcDir(MovingSprite sprite, Coordinate target) {
         final Coordinate source = sprite.getTopLeftCorner();

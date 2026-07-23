@@ -2,6 +2,7 @@ package com.ahmedaraby.game.pacman.sprite;
 
 import com.ahmedaraby.game.pacman.collision.M2SSpriteCollisionDetector;
 import com.ahmedaraby.game.pacman.config.intConfigs.ConfigsEx;
+import com.ahmedaraby.game.pacman.entity.MazeMove;
 import com.ahmedaraby.jengine.entity.Vector;
 import lombok.Getter;
 import lombok.Setter;
@@ -35,9 +36,7 @@ public abstract class MovingSprite extends Sprite {
     }
     protected boolean isCollidingWithWallOrGhostHWall(double stride, Vector dir) {
         final Coordinate nextCord = calcNextCord(stride, dir);
-        final Rectangle nextRect = new Rectangle(nextCord, getWidth(), getHeight());
-        List<CollisionReport> collisionReports = M2SSpriteCollisionDetector.detect(nextRect, List.of(SpriteE.WALL, SpriteE.GHOST_HOUSE_WALL));
-        return !collisionReports.isEmpty();
+        return isCollidingWithWallOrGhostHWall(nextCord);
     }
 
     protected boolean isGoingOutOfCanvas(double stride, Vector dir) {
@@ -53,6 +52,7 @@ public abstract class MovingSprite extends Sprite {
     public double calcStride(Vector dir) {
         final double elapsedTime = Math.abs(gameState.getPrevFrameEndedAt() - gameState.getCurrFrameStartedAt()) / 1_000_000_000.0;
         final double stride = getSpeed() * elapsedTime;
+        // [TODO] separate calibration from calculation
         return calibrateStride(stride, dir);
     }
 
@@ -102,6 +102,12 @@ public abstract class MovingSprite extends Sprite {
         return new Coordinate(newRow, newCol);
     }
 
+    protected boolean isPossibleMove(MazeMove move) {
+        if (move.getDir().equals(dirV)) {
+            return isPossibleToMoveInSameDir();
+        }
+        return isPossibleToMoveInNewDir(move.getDir());
+    }
     protected boolean isPossibleToMoveInSameDir() {
         if (dirV == Vector.STILL) {
             return false;

@@ -79,10 +79,15 @@ public abstract class Sprite {
      * @return Cell
      */
     public Cell calcCell() {
-        final double centerCol = getCol() + (getWidth() / 2);
-        final double centerRow = getRow() + (getHeight() / 2);
-        final int cellCol = (int) (centerCol / configs.PLAYGROUND_CELL_SIZE());
-        final int cellRow = (int) (centerRow / configs.PLAYGROUND_CELL_SIZE());
+        final Coordinate centerCord = calcCenterCord();
+        final int cellCol = (int) (centerCord.getCol() / configs.PLAYGROUND_CELL_SIZE());
+        final int cellRow = (int) (centerCord.getRow() / configs.PLAYGROUND_CELL_SIZE());
         return new Cell(cellRow, cellCol);
+    }
+
+    protected Coordinate calcCenterCord() {
+        final double centerCol = getCol() + getWidth() / 2;
+        final double centerRow = getRow() + getHeight() / 2;
+        return new Coordinate(centerRow, centerCol);
     }
 }

@@ -1,6 +1,7 @@
 canvas:
   width: 1050
   height: 1050
+  coordinateEqualityThreshold: 0.9
 
 playground:
   cellSize: 50

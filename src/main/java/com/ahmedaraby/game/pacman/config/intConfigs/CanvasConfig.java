@@ -10,4 +10,5 @@ import lombok.Setter;
 public class CanvasConfig {
     private double width;
     private double height;
+    private double coordinateEqualityThreshold;
 }

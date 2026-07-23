@@ -2,76 +2,65 @@ package com.ahmedaraby.game.pacman.sprite;
 
 import com.ahmedaraby.game.pacman.config.intConfigs.ConfigsEx;
 import com.ahmedaraby.game.pacman.constant.SpriteE;
-import com.ahmedaraby.game.pacman.event.Event;
+import com.ahmedaraby.game.pacman.entity.Cell;
+import com.ahmedaraby.game.pacman.entity.MazeMove;
 import com.ahmedaraby.game.pacman.model.GameState;
+import com.ahmedaraby.game.pacman.playground.Playground;
 import com.ahmedaraby.jengine.entity.Coordinate;
 import com.ahmedaraby.jengine.entity.Vector;
-import javafx.scene.canvas.Canvas;
 
-import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
+import java.util.Optional;
+import java.util.stream.Collectors;
 
 public abstract class MachineControlledSprite extends MovingSprite {
     public MachineControlledSprite(GameState gameState, ConfigsEx configs, SpriteE type, Coordinate cord, double width, double height, Vector dirV) {
         super(gameState, configs, type, cord, width, height, dirV);
     }
 
-    public MovingSprite buildNextSprite(Vector dir) {
-        final double originalStride = configs.PLAYGROUND_CELL_SIZE();
-        final double calibratedStride = calibrateStride(originalStride, dir);
-        final Coordinate nextCord = calcNextCord(calibratedStride, dir);
-        return new MachineControlledSprite(gameState, configs, type,nextCord, getWidth(), getHeight(), dir) {
-            @Override
-            public void move(Event event) {
-                throw new IllegalStateException("move behaviour is not implemented for the dummy NextSprite");
-            }
-
-            @Override
-            public void render(Canvas canvas) {
-                throw new IllegalStateException("render behaviour is not implemented for the dummy NextSprite");
-            }
-        };
+    // [TODO] find a smarter way to implement this method
+    private Optional<MazeMove> getMazeMoveToCurrCell() {
+        final Coordinate spriteCord = getTopLeftCorner();
+        final Cell currCell = calcCell();
+        final Coordinate currCellCord = currCell.toCord(configs.PLAYGROUND_CELL_SIZE(), configs.PLAYGROUND_CELL_SIZE());
+        Vector moveDir = Vector.STILL;
+        final double colDiff = spriteCord.getCol() - currCellCord.getCol();
+        final double rowDiff = spriteCord.getRow() - currCellCord.getRow();
+        if (colDiff < -configs.CORD_EQ_THRESHOLD()) {
+             moveDir = Vector.RIGHT;
+        } else if (colDiff > configs.CORD_EQ_THRESHOLD()) {
+            moveDir = Vector.LEFT;
+        } else if (rowDiff < -configs.CORD_EQ_THRESHOLD()) {
+            moveDir = Vector.DOWN;
+        } else if (rowDiff > configs.CORD_EQ_THRESHOLD()) {
+            moveDir = Vector.UP;
+        }
+        return moveDir.equals(Vector.STILL) ? Optional.empty() : Optional.of(new MazeMove(currCell, currCell, moveDir));
     }
 
-    private List<Vector> get90Directions() {
-        if (Vector.RIGHT.equals(dirV) || Vector.LEFT.equals(dirV)) {
-            return List.of(Vector.UP, Vector.DOWN);
-        } else if (Vector.UP.equals(dirV) || Vector.DOWN.equals(dirV)) {
-            return List.of(Vector.RIGHT, Vector.LEFT);
-        }
-        // in case the sprite is still
-        return Collections.emptyList();
-    }
-
-    public List<Vector> getPossibleDirections() {
-        List<Vector> possibleDirections = new ArrayList<>();
-        if (getDirV().equals(Vector.STILL)) {
-            Vector.fourD
-                    .stream()
-                    .filter(this::isPossibleToMoveInNewDir)
-                    .forEach(possibleDirections::add);
-        }
-        if (isPossibleToMoveInSameDir()) {
-            possibleDirections.add(getDirV());
-        }
-        get90Directions()
+    private List<MazeMove> getPossibleMazeMovesToAdjacentCells() {
+        final Cell currCell = calcCell();
+        return currCell
+                .getMoves(configs.PLAYGROUND_WIDTH(), configs.PLAYGROUND_HEIGHT())
                 .stream()
-                .filter(this::isPossibleToMoveInNewDir)
-                .forEach(possibleDirections::add);
+                .filter(move -> !Playground.isWall(move.getTo()))
+                .filter(move -> !Playground.isGhostHWall(move.getTo()))
+                .filter(this::isPossibleMove)
+                .collect(Collectors.toList());
+    }
 
-        return possibleDirections;
+    public List<MazeMove> getPossibleMazeMoves() {
+        final List<MazeMove> moves = getPossibleMazeMovesToAdjacentCells();
+        getMazeMoveToCurrCell().ifPresent(moves::add);
+        return moves;
     }
 
     @Override
-    protected boolean isPossibleToMoveInSameDir() {
-        if (dirV == Vector.STILL) {
+    protected boolean isPossibleMove(double stride, Vector dir) {
+        if (stride < 0.001) {
             return false;
         }
-        final double stride = calcStride(dirV);
-        if (Math.abs(stride) < 0.001) {
-            return false;
-        }
-        return isPossibleMove(stride, dirV);
+        final Coordinate calibratedNextCord = calcNextCord(stride, dir);
+        return !isGoingOutOfCanvas(stride, dir) && !isCollidingWithWallOrGhostHWall(calibratedNextCord);
     }
 }

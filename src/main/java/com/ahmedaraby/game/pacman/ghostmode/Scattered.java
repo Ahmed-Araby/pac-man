@@ -18,6 +18,7 @@ import javafx.scene.image.Image;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
+import java.util.Optional;
 
 public abstract class Scattered extends TemporalGhostMode {
     protected final GhostNavigator navigator;
@@ -38,27 +39,24 @@ public abstract class Scattered extends TemporalGhostMode {
 
     @Override
     public void move() {
-        List<Vector> possibleDirections = ghost.getPossibleDirections();
-        final List<MovementPlan> movementPlanList = possibleDirections
+        final Optional<MovementPlan> movementPlan = ghost.getPossibleMazeMoves()
                 .stream()
-                .map(ghost::buildNextSprite)
-                .filter(Objects::nonNull)
-                .map(nextGhost -> {
-                    final double dist = navigator.calcDist(nextGhost, target);
+                .map(move -> {
+                    final double dist = navigator.calcDist(move.getTo(), target.toCell());
                     if (dist < Integer.MAX_VALUE) {
-                        return new MovementPlan(nextGhost.getDirV(), dist);
+                        return new MovementPlan(move.getDir(), dist);
                     }
                     return null;
                 })
                 .filter(Objects::nonNull)
                 .sorted()
-                .toList();
-        if (movementPlanList.isEmpty()) {
+                .findFirst();
+        if (movementPlan.isEmpty()) {
             ghost.setDirV(Vector.STILL);
             return;
         }
 
-        final Vector newDir = movementPlanList.get(0).getDir();
+        final Vector newDir = movementPlan.get().getDir();
         final double stride = ghost.calcStride(newDir);
         ghost.move(stride, newDir);
         animator.stride(stride);

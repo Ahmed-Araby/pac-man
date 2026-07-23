@@ -94,7 +94,7 @@ public class Clyde extends Ghost {
         } else {
             final double distToPacManInPixels = navigator.calcDist(this, gameState.getPacMan());
             // [TODO] provide the number 8 as a configuration
-            if (distToPacManInPixels >= 8 * configs.PLAYGROUND_CELL_SIZE()) {
+            if (distToPacManInPixels >= 11 * configs.PLAYGROUND_CELL_SIZE()) {
                 activeMode = chaser;
             } else if (chaser.ended()) {
                 super.chaserTransition(event);
