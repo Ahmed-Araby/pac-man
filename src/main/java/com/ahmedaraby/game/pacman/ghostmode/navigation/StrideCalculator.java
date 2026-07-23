@@ -29,12 +29,11 @@ public class StrideCalculator {
     }
 
     private double calibrateStride(MovingSprite sprite, double stride, Vector newDir) {
-        // [TODO] return offset with the correct sign from methods calculating the offset
         double calibratedStride = stride;
         if (sprite.isGoingOutOfCanvas(stride, newDir)) {
             calibratedStride = stride + calcStrideCorrectiveOffsetToPreventGoingOut(sprite, stride, newDir);
         } else if (sprite.isCollidingWithWallOrGhostHWall(stride, newDir)) {
-            calibratedStride = stride - calcStrideCorrectiveOffsetToUnblockWallStuck(sprite, stride, newDir);
+            calibratedStride = stride + calcStrideCorrectiveOffsetToUnblockWallStuck(sprite, stride, newDir);
         }
         return calibratedStride;
     }
@@ -55,15 +54,16 @@ public class StrideCalculator {
 
     private double calcStrideCorrectiveOffsetToUnblockWallStuck(MovingSprite sprite, double stride, Vector dir) {
         final Coordinate nextCord = sprite.calcNextCord(stride, dir);
+        double offset = 0;
         if (Vector.RIGHT == dir) {
-            return nextCord.getCol() % configs.PLAYGROUND_CELL_SIZE();
+            offset = nextCord.getCol() % configs.PLAYGROUND_CELL_SIZE();
         } else if (Vector.LEFT == dir) {
-            return configs.PLAYGROUND_CELL_SIZE() - (nextCord.getCol() % configs.PLAYGROUND_CELL_SIZE());
+            offset = configs.PLAYGROUND_CELL_SIZE() - (nextCord.getCol() % configs.PLAYGROUND_CELL_SIZE());
         } else if (Vector.UP == dir) {
-            return configs.PLAYGROUND_CELL_SIZE() - (nextCord.getRow() % configs.PLAYGROUND_CELL_SIZE());
+            offset = configs.PLAYGROUND_CELL_SIZE() - (nextCord.getRow() % configs.PLAYGROUND_CELL_SIZE());
         } else if (Vector.DOWN == dir) {
-            return nextCord.getRow() % configs.PLAYGROUND_CELL_SIZE();
+            offset = nextCord.getRow() % configs.PLAYGROUND_CELL_SIZE();
         }
-        return 0;
+        return -offset;
     }
 }
