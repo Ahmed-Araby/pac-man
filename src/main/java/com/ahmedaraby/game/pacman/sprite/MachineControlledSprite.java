@@ -80,6 +80,8 @@ public abstract class MachineControlledSprite extends MovingSprite {
      * @return true if the movement is possible.
      */
     protected boolean isPossibleMove(MazeMove move) {
+        // [TODO] the concept of sprite current cell to next cell alignment seems to be promising
+        // and it can make the movement check logic simpler
         if (Playground.isWall(move.getTo())
                 || Playground.isGhostHWall(move.getTo())
                 || Vector.STILL.equals(move.getDir())) {

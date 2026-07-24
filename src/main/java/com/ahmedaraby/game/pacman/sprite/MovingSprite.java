@@ -118,6 +118,7 @@ public abstract class MovingSprite extends Sprite {
         return !isGoingOutOfCanvas(stride, dir) && !isCollidingWithWallOrGhostHWall(nextCord);
     }
 
+    // [TODO] this should be moveAt like the GhostMode, or maybe it can be the other way around
     public void move(double stride, Vector dir) {
         final Coordinate nextCord = calcNextCord(stride, dir);
         setTopLeftCorner(nextCord);
