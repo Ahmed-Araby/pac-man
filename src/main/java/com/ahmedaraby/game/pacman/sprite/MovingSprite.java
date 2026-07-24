@@ -75,7 +75,7 @@ public abstract class MovingSprite extends Sprite {
         if (dirV == Vector.STILL) {
             return false;
         }
-        final double stride = calcCalibratedStride(dirV);
+        final double stride = strideCalc.calcCalibratedStride(this, dirV);
         return isPossibleMove(stride, dirV);
     }
 
