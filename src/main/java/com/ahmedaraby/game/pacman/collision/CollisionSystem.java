@@ -1,13 +1,13 @@
 package com.ahmedaraby.game.pacman.collision;
 
 import com.ahmedaraby.game.pacman.constant.SpriteE;
-import com.ahmedaraby.game.pacman.event.Event;
+import com.ahmedaraby.game.pacman.model.event.Event;
 import com.ahmedaraby.jengine.event.Publisher;
 import com.ahmedaraby.jengine.entity.Coordinate;
 import com.ahmedaraby.jengine.entity.Rectangle;
-import com.ahmedaraby.game.pacman.event.EventType;
-import com.ahmedaraby.game.pacman.event.collision.PacMan2GhostCollisionEvent;
-import com.ahmedaraby.game.pacman.event.collision.PacMan2SugarCollisionEvent;
+import com.ahmedaraby.game.pacman.model.event.EventType;
+import com.ahmedaraby.game.pacman.model.event.collision.PacMan2GhostCollisionEvent;
+import com.ahmedaraby.game.pacman.model.event.collision.PacMan2SugarCollisionEvent;
 import com.ahmedaraby.game.pacman.sprite.ghost.Ghost;
 import com.ahmedaraby.game.pacman.model.CollisionReport;
 import com.ahmedaraby.game.pacman.model.GameState;

@@ -2,12 +2,12 @@ package com.ahmedaraby.game.pacman.sprite.ghost;
 
 import com.ahmedaraby.game.pacman.config.intConfigs.ConfigsEx;
 import com.ahmedaraby.game.pacman.constant.SpriteE;
-import com.ahmedaraby.game.pacman.event.collision.PacMan2GhostCollisionEvent;
+import com.ahmedaraby.game.pacman.model.event.collision.PacMan2GhostCollisionEvent;
 import com.ahmedaraby.game.pacman.ghostmode.navigation.StrideCalculator;
 import com.ahmedaraby.game.pacman.sprite.MachineControlledSprite;
 import com.ahmedaraby.jengine.entity.Coordinate;
-import com.ahmedaraby.game.pacman.event.Event;
-import com.ahmedaraby.game.pacman.event.EventType;
+import com.ahmedaraby.game.pacman.model.event.Event;
+import com.ahmedaraby.game.pacman.model.event.EventType;
 import com.ahmedaraby.game.pacman.ghostmode.Chaser;
 import com.ahmedaraby.game.pacman.ghostmode.GhostMode;
 import com.ahmedaraby.game.pacman.ghostmode.Scattered;

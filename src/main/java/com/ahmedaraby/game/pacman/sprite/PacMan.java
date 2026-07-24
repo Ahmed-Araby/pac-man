@@ -2,14 +2,14 @@ package com.ahmedaraby.game.pacman.sprite;
 
 import com.ahmedaraby.game.pacman.config.intConfigs.ConfigsEx;
 import com.ahmedaraby.game.pacman.constant.SpriteE;
-import com.ahmedaraby.game.pacman.event.EventType;
+import com.ahmedaraby.game.pacman.model.event.EventType;
 import com.ahmedaraby.game.pacman.ghostmode.navigation.StrideCalculator;
 import com.ahmedaraby.game.pacman.util.pacman.TurnBuffer;
 import com.ahmedaraby.jengine.entity.Coordinate;
-import com.ahmedaraby.game.pacman.event.Event;
+import com.ahmedaraby.game.pacman.model.event.Event;
 import com.ahmedaraby.jengine.entity.Vector;
 import com.ahmedaraby.jengine.event.Subscriber;
-import com.ahmedaraby.game.pacman.event.movement.PacManMovementRequestEvent;
+import com.ahmedaraby.game.pacman.model.event.movement.PacManMovementRequestEvent;
 import com.ahmedaraby.game.pacman.model.GameState;
 import com.ahmedaraby.game.pacman.util.pacman.PacManGraphicsUtil;
 import com.ahmedaraby.game.pacman.util.pacman.PacManMouthAnimationTracker;

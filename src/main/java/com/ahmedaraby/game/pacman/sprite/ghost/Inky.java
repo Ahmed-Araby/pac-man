@@ -2,7 +2,7 @@ package com.ahmedaraby.game.pacman.sprite.ghost;
 
 import com.ahmedaraby.game.pacman.config.intConfigs.ConfigsEx;
 import com.ahmedaraby.game.pacman.constant.SpriteE;
-import com.ahmedaraby.game.pacman.event.Event;
+import com.ahmedaraby.game.pacman.model.event.Event;
 import com.ahmedaraby.game.pacman.ghostmode.common.Eaten;
 import com.ahmedaraby.game.pacman.ghostmode.common.Frightened;
 import com.ahmedaraby.game.pacman.ghostmode.navigation.StrideCalculator;

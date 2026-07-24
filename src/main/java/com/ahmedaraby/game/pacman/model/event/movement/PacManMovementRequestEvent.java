@@ -1,7 +1,7 @@
-package com.ahmedaraby.game.pacman.event.movement;
+package com.ahmedaraby.game.pacman.model.event.movement;
 
-import com.ahmedaraby.game.pacman.event.Event;
-import com.ahmedaraby.game.pacman.event.EventType;
+import com.ahmedaraby.game.pacman.model.event.Event;
+import com.ahmedaraby.game.pacman.model.event.EventType;
 import com.ahmedaraby.jengine.entity.Vector;
 import lombok.Getter;
 

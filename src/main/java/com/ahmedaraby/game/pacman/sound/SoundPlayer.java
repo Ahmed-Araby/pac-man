@@ -1,8 +1,8 @@
 package com.ahmedaraby.game.pacman.sound;
 
 import com.ahmedaraby.game.pacman.constant.SoundFileNameC;
-import com.ahmedaraby.game.pacman.event.Event;
-import com.ahmedaraby.game.pacman.event.EventType;
+import com.ahmedaraby.game.pacman.model.event.Event;
+import com.ahmedaraby.game.pacman.model.event.EventType;
 import javafx.scene.media.AudioClip;
 import com.ahmedaraby.jengine.event.Subscriber;
 

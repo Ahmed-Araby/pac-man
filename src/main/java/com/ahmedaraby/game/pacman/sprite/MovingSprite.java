@@ -10,7 +10,7 @@ import lombok.Setter;
 import com.ahmedaraby.game.pacman.constant.SpriteE;
 import com.ahmedaraby.jengine.entity.Coordinate;
 import com.ahmedaraby.jengine.entity.Rectangle;
-import com.ahmedaraby.game.pacman.event.Event;
+import com.ahmedaraby.game.pacman.model.event.Event;
 import com.ahmedaraby.game.pacman.model.CollisionReport;
 import com.ahmedaraby.game.pacman.model.GameState;
 

@@ -1,9 +1,9 @@
-package com.ahmedaraby.game.pacman.event.collision;
+package com.ahmedaraby.game.pacman.model.event.collision;
 
+import com.ahmedaraby.game.pacman.model.event.Event;
+import com.ahmedaraby.game.pacman.model.event.EventType;
 import com.ahmedaraby.game.pacman.sprite.ghost.Ghost;
 import lombok.Getter;
-import com.ahmedaraby.game.pacman.event.Event;
-import com.ahmedaraby.game.pacman.event.EventType;
 
 @Getter
 public class PacMan2GhostCollisionEvent extends Event<EventType> {

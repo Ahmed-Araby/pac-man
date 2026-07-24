@@ -9,7 +9,7 @@ import com.ahmedaraby.jengine.entity.Vector;
 import com.ahmedaraby.jengine.sprite.SpriteRegistry;
 import javafx.scene.canvas.Canvas;
 import com.ahmedaraby.game.pacman.config.GhostModeActivePeriodsConf;
-import com.ahmedaraby.game.pacman.event.Event;
+import com.ahmedaraby.game.pacman.model.event.Event;
 import com.ahmedaraby.game.pacman.ghostmode.blinky.BlinkyChaser;
 import com.ahmedaraby.game.pacman.ghostmode.common.Eaten;
 import com.ahmedaraby.game.pacman.ghostmode.common.Frightened;

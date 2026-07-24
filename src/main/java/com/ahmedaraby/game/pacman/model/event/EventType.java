@@ -1,4 +1,4 @@
-package com.ahmedaraby.game.pacman.event;
+package com.ahmedaraby.game.pacman.model.event;
 
 public enum EventType {
     PAC_MAN_SUGAR_COLLISION,
