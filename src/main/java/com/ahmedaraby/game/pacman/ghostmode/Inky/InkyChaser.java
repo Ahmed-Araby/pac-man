@@ -36,7 +36,9 @@ public class InkyChaser extends Chaser {
         final Line blinky2InterTileLine = makeLineFromBlinkyToIntermediateTile(interTile);
         final Coordinate target = calculateTheTargetCoordinate(blinky2InterTileLine);
 
-        moveTo(target);
+        // move
+        final Vector newDir = targetNavigator.calcDir(ghost, target);
+        moveAt(newDir);
     }
 
     private Coordinate calculateIntermediateTile() {

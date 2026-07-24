@@ -5,6 +5,7 @@ import com.ahmedaraby.game.pacman.constant.SpriteFileNameC;
 import com.ahmedaraby.game.pacman.ghostmode.Chaser;
 import com.ahmedaraby.game.pacman.model.GameState;
 import com.ahmedaraby.game.pacman.sprite.ghost.Ghost;
+import com.ahmedaraby.jengine.entity.Vector;
 import com.ahmedaraby.jengine.sprite.SpriteRegistry;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
@@ -26,7 +27,8 @@ public class ClydeChaser extends Chaser {
 
     @Override
     public void move() {
-        moveTo(gameState.getPacMan());
+        final Vector newDir = targetNavigator.calcDir(ghost, gameState.getPacMan());
+        moveAt(newDir);
     }
 
     @Override

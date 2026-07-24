@@ -3,6 +3,7 @@ package com.ahmedaraby.game.pacman.ghostmode.blinky;
 import com.ahmedaraby.game.pacman.config.intConfigs.ConfigsEx;
 import com.ahmedaraby.game.pacman.model.GameState;
 import com.ahmedaraby.game.pacman.sprite.ghost.Ghost;
+import com.ahmedaraby.jengine.entity.Vector;
 import com.ahmedaraby.jengine.sprite.SpriteRegistry;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.image.Image;
@@ -22,7 +23,8 @@ public class BlinkyChaser extends Chaser {
 
     @Override
     public void move() {
-        moveTo(gameState.getPacMan());
+        final Vector newDir = targetNavigator.calcDir(ghost, gameState.getPacMan());
+        moveAt(newDir);
     }
 
     @Override

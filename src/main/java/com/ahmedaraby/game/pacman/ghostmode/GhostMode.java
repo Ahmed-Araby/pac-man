@@ -36,5 +36,9 @@ public abstract class GhostMode {
         System.out.println("GhostMode.init() method is not implemented for sprite " + this.getClass().getSimpleName());
     }
 
+    protected void moveAt(Vector newDir) {
+        final double stride = ghost.calcCalibratedStride(newDir);
+        ghost.move(stride, newDir);
+        animator.stride(stride);
     }
 }

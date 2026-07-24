@@ -37,7 +37,9 @@ public class PinkyChaser extends Chaser {
         final Line lookAheadLine = new Line(pacManCord, lookAheadCord).trim(gameState.getMaze().getRect());
         final Coordinate target = lookAheadLine.getEnd();
 
-        moveTo(target);
+        // move
+        final Vector newDir = targetNavigator.calcDir(ghost, target);
+        moveAt(newDir);
     }
 
     @Override

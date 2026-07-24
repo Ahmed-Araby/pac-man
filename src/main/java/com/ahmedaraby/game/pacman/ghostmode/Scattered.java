@@ -29,8 +29,6 @@ public abstract class Scattered extends TemporalGhostMode {
     @Override
     public void move() {
         final Vector newDir = targetNavigator.calcDir(ghost, target);
-        final double stride = ghost.calcCalibratedStride(newDir);
-        ghost.move(stride, newDir);
-        animator.stride(stride);
+        moveAt(newDir);
     }
 }

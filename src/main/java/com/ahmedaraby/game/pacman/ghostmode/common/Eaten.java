@@ -55,9 +55,7 @@ public class Eaten extends GhostMode {
     @Override
     public void move() {
         final Vector newDir = targetNavigator.calcDir(ghost, ghostHouseEmptyLoc);
-        final double stride = ghost.calcCalibratedStride(newDir);
-        ghost.move(stride, newDir);
-        this.animator.stride(stride);
+        moveAt(newDir);
     }
 
     @Override
