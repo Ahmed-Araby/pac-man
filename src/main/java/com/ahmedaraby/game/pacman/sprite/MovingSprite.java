@@ -99,8 +99,8 @@ public abstract class MovingSprite extends Sprite {
     }
 
     protected boolean isPossibleMove(double stride, Vector dir) {
-        final Coordinate calibratedNextCord = calcNextCord(stride, dir);
-        return !isGoingOutOfCanvas(stride, dir) && !isCollidingWithWallOrGhostHWall(calibratedNextCord);
+        final Coordinate nextCord = calcNextCord(stride, dir);
+        return !isGoingOutOfCanvas(stride, dir) && !isCollidingWithWallOrGhostHWall(nextCord);
     }
 
     public void move(double stride, Vector dir) {
