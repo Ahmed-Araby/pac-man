@@ -1,15 +1,13 @@
 package com.ahmedaraby.game.pacman.ghostmode.common;
 
 import com.ahmedaraby.game.pacman.config.intConfigs.ConfigsEx;
-import com.ahmedaraby.game.pacman.entity.MazeMove;
+import com.ahmedaraby.game.pacman.model.MazeMove;
 import com.ahmedaraby.jengine.entity.Vector;
 import com.ahmedaraby.game.pacman.model.GameState;
 import com.ahmedaraby.game.pacman.sprite.ghost.Ghost;
 import com.ahmedaraby.jengine.sprite.SpriteRegistry;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.image.Image;
-import com.ahmedaraby.jengine.animation.Animator;
-import com.ahmedaraby.jengine.animation.DistanceBasedAnimator;
 import com.ahmedaraby.game.pacman.constant.SpriteFileNameC;
 import com.ahmedaraby.game.pacman.ghostmode.TemporalGhostMode;
 import com.ahmedaraby.game.pacman.util.EnrichedThreadLocalRandom;

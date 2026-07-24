@@ -6,7 +6,7 @@ import com.ahmedaraby.game.pacman.model.event.EventType;
 import com.ahmedaraby.game.pacman.util.SpriteUtil;
 import com.ahmedaraby.jengine.entity.Coordinate;
 import com.ahmedaraby.jengine.entity.Rectangle;
-import com.ahmedaraby.game.pacman.entity.Cell;
+import com.ahmedaraby.game.pacman.model.Cell;
 import com.ahmedaraby.game.pacman.model.event.Event;
 import com.ahmedaraby.jengine.event.Subscriber;
 import com.ahmedaraby.game.pacman.model.event.collision.PacMan2SugarCollisionEvent;

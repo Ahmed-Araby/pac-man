@@ -4,9 +4,8 @@ import com.ahmedaraby.game.pacman.constant.DimensionsC;
 import com.ahmedaraby.game.pacman.constant.SpriteE;
 import com.ahmedaraby.jengine.entity.Coordinate;
 import com.ahmedaraby.jengine.entity.Rectangle;
-import com.ahmedaraby.game.pacman.entity.Cell;
+import com.ahmedaraby.game.pacman.model.Cell;
 import com.ahmedaraby.game.pacman.playground.Playground;
-import com.ahmedaraby.jengine.entity.Vector;
 
 public class SpriteUtil {
     private SpriteUtil() {}

@@ -2,13 +2,12 @@ package com.ahmedaraby.game.pacman.sprite.playground;
 
 import com.ahmedaraby.game.pacman.config.intConfigs.ConfigsEx;
 import com.ahmedaraby.game.pacman.constant.SpriteE;
-import com.ahmedaraby.jengine.entity.Vector;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import lombok.Getter;
 import lombok.Setter;
 import com.ahmedaraby.jengine.entity.Coordinate;
-import com.ahmedaraby.game.pacman.entity.Cell;
+import com.ahmedaraby.game.pacman.model.Cell;
 import com.ahmedaraby.game.pacman.playground.Playground;
 import com.ahmedaraby.game.pacman.model.GameState;
 import com.ahmedaraby.game.pacman.sprite.Sprite;

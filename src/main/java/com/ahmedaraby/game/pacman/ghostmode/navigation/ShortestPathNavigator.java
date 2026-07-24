@@ -1,7 +1,7 @@
 package com.ahmedaraby.game.pacman.ghostmode.navigation;
 
 import com.ahmedaraby.game.pacman.config.intConfigs.ConfigsEx;
-import com.ahmedaraby.game.pacman.entity.Cell;
+import com.ahmedaraby.game.pacman.model.Cell;
 import com.ahmedaraby.game.pacman.sprite.MovingSprite;
 import com.ahmedaraby.game.pacman.sprite.Sprite;
 import lombok.AllArgsConstructor;

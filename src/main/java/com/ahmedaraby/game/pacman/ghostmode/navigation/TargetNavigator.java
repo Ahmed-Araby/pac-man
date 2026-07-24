@@ -1,9 +1,9 @@
 package com.ahmedaraby.game.pacman.ghostmode.navigation;
 
 import com.ahmedaraby.game.pacman.config.intConfigs.ConfigsEx;
-import com.ahmedaraby.game.pacman.entity.Cell;
-import com.ahmedaraby.game.pacman.entity.MazeMove;
-import com.ahmedaraby.game.pacman.entity.MovementPlan;
+import com.ahmedaraby.game.pacman.model.Cell;
+import com.ahmedaraby.game.pacman.model.MazeMove;
+import com.ahmedaraby.game.pacman.model.MovementPlan;
 import com.ahmedaraby.game.pacman.sprite.MachineControlledSprite;
 import com.ahmedaraby.game.pacman.sprite.Sprite;
 import com.ahmedaraby.game.pacman.util.PlaygroundShortestPathNav;

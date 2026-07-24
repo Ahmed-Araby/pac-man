@@ -1,7 +1,7 @@
 package com.ahmedaraby.game.pacman.sprite;
 
 import com.ahmedaraby.game.pacman.config.intConfigs.ConfigsEx;
-import com.ahmedaraby.game.pacman.entity.Cell;
+import com.ahmedaraby.game.pacman.model.Cell;
 import com.ahmedaraby.jengine.entity.Rectangle;
 import com.ahmedaraby.game.pacman.model.GameState;
 import javafx.scene.canvas.Canvas;

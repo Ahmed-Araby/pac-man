@@ -1,7 +1,7 @@
 package com.ahmedaraby.jengine.entity;
 
 import com.ahmedaraby.game.pacman.constant.DimensionsC;
-import com.ahmedaraby.game.pacman.entity.Cell;
+import com.ahmedaraby.game.pacman.model.Cell;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.ToString;

@@ -1,4 +1,4 @@
-package com.ahmedaraby.game.pacman.entity;
+package com.ahmedaraby.game.pacman.model;
 
 import com.ahmedaraby.jengine.entity.Coordinate;
 import com.ahmedaraby.jengine.entity.Vector;

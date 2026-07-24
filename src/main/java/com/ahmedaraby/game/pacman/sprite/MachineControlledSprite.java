@@ -2,8 +2,8 @@ package com.ahmedaraby.game.pacman.sprite;
 
 import com.ahmedaraby.game.pacman.config.intConfigs.ConfigsEx;
 import com.ahmedaraby.game.pacman.constant.SpriteE;
-import com.ahmedaraby.game.pacman.entity.Cell;
-import com.ahmedaraby.game.pacman.entity.MazeMove;
+import com.ahmedaraby.game.pacman.model.Cell;
+import com.ahmedaraby.game.pacman.model.MazeMove;
 import com.ahmedaraby.game.pacman.ghostmode.navigation.StrideCalculator;
 import com.ahmedaraby.game.pacman.model.GameState;
 import com.ahmedaraby.game.pacman.playground.Playground;
