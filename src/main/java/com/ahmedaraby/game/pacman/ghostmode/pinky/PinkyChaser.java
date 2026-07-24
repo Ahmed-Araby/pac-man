@@ -5,7 +5,6 @@ import com.ahmedaraby.game.pacman.constant.SpriteFileNameC;
 import com.ahmedaraby.game.pacman.ghostmode.Chaser;
 import com.ahmedaraby.game.pacman.model.GameState;
 import com.ahmedaraby.game.pacman.sprite.ghost.Ghost;
-import com.ahmedaraby.jengine.animation.DistanceBasedAnimator;
 import com.ahmedaraby.jengine.entity.Coordinate;
 import com.ahmedaraby.jengine.entity.Line;
 import com.ahmedaraby.jengine.entity.Vector;
@@ -17,13 +16,8 @@ import javafx.scene.image.Image;
 public class PinkyChaser extends Chaser {
 
     public PinkyChaser(Ghost ghost, GameState gameState, ConfigsEx configs, SpriteRegistry<String, Image> spriteRegistry, int[] activePeriodsSec) {
-        super(ghost, gameState, configs, spriteRegistry, activePeriodsSec);
-
-        final Image[] frames = loadSprites();
-        animator = new DistanceBasedAnimator(new double[]{
-                configs.GHOST_PINKY_FIRST_FRAME_DISTANCE(),
-                configs.GHOST_PINKY_SECOND_FRAME_DISTANCE()
-        }, frames);
+        super(ghost, gameState, configs, spriteRegistry, activePeriodsSec,
+                new double[]{configs.GHOST_PINKY_FIRST_FRAME_DISTANCE(), configs.GHOST_PINKY_SECOND_FRAME_DISTANCE()});
     }
 
     @Override
@@ -46,7 +40,8 @@ public class PinkyChaser extends Chaser {
         moveTo(target);
     }
 
-    private Image[] loadSprites() {
+    @Override
+    protected Image[] loadSprites() {
         final String frame1Path = String.format(SpriteFileNameC.GHOST_SPRITE_PATH_TEMPLATE, SpriteFileNameC.PINKY_FOLDER, SpriteFileNameC.PINKY_FRAME_1_FILE_NAME);
         final String frame2Path = String.format(SpriteFileNameC.GHOST_SPRITE_PATH_TEMPLATE, SpriteFileNameC.PINKY_FOLDER, SpriteFileNameC.PINKY_FRAME_2_FILE_NAME);
         final Image frame1 = spriteRegistry.get(frame1Path);

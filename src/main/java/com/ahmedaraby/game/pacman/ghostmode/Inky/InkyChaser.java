@@ -1,7 +1,6 @@
 package com.ahmedaraby.game.pacman.ghostmode.Inky;
 
 import com.ahmedaraby.game.pacman.config.intConfigs.ConfigsEx;
-import com.ahmedaraby.jengine.animation.DistanceBasedAnimator;
 import com.ahmedaraby.game.pacman.constant.SpriteFileNameC;
 import com.ahmedaraby.jengine.entity.Coordinate;
 import com.ahmedaraby.jengine.entity.Rectangle;
@@ -20,12 +19,8 @@ public class InkyChaser extends Chaser {
 
 
     public InkyChaser(Ghost ghost, GameState gameState, ConfigsEx configs, SpriteRegistry<String, Image> spriteRegistry, int[] activePeriodsSec) {
-        super(ghost, gameState, configs, spriteRegistry, activePeriodsSec);
-        final Image[] frames = loadSprites();
-        animator = new DistanceBasedAnimator(
-                new double[]{configs.GHOST_INKY_FIRST_FRAME_DISTANCE(), configs.GHOST_INKY_SECOND_FRAME_DISTANCE()}
-                ,frames
-        );
+        super(ghost, gameState, configs, spriteRegistry, activePeriodsSec,
+                new double[]{configs.GHOST_INKY_FIRST_FRAME_DISTANCE(), configs.GHOST_INKY_SECOND_FRAME_DISTANCE()});
     }
 
     @Override
@@ -74,7 +69,8 @@ public class InkyChaser extends Chaser {
                 .getEnd();  // endpoint is the target coordinate for Inky
     }
 
-    private Image[] loadSprites() {
+    @Override
+    protected Image[] loadSprites() {
         final String frame1Path = String.format(SpriteFileNameC.GHOST_SPRITE_PATH_TEMPLATE, SpriteFileNameC.INKY_FOLDER, SpriteFileNameC.INKY_FRAME_1_FILE_NAME);
         final String frame2Path = String.format(SpriteFileNameC.GHOST_SPRITE_PATH_TEMPLATE, SpriteFileNameC.INKY_FOLDER, SpriteFileNameC.INKY_FRAME_2_FILE_NAME);
         final Image frame1 = spriteRegistry.get(frame1Path);

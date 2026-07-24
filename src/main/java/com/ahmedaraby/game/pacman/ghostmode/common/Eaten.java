@@ -20,18 +20,12 @@ import com.ahmedaraby.game.pacman.ghostmode.GhostMode;
 import java.util.*;
 
 public class Eaten extends GhostMode {
-    private final Animator animator;
     private Coordinate ghostHouseEmptyLoc;
     private TargetNavigator targetNavigator;
 
     public Eaten(Ghost ghost, GameState gameState, ConfigsEx configs, SpriteRegistry<String, Image> spriteRegistry) {
-        super(ghost, gameState, configs, spriteRegistry);
-
-        final Map<Vector, Image[]> sprites = loadSprites();
-        this.animator = new DistanceBasedAnimator(
-                new double[]{configs.GHOST_ANIMATION_COMPLETE_DIST()},
-                sprites.get(Vector.UP)
-        );
+        super(ghost, gameState, configs, spriteRegistry,
+                new double[]{configs.GHOST_ANIMATION_COMPLETE_DIST()});
         targetNavigator = new TargetNavigator(configs);
     }
 
@@ -66,24 +60,18 @@ public class Eaten extends GhostMode {
         this.animator.stride(stride);
     }
 
-    private Map<Vector, Image[]> loadSprites() {
-        // [TODO] move sprites loading into a class that provide caching
-
+    @Override
+    protected Image[] loadSprites() {
         final String eatenUpFramePath = String.format(SpriteFileNameC.GHOST_SPRITE_PATH_TEMPLATE, SpriteFileNameC.GHOST_EATEN_FOLDER, SpriteFileNameC.GHOST_EATEN_UP_FRAME_FILE_NAME);
-        final String eatenRightFramePath = String.format(SpriteFileNameC.GHOST_SPRITE_PATH_TEMPLATE, SpriteFileNameC.GHOST_EATEN_FOLDER, SpriteFileNameC.GHOST_EATEN_RIGHT_FRAME_FILE_NAME);
-        final String eatenDownFramePath = String.format(SpriteFileNameC.GHOST_SPRITE_PATH_TEMPLATE, SpriteFileNameC.GHOST_EATEN_FOLDER, SpriteFileNameC.GHOST_EATEN_DOWN_FRAME_FILE_NAME);
-        final String eatenLeftFramePath = String.format(SpriteFileNameC.GHOST_SPRITE_PATH_TEMPLATE, SpriteFileNameC.GHOST_EATEN_FOLDER, SpriteFileNameC.GHOST_EATEN_LEFT_FRAME_FILE_NAME);
+//        final String eatenRightFramePath = String.format(SpriteFileNameC.GHOST_SPRITE_PATH_TEMPLATE, SpriteFileNameC.GHOST_EATEN_FOLDER, SpriteFileNameC.GHOST_EATEN_RIGHT_FRAME_FILE_NAME);
+//        final String eatenDownFramePath = String.format(SpriteFileNameC.GHOST_SPRITE_PATH_TEMPLATE, SpriteFileNameC.GHOST_EATEN_FOLDER, SpriteFileNameC.GHOST_EATEN_DOWN_FRAME_FILE_NAME);
+//        final String eatenLeftFramePath = String.format(SpriteFileNameC.GHOST_SPRITE_PATH_TEMPLATE, SpriteFileNameC.GHOST_EATEN_FOLDER, SpriteFileNameC.GHOST_EATEN_LEFT_FRAME_FILE_NAME);
 
         final Image up = spriteRegistry.get(eatenUpFramePath);
-        final Image right = spriteRegistry.get(eatenRightFramePath);
-        final Image down = spriteRegistry.get(eatenDownFramePath);
-        final Image left = spriteRegistry.get(eatenLeftFramePath);
+//        final Image right = spriteRegistry.get(eatenRightFramePath);
+//        final Image down = spriteRegistry.get(eatenDownFramePath);
+//        final Image left = spriteRegistry.get(eatenLeftFramePath);
 
-        return Map.ofEntries(
-                new AbstractMap.SimpleEntry<>(Vector.UP, new Image[]{up}),
-                new AbstractMap.SimpleEntry<>(Vector.RIGHT, new Image[]{right}),
-                new AbstractMap.SimpleEntry<>(Vector.DOWN, new Image[]{down}),
-                new AbstractMap.SimpleEntry<>(Vector.LEFT, new Image[]{left})
-                );
+        return new Image[]{up};
     }
 }

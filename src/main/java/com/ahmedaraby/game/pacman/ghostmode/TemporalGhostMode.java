@@ -16,8 +16,8 @@ public abstract class TemporalGhostMode extends GhostMode {
     private int activePeriodIndex;
 
 
-    public TemporalGhostMode(Ghost ghost, GameState gameState, ConfigsEx configs, SpriteRegistry<String, Image> spriteRegistry, int[] activePeriodsSec) {
-        super(ghost, gameState, configs, spriteRegistry);
+    public TemporalGhostMode(Ghost ghost, GameState gameState, ConfigsEx configs, SpriteRegistry<String, Image> spriteRegistry, int[] activePeriodsSec, double[] frameDistance) {
+        super(ghost, gameState, configs, spriteRegistry, frameDistance);
         this.activePeriodsSec = activePeriodsSec;
     }
 

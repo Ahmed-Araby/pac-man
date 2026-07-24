@@ -18,15 +18,12 @@ import java.util.List;
 
 
 public class Frightened extends TemporalGhostMode {
-
-    private final Animator animator;
     private final EnrichedThreadLocalRandom random;
 
     public Frightened(Ghost ghost, GameState gameState, ConfigsEx configs, SpriteRegistry<String, Image> spriteRegistry, int[] activePeriodsSec) {
-        super(ghost, gameState, configs, spriteRegistry, activePeriodsSec);
+        super(ghost, gameState, configs, spriteRegistry, activePeriodsSec,
+                new double[]{configs.GHOST_FIRST_FRAME_DISTANCE(), configs.GHOST_SECOND_FRAME_DISTANCE()});
 
-        Image[] frames = loadSprites();
-        this.animator = new DistanceBasedAnimator(new double[]{configs.GHOST_FIRST_FRAME_DISTANCE(), configs.GHOST_SECOND_FRAME_DISTANCE()}, frames);
         this.random = new EnrichedThreadLocalRandom();
     }
 
@@ -65,17 +62,18 @@ public class Frightened extends TemporalGhostMode {
         // explicitly do nothing
     }
 
-    private Image[] loadSprites() {
+    private void turnAround(Ghost ghost) {
+        final Vector dir = ghost.getDirV();
+        final Vector oppositeDir = dir.flip180();
+        ghost.setDirV(oppositeDir);
+    }
+
+    @Override
+    protected Image[] loadSprites() {
         final String frame1Path = String.format(SpriteFileNameC.GHOST_SPRITE_PATH_TEMPLATE, SpriteFileNameC.GHOST_FRIGHTENED_FOLDER, SpriteFileNameC.GHOST_FRIGHTENED_FRAME_1_FILE_NAME);
         final String frame2Path = String.format(SpriteFileNameC.GHOST_SPRITE_PATH_TEMPLATE, SpriteFileNameC.GHOST_FRIGHTENED_FOLDER, SpriteFileNameC.GHOST_FRIGHTENED_FRAME_2_FILE_NAME);
         final Image frame1 = spriteRegistry.get(frame1Path);
         final Image frame2 = spriteRegistry.get(frame2Path);
         return new Image[]{frame1, frame2};
-    }
-
-    private void turnAround(Ghost ghost) {
-        final Vector dir = ghost.getDirV();
-        final Vector oppositeDir = dir.flip180();
-        ghost.setDirV(oppositeDir);
     }
 }

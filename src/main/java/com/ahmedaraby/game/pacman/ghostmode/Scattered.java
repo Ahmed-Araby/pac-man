@@ -4,7 +4,6 @@ import com.ahmedaraby.game.pacman.config.intConfigs.ConfigsEx;
 import com.ahmedaraby.game.pacman.ghostmode.navigation.TargetNavigator;
 import com.ahmedaraby.game.pacman.model.GameState;
 import com.ahmedaraby.game.pacman.sprite.ghost.Ghost;
-import com.ahmedaraby.jengine.animation.Animator;
 import com.ahmedaraby.jengine.entity.Coordinate;
 import com.ahmedaraby.jengine.entity.Vector;
 import com.ahmedaraby.jengine.sprite.SpriteRegistry;
@@ -12,16 +11,12 @@ import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
 
-import java.util.ArrayList;
-import java.util.List;
-
 public abstract class Scattered extends TemporalGhostMode {
-    protected Animator animator;
     protected Coordinate target;
     private TargetNavigator targetNavigator;
 
-    public Scattered(Ghost ghost, GameState gameState, ConfigsEx configs, SpriteRegistry<String, Image> spriteRegistry, int[] activePeriodsSec) {
-        super(ghost, gameState, configs, spriteRegistry, activePeriodsSec);
+    public Scattered(Ghost ghost, GameState gameState, ConfigsEx configs, SpriteRegistry<String, Image> spriteRegistry, int[] activePeriodsSec, double[] frameDistance) {
+        super(ghost, gameState, configs, spriteRegistry, activePeriodsSec, frameDistance);
         targetNavigator = new TargetNavigator(configs);
     }
 
@@ -37,13 +32,5 @@ public abstract class Scattered extends TemporalGhostMode {
         final double stride = ghost.calcCalibratedStride(newDir);
         ghost.move(stride, newDir);
         animator.stride(stride);
-    }
-
-    protected Image[] loadSprites(String[] frameRelativePaths) {
-        final List<Image> spriteList = new ArrayList<>();
-        for (String path : frameRelativePaths) {
-            spriteList.add(spriteRegistry.get(path));
-        }
-        return spriteList.toArray(new Image[0]);
     }
 }
