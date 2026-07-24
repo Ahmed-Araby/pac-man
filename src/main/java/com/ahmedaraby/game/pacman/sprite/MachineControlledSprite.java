@@ -45,8 +45,6 @@ public abstract class MachineControlledSprite extends MovingSprite {
         return currCell
                 .getMoves(configs.PLAYGROUND_WIDTH(), configs.PLAYGROUND_HEIGHT())
                 .stream()
-                .filter(move -> !Playground.isWall(move.getTo()))
-                .filter(move -> !Playground.isGhostHWall(move.getTo()))
                 .filter(this::isPossibleMove)
                 .collect(Collectors.toList());
     }

@@ -4,6 +4,7 @@ import com.ahmedaraby.game.pacman.collision.M2SSpriteCollisionDetector;
 import com.ahmedaraby.game.pacman.config.intConfigs.ConfigsEx;
 import com.ahmedaraby.game.pacman.model.MazeMove;
 import com.ahmedaraby.game.pacman.ghostmode.navigation.StrideCalculator;
+import com.ahmedaraby.game.pacman.playground.Playground;
 import com.ahmedaraby.jengine.entity.Vector;
 import lombok.Getter;
 import lombok.Setter;
@@ -66,6 +67,11 @@ public abstract class MovingSprite extends Sprite {
     }
 
     protected boolean isPossibleMove(MazeMove move) {
+        if (Playground.isWall(move.getTo())
+                || Playground.isGhostHWall(move.getTo())
+                || Vector.STILL.equals(move.getDir())) {
+            return false;
+        }
         if (move.getDir().equals(dirV)) {
             // [TODO] should consider opposite direction, (i.e. any direction parallel to the current direction)
             return isPossibleToMoveInSameDir();
