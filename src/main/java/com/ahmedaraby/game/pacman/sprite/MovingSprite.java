@@ -67,10 +67,24 @@ public abstract class MovingSprite extends Sprite {
 
     protected boolean isPossibleMove(MazeMove move) {
         if (move.getDir().equals(dirV)) {
+            // [TODO] should consider opposite direction, (i.e. any direction parallel to the current direction)
             return isPossibleToMoveInSameDir();
         }
         return isPossibleToMoveInNewDir(move.getDir());
     }
+
+    /**
+     * check the possibility of moving in the current direction, using the original stride
+     * or a calibrated stride.
+     * <p>
+     * a calibrated stride is considered because the original stride might be too big which can cause the sprite
+     * to go out of canvas or collide with a wall.
+     * <p>
+     * hence a smaller (still within the accepted threshold) stride is calculated (i.e. the calibrated stride)
+     * to check if it is possible to make a more cautious move.
+     *
+     * @return true is the movement is possible.
+     */
     protected boolean isPossibleToMoveInSameDir() {
         if (dirV == Vector.STILL) {
             return false;
@@ -79,16 +93,23 @@ public abstract class MovingSprite extends Sprite {
         return isPossibleMove(stride, dirV);
     }
 
+    /**
+     * the main goal of this check is to prevent movement between walls in an empty area or on the sub pixel level,
+     * and for this the applied stride has to be a minimum of the empty space that the sprite can move in within a cell
+     * without colliding with walls horizontal to the movement direction.
+     * <p>
+     * however, if the movement is valid, it is expected that the actual movement applied on the sprite happens
+     * using the original stride after calibration.
+     * <p>
+     * refer to the empty space calculation methods to know more.
+     *
+     * @param dir new direction
+     * @return true of the movement is possible
+     */
     protected boolean isPossibleToMoveInNewDir(Vector dir) {
         if (dir == Vector.STILL) {
             return false;
         }
-        /**
-         * when moving in a new direction, the validity of the move is checked with the static stride.
-         * the static stride is equal to the empty space that the sprite can move in within a cell without colliding with a wall,
-         * because this helps to prevent the sprite from moving between walls on the sub pixel level.
-         * however, if the movement is valid, the actual movement applied on the sprite happens using the original stride.
-         */
         double emptySpace;
         if (dir.isVertical()) {
             emptySpace = calcVEmptySpaceInPlaygroundCell();
