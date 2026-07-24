@@ -21,7 +21,6 @@ public abstract class MachineControlledSprite extends MovingSprite {
                 type, cord, width, height, dirV);
     }
 
-    // [TODO] find a smarter way to implement this method
     private Optional<MazeMove> getMazeMoveToCurrCell() {
         final Coordinate spriteCord = getTopLeftCorner();
         final Cell currCell = calcCell();
