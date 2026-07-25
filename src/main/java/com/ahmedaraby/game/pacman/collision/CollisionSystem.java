@@ -58,8 +58,7 @@ public class CollisionSystem {
     }
 
     private void detectPacman2GhostCollision() {
-        final Coordinate pacManTopLeftCorner = gameState.getPacMan().getTopLeftCorner();
-        final Rectangle pacManRect = SpriteUtil.toRect(pacManTopLeftCorner, SpriteE.PAC_MAN);
+        final Rectangle pacManRect = gameState.getPacMan().getRect();
 
         for(Ghost ghost: gameState.getGhosts()) {
             final Rectangle ghostRect = SpriteUtil.toRect(ghost.getTopLeftCorner(), SpriteE.GHOST);
