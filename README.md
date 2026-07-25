@@ -20,9 +20,9 @@ pac man game using javaFX.
     - [Pac Man to sugar](#pac-man-to-sugar)
     - [Pac Man to Ghost](#pac-man-to-ghost)
 - [Navigation](#navigation)
-    - [Machine Controlled Sprites Navigation Algorithm](Machine-controlled-sprites-navigation-algorithm)
-    - [PacMan](pacman)
-    - [PacMan Turn Buffer](pacman-turn-buffer)
+    - [Machine Controlled Sprites Navigation Algorithm](#machine-controlled-sprites-navigation-algorithm)
+    - [PacMan](#pac-man)
+    - [PacMan Turn Buffer](#pacman-turn-buffer)
 - [Turn Buffer](#turn-buffer)
 - [Ghosts](#ghosts)
 - [Backlog](#backlog)
@@ -150,8 +150,10 @@ TBD
 ## Navigation
 ### Machine Controlled Sprites Navigation Algorithm
 ![Machine Controlled Sprite Navigation Algorithm](https://github.com/Ahmed-Araby/pac-man/blob/fps-independent-movement_round2/documentation/imgs/navigation/Machine-Controlled-Sprite-Navigation-Algorithm.png)
-### PacMan (User Controlled)
-### PacMan Turn buffer (Machine Assisted Navigation for PacMan)
+### PacMan
+### PacMan Turn buffer
+Machine Assisted Navigation for PacMan.
+
 it is almost impossible for the player to instruct Pac Man to take a turn manually, the player will always do this at a position such that taking the turn will cause collision between Pac-Man and a Wall. to solve this problem, an Automatic Assistance is provided for the player.
 
 when the player instruct Pac-Man to take a turn and fail, the game remember the intent of the player to take the next turn. then the game will do this automatically for him in a way that sounds very natural.
