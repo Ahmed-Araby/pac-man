@@ -21,7 +21,7 @@ pac man game using javaFX.
     - [Pac Man to Ghost](#pac-man-to-ghost)
 - [Navigation](#navigation)
     - [Machine Controlled Sprites Navigation Algorithm](#machine-controlled-sprites-navigation-algorithm)
-    - [PacMan](#pacman)
+    - [PacMan Navigation Algorithm](#pacman-navigation-algorithm)
     - [PacMan Turn Buffer](#pacman-turn-buffer)
 - [Turn Buffer](#turn-buffer)
 - [Ghosts](#ghosts)
@@ -150,8 +150,8 @@ TBD
 ## Navigation
 ### Machine Controlled Sprites Navigation Algorithm
 ![Machine Controlled Sprite Navigation Algorithm](https://github.com/Ahmed-Araby/pac-man/blob/fps-independent-movement_round2/documentation/imgs/navigation/Machine-Controlled-Sprite-Navigation-Algorithm.png)
-### PacMan
-TBD
+### PacMan Navigation Algorithm
+![PacMan Navigation Algorithm](https://github.com/Ahmed-Araby/pac-man/blob/fps-independent-movement_round2/documentation/imgs/navigation/pacman-navigation-algorithm.png)
 
 ### PacMan Turn buffer
 Machine Assisted Navigation for PacMan.
