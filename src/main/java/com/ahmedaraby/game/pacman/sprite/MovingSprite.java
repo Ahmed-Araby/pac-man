@@ -114,8 +114,7 @@ public abstract class MovingSprite extends Sprite {
     }
 
     protected boolean isPossibleMove(double stride, Vector dir) {
-        // [TODO] make this threshold be configured
-        if (stride < 0.001) {
+        if (stride < configs.MIN_ALLOWED_STRIDE()) {
             return false;
         }
         final Coordinate nextCord = calcNextCord(stride, dir);

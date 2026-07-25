@@ -1,6 +1,5 @@
 package com.ahmedaraby.game.pacman.config.intConfigs;
 
-import com.ahmedaraby.jengine.event.Publisher;
 import javafx.scene.paint.Color;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -12,6 +11,7 @@ import java.util.List;
 public class ConfigsEx {
     private CanvasConfig canvas;
     private PlaygroundConfig playground;
+    private MovingSpriteConfig movingSprite;
     private PacManConfig pacman;
     private GhostConfig ghost;
     private GhostHouseConfig ghostHouse;
@@ -50,6 +50,10 @@ public class ConfigsEx {
 
     public Color PLAYGROUND_BACKGROUND_COLOR() {
         return playground.getBackgroundColor();
+    }
+
+    public double MIN_ALLOWED_STRIDE() {
+        return movingSprite.getMinAllowedStride();
     }
 
     public double PACMAN_SPEED() {

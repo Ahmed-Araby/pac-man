@@ -8,6 +8,8 @@ playground:
   wallColor: !color BLUE
   backgroundColor: !color BLACK
 
+movingSprite:
+  minAllowedStride: 0.001
 pacman:
   speed: 200
   color: !color YELLOW
