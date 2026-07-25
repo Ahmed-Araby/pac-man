@@ -151,6 +151,8 @@ TBD
 ### Machine Controlled Sprites Navigation Algorithm
 ![Machine Controlled Sprite Navigation Algorithm](https://github.com/Ahmed-Araby/pac-man/blob/fps-independent-movement_round2/documentation/imgs/navigation/Machine-Controlled-Sprite-Navigation-Algorithm.png)
 ### PacMan
+TBD
+
 ### PacMan Turn buffer
 Machine Assisted Navigation for PacMan.
 
