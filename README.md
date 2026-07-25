@@ -21,7 +21,7 @@ pac man game using javaFX.
     - [Pac Man to Ghost](#pac-man-to-ghost)
 - [Navigation](#navigation)
     - [Machine Controlled Sprites Navigation Algorithm](#machine-controlled-sprites-navigation-algorithm)
-    - [PacMan](#pac-man)
+    - [PacMan](#pacman)
     - [PacMan Turn Buffer](#pacman-turn-buffer)
 - [Turn Buffer](#turn-buffer)
 - [Ghosts](#ghosts)
