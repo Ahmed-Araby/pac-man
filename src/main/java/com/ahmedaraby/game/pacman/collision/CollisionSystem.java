@@ -2,6 +2,7 @@ package com.ahmedaraby.game.pacman.collision;
 
 import com.ahmedaraby.game.pacman.constant.SpriteE;
 import com.ahmedaraby.game.pacman.model.event.Event;
+import com.ahmedaraby.jengine.collision.Rect2RectCollisionDetectorUtil;
 import com.ahmedaraby.jengine.event.Publisher;
 import com.ahmedaraby.jengine.entity.Coordinate;
 import com.ahmedaraby.jengine.entity.Rectangle;
@@ -62,10 +63,11 @@ public class CollisionSystem {
 
         for(Ghost ghost: gameState.getGhosts()) {
             final Rectangle ghostRect = ghost.getRect();
-            M2MSpriteCollisionDetector.detect(pacManRect, ghostRect).ifPresent((report)-> {
+            final boolean collide = Rect2RectCollisionDetectorUtil.collide(pacManRect, ghostRect);
+            if (collide) {
                 final PacMan2GhostCollisionEvent collisionEvent = new PacMan2GhostCollisionEvent(ghost);
                 asyncEventManager.notify(collisionEvent);
-            });
+            }
         }
 
     }
