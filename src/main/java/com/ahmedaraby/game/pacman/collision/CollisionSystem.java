@@ -71,15 +71,4 @@ public class CollisionSystem {
         }
 
     }
-
-    // [TODO] implement pacman to ghosts collision detection
-
-    public void analyzeMovementAttempt() {
-    }
-
-    private void analyzePacmanMovementAttempt() {
-    }
-
-    private void analyzeGhostMovementAttempt() {
-    }
 }
