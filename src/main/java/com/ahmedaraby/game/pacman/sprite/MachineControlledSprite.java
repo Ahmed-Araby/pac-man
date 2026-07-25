@@ -93,14 +93,4 @@ public abstract class MachineControlledSprite extends MovingSprite {
         }
         return isPossibleToMoveInNewDir(move.getDir());
     }
-
-    @Override
-    protected boolean isPossibleMove(double stride, Vector dir) {
-        // [TODO] make this threshold be configured
-        if (stride < 0.001) {
-            return false;
-        }
-        final Coordinate calibratedNextCord = calcNextCord(stride, dir);
-        return !isGoingOutOfCanvas(stride, dir) && !isCollidingWithWallOrGhostHWall(calibratedNextCord);
-    }
 }
