@@ -19,6 +19,8 @@ pac man game using javaFX.
     - [Pac Man to Wall](#pac-man-to-wall)
     - [Pac Man to sugar](#pac-man-to-sugar)
     - [Pac Man to Ghost](#pac-man-to-ghost)
+- [Navigation](#navigation)
+    - [Machine Controlled Sprites Navigation Algorithm](Machine-controlled-sprites-navigation-algorithm)
 - [Turn Buffer](#turn-buffer)
 - [Ghosts](#ghosts)
 - [Backlog](#backlog)
@@ -141,6 +143,11 @@ it is as simple as checking that the virtual rectangle enclosing the sugar lies 
 
 ### Pac Man to Ghost
 TBD
+
+<br><br>
+## Navigation
+### Machine Controlled Sprites Navigation Algorithm
+![Machine Controlled Sprite Navigation Algorithm](https://github.com/Ahmed-Araby/pac-man/blob/fps-independent-movement_round2/documentation/imgs/navigation/Machine-Controlled-Sprite-Navigation-Algorithm.png)
 
 <br><br>
 ## Turn buffer
