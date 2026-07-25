@@ -27,7 +27,6 @@ public abstract class MachineControlledSprite extends MovingSprite {
      *
      * @return MazeMove describing a movement to the center of sprite's current cell
      */
-
     private Optional<MazeMove> getMazeMoveToCurrCellCenter() {
         final Coordinate spriteCord = getTopLeftCorner();
         final Cell currCell = calcCell();
