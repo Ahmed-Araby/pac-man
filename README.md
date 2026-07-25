@@ -206,13 +206,13 @@ if the turn is still not possible and Pac-Man is now in the next Cell (in respec
 - [ ] Frozen, Ghost Mode
 - [ ] Refactoring
   - [X] Collision Detection
-  - [ ] combine data with its behaviour when appropriate (tell, don't ask prinsible)
+  - [X] combine data with its behaviour when appropriate (tell, don't ask prinsible)
   - [ ] Event Structure
-  - [ ] sprite movement in relation to frames and time.
-  - [ ] sprite animation in relation to sprite movement.
+  - [X] sprite movement in relation to frames and time.
+  - [X] sprite animation in relation to sprite movement.
   - [X] pac man movement
   - [ ] Ghost Utility classes
-  - [ ] maze vs canvas
+  - [X] maze vs canvas
   - [ ] logging
   - [ ] unify Scattered Modes
   - [ ] use builder pattern instead of constructors
