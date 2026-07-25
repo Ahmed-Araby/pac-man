@@ -156,6 +156,7 @@ public class GamePlayGameScene implements GameScene {
         syncEventManager.subscribe(EventType.PAC_MAN_GHOST_COLLISION, clyde);
     }
 
+    // [TODO] remove this method
     private void registerSubscribersForSyncEvents() {
         if (pacMan == null) {
             throw new IllegalStateException("can't register null objects for sync event subscription, PacMan, and pacManToWallCollisionDetection must be defined");
@@ -186,6 +187,7 @@ public class GamePlayGameScene implements GameScene {
     @Override
     public void render() {
         final GraphicsContext context = canvas.getGraphicsContext2D();
+        // erase canvas
         context.setFill(ColorC.CANVAS_COLOR);
         context.fillRect(0, 0, configs.CANVAS_WIDTH(), configs.CANVAS_HEIGHT());
 
