@@ -31,7 +31,7 @@ public class PacMan extends MovingSprite implements Subscriber<EventType> {
     // pacman mouse geometric information
     private double arcStartAngle;
     private double arcExtent;
-    private final Map<Vector, Integer> openMouseStartAngleByDir = new HashMap<>();
+    private final Map<Vector, Integer> openMouthStartAngleByDir = new HashMap<>();
 
     public PacMan(GameState gameState, ConfigsEx configs, StrideCalculator strideCalc) {
         super(gameState, configs, strideCalc,
@@ -51,10 +51,10 @@ public class PacMan extends MovingSprite implements Subscriber<EventType> {
         arcStartAngle = configs.PACMAN_MOUTH_CLOSED_RIGHT_START_ANGLE();
         arcExtent = configs.PACMAN_MOUTH_CLOSED_ARC_EXTENT_DEG();
 
-        openMouseStartAngleByDir.put(Vector.RIGHT, configs.PACMAN_MOUTH_OPEN_RIGHT_START_ANGLE());
-        openMouseStartAngleByDir.put(Vector.UP, configs.PACMAN_MOUTH_OPEN_UP_START_ANGLE());
-        openMouseStartAngleByDir.put(Vector.DOWN, configs.PACMAN_MOUTH_OPEN_DOWN_START_ANGLE());
-        openMouseStartAngleByDir.put(Vector.LEFT, configs.PACMAN_MOUTH_OPEN_LEFT_START_ANGLE());
+        openMouthStartAngleByDir.put(Vector.RIGHT, configs.PACMAN_MOUTH_OPEN_RIGHT_START_ANGLE());
+        openMouthStartAngleByDir.put(Vector.UP, configs.PACMAN_MOUTH_OPEN_UP_START_ANGLE());
+        openMouthStartAngleByDir.put(Vector.DOWN, configs.PACMAN_MOUTH_OPEN_DOWN_START_ANGLE());
+        openMouthStartAngleByDir.put(Vector.LEFT, configs.PACMAN_MOUTH_OPEN_LEFT_START_ANGLE());
     }
 
     @Override
@@ -132,7 +132,7 @@ public class PacMan extends MovingSprite implements Subscriber<EventType> {
             updateTurnBuffer(event.getDir(), event.getSource());
 
             mouthAnimationTracker.stride(stride);
-            arcStartAngle = openMouseStartAngleByDir.get(event.getDir());
+            arcStartAngle = openMouthStartAngleByDir.get(event.getDir());
             arcExtent = configs.PACMAN_MOUTH_OPEN_ARC_EXTENT_DEG();
         } else if (event.getSource() instanceof Scene) {
             // buffer denied user movement
