@@ -4,7 +4,7 @@ import com.ahmedaraby.game.pacman.sprite.ghost.Ghost;
 import com.ahmedaraby.game.pacman.sprite.playground.GhostHouseS;
 import com.ahmedaraby.game.pacman.sprite.playground.Maze;
 import lombok.*;
-import com.ahmedaraby.game.pacman.sprite.PacMan;
+import com.ahmedaraby.game.pacman.sprite.pacman.PacMan;
 
 import java.util.ArrayList;
 import java.util.List;

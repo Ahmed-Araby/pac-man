@@ -28,7 +28,7 @@ import com.ahmedaraby.game.pacman.input.JavaFXInputHandler;
 import com.ahmedaraby.game.pacman.input.JavaFXUserInputHandler;
 import com.ahmedaraby.game.pacman.playground.Playground;
 import com.ahmedaraby.game.pacman.sound.SoundPlayer;
-import com.ahmedaraby.game.pacman.sprite.PacMan;
+import com.ahmedaraby.game.pacman.sprite.pacman.PacMan;
 import com.ahmedaraby.game.pacman.sprite.ghost.Inky;
 import com.ahmedaraby.game.pacman.sprite.playground.SuperSugar;
 import com.ahmedaraby.game.pacman.util.debug.DebugUtil;

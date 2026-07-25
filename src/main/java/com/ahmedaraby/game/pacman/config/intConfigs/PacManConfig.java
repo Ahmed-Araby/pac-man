@@ -27,11 +27,11 @@ public class PacManConfig {
         @Setter
         public static class State {
 
-            private double arcExtentDeg;
-            private double rightStartAngle;
-            private double upStartAngle;
-            private double leftStartAngle;
-            private double downStartAngle;
+            private int arcExtentDeg;
+            private int rightStartAngle;
+            private int upStartAngle;
+            private int leftStartAngle;
+            private int downStartAngle;
         }
     }
 

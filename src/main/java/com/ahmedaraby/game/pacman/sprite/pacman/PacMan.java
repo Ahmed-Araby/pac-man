@@ -1,9 +1,11 @@
-package com.ahmedaraby.game.pacman.sprite;
+package com.ahmedaraby.game.pacman.sprite.pacman;
 
 import com.ahmedaraby.game.pacman.config.intConfigs.ConfigsEx;
+import com.ahmedaraby.game.pacman.constant.ColorC;
 import com.ahmedaraby.game.pacman.constant.SpriteE;
 import com.ahmedaraby.game.pacman.model.event.EventType;
 import com.ahmedaraby.game.pacman.ghostmode.navigation.StrideCalculator;
+import com.ahmedaraby.game.pacman.sprite.MovingSprite;
 import com.ahmedaraby.game.pacman.util.pacman.TurnBuffer;
 import com.ahmedaraby.jengine.entity.Coordinate;
 import com.ahmedaraby.game.pacman.model.event.Event;
@@ -11,17 +13,25 @@ import com.ahmedaraby.jengine.entity.Vector;
 import com.ahmedaraby.jengine.event.Subscriber;
 import com.ahmedaraby.game.pacman.model.event.movement.PacManMovementRequestEvent;
 import com.ahmedaraby.game.pacman.model.GameState;
-import com.ahmedaraby.game.pacman.util.pacman.PacManGraphicsUtil;
 import com.ahmedaraby.game.pacman.util.pacman.PacManMouthAnimationTracker;
 import javafx.scene.Scene;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import com.ahmedaraby.game.pacman.playground.Playground;
+import javafx.scene.shape.ArcType;
+
+import java.util.HashMap;
+import java.util.Map;
 
 public class PacMan extends MovingSprite implements Subscriber<EventType> {
 
     private final TurnBuffer turnBuffer;
     private final PacManMouthAnimationTracker mouthAnimationTracker;
+
+    // pacman mouse geometric information
+    private double arcStartAngle;
+    private double arcExtent;
+    private final Map<Vector, Integer> openMouseStartAngleByDir = new HashMap<>();
 
     public PacMan(GameState gameState, ConfigsEx configs, StrideCalculator strideCalc) {
         super(gameState, configs, strideCalc,
@@ -37,28 +47,32 @@ public class PacMan extends MovingSprite implements Subscriber<EventType> {
         this.mouthAnimationTracker = new PacManMouthAnimationTracker(
                configs.PACMAN_MOUTH_OPEN_DISTANCE(),
                 configs.PACMAN_MOUTH_CLOSED_DISTANCE());
+
+        arcStartAngle = configs.PACMAN_MOUTH_CLOSED_RIGHT_START_ANGLE();
+        arcExtent = configs.PACMAN_MOUTH_CLOSED_ARC_EXTENT_DEG();
+
+        openMouseStartAngleByDir.put(Vector.RIGHT, configs.PACMAN_MOUTH_OPEN_RIGHT_START_ANGLE());
+        openMouseStartAngleByDir.put(Vector.UP, configs.PACMAN_MOUTH_OPEN_UP_START_ANGLE());
+        openMouseStartAngleByDir.put(Vector.DOWN, configs.PACMAN_MOUTH_OPEN_DOWN_START_ANGLE());
+        openMouseStartAngleByDir.put(Vector.LEFT, configs.PACMAN_MOUTH_OPEN_LEFT_START_ANGLE());
     }
 
     @Override
     public void render(Canvas canvas) {
         final GraphicsContext con = canvas.getGraphicsContext2D();
 
-        final double col = getCol();
-        final double row = getRow();
-
+        // calculate effective angles
+        double effectiveArcStartAngle = arcStartAngle;
+        double effectiveArcExtent = arcExtent;
         if (mouthAnimationTracker.isClosed()) {
-            PacManGraphicsUtil.drawClosedMousePacMan(con, col, row);
-        } else if (dirV == Vector.RIGHT) {
-            PacManGraphicsUtil.drawRightOpenMousePacMan(con, col, row);
-        } else if (dirV == Vector.UP) {
-            PacManGraphicsUtil.drawUpOpenMousePacMan(con, col, row);
-        } else if (dirV == Vector.LEFT) {
-            PacManGraphicsUtil.drawLeftOpenMousePacMan(con, col, row);
-        } else if (dirV == Vector.DOWN) {
-            PacManGraphicsUtil.drawDownOpenMousePacMan(con, col, row);
-        } else if (dirV == Vector.STILL) {
-            PacManGraphicsUtil.drawClosedMousePacMan(con, col, row);
+            effectiveArcStartAngle = configs.PACMAN_MOUTH_CLOSED_RIGHT_START_ANGLE();
+            effectiveArcExtent = configs.PACMAN_MOUTH_CLOSED_ARC_EXTENT_DEG();
         }
+
+        // render
+        con.setFill(ColorC.PAC_MAN_COLOR);
+        con.fillArc(getCol(), getRow(), configs.PACMAN_DIAMETER(), configs.PACMAN_DIAMETER(),
+                effectiveArcStartAngle, effectiveArcExtent, ArcType.ROUND);
     }
 
 
@@ -115,8 +129,11 @@ public class PacMan extends MovingSprite implements Subscriber<EventType> {
         if (isPossible) {
             final double stride = calcCalibratedStride(event.getDir());
             move(stride, event.getDir());
-            mouthAnimationTracker.stride(stride);
             updateTurnBuffer(event.getDir(), event.getSource());
+
+            mouthAnimationTracker.stride(stride);
+            arcStartAngle = openMouseStartAngleByDir.get(event.getDir());
+            arcExtent = configs.PACMAN_MOUTH_OPEN_ARC_EXTENT_DEG();
         } else if (event.getSource() instanceof Scene) {
             // buffer denied user movement
             turnBuffer.buffer(event.getDir());
@@ -128,6 +145,7 @@ public class PacMan extends MovingSprite implements Subscriber<EventType> {
     private void updateTurnBuffer(Vector dir, Object movementSource) {
         if (movementSource instanceof Scene || movementSource instanceof TurnBuffer) {
             // user input or turn buffer automated move
+            // [TODO] this is duplicated at the move( method
             turnBuffer.clear();
         } else if (movementSource instanceof PacMan) {
             // automated straight line movement
