@@ -21,6 +21,13 @@ public abstract class MachineControlledSprite extends MovingSprite {
                 type, cord, width, height, dirV);
     }
 
+    /**
+     * a move to the current cell is considered to center the sprite within the current cell, in order to for the sprite
+     * to near perfect align itself to the adjacent cells.
+     *
+     * @return MazeMove describing a movement to the center of sprite's current cell
+     */
+
     private Optional<MazeMove> getMazeMoveToCurrCell() {
         final Coordinate spriteCord = getTopLeftCorner();
         final Cell currCell = calcCell();
