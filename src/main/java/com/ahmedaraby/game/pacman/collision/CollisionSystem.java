@@ -61,7 +61,7 @@ public class CollisionSystem {
         final Rectangle pacManRect = gameState.getPacMan().getRect();
 
         for(Ghost ghost: gameState.getGhosts()) {
-            final Rectangle ghostRect = SpriteUtil.toRect(ghost.getTopLeftCorner(), SpriteE.GHOST);
+            final Rectangle ghostRect = ghost.getRect();
             M2MSpriteCollisionDetector.detect(pacManRect, ghostRect).ifPresent((report)-> {
                 final PacMan2GhostCollisionEvent collisionEvent = new PacMan2GhostCollisionEvent(ghost);
                 asyncEventManager.notify(collisionEvent);
