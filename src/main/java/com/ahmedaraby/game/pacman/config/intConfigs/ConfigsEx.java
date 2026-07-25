@@ -108,21 +108,10 @@ public class ConfigsEx {
         return pacman.getMouth().getClosed().getArcExtentDeg();
     }
 
-    public int PACMAN_MOUTH_CLOSED_RIGHT_START_ANGLE() {
-        return pacman.getMouth().getClosed().getRightStartAngle();
+    public int PACMAN_MOUTH_CLOSED_ARC_START_ANGLE_DEG() {
+        return pacman.getMouth().getClosed().getArcStartAngleDeg();
     }
 
-    public int PACMAN_MOUTH_CLOSED_UP_START_ANGLE() {
-        return pacman.getMouth().getClosed().getUpStartAngle();
-    }
-
-    public int PACMAN_MOUTH_CLOSED_LEFT_START_ANGLE() {
-        return pacman.getMouth().getClosed().getLeftStartAngle();
-    }
-
-    public int PACMAN_MOUTH_CLOSED_DOWN_START_ANGLE() {
-        return pacman.getMouth().getClosed().getDownStartAngle();
-    }
 
     public double GHOST_WIDTH() {
         return ghost.getWidth();

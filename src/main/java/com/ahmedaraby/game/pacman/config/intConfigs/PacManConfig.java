@@ -19,19 +19,27 @@ public class PacManConfig {
     @Setter
     public static class Mouth {
         private AnimationConfig animation;
-        private State open;
-        private State closed;
+        private OpenState open;
+        private CloseState closed;
 
         @NoArgsConstructor
         @Getter
         @Setter
-        public static class State {
+        public static class OpenState {
 
             private int arcExtentDeg;
             private int rightStartAngle;
             private int upStartAngle;
             private int leftStartAngle;
             private int downStartAngle;
+        }
+
+        @NoArgsConstructor
+        @Getter
+        @Setter
+        public static class CloseState {
+            private int arcExtentDeg;
+            private int arcStartAngleDeg;
         }
     }
 

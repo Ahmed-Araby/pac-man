@@ -28,10 +28,7 @@ pacman:
       downStartAngle: 315
     closed:
       arcExtentDeg: 360
-      rightStartAngle: 0
-      upStartAngle: 0
-      leftStartAngle: 0
-      downStartAngle: 0
+      arcStartAngleDeg: 0
 
 ghost:
   width: 50

@@ -48,7 +48,7 @@ public class PacMan extends MovingSprite implements Subscriber<EventType> {
                configs.PACMAN_MOUTH_OPEN_DISTANCE(),
                 configs.PACMAN_MOUTH_CLOSED_DISTANCE());
 
-        arcStartAngle = configs.PACMAN_MOUTH_CLOSED_RIGHT_START_ANGLE();
+        arcStartAngle = configs.PACMAN_MOUTH_CLOSED_ARC_START_ANGLE_DEG();
         arcExtent = configs.PACMAN_MOUTH_CLOSED_ARC_EXTENT_DEG();
 
         openMouthStartAngleByDir.put(Vector.RIGHT, configs.PACMAN_MOUTH_OPEN_RIGHT_START_ANGLE());
@@ -65,7 +65,7 @@ public class PacMan extends MovingSprite implements Subscriber<EventType> {
         double effectiveArcStartAngle = arcStartAngle;
         double effectiveArcExtent = arcExtent;
         if (mouthAnimationTracker.isClosed()) {
-            effectiveArcStartAngle = configs.PACMAN_MOUTH_CLOSED_RIGHT_START_ANGLE();
+            effectiveArcStartAngle = configs.PACMAN_MOUTH_CLOSED_ARC_START_ANGLE_DEG();
             effectiveArcExtent = configs.PACMAN_MOUTH_CLOSED_ARC_EXTENT_DEG();
         }
 
