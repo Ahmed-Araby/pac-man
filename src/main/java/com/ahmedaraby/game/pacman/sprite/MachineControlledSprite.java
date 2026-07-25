@@ -28,7 +28,7 @@ public abstract class MachineControlledSprite extends MovingSprite {
      * @return MazeMove describing a movement to the center of sprite's current cell
      */
 
-    private Optional<MazeMove> getMazeMoveToCurrCell() {
+    private Optional<MazeMove> getMazeMoveToCurrCellCenter() {
         final Coordinate spriteCord = getTopLeftCorner();
         final Cell currCell = calcCell();
         final Coordinate currCellCord = currCell.toCord(configs.PLAYGROUND_CELL_SIZE(), configs.PLAYGROUND_CELL_SIZE());
@@ -58,7 +58,7 @@ public abstract class MachineControlledSprite extends MovingSprite {
 
     public List<MazeMove> getPossibleMazeMoves() {
         final List<MazeMove> moves = getPossibleMazeMovesToAdjacentCells();
-        getMazeMoveToCurrCell().ifPresent(moves::add);
+        getMazeMoveToCurrCellCenter().ifPresent(moves::add);
         return moves;
     }
 
