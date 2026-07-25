@@ -1,6 +1,6 @@
 package com.ahmedaraby.jengine.event;
 
-import com.ahmedaraby.game.pacman.event.Event;
+import com.ahmedaraby.game.pacman.model.event.Event;
 
 public interface Subscriber<T> {
 

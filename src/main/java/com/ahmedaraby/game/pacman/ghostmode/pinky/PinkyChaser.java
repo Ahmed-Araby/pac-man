@@ -1,14 +1,10 @@
 package com.ahmedaraby.game.pacman.ghostmode.pinky;
 
-import com.ahmedaraby.game.pacman.config.Configs;
 import com.ahmedaraby.game.pacman.config.intConfigs.ConfigsEx;
-import com.ahmedaraby.game.pacman.constant.DirectionsE;
 import com.ahmedaraby.game.pacman.constant.SpriteFileNameC;
 import com.ahmedaraby.game.pacman.ghostmode.Chaser;
 import com.ahmedaraby.game.pacman.model.GameState;
 import com.ahmedaraby.game.pacman.sprite.ghost.Ghost;
-import com.ahmedaraby.jengine.animation.Animator;
-import com.ahmedaraby.jengine.animation.DistanceBasedAnimator;
 import com.ahmedaraby.jengine.entity.Coordinate;
 import com.ahmedaraby.jengine.entity.Line;
 import com.ahmedaraby.jengine.entity.Vector;
@@ -18,16 +14,10 @@ import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
 
 public class PinkyChaser extends Chaser {
-    private final Animator animator;
 
     public PinkyChaser(Ghost ghost, GameState gameState, ConfigsEx configs, SpriteRegistry<String, Image> spriteRegistry, int[] activePeriodsSec) {
-        super(ghost, gameState, configs, spriteRegistry, activePeriodsSec);
-
-        final Image[] frames = loadSprites();
-        animator = new DistanceBasedAnimator(new double[]{
-                configs.GHOST_PINKY_FIRST_FRAME_DISTANCE(),
-                configs.GHOST_PINKY_SECOND_FRAME_DISTANCE()
-        }, frames);
+        super(ghost, gameState, configs, spriteRegistry, activePeriodsSec,
+                new double[]{configs.GHOST_PINKY_FIRST_FRAME_DISTANCE(), configs.GHOST_PINKY_SECOND_FRAME_DISTANCE()});
     }
 
     @Override
@@ -38,25 +28,22 @@ public class PinkyChaser extends Chaser {
 
     @Override
     public void move() {
+        // calculate target
         final Coordinate pacManCord = gameState.getPacMan().getTopLeftCorner();
-        final Vector pacManDir = gameState.getPacMan().getDir().toVector();
-
+        final Vector pacManDir = gameState.getPacMan().getDirV();
         // calculate the tile 4 steps ahead of pacman, and force it to be within the playground
-        final Vector pacManDirScaled = pacManDir.scale(4);
+        final Vector pacManDirScaled = pacManDir.scale(4 * configs.PLAYGROUND_CELL_SIZE());
         final Coordinate lookAheadCord = pacManCord.add(pacManDirScaled.getX(), pacManDirScaled.getY());
         final Line lookAheadLine = new Line(pacManCord, lookAheadCord).trim(gameState.getMaze().getRect());
         final Coordinate target = lookAheadLine.getEnd();
 
-        final DirectionsE newDir = navigator.calcDir(ghost, target);
-        if (newDir != DirectionsE.STILL) {
-            final Coordinate newCord = ghost.calculateNextCord(newDir.toVector());
-            ghost.setTopLeftCorner(newCord);
-            ghost.setDir(newDir);
-            animator.stride(configs.GHOST_SPEED() / Configs.FRAMES_PER_SEC_FOR_GHOST_STRIDE);
-        }
+        // move
+        final Vector newDir = targetNavigator.calcDir(ghost, target);
+        moveAt(newDir);
     }
 
-    private Image[] loadSprites() {
+    @Override
+    protected Image[] loadSprites() {
         final String frame1Path = String.format(SpriteFileNameC.GHOST_SPRITE_PATH_TEMPLATE, SpriteFileNameC.PINKY_FOLDER, SpriteFileNameC.PINKY_FRAME_1_FILE_NAME);
         final String frame2Path = String.format(SpriteFileNameC.GHOST_SPRITE_PATH_TEMPLATE, SpriteFileNameC.PINKY_FOLDER, SpriteFileNameC.PINKY_FRAME_2_FILE_NAME);
         final Image frame1 = spriteRegistry.get(frame1Path);

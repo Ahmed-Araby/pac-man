@@ -1,6 +1,7 @@
 package com.ahmedaraby.game.pacman.sprite;
 
 import com.ahmedaraby.game.pacman.config.intConfigs.ConfigsEx;
+import com.ahmedaraby.game.pacman.model.Cell;
 import com.ahmedaraby.jengine.entity.Rectangle;
 import com.ahmedaraby.game.pacman.model.GameState;
 import javafx.scene.canvas.Canvas;
@@ -54,5 +55,39 @@ public abstract class Sprite {
 
     public void setRow(double row) {
         topLeftCorner = new Coordinate(row, topLeftCorner.getCol());
+    }
+
+    public double calcHEmptySpaceInPlaygroundCell() {
+        final double spriteToCellSizeDiff = configs.PLAYGROUND_CELL_SIZE() - getWidth();
+        final double leftGutterSize = 1; // almost
+        final double rightGutterSize = 1; // almost
+        return Math.ceil(leftGutterSize + rightGutterSize + spriteToCellSizeDiff);
+    }
+
+    public double calcVEmptySpaceInPlaygroundCell() {
+        final double spriteToCellSizeDiff = configs.PLAYGROUND_CELL_SIZE() - getHeight();
+        final double topGutterSize = 1; // almost
+        final double bottomGutterSize = 1; // almost
+        return Math.ceil(topGutterSize + bottomGutterSize + spriteToCellSizeDiff);
+    }
+
+    /**
+     * playground cell to which the sprite belongs is the cell that contains the center point of the sprite.
+     * if the center point lies at the sub pixels between 2 cells, flooring is used,
+     * (i.e. the left cell will be chosen over the right cell and the top cell will be chosen over the bottom cell).
+     *
+     * @return Cell
+     */
+    public Cell calcCell() {
+        final Coordinate centerCord = calcCenterCord();
+        final int cellCol = (int) (centerCord.getCol() / configs.PLAYGROUND_CELL_SIZE());
+        final int cellRow = (int) (centerCord.getRow() / configs.PLAYGROUND_CELL_SIZE());
+        return new Cell(cellRow, cellCol);
+    }
+
+    protected Coordinate calcCenterCord() {
+        final double centerCol = getCol() + getWidth() / 2;
+        final double centerRow = getRow() + getHeight() / 2;
+        return new Coordinate(centerRow, centerCol);
     }
 }

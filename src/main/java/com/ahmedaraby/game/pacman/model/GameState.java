@@ -22,6 +22,9 @@ public class GameState {
     private List<Ghost> ghosts = new ArrayList<>();
     private GhostHouseS ghostHouseS;
 
+    private long prevFrameEndedAt;
+    private long currFrameStartedAt;
+
     public void addGhost(Ghost ghost) {
         ghosts.add(ghost);
     }

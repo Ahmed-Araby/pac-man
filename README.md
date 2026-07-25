@@ -19,6 +19,10 @@ pac man game using javaFX.
     - [Pac Man to Wall](#pac-man-to-wall)
     - [Pac Man to sugar](#pac-man-to-sugar)
     - [Pac Man to Ghost](#pac-man-to-ghost)
+- [Navigation](#navigation)
+    - [Machine Controlled Sprites Navigation Algorithm](#machine-controlled-sprites-navigation-algorithm)
+    - [PacMan Navigation Algorithm](#pacman-navigation-algorithm)
+    - [PacMan Turn Buffer](#pacman-turn-buffer)
 - [Turn Buffer](#turn-buffer)
 - [Ghosts](#ghosts)
 - [Backlog](#backlog)
@@ -143,7 +147,15 @@ it is as simple as checking that the virtual rectangle enclosing the sugar lies 
 TBD
 
 <br><br>
-## Turn buffer
+## Navigation
+### Machine Controlled Sprites Navigation Algorithm
+![Machine Controlled Sprite Navigation Algorithm](https://github.com/Ahmed-Araby/pac-man/blob/fps-independent-movement_round2/documentation/imgs/navigation/Machine-Controlled-Sprite-Navigation-Algorithm.png)
+### PacMan Navigation Algorithm
+![PacMan Navigation Algorithm](https://github.com/Ahmed-Araby/pac-man/blob/fps-independent-movement_round2/documentation/imgs/navigation/pacman-navigation-algorithm.png)
+
+### PacMan Turn buffer
+Machine Assisted Navigation for PacMan.
+
 it is almost impossible for the player to instruct Pac Man to take a turn manually, the player will always do this at a position such that taking the turn will cause collision between Pac-Man and a Wall. to solve this problem, an Automatic Assistance is provided for the player.
 
 when the player instruct Pac-Man to take a turn and fail, the game remember the intent of the player to take the next turn. then the game will do this automatically for him in a way that sounds very natural.
@@ -194,13 +206,13 @@ if the turn is still not possible and Pac-Man is now in the next Cell (in respec
 - [ ] Frozen, Ghost Mode
 - [ ] Refactoring
   - [X] Collision Detection
-  - [ ] combine data with its behaviour when appropriate (tell, don't ask prinsible)
+  - [X] combine data with its behaviour when appropriate (tell, don't ask prinsible)
   - [ ] Event Structure
-  - [ ] sprite movement in relation to frames and time.
-  - [ ] sprite animation in relation to sprite movement.
+  - [X] sprite movement in relation to frames and time.
+  - [X] sprite animation in relation to sprite movement.
   - [X] pac man movement
   - [ ] Ghost Utility classes
-  - [ ] maze vs canvas
+  - [X] maze vs canvas
   - [ ] logging
   - [ ] unify Scattered Modes
   - [ ] use builder pattern instead of constructors

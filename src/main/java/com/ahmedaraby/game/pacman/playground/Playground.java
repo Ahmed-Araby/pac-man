@@ -4,7 +4,7 @@ import com.ahmedaraby.game.pacman.config.intConfigs.ConfigsEx;
 import com.ahmedaraby.game.pacman.constant.DimensionsC;
 import com.ahmedaraby.game.pacman.constant.SpriteE;
 import com.ahmedaraby.jengine.entity.Coordinate;
-import com.ahmedaraby.game.pacman.entity.Cell;
+import com.ahmedaraby.game.pacman.model.Cell;
 import com.ahmedaraby.jengine.entity.Rectangle;
 import com.ahmedaraby.jengine.maze.MazeGenerator;
 import com.ahmedaraby.jengine.maze.RandomizedDFSMazeGenerator;
@@ -104,4 +104,5 @@ public class Playground {
         final double topLeftCornerCol = point.getCol() - point.getCol() % DimensionsC.MAZE_CELL_SIZE_PIXELS;
         return new Rectangle(new Coordinate(topLeftCornerRow, topLeftCornerCol), DimensionsC.MAZE_CELL_SIZE_PIXELS, DimensionsC.MAZE_CELL_SIZE_PIXELS);
     }
+
 }

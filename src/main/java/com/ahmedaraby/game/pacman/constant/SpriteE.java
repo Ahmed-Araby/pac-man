@@ -11,5 +11,8 @@ public enum SpriteE {
     PAC_MAN,
     GHOST,
     SUPER_SUGAR,
-    MAZE;
+    MAZE,
+
+    // this type is used to mark dummy/Virtual sprites that wrap coordinates
+    VIRTUAL;
 }

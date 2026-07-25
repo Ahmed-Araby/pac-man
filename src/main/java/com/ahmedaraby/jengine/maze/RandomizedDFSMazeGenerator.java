@@ -1,6 +1,6 @@
 package com.ahmedaraby.jengine.maze;
 
-import com.ahmedaraby.game.pacman.entity.Cell;
+import com.ahmedaraby.game.pacman.model.Cell;
 import com.ahmedaraby.jengine.entity.Vector;
 
 import java.util.ArrayList;

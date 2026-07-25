@@ -1,4 +1,4 @@
-package com.ahmedaraby.game.pacman.event;
+package com.ahmedaraby.game.pacman.model.event;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;

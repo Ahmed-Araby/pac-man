@@ -1,6 +1,6 @@
 package com.ahmedaraby.game.pacman.util;
 import com.ahmedaraby.game.pacman.constant.DimensionsC;
-import com.ahmedaraby.game.pacman.entity.Cell;
+import com.ahmedaraby.game.pacman.model.Cell;
 import com.ahmedaraby.game.pacman.playground.Playground;
 
 import java.util.ArrayList;

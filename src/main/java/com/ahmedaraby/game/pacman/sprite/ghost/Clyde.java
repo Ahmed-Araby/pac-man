@@ -2,10 +2,9 @@ package com.ahmedaraby.game.pacman.sprite.ghost;
 
 import com.ahmedaraby.game.pacman.config.GhostModeActivePeriodsConf;
 import com.ahmedaraby.game.pacman.config.intConfigs.ConfigsEx;
-import com.ahmedaraby.game.pacman.constant.DirectionsE;
 import com.ahmedaraby.game.pacman.constant.SpriteE;
-import com.ahmedaraby.game.pacman.event.Event;
-import com.ahmedaraby.game.pacman.event.EventType;
+import com.ahmedaraby.game.pacman.model.event.Event;
+import com.ahmedaraby.game.pacman.model.event.EventType;
 import com.ahmedaraby.game.pacman.ghostmode.Chaser;
 import com.ahmedaraby.game.pacman.ghostmode.clyde.ClydeChaser;
 import com.ahmedaraby.game.pacman.ghostmode.clyde.ClydeScaredChaser;
@@ -13,10 +12,12 @@ import com.ahmedaraby.game.pacman.ghostmode.clyde.ClydeScattered;
 import com.ahmedaraby.game.pacman.ghostmode.common.Eaten;
 import com.ahmedaraby.game.pacman.ghostmode.common.Frightened;
 import com.ahmedaraby.game.pacman.ghostmode.navigation.ShortestPathNavigator;
+import com.ahmedaraby.game.pacman.ghostmode.navigation.StrideCalculator;
 import com.ahmedaraby.game.pacman.model.GameState;
 import com.ahmedaraby.game.pacman.sprite.playground.GhostHouseS;
 import com.ahmedaraby.game.pacman.util.PlaygroundShortestPathNav;
 import com.ahmedaraby.jengine.entity.Coordinate;
+import com.ahmedaraby.jengine.entity.Vector;
 import com.ahmedaraby.jengine.sprite.SpriteRegistry;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.image.Image;
@@ -26,8 +27,10 @@ public class Clyde extends Ghost {
     private final ClydeScaredChaser scaredChaser;
     private final ShortestPathNavigator navigator;
 
-    public Clyde(GameState gameState, ConfigsEx configs, SpriteRegistry<String, Image> spriteRegistry) {
-        super(gameState, configs, SpriteE.GHOST, -1, -1, DirectionsE.STILL);
+    public Clyde(GameState gameState, ConfigsEx configs, StrideCalculator strideCalc,
+                 SpriteRegistry<String, Image> spriteRegistry) {
+        super(gameState, configs, strideCalc,
+                SpriteE.GHOST, -1, -1, Vector.STILL);
 
         scattered = new ClydeScattered(this, gameState, configs, spriteRegistry,
                 GhostModeActivePeriodsConf.LEVEL_1_SCATTER_ACTIVE_PERIODS);
@@ -56,6 +59,11 @@ public class Clyde extends Ghost {
     }
 
     @Override
+    public double getSpeed() {
+        return configs.GHOST_CLYDE_SPEED();
+    }
+
+    @Override
     public void move(Event event) {
         transitionMode(event);
         activeMode.move();
@@ -77,6 +85,7 @@ public class Clyde extends Ghost {
         }
     }
 
+
     // [TODO] debug, Clyde never leaves teh scared chaser mode
     private void scaredChaserTransition(Event event) {
         if (event != null && EventType.PAC_MAN_SUPER_SUGAR_COLLISION.equals(event.getType())) {
@@ -86,10 +95,9 @@ public class Clyde extends Ghost {
             frightened.enter();
             activeMode = frightened;
         } else {
-            final Coordinate pacManCord = gameState.getPacMan().getTopLeftCorner();
-            final double distToPacManInPixels = navigator.calcDist(this, pacManCord);
+            final double distToPacManInPixels = navigator.calcDist(this, gameState.getPacMan());
             // [TODO] provide the number 8 as a configuration
-            if (distToPacManInPixels >= 8 * configs.PLAYGROUND_CELL_SIZE()) {
+            if (distToPacManInPixels >= 11 * configs.PLAYGROUND_CELL_SIZE()) {
                 activeMode = chaser;
             } else if (chaser.ended()) {
                 super.chaserTransition(event);
@@ -105,8 +113,7 @@ public class Clyde extends Ghost {
             return;
         }
 
-        final Coordinate pacManCord = gameState.getPacMan().getTopLeftCorner();
-        final double distToPacManInPixels = navigator.calcDist(this, pacManCord);
+        final double distToPacManInPixels = navigator.calcDist(this, gameState.getPacMan());
         // [TODO] provide the number 8 as a configuration
         if (distToPacManInPixels < 8 * configs.PLAYGROUND_CELL_SIZE()) {
             activeMode = scaredChaser;

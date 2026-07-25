@@ -7,8 +7,6 @@ import lombok.Setter;
 @NoArgsConstructor
 @Setter
 @Getter
-public class CanvasConfig {
-    private double width;
-    private double height;
-    private double coordinateEqualityThreshold;
+public class MovingSpriteConfig {
+    private double minAllowedStride;
 }

@@ -3,27 +3,17 @@ package com.ahmedaraby.game.pacman.ghostmode.blinky;
 import com.ahmedaraby.game.pacman.config.intConfigs.ConfigsEx;
 import com.ahmedaraby.game.pacman.model.GameState;
 import com.ahmedaraby.game.pacman.sprite.ghost.Ghost;
+import com.ahmedaraby.jengine.entity.Vector;
 import com.ahmedaraby.jengine.sprite.SpriteRegistry;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.image.Image;
-import com.ahmedaraby.jengine.animation.Animator;
-import com.ahmedaraby.jengine.animation.DistanceBasedAnimator;
-import com.ahmedaraby.game.pacman.config.Configs;
-import com.ahmedaraby.game.pacman.constant.DirectionsE;
 import com.ahmedaraby.game.pacman.constant.SpriteFileNameC;
-import com.ahmedaraby.jengine.entity.Coordinate;
 import com.ahmedaraby.game.pacman.ghostmode.Chaser;
 
 public class BlinkyChaser extends Chaser {
 
-    private final Animator animator;
-
     public BlinkyChaser(Ghost ghost, GameState gameState, ConfigsEx configs, SpriteRegistry<String, Image> spriteRegistry, int[] activePeriodsSec) {
-        super(ghost, gameState, configs, spriteRegistry, activePeriodsSec);
-
-        final Image[] frames = loadSprites();
-        this.animator = new DistanceBasedAnimator(
-                new double[]{configs.GHOST_BLINK_FIRST_FRAME_DISTANCE(), configs.GHOST_BLINK_SECOND_FRAME_DISTANCE()}, frames);
+        super(ghost, gameState, configs, spriteRegistry, activePeriodsSec, new double[]{configs.GHOST_BLINK_FIRST_FRAME_DISTANCE(), configs.GHOST_BLINK_SECOND_FRAME_DISTANCE()});
     }
 
     @Override
@@ -33,22 +23,12 @@ public class BlinkyChaser extends Chaser {
 
     @Override
     public void move() {
-        final Coordinate pacmanCurrCord = gameState.getPacMan().getTopLeftCorner();
-        final DirectionsE directionsE = navigator.calcDir(ghost, pacmanCurrCord);
-        final Coordinate ghostNewCord = ghost.calculateNextCord(directionsE.toVector());
-
-        ghost.setDir(directionsE);
-        ghost.setRow(ghostNewCord.getRow());
-        ghost.setCol(ghostNewCord.getCol());
-
-        if(directionsE != DirectionsE.STILL) {
-            animator.stride(configs.GHOST_BLINKY_SPEED() / Configs.FRAMES_PER_SEC_FOR_GHOST_STRIDE);
-        }
-
+        final Vector newDir = targetNavigator.calcDir(ghost, gameState.getPacMan());
+        moveAt(newDir);
     }
 
-
-    private Image[] loadSprites() {
+    @Override
+    protected Image[] loadSprites() {
         final String frame1Path = String.format(SpriteFileNameC.GHOST_SPRITE_PATH_TEMPLATE, SpriteFileNameC.BLINKY_FOLDER, SpriteFileNameC.BLINKY_FRAME_1_FILE_NAME);
         final String frame2Path = String.format(SpriteFileNameC.GHOST_SPRITE_PATH_TEMPLATE, SpriteFileNameC.BLINKY_FOLDER, SpriteFileNameC.BLINKY_FRAME_2_FILE_NAME);
         final Image frame1 = spriteRegistry.get(frame1Path);

@@ -1,16 +1,15 @@
 package com.ahmedaraby.game.pacman.sprite.playground;
 
 import com.ahmedaraby.game.pacman.config.intConfigs.ConfigsEx;
-import com.ahmedaraby.game.pacman.constant.DirectionsE;
 import com.ahmedaraby.game.pacman.constant.SpriteE;
-import com.ahmedaraby.game.pacman.event.EventType;
+import com.ahmedaraby.game.pacman.model.event.EventType;
 import com.ahmedaraby.game.pacman.util.SpriteUtil;
 import com.ahmedaraby.jengine.entity.Coordinate;
 import com.ahmedaraby.jengine.entity.Rectangle;
-import com.ahmedaraby.game.pacman.entity.Cell;
-import com.ahmedaraby.game.pacman.event.Event;
+import com.ahmedaraby.game.pacman.model.Cell;
+import com.ahmedaraby.game.pacman.model.event.Event;
 import com.ahmedaraby.jengine.event.Subscriber;
-import com.ahmedaraby.game.pacman.event.collision.PacMan2SugarCollisionEvent;
+import com.ahmedaraby.game.pacman.model.event.collision.PacMan2SugarCollisionEvent;
 import com.ahmedaraby.game.pacman.model.GameState;
 import com.ahmedaraby.game.pacman.sprite.Sprite;
 import javafx.scene.canvas.Canvas;
@@ -60,7 +59,7 @@ public class SuperSugar extends Sprite implements Subscriber<EventType> {
     }
 
     public void removeSugar(Rectangle rect) {
-        final Cell sugarCellMazeTopLeftCornerCoordinate = rect.getTopLeftCorner().toCell(DirectionsE.STILL.toVector());
+        final Cell sugarCellMazeTopLeftCornerCoordinate = rect.getTopLeftCorner().toCell();
         Playground.set(sugarCellMazeTopLeftCornerCoordinate.getRow(), sugarCellMazeTopLeftCornerCoordinate.getCol(), SpriteE.EMPTY);
     }
 }

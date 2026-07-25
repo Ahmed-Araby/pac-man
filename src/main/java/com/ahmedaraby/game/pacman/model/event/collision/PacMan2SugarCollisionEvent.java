@@ -1,9 +1,9 @@
-package com.ahmedaraby.game.pacman.event.collision;
+package com.ahmedaraby.game.pacman.model.event.collision;
 
 import lombok.Getter;
 import com.ahmedaraby.jengine.entity.Rectangle;
-import com.ahmedaraby.game.pacman.event.Event;
-import com.ahmedaraby.game.pacman.event.EventType;
+import com.ahmedaraby.game.pacman.model.event.Event;
+import com.ahmedaraby.game.pacman.model.event.EventType;
 
 public class PacMan2SugarCollisionEvent extends Event<EventType> {
 

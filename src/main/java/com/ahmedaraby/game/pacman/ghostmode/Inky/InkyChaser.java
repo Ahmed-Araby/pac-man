@@ -1,9 +1,6 @@
 package com.ahmedaraby.game.pacman.ghostmode.Inky;
 
 import com.ahmedaraby.game.pacman.config.intConfigs.ConfigsEx;
-import com.ahmedaraby.jengine.animation.DistanceBasedAnimator;
-import com.ahmedaraby.game.pacman.config.Configs;
-import com.ahmedaraby.game.pacman.constant.DirectionsE;
 import com.ahmedaraby.game.pacman.constant.SpriteFileNameC;
 import com.ahmedaraby.jengine.entity.Coordinate;
 import com.ahmedaraby.jengine.entity.Rectangle;
@@ -20,15 +17,10 @@ import com.ahmedaraby.game.pacman.ghostmode.Chaser;
 
 public class InkyChaser extends Chaser {
 
-    private final DistanceBasedAnimator animator;
 
     public InkyChaser(Ghost ghost, GameState gameState, ConfigsEx configs, SpriteRegistry<String, Image> spriteRegistry, int[] activePeriodsSec) {
-        super(ghost, gameState, configs, spriteRegistry, activePeriodsSec);
-        final Image[] frames = loadSprites();
-        animator = new DistanceBasedAnimator(
-                new double[]{configs.GHOST_INKY_FIRST_FRAME_DISTANCE(), configs.GHOST_INKY_SECOND_FRAME_DISTANCE()}
-                ,frames
-        );
+        super(ghost, gameState, configs, spriteRegistry, activePeriodsSec,
+                new double[]{configs.GHOST_INKY_FIRST_FRAME_DISTANCE(), configs.GHOST_INKY_SECOND_FRAME_DISTANCE()});
     }
 
     @Override
@@ -44,23 +36,14 @@ public class InkyChaser extends Chaser {
         final Line blinky2InterTileLine = makeLineFromBlinkyToIntermediateTile(interTile);
         final Coordinate target = calculateTheTargetCoordinate(blinky2InterTileLine);
 
-        // navigate the ghost to the target
-        DirectionsE newDir = navigator.calcDir(ghost, target);
-
-        if (newDir != null) {
-            animator.stride(configs.GHOST_INKY_SPEED() / Configs.FRAMES_PER_SEC_FOR_GHOST_STRIDE);
-
-            final Coordinate newCord = ghost.calculateNextCord(newDir.toVector());
-
-            ghost.setDir(newDir);
-            ghost.setCol(newCord.getCol());
-            ghost.setRow(newCord.getRow());
-        }
+        // move
+        final Vector newDir = targetNavigator.calcDir(ghost, target);
+        moveAt(newDir);
     }
 
     private Coordinate calculateIntermediateTile() {
         final Coordinate pacManCord = gameState.getPacMan().getTopLeftCorner();
-        final Vector pacManDir = gameState.getPacMan().getDir().toVector();
+        final Vector pacManDir = gameState.getPacMan().getDirV();
         return pacManCord.add(
                 configs.PLAYGROUND_CELL_SIZE() * 2 * pacManDir.getX(),
                 configs.PLAYGROUND_CELL_SIZE() * 2 * pacManDir.getY()
@@ -88,7 +71,8 @@ public class InkyChaser extends Chaser {
                 .getEnd();  // endpoint is the target coordinate for Inky
     }
 
-    private Image[] loadSprites() {
+    @Override
+    protected Image[] loadSprites() {
         final String frame1Path = String.format(SpriteFileNameC.GHOST_SPRITE_PATH_TEMPLATE, SpriteFileNameC.INKY_FOLDER, SpriteFileNameC.INKY_FRAME_1_FILE_NAME);
         final String frame2Path = String.format(SpriteFileNameC.GHOST_SPRITE_PATH_TEMPLATE, SpriteFileNameC.INKY_FOLDER, SpriteFileNameC.INKY_FRAME_2_FILE_NAME);
         final Image frame1 = spriteRegistry.get(frame1Path);
