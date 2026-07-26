@@ -35,7 +35,7 @@ import java.io.FileNotFoundException;
 import java.net.URISyntaxException;
 
 
-public class GamePlayGameScene implements GameScene {
+public class GamePlayGameScene extends GameScene {
     private final ConfigsEx configs;
     private final GameState gameState = new GameState();
     private final SpriteRegistry<String, Image> spriteRegistry = new FxSpriteRegistry();
@@ -53,11 +53,6 @@ public class GamePlayGameScene implements GameScene {
     private Inky inky;
     private Pinky pinky;
     private Clyde clyde;
-
-    // javaFX
-    final Pane pane;
-    final Canvas canvas;
-    final Scene scene;
 
     // game engine
     final SyncEventManager<EventType, Event<EventType>> syncEventManager;
@@ -177,11 +172,6 @@ public class GamePlayGameScene implements GameScene {
         inky.init();
         pinky.init();
         clyde.init();
-    }
-
-    @Override
-    public Scene getScene() {
-        return scene;
     }
 
     @Override
