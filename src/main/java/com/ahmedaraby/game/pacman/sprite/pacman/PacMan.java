@@ -3,8 +3,13 @@ package com.ahmedaraby.game.pacman.sprite.pacman;
 import com.ahmedaraby.game.pacman.config.intConfigs.ConfigsEx;
 import com.ahmedaraby.game.pacman.constant.ColorC;
 import com.ahmedaraby.game.pacman.constant.SpriteE;
+import com.ahmedaraby.game.pacman.ghostmode.Chaser;
+import com.ahmedaraby.game.pacman.ghostmode.Scattered;
 import com.ahmedaraby.game.pacman.model.event.EventType;
 import com.ahmedaraby.game.pacman.ghostmode.navigation.StrideCalculator;
+import com.ahmedaraby.game.pacman.model.event.collision.PacMan2GhostCollisionEvent;
+import com.ahmedaraby.game.pacman.model.exception.GameOverException;
+import com.ahmedaraby.game.pacman.model.exception.SceneTransitionException;
 import com.ahmedaraby.game.pacman.sprite.MovingSprite;
 import com.ahmedaraby.game.pacman.util.pacman.TurnBuffer;
 import com.ahmedaraby.jengine.entity.Coordinate;
@@ -159,6 +164,13 @@ public class PacMan extends MovingSprite implements Subscriber<EventType> {
         switch (event.getType()) {
             case PAC_MAN_MOVEMENT_REQUEST:
                 move(event);
+                break;
+            case PAC_MAN_GHOST_COLLISION:
+                final PacMan2GhostCollisionEvent collisionEvent = (PacMan2GhostCollisionEvent) event;
+                if (collisionEvent.getGhost().getActiveMode() instanceof Chaser
+                        || collisionEvent.getGhost().getActiveMode() instanceof Scattered) {
+                    throw new GameOverException(gameState, configs);
+                }
                 break;
             default:
                 throw new UnsupportedOperationException();

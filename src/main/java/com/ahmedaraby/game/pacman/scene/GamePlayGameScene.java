@@ -19,7 +19,6 @@ import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
 import javafx.scene.layout.Pane;
-import javafx.scene.paint.Color;
 import com.ahmedaraby.game.pacman.constant.ColorC;
 import com.ahmedaraby.game.pacman.model.event.EventType;
 import com.ahmedaraby.jengine.event.SyncEventManager;
@@ -91,6 +90,7 @@ public class GamePlayGameScene extends GameScene {
         canvas = new Canvas(configs.CANVAS_WIDTH(), configs.CANVAS_HEIGHT());
         pane = new Pane(canvas);
         scene = new Scene(pane);
+        // [TODO] unregister the input handler
         scene.setOnKeyPressed((event) -> {
             javaFXInputHandler.handleKeyPressedEvent(event);
         });
@@ -149,6 +149,7 @@ public class GamePlayGameScene extends GameScene {
         syncEventManager.subscribe(EventType.PAC_MAN_GHOST_COLLISION, inky);
         syncEventManager.subscribe(EventType.PAC_MAN_GHOST_COLLISION, pinky);
         syncEventManager.subscribe(EventType.PAC_MAN_GHOST_COLLISION, clyde);
+        syncEventManager.subscribe(EventType.PAC_MAN_GHOST_COLLISION, pacMan);
     }
 
     // [TODO] remove this method

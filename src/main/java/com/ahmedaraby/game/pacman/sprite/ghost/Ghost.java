@@ -17,6 +17,7 @@ import com.ahmedaraby.game.pacman.ghostmode.common.Frightened;
 import com.ahmedaraby.game.pacman.model.GameState;
 import com.ahmedaraby.jengine.entity.Vector;
 import com.ahmedaraby.jengine.event.Subscriber;
+import lombok.Getter;
 
 public abstract class Ghost extends MachineControlledSprite implements Subscriber<EventType> {
     // modes
@@ -25,6 +26,7 @@ public abstract class Ghost extends MachineControlledSprite implements Subscribe
     protected TemporalGhostMode frightened;
     protected GhostMode eaten;
 
+    @Getter
     protected GhostMode activeMode;
     protected TemporalGhostMode previousMode;
 
