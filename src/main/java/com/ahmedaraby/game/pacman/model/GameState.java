@@ -3,6 +3,8 @@ package com.ahmedaraby.game.pacman.model;
 import com.ahmedaraby.game.pacman.sprite.ghost.Ghost;
 import com.ahmedaraby.game.pacman.sprite.playground.GhostHouseS;
 import com.ahmedaraby.game.pacman.sprite.playground.Maze;
+import com.ahmedaraby.game.pacman.sprite.playground.Sugar;
+import com.ahmedaraby.game.pacman.sprite.playground.SuperSugar;
 import lombok.*;
 import com.ahmedaraby.game.pacman.sprite.pacman.PacMan;
 
@@ -18,6 +20,8 @@ import java.util.List;
 public class GameState {
     private Maze maze;
     private PacMan pacMan;
+    private Sugar sugar;
+    private SuperSugar superSugar;
     @Setter(AccessLevel.NONE)
     private List<Ghost> ghosts = new ArrayList<>();
     private GhostHouseS ghostHouseS;

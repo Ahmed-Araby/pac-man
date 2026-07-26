@@ -123,8 +123,10 @@ public class GamePlayGameScene implements GameScene {
 
     private void setGameState() {
         gameState.setMaze(maze);
-        gameState.setPacMan(pacMan);
         gameState.setGhostHouseS(ghostHouseS);
+        gameState.setSugar(sugar);
+        gameState.setSuperSugar(superSugar);
+        gameState.setPacMan(pacMan);
 
         // track ghosts
         gameState.addGhost(blinky);
