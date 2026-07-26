@@ -1,6 +1,6 @@
 package com.ahmedaraby.game.pacman;
 
-import com.ahmedaraby.game.pacman.scene.GamePlayGameScene;
+import com.ahmedaraby.game.pacman.scene.GameLoop;
 import javafx.animation.AnimationTimer;
 import javafx.application.Application;
 import javafx.stage.Stage;
@@ -15,21 +15,8 @@ public class Main extends Application
 
     @Override
     public void start(Stage stage) throws Exception {
-        GameConfig.load();
 
-        stage.setTitle("Pac Man Game");
-        GamePlayGameScene gamePlayGameScene = new GamePlayGameScene();
-        stage.setScene(gamePlayGameScene.getScene());
-        stage.show();
-
-        final AnimationTimer gameLoop = new AnimationTimer() {
-            @Override
-            public void handle(long l) {
-                // clear the canvas
-                gamePlayGameScene.update();
-                gamePlayGameScene.render();
-            }
-        };
+        final AnimationTimer gameLoop = new GameLoop(stage);
         gameLoop.start();
     }
 }

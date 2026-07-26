@@ -24,6 +24,7 @@ import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import com.ahmedaraby.game.pacman.playground.Playground;
 import javafx.scene.shape.ArcType;
+import lombok.Getter;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -34,8 +35,11 @@ public class PacMan extends MovingSprite implements Subscriber<EventType> {
     private final PacManMouthAnimationTracker mouthAnimationTracker;
 
     // pacman mouse geometric information
+    @Getter
     private double arcStartAngle;
+    @Getter
     private double arcExtent;
+
     private final Map<Vector, Integer> openMouthStartAngleByDir = new HashMap<>();
 
     public PacMan(GameState gameState, ConfigsEx configs, StrideCalculator strideCalc) {
