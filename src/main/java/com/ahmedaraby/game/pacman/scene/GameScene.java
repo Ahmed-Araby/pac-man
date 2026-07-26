@@ -1,9 +1,18 @@
 package com.ahmedaraby.game.pacman.scene;
 
 import javafx.scene.Scene;
+import javafx.scene.canvas.Canvas;
+import javafx.scene.layout.Pane;
+import lombok.Getter;
 
-public interface GameScene {
-    Scene getScene();
-    void render();
-    void update();
+
+public abstract class GameScene {
+    // javaFX
+    protected Pane pane;
+    protected Canvas canvas;
+    @Getter
+    protected Scene scene;
+
+    public abstract void render();
+    public abstract void update();
 }

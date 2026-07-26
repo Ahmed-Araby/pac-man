@@ -20,7 +20,6 @@ import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
-import com.ahmedaraby.game.pacman.config.GameConfig;
 import com.ahmedaraby.game.pacman.constant.ColorC;
 import com.ahmedaraby.game.pacman.model.event.EventType;
 import com.ahmedaraby.jengine.event.SyncEventManager;
@@ -31,7 +30,6 @@ import com.ahmedaraby.game.pacman.sound.SoundPlayer;
 import com.ahmedaraby.game.pacman.sprite.pacman.PacMan;
 import com.ahmedaraby.game.pacman.sprite.ghost.Inky;
 import com.ahmedaraby.game.pacman.sprite.playground.SuperSugar;
-import com.ahmedaraby.game.pacman.util.debug.DebugUtil;
 
 import java.io.FileNotFoundException;
 import java.net.URISyntaxException;
@@ -198,10 +196,6 @@ public class GamePlayGameScene implements GameScene {
         ghostHouseS.render(canvas);
         sugar.render(canvas);
         superSugar.render(canvas);
-
-        if(GameConfig.isDebugModeOn()) {
-            DebugUtil.drawDummyPacman(context, 0, 0, configs.PACMAN_DIAMETER(), configs.PACMAN_DIAMETER(), Color.GRAY);
-        }
 
         pacMan.render(canvas);
         blinky.render(canvas);

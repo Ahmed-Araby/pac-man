@@ -6,12 +6,10 @@ import com.ahmedaraby.game.pacman.model.GameState;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.paint.Color;
-import com.ahmedaraby.game.pacman.config.GameConfig;
 import com.ahmedaraby.game.pacman.constant.SpriteE;
 import com.ahmedaraby.jengine.entity.Coordinate;
 import com.ahmedaraby.game.pacman.playground.Playground;
 import com.ahmedaraby.game.pacman.sprite.Sprite;
-import com.ahmedaraby.game.pacman.util.debug.DebugUtil;
 
 public class Maze extends Sprite {
 
@@ -40,14 +38,6 @@ public class Maze extends Sprite {
 
                     con.setFill(configs.PLAYGROUND_WALL_COLOR());
                     con.fillRect(canvasCord.getCol(), canvasCord.getRow(), MAZE_CELL_SIZE, MAZE_CELL_SIZE);
-                    if (GameConfig.isDebugModeOn()) {
-                        DebugUtil.drawVirtualRect(con, canvasCord.getCol(), canvasCord.getRow(), MAZE_CELL_SIZE, MAZE_CELL_SIZE, Color.RED);
-
-                    }
-                } else {
-                    if(GameConfig.isDebugModeOn()) {
-                        DebugUtil.drawVirtualRect(con, canvasCord.getCol(), canvasCord.getRow(), MAZE_CELL_SIZE, MAZE_CELL_SIZE, Color.YELLOW);
-                    }
                 }
             }
         }

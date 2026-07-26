@@ -4,7 +4,6 @@ import com.ahmedaraby.game.pacman.scene.GamePlayGameScene;
 import javafx.animation.AnimationTimer;
 import javafx.application.Application;
 import javafx.stage.Stage;
-import com.ahmedaraby.game.pacman.config.GameConfig;
 
 
 public class Main extends Application
