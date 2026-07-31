@@ -35,6 +35,8 @@ public class GameLoop extends AnimationTimer {
     private void transitionScene(SceneTransitionException exc) {
         if (activeScene instanceof GamePlayGameScene) {
             transitionFromGamePlayScene((GameOverException) exc);
+        } else if (activeScene instanceof DemolishingScene) {
+            transitionFromDemolishingScene();
         }
     }
 
@@ -44,4 +46,12 @@ public class GameLoop extends AnimationTimer {
         stage.setScene(activeScene.getScene());
         stage.show();
     }
+
+    @SneakyThrows
+    private void transitionFromDemolishingScene() {
+        activeScene = new GamePlayGameScene();
+        stage.setScene(activeScene.getScene());
+        stage.show();
+    }
+
 }
