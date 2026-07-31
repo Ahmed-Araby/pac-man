@@ -3,6 +3,7 @@ package com.ahmedaraby.game.pacman.scene;
 import com.ahmedaraby.game.pacman.config.intConfigs.ConfigsEx;
 import com.ahmedaraby.game.pacman.constant.ColorC;
 import com.ahmedaraby.game.pacman.model.GameState;
+import com.ahmedaraby.game.pacman.sound.DemolishingSoundPlayer;
 import com.ahmedaraby.game.pacman.sprite.ghost.*;
 import com.ahmedaraby.game.pacman.sprite.pacman.DyingPacManS;
 import com.ahmedaraby.game.pacman.sprite.playground.GhostHouseS;
@@ -17,6 +18,8 @@ import javafx.scene.layout.Pane;
 public class DemolishingScene extends GameScene {
     private final GameState gameState;
     private final ConfigsEx configs;
+    private final DemolishingSoundPlayer soundPlayer;
+
     // sprites
     GhostHouseS ghostHouseS;
     Maze maze;
@@ -29,6 +32,7 @@ public class DemolishingScene extends GameScene {
     private Inky inky;
     private Pinky pinky;
     private Clyde clyde;
+
 
     public DemolishingScene(Canvas canvas, Pane pane, Scene scene,
                             GameState gameState, ConfigsEx configs) {
@@ -44,6 +48,8 @@ public class DemolishingScene extends GameScene {
         superSugar = gameState.getSuperSugar();
         this.dyingPacMan = new DyingPacManS(gameState.getPacMan(), gameState, configs);
         gameState.setPrevFrameEndedAt(System.nanoTime());
+        soundPlayer = new DemolishingSoundPlayer(configs);
+        soundPlayer.playPacManDyingSound();
     }
 
     private void setGhosts() {

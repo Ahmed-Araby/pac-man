@@ -83,3 +83,4 @@ superSugar:
 
 sound:
   pacmanEatSugarPath: "/assets/sounds/eat_sugar.wav"
+  pacManDyingPath: "/assets/sounds/death.wav"

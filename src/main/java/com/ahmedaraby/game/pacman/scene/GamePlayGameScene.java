@@ -6,6 +6,7 @@ import com.ahmedaraby.game.pacman.config.intConfigs.ConfigsEx;
 import com.ahmedaraby.game.pacman.model.event.Event;
 import com.ahmedaraby.game.pacman.ghostmode.navigation.StrideCalculator;
 import com.ahmedaraby.game.pacman.model.GameState;
+import com.ahmedaraby.game.pacman.sound.GamePlaySoundPlayer;
 import com.ahmedaraby.game.pacman.sprite.ghost.Blinky;
 import com.ahmedaraby.game.pacman.sprite.ghost.Clyde;
 import com.ahmedaraby.game.pacman.sprite.ghost.Pinky;
@@ -25,7 +26,6 @@ import com.ahmedaraby.jengine.event.SyncEventManager;
 import com.ahmedaraby.game.pacman.input.JavaFXInputHandler;
 import com.ahmedaraby.game.pacman.input.JavaFXUserInputHandler;
 import com.ahmedaraby.game.pacman.playground.Playground;
-import com.ahmedaraby.game.pacman.sound.SoundPlayer;
 import com.ahmedaraby.game.pacman.sprite.pacman.PacMan;
 import com.ahmedaraby.game.pacman.sprite.ghost.Inky;
 import com.ahmedaraby.game.pacman.sprite.playground.SuperSugar;
@@ -41,11 +41,11 @@ public class GamePlayGameScene extends GameScene {
     private final StrideCalculator strideCalculator;
 
     // sprites
-    GhostHouseS ghostHouseS;
-    Maze maze;
-    Sugar sugar;
-    SuperSugar superSugar;
-    PacMan pacMan;
+    private GhostHouseS ghostHouseS;
+    private Maze maze;
+    private Sugar sugar;
+    private SuperSugar superSugar;
+    private PacMan pacMan;
 
     // ghosts
     private Blinky blinky;
@@ -54,10 +54,10 @@ public class GamePlayGameScene extends GameScene {
     private Clyde clyde;
 
     // game engine
-    final SyncEventManager<EventType, Event<EventType>> syncEventManager;
+    private final SyncEventManager<EventType, Event<EventType>> syncEventManager;
 
-    final SoundPlayer soundPlayer;
-    final JavaFXInputHandler javaFXInputHandler;
+    private final GamePlaySoundPlayer gamePlaySoundPlayer;
+    private final JavaFXInputHandler javaFXInputHandler;
 
     // collision detection
     private final CollisionSystem collisionSystem;
@@ -71,7 +71,7 @@ public class GamePlayGameScene extends GameScene {
 
         // game engine
         syncEventManager = new SyncEventManager();
-        soundPlayer = new SoundPlayer();
+        gamePlaySoundPlayer = new GamePlaySoundPlayer(configs);
         javaFXInputHandler = new JavaFXUserInputHandler(syncEventManager);
         collisionSystem = new CollisionSystem(gameState, syncEventManager);
 
@@ -130,14 +130,14 @@ public class GamePlayGameScene extends GameScene {
     }
 
     private void registerEventSubscribers() {
-        if (soundPlayer == null || sugar == null || pacMan == null) {
-            throw new IllegalStateException("can't register null sprite for event subscription, SoundPlayer, Sugar and PacMan sprites must be defined");
+        if (gamePlaySoundPlayer == null || sugar == null || pacMan == null) {
+            throw new IllegalStateException("can't register null sprite for event subscription, GamePlaySoundPlayer, Sugar and PacMan sprites must be defined");
         }
 
-        syncEventManager.subscribe(EventType.PAC_MAN_SUGAR_COLLISION, soundPlayer);
+        syncEventManager.subscribe(EventType.PAC_MAN_SUGAR_COLLISION, gamePlaySoundPlayer);
         syncEventManager.subscribe(EventType.PAC_MAN_SUGAR_COLLISION, sugar);
 
-        syncEventManager.subscribe(EventType.PAC_MAN_SUPER_SUGAR_COLLISION, soundPlayer);
+        syncEventManager.subscribe(EventType.PAC_MAN_SUPER_SUGAR_COLLISION, gamePlaySoundPlayer);
         syncEventManager.subscribe(EventType.PAC_MAN_SUPER_SUGAR_COLLISION, superSugar);
 
         syncEventManager.subscribe(EventType.PAC_MAN_SUPER_SUGAR_COLLISION, blinky);

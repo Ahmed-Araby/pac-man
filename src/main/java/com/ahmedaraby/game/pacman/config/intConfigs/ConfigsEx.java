@@ -248,4 +248,8 @@ public class ConfigsEx {
     public double SUPER_SUGAR_PERCENTAGE() {
         return superSugar.getPercentage();
     }
+
+    public String PAC_MAN_DYING_CLIP_PATH() {
+        return sound.getPacManDyingPath();
+    }
 }

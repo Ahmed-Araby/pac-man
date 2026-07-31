@@ -1,15 +1,17 @@
 package com.ahmedaraby.game.pacman.sound;
 
+import com.ahmedaraby.game.pacman.config.intConfigs.ConfigsEx;
 import com.ahmedaraby.game.pacman.constant.SoundFileNameC;
 import com.ahmedaraby.game.pacman.model.event.Event;
 import com.ahmedaraby.game.pacman.model.event.EventType;
 import javafx.scene.media.AudioClip;
 import com.ahmedaraby.jengine.event.Subscriber;
 
-public class SoundPlayer implements Subscriber<EventType> {
+public class GamePlaySoundPlayer implements Subscriber<EventType> {
 
     private AudioClip eatSugar;
-    public SoundPlayer() {
+
+    public GamePlaySoundPlayer(ConfigsEx configs) {
         // load eat sugar sound
         final String PAC_MAN_EAT_SUGAR_SOUND_FILE_ABSOLUTE_PATH = getClass().getResource(SoundFileNameC.PAC_MAN_EAT_SUGAR_SOUND_FILE_RESOURCES_RELATIVE_PATH).toString();
         System.out.println("PAC_MAN_EAT_SUGAR_SOUND_FILE_ABSOLUTE_PATH = " + PAC_MAN_EAT_SUGAR_SOUND_FILE_ABSOLUTE_PATH);
