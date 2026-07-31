@@ -3,7 +3,10 @@ package com.ahmedaraby.game.pacman.sprite.pacman;
 import com.ahmedaraby.game.pacman.config.intConfigs.ConfigsEx;
 import com.ahmedaraby.game.pacman.constant.ColorC;
 import com.ahmedaraby.game.pacman.constant.SpriteE;
+import com.ahmedaraby.game.pacman.model.GameState;
 import com.ahmedaraby.game.pacman.model.event.Event;
+import com.ahmedaraby.game.pacman.model.exception.GameOverException;
+import com.ahmedaraby.game.pacman.model.exception.GameStartException;
 import com.ahmedaraby.game.pacman.sprite.MovingSprite;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
@@ -13,12 +16,14 @@ public class DyingPacManS extends MovingSprite {
     // pacman mouse geometric information
     private double arcStartAngle;
     private double arcExtent;
+    private final double originalArcExtent;
 
-    public DyingPacManS(PacMan pacMan, ConfigsEx configs) {
-        super(null, configs, null, SpriteE.DEMOLISHING_PAC_MAN,
+    public DyingPacManS(PacMan pacMan, GameState gameState, ConfigsEx configs) {
+        super(gameState, configs, null, SpriteE.DEMOLISHING_PAC_MAN,
                 pacMan.getTopLeftCorner(), pacMan.getWidth(), pacMan.getHeight(), pacMan.getDirV());
         arcStartAngle = pacMan.getArcStartAngle();
         arcExtent = pacMan.getArcExtent();
+        originalArcExtent = pacMan.getArcExtent();
     }
 
     @Override
@@ -31,6 +36,13 @@ public class DyingPacManS extends MovingSprite {
 
     @Override
     public void move(Event event) {
-        // [TODO] collapse pacman
+        final double elapsedTime = Math.abs(gameState.getCurrFrameStartedAt() - gameState.getPrevFrameEndedAt()) / 1_000_000_000.0;
+        final double elapsed2DeathTimeRatio = elapsedTime / configs.PACMAN_DEATH_PERIOD_SEC();
+        final double demolishedDeg = elapsed2DeathTimeRatio * originalArcExtent;
+        arcStartAngle += demolishedDeg / 2;
+        arcExtent -= demolishedDeg;
+        if (arcExtent <= 0) {
+            throw new GameStartException();
+        }
     }
 }

@@ -68,6 +68,11 @@ public class ConfigsEx {
         return pacman.getDiameter();
     }
 
+    // equals to the length of the dying music
+    public int PACMAN_DEATH_PERIOD_SEC() {
+        return pacman.getDeathPeriodSec();
+    }
+
     public double PACMAN_MOUTH_ANIMATION_COMPLETE_DIST() {
         return pacman.getMouth().getAnimation().getCompleteDist();
     }

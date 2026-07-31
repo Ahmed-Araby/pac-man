@@ -42,7 +42,8 @@ public class DemolishingScene extends GameScene {
         setGhosts();
         sugar = gameState.getSugar();
         superSugar = gameState.getSuperSugar();
-        this.dyingPacMan = new DyingPacManS(gameState.getPacMan(), configs);
+        this.dyingPacMan = new DyingPacManS(gameState.getPacMan(), gameState, configs);
+        gameState.setPrevFrameEndedAt(System.nanoTime());
     }
 
     private void setGhosts() {
@@ -83,10 +84,12 @@ public class DemolishingScene extends GameScene {
         inky.render(canvas);
         pinky.render(canvas);
         clyde.render(canvas);
+        gameState.setPrevFrameEndedAt(System.nanoTime());
     }
 
     @Override
     public void update() {
+        gameState.setCurrFrameStartedAt(System.nanoTime());
         dyingPacMan.move(null);
     }
 }
