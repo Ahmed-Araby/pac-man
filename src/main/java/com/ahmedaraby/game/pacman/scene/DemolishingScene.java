@@ -3,16 +3,13 @@ package com.ahmedaraby.game.pacman.scene;
 import com.ahmedaraby.game.pacman.config.intConfigs.ConfigsEx;
 import com.ahmedaraby.game.pacman.constant.ColorC;
 import com.ahmedaraby.game.pacman.model.GameState;
-import com.ahmedaraby.game.pacman.model.event.Event;
-import com.ahmedaraby.game.pacman.model.event.EventType;
 import com.ahmedaraby.game.pacman.sound.SoundPlayer;
 import com.ahmedaraby.game.pacman.sprite.ghost.*;
-import com.ahmedaraby.game.pacman.sprite.pacman.DyingPacManS;
+import com.ahmedaraby.game.pacman.sprite.pacman.PacMan;
 import com.ahmedaraby.game.pacman.sprite.playground.GhostHouseS;
 import com.ahmedaraby.game.pacman.sprite.playground.Maze;
 import com.ahmedaraby.game.pacman.sprite.playground.Sugar;
 import com.ahmedaraby.game.pacman.sprite.playground.SuperSugar;
-import com.ahmedaraby.jengine.event.SyncEventManager;
 import javafx.scene.Scene;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
@@ -24,11 +21,11 @@ public class DemolishingScene extends GameScene {
     private final SoundPlayer soundPlayer;
 
     // sprites
-    GhostHouseS ghostHouseS;
-    Maze maze;
-    Sugar sugar;
-    SuperSugar superSugar;
-    DyingPacManS dyingPacMan;
+    private final GhostHouseS ghostHouseS;
+    private final Maze maze;
+    private final Sugar sugar;
+    private final SuperSugar superSugar;
+    private final PacMan pacMan;
 
     // ghosts
     private Blinky blinky;
@@ -47,10 +44,10 @@ public class DemolishingScene extends GameScene {
         // initiate sprites
         ghostHouseS = gameState.getGhostHouseS();
         maze = gameState.getMaze();
+        pacMan = gameState.getPacMan();
         setGhosts();
         sugar = gameState.getSugar();
         superSugar = gameState.getSuperSugar();
-        this.dyingPacMan = new DyingPacManS(gameState.getPacMan(), gameState, soundPlayer, configs);
         gameState.setPrevFrameEndedAt(System.nanoTime());
     }
 
@@ -84,8 +81,7 @@ public class DemolishingScene extends GameScene {
         sugar.render(canvas);
         superSugar.render(canvas);
 
-        // pacman
-        dyingPacMan.render(canvas);
+        pacMan.render(canvas);
 
         // ghosts
         blinky.render(canvas);
@@ -98,6 +94,6 @@ public class DemolishingScene extends GameScene {
     @Override
     public void update() {
         gameState.setCurrFrameStartedAt(System.nanoTime());
-        dyingPacMan.move(null);
+        pacMan.move(null);
     }
 }

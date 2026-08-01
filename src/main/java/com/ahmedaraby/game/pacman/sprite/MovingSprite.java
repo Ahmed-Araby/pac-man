@@ -79,7 +79,7 @@ public abstract class MovingSprite extends Sprite {
      *
      * @return true is the movement is possible.
      */
-    protected boolean isPossibleToMoveInSameDir() {
+    public boolean isPossibleToMoveInSameDir() {
         if (dirV == Vector.STILL) {
             return false;
         }
@@ -100,7 +100,7 @@ public abstract class MovingSprite extends Sprite {
      * @param dir new direction
      * @return true of the movement is possible
      */
-    protected boolean isPossibleToMoveInNewDir(Vector dir) {
+    public boolean isPossibleToMoveInNewDir(Vector dir) {
         if (dir == Vector.STILL) {
             return false;
         }

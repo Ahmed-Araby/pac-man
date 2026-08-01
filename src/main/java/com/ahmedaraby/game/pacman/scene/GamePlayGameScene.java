@@ -6,7 +6,7 @@ import com.ahmedaraby.game.pacman.config.intConfigs.ConfigsEx;
 import com.ahmedaraby.game.pacman.model.event.Event;
 import com.ahmedaraby.game.pacman.ghostmode.navigation.StrideCalculator;
 import com.ahmedaraby.game.pacman.model.GameState;
-import com.ahmedaraby.game.pacman.sound.GamePlaySoundPlayer;
+import com.ahmedaraby.game.pacman.sound.SoundPlayer;
 import com.ahmedaraby.game.pacman.sprite.ghost.Blinky;
 import com.ahmedaraby.game.pacman.sprite.ghost.Clyde;
 import com.ahmedaraby.game.pacman.sprite.ghost.Pinky;
@@ -56,7 +56,7 @@ public class GamePlayGameScene extends GameScene {
     // game engine
     private final SyncEventManager<EventType, Event<EventType>> syncEventManager;
 
-    private final GamePlaySoundPlayer gamePlaySoundPlayer;
+    private final SoundPlayer soundPlayer;
     private final JavaFXInputHandler javaFXInputHandler;
 
     // collision detection
@@ -71,7 +71,7 @@ public class GamePlayGameScene extends GameScene {
 
         // game engine
         syncEventManager = new SyncEventManager();
-        gamePlaySoundPlayer = new GamePlaySoundPlayer(configs);
+        soundPlayer = new SoundPlayer(configs);
         javaFXInputHandler = new JavaFXUserInputHandler(syncEventManager);
         collisionSystem = new CollisionSystem(gameState, syncEventManager);
 
@@ -127,17 +127,20 @@ public class GamePlayGameScene extends GameScene {
         gameState.addGhost(pinky);
         gameState.addGhost(clyde);
 
+        // game engine
+        gameState.setSoundPlayer(soundPlayer);
+
     }
 
     private void registerEventSubscribers() {
-        if (gamePlaySoundPlayer == null || sugar == null || pacMan == null) {
+        if (soundPlayer == null || sugar == null || pacMan == null) {
             throw new IllegalStateException("can't register null sprite for event subscription, GamePlaySoundPlayer, Sugar and PacMan sprites must be defined");
         }
 
-        syncEventManager.subscribe(EventType.PAC_MAN_SUGAR_COLLISION, gamePlaySoundPlayer);
+        syncEventManager.subscribe(EventType.PAC_MAN_SUGAR_COLLISION, soundPlayer);
         syncEventManager.subscribe(EventType.PAC_MAN_SUGAR_COLLISION, sugar);
 
-        syncEventManager.subscribe(EventType.PAC_MAN_SUPER_SUGAR_COLLISION, gamePlaySoundPlayer);
+        syncEventManager.subscribe(EventType.PAC_MAN_SUPER_SUGAR_COLLISION, soundPlayer);
         syncEventManager.subscribe(EventType.PAC_MAN_SUPER_SUGAR_COLLISION, superSugar);
 
         syncEventManager.subscribe(EventType.PAC_MAN_SUPER_SUGAR_COLLISION, blinky);

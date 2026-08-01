@@ -249,6 +249,10 @@ public class ConfigsEx {
         return superSugar.getPercentage();
     }
 
+    public String PAC_MAN_EAT_SUGAR_CLIP_PATH() {
+        return sound.getPacmanEatSugarPath();
+    }
+
     public String PAC_MAN_DYING_CLIP_PATH() {
         return sound.getPacManDyingPath();
     }

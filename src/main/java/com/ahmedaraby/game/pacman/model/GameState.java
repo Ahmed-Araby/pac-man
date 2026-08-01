@@ -1,5 +1,6 @@
 package com.ahmedaraby.game.pacman.model;
 
+import com.ahmedaraby.game.pacman.sound.SoundPlayer;
 import com.ahmedaraby.game.pacman.sprite.ghost.Ghost;
 import com.ahmedaraby.game.pacman.sprite.playground.GhostHouseS;
 import com.ahmedaraby.game.pacman.sprite.playground.Maze;
@@ -28,6 +29,8 @@ public class GameState {
 
     private long prevFrameEndedAt;
     private long currFrameStartedAt;
+
+    private SoundPlayer soundPlayer;
 
     public void addGhost(Ghost ghost) {
         ghosts.add(ghost);

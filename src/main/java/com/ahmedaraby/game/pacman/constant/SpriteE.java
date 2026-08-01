@@ -9,7 +9,6 @@ public enum SpriteE {
     GHOST_HOUSE_EMPTY,
     SUGAR,
     PAC_MAN,
-    DEMOLISHING_PAC_MAN,
     GHOST,
     SUPER_SUGAR,
     MAZE,
