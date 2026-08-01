@@ -3,7 +3,7 @@ package com.ahmedaraby.jengine.sprite;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
-public abstract class SpriteRegistry<K, V> {
+public abstract class AssetRegistry<K, V> {
     private final Map<K, V> registry = new ConcurrentHashMap<>();
 
     public V get(K key) throws IllegalStateException {

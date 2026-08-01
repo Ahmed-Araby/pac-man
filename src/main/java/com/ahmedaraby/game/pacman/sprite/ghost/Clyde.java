@@ -18,7 +18,7 @@ import com.ahmedaraby.game.pacman.sprite.playground.GhostHouseS;
 import com.ahmedaraby.game.pacman.util.PlaygroundShortestPathNav;
 import com.ahmedaraby.jengine.entity.Coordinate;
 import com.ahmedaraby.jengine.entity.Vector;
-import com.ahmedaraby.jengine.sprite.SpriteRegistry;
+import com.ahmedaraby.jengine.sprite.AssetRegistry;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.image.Image;
 
@@ -28,18 +28,18 @@ public class Clyde extends Ghost {
     private final ShortestPathNavigator navigator;
 
     public Clyde(GameState gameState, ConfigsEx configs, StrideCalculator strideCalc,
-                 SpriteRegistry<String, Image> spriteRegistry) {
+                 AssetRegistry<String, Image> assetRegistry) {
         super(gameState, configs, strideCalc,
                 SpriteE.GHOST, -1, -1, Vector.STILL);
 
-        scattered = new ClydeScattered(this, gameState, configs, spriteRegistry,
+        scattered = new ClydeScattered(this, gameState, configs, assetRegistry,
                 GhostModeActivePeriodsConf.LEVEL_1_SCATTER_ACTIVE_PERIODS);
-        chaser = new ClydeChaser(this, gameState, configs, spriteRegistry,
+        chaser = new ClydeChaser(this, gameState, configs, assetRegistry,
                 GhostModeActivePeriodsConf.LEVEL_1_CHASE_ACTIVE_PERIODS);
-        frightened = new Frightened(this, gameState, configs, spriteRegistry,
+        frightened = new Frightened(this, gameState, configs, assetRegistry,
                 GhostModeActivePeriodsConf.ALL_LEVELS_FRIGHTENED_MODE_ACTIVE_PERIODS);
-        eaten = new Eaten(this, gameState, configs, spriteRegistry);
-        scaredChaser = new ClydeScaredChaser(this, gameState, configs, spriteRegistry);
+        eaten = new Eaten(this, gameState, configs, assetRegistry);
+        scaredChaser = new ClydeScaredChaser(this, gameState, configs, assetRegistry);
 
         PlaygroundShortestPathNav playgroundShortestPathNav = new PlaygroundShortestPathNav();
         navigator = new ShortestPathNavigator(configs, playgroundShortestPathNav);

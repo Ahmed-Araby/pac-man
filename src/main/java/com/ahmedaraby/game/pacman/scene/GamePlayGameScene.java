@@ -13,8 +13,8 @@ import com.ahmedaraby.game.pacman.sprite.ghost.Pinky;
 import com.ahmedaraby.game.pacman.sprite.playground.GhostHouseS;
 import com.ahmedaraby.game.pacman.sprite.playground.Maze;
 import com.ahmedaraby.game.pacman.sprite.playground.Sugar;
-import com.ahmedaraby.game.pacman.util.FxSpriteRegistry;
-import com.ahmedaraby.jengine.sprite.SpriteRegistry;
+import com.ahmedaraby.game.pacman.util.FxAssetRegistry;
+import com.ahmedaraby.jengine.sprite.AssetRegistry;
 import javafx.scene.Scene;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
@@ -37,7 +37,7 @@ import java.net.URISyntaxException;
 public class GamePlayGameScene extends GameScene {
     private final ConfigsEx configs;
     private final GameState gameState = new GameState();
-    private final SpriteRegistry<String, Image> spriteRegistry = new FxSpriteRegistry();
+    private final AssetRegistry<String, Image> assetRegistry = new FxAssetRegistry();
     private final StrideCalculator strideCalculator;
 
     // sprites
@@ -108,10 +108,10 @@ public class GamePlayGameScene extends GameScene {
     }
 
     private void createGhostsSprites() {
-        blinky = new Blinky(gameState, configs, strideCalculator, spriteRegistry);
-        inky = new Inky(gameState, configs, strideCalculator, spriteRegistry);
-        pinky = new Pinky(gameState, configs, strideCalculator, spriteRegistry);
-        clyde = new Clyde(gameState, configs, strideCalculator, spriteRegistry);
+        blinky = new Blinky(gameState, configs, strideCalculator, assetRegistry);
+        inky = new Inky(gameState, configs, strideCalculator, assetRegistry);
+        pinky = new Pinky(gameState, configs, strideCalculator, assetRegistry);
+        clyde = new Clyde(gameState, configs, strideCalculator, assetRegistry);
     }
 
     private void setGameState() {

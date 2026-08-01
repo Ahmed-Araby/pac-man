@@ -6,7 +6,7 @@ import com.ahmedaraby.game.pacman.model.GameState;
 import com.ahmedaraby.game.pacman.sprite.ghost.Ghost;
 import com.ahmedaraby.jengine.entity.Coordinate;
 import com.ahmedaraby.jengine.entity.Vector;
-import com.ahmedaraby.jengine.sprite.SpriteRegistry;
+import com.ahmedaraby.jengine.sprite.AssetRegistry;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
@@ -15,8 +15,8 @@ public abstract class Scattered extends TemporalGhostMode {
     protected Coordinate target;
     private TargetNavigator targetNavigator;
 
-    public Scattered(Ghost ghost, GameState gameState, ConfigsEx configs, SpriteRegistry<String, Image> spriteRegistry, int[] activePeriodsSec, double[] frameDistance) {
-        super(ghost, gameState, configs, spriteRegistry, activePeriodsSec, frameDistance);
+    public Scattered(Ghost ghost, GameState gameState, ConfigsEx configs, AssetRegistry<String, Image> assetRegistry, int[] activePeriodsSec, double[] frameDistance) {
+        super(ghost, gameState, configs, assetRegistry, activePeriodsSec, frameDistance);
         targetNavigator = new TargetNavigator(configs);
     }
 
