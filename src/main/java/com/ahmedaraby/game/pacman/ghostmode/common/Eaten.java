@@ -3,28 +3,21 @@ package com.ahmedaraby.game.pacman.ghostmode.common;
 import com.ahmedaraby.game.pacman.config.intConfigs.ConfigsEx;
 import com.ahmedaraby.game.pacman.constant.SpriteFileNameC;
 import com.ahmedaraby.game.pacman.ghostmode.navigation.TargetNavigator;
-import com.ahmedaraby.game.pacman.util.PlaygroundShortestPathNav;
-import com.ahmedaraby.jengine.animation.Animator;
-import com.ahmedaraby.jengine.animation.DistanceBasedAnimator;
 import com.ahmedaraby.jengine.entity.Coordinate;
 import com.ahmedaraby.jengine.entity.Vector;
-import com.ahmedaraby.game.pacman.ghostmode.navigation.GhostNavigator;
-import com.ahmedaraby.game.pacman.ghostmode.navigation.ShortestPathNavigator;
 import com.ahmedaraby.game.pacman.model.GameState;
 import com.ahmedaraby.game.pacman.sprite.ghost.Ghost;
-import com.ahmedaraby.jengine.sprite.SpriteRegistry;
+import com.ahmedaraby.jengine.sprite.AssetRegistry;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.image.Image;
 import com.ahmedaraby.game.pacman.ghostmode.GhostMode;
-
-import java.util.*;
 
 public class Eaten extends GhostMode {
     private Coordinate ghostHouseEmptyLoc;
     private TargetNavigator targetNavigator;
 
-    public Eaten(Ghost ghost, GameState gameState, ConfigsEx configs, SpriteRegistry<String, Image> spriteRegistry) {
-        super(ghost, gameState, configs, spriteRegistry,
+    public Eaten(Ghost ghost, GameState gameState, ConfigsEx configs, AssetRegistry<String, Image> assetRegistry) {
+        super(ghost, gameState, configs, assetRegistry,
                 new double[]{configs.GHOST_ANIMATION_COMPLETE_DIST()});
         targetNavigator = new TargetNavigator(configs);
     }
@@ -65,10 +58,10 @@ public class Eaten extends GhostMode {
 //        final String eatenDownFramePath = String.format(SpriteFileNameC.GHOST_SPRITE_PATH_TEMPLATE, SpriteFileNameC.GHOST_EATEN_FOLDER, SpriteFileNameC.GHOST_EATEN_DOWN_FRAME_FILE_NAME);
 //        final String eatenLeftFramePath = String.format(SpriteFileNameC.GHOST_SPRITE_PATH_TEMPLATE, SpriteFileNameC.GHOST_EATEN_FOLDER, SpriteFileNameC.GHOST_EATEN_LEFT_FRAME_FILE_NAME);
 
-        final Image up = spriteRegistry.get(eatenUpFramePath);
-//        final Image right = spriteRegistry.get(eatenRightFramePath);
-//        final Image down = spriteRegistry.get(eatenDownFramePath);
-//        final Image left = spriteRegistry.get(eatenLeftFramePath);
+        final Image up = assetRegistry.get(eatenUpFramePath);
+//        final Image right = assetRegistry.get(eatenRightFramePath);
+//        final Image down = assetRegistry.get(eatenDownFramePath);
+//        final Image left = assetRegistry.get(eatenLeftFramePath);
 
         return new Image[]{up};
     }

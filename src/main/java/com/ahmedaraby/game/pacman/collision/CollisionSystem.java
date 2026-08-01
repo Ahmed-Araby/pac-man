@@ -2,6 +2,7 @@ package com.ahmedaraby.game.pacman.collision;
 
 import com.ahmedaraby.game.pacman.constant.SpriteE;
 import com.ahmedaraby.game.pacman.model.event.Event;
+import com.ahmedaraby.jengine.collision.Rect2RectCollisionDetectorUtil;
 import com.ahmedaraby.jengine.event.Publisher;
 import com.ahmedaraby.jengine.entity.Coordinate;
 import com.ahmedaraby.jengine.entity.Rectangle;
@@ -58,27 +59,16 @@ public class CollisionSystem {
     }
 
     private void detectPacman2GhostCollision() {
-        final Coordinate pacManTopLeftCorner = gameState.getPacMan().getTopLeftCorner();
-        final Rectangle pacManRect = SpriteUtil.toRect(pacManTopLeftCorner, SpriteE.PAC_MAN);
+        final Rectangle pacManRect = gameState.getPacMan().getRect();
 
         for(Ghost ghost: gameState.getGhosts()) {
-            final Rectangle ghostRect = SpriteUtil.toRect(ghost.getTopLeftCorner(), SpriteE.GHOST);
-            M2MSpriteCollisionDetector.detect(pacManRect, ghostRect).ifPresent((report)-> {
+            final Rectangle ghostRect = ghost.getRect();
+            final boolean collide = Rect2RectCollisionDetectorUtil.collide(pacManRect, ghostRect);
+            if (collide) {
                 final PacMan2GhostCollisionEvent collisionEvent = new PacMan2GhostCollisionEvent(ghost);
                 asyncEventManager.notify(collisionEvent);
-            });
+            }
         }
 
-    }
-
-    // [TODO] implement pacman to ghosts collision detection
-
-    public void analyzeMovementAttempt() {
-    }
-
-    private void analyzePacmanMovementAttempt() {
-    }
-
-    private void analyzeGhostMovementAttempt() {
     }
 }

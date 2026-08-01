@@ -9,4 +9,6 @@ import lombok.Setter;
 @Getter
 public class SoundConfig {
     private String pacmanEatSugarPath;
+    private String pacManDefeatedPath;
+    private String PacManBurstPath;
 }

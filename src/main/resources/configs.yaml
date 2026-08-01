@@ -14,6 +14,8 @@ pacman:
   speed: 200
   color: !color YELLOW
   diameter: 50
+  burstingArcExtentDeg: 10
+  burstingArcCount: 10
   mouth:
     animation:
       completeDist: 50
@@ -28,10 +30,7 @@ pacman:
       downStartAngle: 315
     closed:
       arcExtentDeg: 360
-      rightStartAngle: 0
-      upStartAngle: 0
-      leftStartAngle: 0
-      downStartAngle: 0
+      arcStartAngleDeg: 0
 
 ghost:
   width: 50
@@ -85,3 +84,5 @@ superSugar:
 
 sound:
   pacmanEatSugarPath: "/assets/sounds/eat_sugar.wav"
+  pacManDefeatedPath: "/assets/sounds/defeated.wav"
+  pacManBurstPath: "/assets/sounds/burst.wav"

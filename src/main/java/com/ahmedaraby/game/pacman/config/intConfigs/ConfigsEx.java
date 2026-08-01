@@ -84,44 +84,40 @@ public class ConfigsEx {
         return PACMAN_MOUTH_ANIMATION_COMPLETE_DIST() * PACMAN_MOUTH_ANIMATION_PERCENTAGES().get(1);
     }
 
-    public double PACMAN_MOUTH_OPEN_ARC_EXTENT_DEG() {
+    public int PACMAN_MOUTH_OPEN_ARC_EXTENT_DEG() {
         return pacman.getMouth().getOpen().getArcExtentDeg();
     }
 
-    public double PACMAN_MOUTH_OPEN_RIGHT_START_ANGLE() {
+    public int PACMAN_MOUTH_OPEN_RIGHT_START_ANGLE() {
         return pacman.getMouth().getOpen().getRightStartAngle();
     }
 
-    public double PACMAN_MOUTH_OPEN_UP_START_ANGLE() {
+    public int PACMAN_MOUTH_OPEN_UP_START_ANGLE() {
         return pacman.getMouth().getOpen().getUpStartAngle();
     }
 
-    public double PACMAN_MOUTH_OPEN_LEFT_START_ANGLE() {
+    public int PACMAN_MOUTH_OPEN_LEFT_START_ANGLE() {
         return pacman.getMouth().getOpen().getLeftStartAngle();
     }
 
-    public double PACMAN_MOUTH_OPEN_DOWN_START_ANGLE() {
+    public int PACMAN_MOUTH_OPEN_DOWN_START_ANGLE() {
         return pacman.getMouth().getOpen().getDownStartAngle();
     }
 
-    public double PACMAN_MOUTH_CLOSED_ARC_EXTENT_DEG() {
+    public int PACMAN_MOUTH_CLOSED_ARC_EXTENT_DEG() {
         return pacman.getMouth().getClosed().getArcExtentDeg();
     }
 
-    public double PACMAN_MOUTH_CLOSED_RIGHT_START_ANGLE() {
-        return pacman.getMouth().getClosed().getRightStartAngle();
+    public int PACMAN_MOUTH_CLOSED_ARC_START_ANGLE_DEG() {
+        return pacman.getMouth().getClosed().getArcStartAngleDeg();
     }
 
-    public double PACMAN_MOUTH_CLOSED_UP_START_ANGLE() {
-        return pacman.getMouth().getClosed().getUpStartAngle();
+    public int PAC_MAN_BURSTING_ARC_EXTENT_DEG() {
+        return pacman.getBurstingArcExtentDeg();
     }
 
-    public double PACMAN_MOUTH_CLOSED_LEFT_START_ANGLE() {
-        return pacman.getMouth().getClosed().getLeftStartAngle();
-    }
-
-    public double PACMAN_MOUTH_CLOSED_DOWN_START_ANGLE() {
-        return pacman.getMouth().getClosed().getDownStartAngle();
+    public int PAC_MAN_BURSTING_ARC_COUNT() {
+        return pacman.getBurstingArcCount();
     }
 
     public double GHOST_WIDTH() {
@@ -253,5 +249,17 @@ public class ConfigsEx {
 
     public double SUPER_SUGAR_PERCENTAGE() {
         return superSugar.getPercentage();
+    }
+
+    public String PAC_MAN_EAT_SUGAR_CLIP_PATH() {
+        return sound.getPacmanEatSugarPath();
+    }
+
+    public String PAC_MAN_DEFEATED_CLIP_PATH() {
+        return sound.getPacManDefeatedPath();
+    }
+
+    public String PAC_MAN_BURST_CLIP_PATH() {
+        return sound.getPacManBurstPath();
     }
 }

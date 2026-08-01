@@ -6,6 +6,7 @@ import com.ahmedaraby.game.pacman.config.intConfigs.ConfigsEx;
 import com.ahmedaraby.game.pacman.model.event.Event;
 import com.ahmedaraby.game.pacman.ghostmode.navigation.StrideCalculator;
 import com.ahmedaraby.game.pacman.model.GameState;
+import com.ahmedaraby.game.pacman.sound.SoundPlayer;
 import com.ahmedaraby.game.pacman.sprite.ghost.Blinky;
 import com.ahmedaraby.game.pacman.sprite.ghost.Clyde;
 import com.ahmedaraby.game.pacman.sprite.ghost.Pinky;
@@ -13,42 +14,38 @@ import com.ahmedaraby.game.pacman.sprite.playground.GhostHouseS;
 import com.ahmedaraby.game.pacman.sprite.playground.Maze;
 import com.ahmedaraby.game.pacman.sprite.playground.Sugar;
 import com.ahmedaraby.game.pacman.util.FxSpriteRegistry;
-import com.ahmedaraby.jengine.sprite.SpriteRegistry;
+import com.ahmedaraby.jengine.sprite.AssetRegistry;
 import javafx.scene.Scene;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
 import javafx.scene.layout.Pane;
-import javafx.scene.paint.Color;
-import com.ahmedaraby.game.pacman.config.GameConfig;
 import com.ahmedaraby.game.pacman.constant.ColorC;
 import com.ahmedaraby.game.pacman.model.event.EventType;
 import com.ahmedaraby.jengine.event.SyncEventManager;
 import com.ahmedaraby.game.pacman.input.JavaFXInputHandler;
 import com.ahmedaraby.game.pacman.input.JavaFXUserInputHandler;
 import com.ahmedaraby.game.pacman.playground.Playground;
-import com.ahmedaraby.game.pacman.sound.SoundPlayer;
-import com.ahmedaraby.game.pacman.sprite.PacMan;
+import com.ahmedaraby.game.pacman.sprite.pacman.PacMan;
 import com.ahmedaraby.game.pacman.sprite.ghost.Inky;
 import com.ahmedaraby.game.pacman.sprite.playground.SuperSugar;
-import com.ahmedaraby.game.pacman.util.debug.DebugUtil;
 
 import java.io.FileNotFoundException;
 import java.net.URISyntaxException;
 
 
-public class GamePlayGameScene implements GameScene {
+public class GamePlayGameScene extends GameScene {
     private final ConfigsEx configs;
     private final GameState gameState = new GameState();
-    private final SpriteRegistry<String, Image> spriteRegistry = new FxSpriteRegistry();
+    private final AssetRegistry<String, Image> assetRegistry = new FxSpriteRegistry();
     private final StrideCalculator strideCalculator;
 
     // sprites
-    GhostHouseS ghostHouseS;
-    Maze maze;
-    Sugar sugar;
-    SuperSugar superSugar;
-    PacMan pacMan;
+    private GhostHouseS ghostHouseS;
+    private Maze maze;
+    private Sugar sugar;
+    private SuperSugar superSugar;
+    private PacMan pacMan;
 
     // ghosts
     private Blinky blinky;
@@ -56,16 +53,11 @@ public class GamePlayGameScene implements GameScene {
     private Pinky pinky;
     private Clyde clyde;
 
-    // javaFX
-    final Pane pane;
-    final Canvas canvas;
-    final Scene scene;
-
     // game engine
-    final SyncEventManager<EventType, Event<EventType>> syncEventManager;
+    private final SyncEventManager<EventType, Event<EventType>> syncEventManager;
 
-    final SoundPlayer soundPlayer;
-    final JavaFXInputHandler javaFXInputHandler;
+    private final SoundPlayer soundPlayer;
+    private final JavaFXInputHandler javaFXInputHandler;
 
     // collision detection
     private final CollisionSystem collisionSystem;
@@ -79,7 +71,7 @@ public class GamePlayGameScene implements GameScene {
 
         // game engine
         syncEventManager = new SyncEventManager();
-        soundPlayer = new SoundPlayer();
+        soundPlayer = new SoundPlayer(configs);
         javaFXInputHandler = new JavaFXUserInputHandler(syncEventManager);
         collisionSystem = new CollisionSystem(gameState, syncEventManager);
 
@@ -98,6 +90,7 @@ public class GamePlayGameScene implements GameScene {
         canvas = new Canvas(configs.CANVAS_WIDTH(), configs.CANVAS_HEIGHT());
         pane = new Pane(canvas);
         scene = new Scene(pane);
+        // [TODO] unregister the input handler
         scene.setOnKeyPressed((event) -> {
             javaFXInputHandler.handleKeyPressedEvent(event);
         });
@@ -115,16 +108,18 @@ public class GamePlayGameScene implements GameScene {
     }
 
     private void createGhostsSprites() {
-        blinky = new Blinky(gameState, configs, strideCalculator, spriteRegistry);
-        inky = new Inky(gameState, configs, strideCalculator, spriteRegistry);
-        pinky = new Pinky(gameState, configs, strideCalculator, spriteRegistry);
-        clyde = new Clyde(gameState, configs, strideCalculator, spriteRegistry);
+        blinky = new Blinky(gameState, configs, strideCalculator, assetRegistry);
+        inky = new Inky(gameState, configs, strideCalculator, assetRegistry);
+        pinky = new Pinky(gameState, configs, strideCalculator, assetRegistry);
+        clyde = new Clyde(gameState, configs, strideCalculator, assetRegistry);
     }
 
     private void setGameState() {
         gameState.setMaze(maze);
-        gameState.setPacMan(pacMan);
         gameState.setGhostHouseS(ghostHouseS);
+        gameState.setSugar(sugar);
+        gameState.setSuperSugar(superSugar);
+        gameState.setPacMan(pacMan);
 
         // track ghosts
         gameState.addGhost(blinky);
@@ -132,11 +127,14 @@ public class GamePlayGameScene implements GameScene {
         gameState.addGhost(pinky);
         gameState.addGhost(clyde);
 
+        // game engine
+        gameState.setSoundPlayer(soundPlayer);
+
     }
 
     private void registerEventSubscribers() {
         if (soundPlayer == null || sugar == null || pacMan == null) {
-            throw new IllegalStateException("can't register null sprite for event subscription, SoundPlayer, Sugar and PacMan sprites must be defined");
+            throw new IllegalStateException("can't register null sprite for event subscription, GamePlaySoundPlayer, Sugar and PacMan sprites must be defined");
         }
 
         syncEventManager.subscribe(EventType.PAC_MAN_SUGAR_COLLISION, soundPlayer);
@@ -154,8 +152,10 @@ public class GamePlayGameScene implements GameScene {
         syncEventManager.subscribe(EventType.PAC_MAN_GHOST_COLLISION, inky);
         syncEventManager.subscribe(EventType.PAC_MAN_GHOST_COLLISION, pinky);
         syncEventManager.subscribe(EventType.PAC_MAN_GHOST_COLLISION, clyde);
+        syncEventManager.subscribe(EventType.PAC_MAN_GHOST_COLLISION, pacMan);
     }
 
+    // [TODO] remove this method
     private void registerSubscribersForSyncEvents() {
         if (pacMan == null) {
             throw new IllegalStateException("can't register null objects for sync event subscription, PacMan, and pacManToWallCollisionDetection must be defined");
@@ -179,13 +179,9 @@ public class GamePlayGameScene implements GameScene {
     }
 
     @Override
-    public Scene getScene() {
-        return scene;
-    }
-
-    @Override
     public void render() {
         final GraphicsContext context = canvas.getGraphicsContext2D();
+        // erase canvas
         context.setFill(ColorC.CANVAS_COLOR);
         context.fillRect(0, 0, configs.CANVAS_WIDTH(), configs.CANVAS_HEIGHT());
 
@@ -194,10 +190,6 @@ public class GamePlayGameScene implements GameScene {
         ghostHouseS.render(canvas);
         sugar.render(canvas);
         superSugar.render(canvas);
-
-        if(GameConfig.isDebugModeOn()) {
-            DebugUtil.drawDummyPacman(context, 0, 0, configs.PACMAN_DIAMETER(), configs.PACMAN_DIAMETER(), Color.GRAY);
-        }
 
         pacMan.render(canvas);
         blinky.render(canvas);

@@ -9,7 +9,7 @@ import com.ahmedaraby.jengine.entity.Vector;
 import com.ahmedaraby.game.pacman.model.GameState;
 import com.ahmedaraby.game.pacman.sprite.ghost.Blinky;
 import com.ahmedaraby.game.pacman.sprite.ghost.Ghost;
-import com.ahmedaraby.jengine.sprite.SpriteRegistry;
+import com.ahmedaraby.jengine.sprite.AssetRegistry;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
@@ -18,8 +18,8 @@ import com.ahmedaraby.game.pacman.ghostmode.Chaser;
 public class InkyChaser extends Chaser {
 
 
-    public InkyChaser(Ghost ghost, GameState gameState, ConfigsEx configs, SpriteRegistry<String, Image> spriteRegistry, int[] activePeriodsSec) {
-        super(ghost, gameState, configs, spriteRegistry, activePeriodsSec,
+    public InkyChaser(Ghost ghost, GameState gameState, ConfigsEx configs, AssetRegistry<String, Image> assetRegistry, int[] activePeriodsSec) {
+        super(ghost, gameState, configs, assetRegistry, activePeriodsSec,
                 new double[]{configs.GHOST_INKY_FIRST_FRAME_DISTANCE(), configs.GHOST_INKY_SECOND_FRAME_DISTANCE()});
     }
 
@@ -75,8 +75,8 @@ public class InkyChaser extends Chaser {
     protected Image[] loadSprites() {
         final String frame1Path = String.format(SpriteFileNameC.GHOST_SPRITE_PATH_TEMPLATE, SpriteFileNameC.INKY_FOLDER, SpriteFileNameC.INKY_FRAME_1_FILE_NAME);
         final String frame2Path = String.format(SpriteFileNameC.GHOST_SPRITE_PATH_TEMPLATE, SpriteFileNameC.INKY_FOLDER, SpriteFileNameC.INKY_FRAME_2_FILE_NAME);
-        final Image frame1 = spriteRegistry.get(frame1Path);
-        final Image frame2 = spriteRegistry.get(frame2Path);
+        final Image frame1 = assetRegistry.get(frame1Path);
+        final Image frame2 = assetRegistry.get(frame2Path);
         return new Image[] {frame1, frame2};
     }
 }
