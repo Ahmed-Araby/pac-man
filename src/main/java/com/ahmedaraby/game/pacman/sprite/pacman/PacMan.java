@@ -8,6 +8,7 @@ import com.ahmedaraby.game.pacman.model.event.EventType;
 import com.ahmedaraby.game.pacman.ghostmode.navigation.StrideCalculator;
 import com.ahmedaraby.game.pacman.model.event.collision.PacMan2GhostCollisionEvent;
 import com.ahmedaraby.game.pacman.model.exception.GameOverException;
+import com.ahmedaraby.game.pacman.model.exception.GameStartException;
 import com.ahmedaraby.game.pacman.sprite.MovingSprite;
 import com.ahmedaraby.game.pacman.sprite.pacman.mode.DefeatedPacManMode;
 import com.ahmedaraby.game.pacman.sprite.pacman.mode.BurstingPacManMode;
@@ -95,6 +96,8 @@ public class PacMan extends MovingSprite implements Subscriber<EventType> {
             playerModeTransition(event);
         } else if (activeMode instanceof DefeatedPacManMode) {
             DefeatedModeTransition();
+        } else if (activeMode instanceof BurstingPacManMode) {
+            burstingModeTransition();
         } else {
             throw new IllegalStateException("no available transition for pacman");
         }
@@ -115,6 +118,12 @@ public class PacMan extends MovingSprite implements Subscriber<EventType> {
     private void DefeatedModeTransition() {
         if (activeMode.ended()) {
             activeMode = new BurstingPacManMode(this, gameState, configs);
+        }
+    }
+
+    private void burstingModeTransition() {
+        if (activeMode.ended()) {
+            throw new GameStartException();
         }
     }
 }
