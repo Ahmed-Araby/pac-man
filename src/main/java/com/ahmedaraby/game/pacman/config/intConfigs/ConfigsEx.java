@@ -117,6 +117,13 @@ public class ConfigsEx {
         return pacman.getMouth().getClosed().getArcStartAngleDeg();
     }
 
+    public int PAC_MAN_BURSTING_ARC_EXTENT_DEG() {
+        return pacman.getBurstingArcExtentDeg();
+    }
+
+    public int PAC_MAN_BURSTING_ARC_COUNT() {
+        return pacman.getBurstingArcCount();
+    }
 
     public double GHOST_WIDTH() {
         return ghost.getWidth();
@@ -255,5 +262,9 @@ public class ConfigsEx {
 
     public String PAC_MAN_DYING_CLIP_PATH() {
         return sound.getPacManDyingPath();
+    }
+
+    public String AFTER_PAC_MAN_DEATH_CLIP_PATH() {
+        return sound.getAfterPacManDeathPath();
     }
 }

@@ -14,6 +14,8 @@ pacman:
   speed: 200
   color: !color YELLOW
   diameter: 50
+  burstingArcExtentDeg: 10
+  burstingArcCount: 10
   deathPeriodSec: 3
   mouth:
     animation:
@@ -84,3 +86,4 @@ superSugar:
 sound:
   pacmanEatSugarPath: "/assets/sounds/eat_sugar.wav"
   pacManDyingPath: "/assets/sounds/death.wav"
+  afterPacManDeathPath: "/assets/sounds/after_death.wav"

@@ -12,6 +12,8 @@ public class PacManConfig {
     private double speed;
     private Color color;
     private double diameter;
+    private int burstingArcExtentDeg;
+    private int burstingArcCount;
     private int deathPeriodSec;
     private Mouth mouth;
 

@@ -22,13 +22,29 @@ public class SoundPlayer implements Subscriber<EventType> {
     }
 
     public void play(String key) {
-        registry.get(key).play();
+        MediaPlayer player = registry.get(key);
+
+        if (player.getStatus() != MediaPlayer.Status.PLAYING) {
+            player.seek(player.getStartTime());
+            player.play();
+        }
+        player.setOnEndOfMedia(() -> player.stop());
     }
 
     public MediaPlayer repeat(String key, int count) {
         final MediaPlayer player = registry.get(key);
-        player.setCycleCount(count);
-        player.play();
+        if (player.getStatus() != MediaPlayer.Status.PLAYING) {
+            player.seek(player.getStartTime());
+            player.setCycleCount(count);
+            player.play();
+        }
+
+        player.setOnEndOfMedia(() -> {
+            if (player.getCurrentCount() == count) {
+                player.pause();
+            }
+        });
+
         return player;
     }
 

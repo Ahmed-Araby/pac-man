@@ -10,4 +10,5 @@ import lombok.Setter;
 public class SoundConfig {
     private String pacmanEatSugarPath;
     private String pacManDyingPath;
+    private String afterPacManDeathPath;
 }

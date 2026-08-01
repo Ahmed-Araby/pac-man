@@ -12,10 +12,10 @@ import javafx.scene.shape.ArcType;
 import javafx.scene.canvas.Canvas;
 
 
-public class DyingPacManMode extends PacManMode {
+public class DefeatedPacManMode extends PacManMode {
     private final double originalArcExtent;
 
-    public DyingPacManMode(PacMan pacMan, GameState gameState, ConfigsEx configs) {
+    public DefeatedPacManMode(PacMan pacMan, GameState gameState, ConfigsEx configs) {
         super(pacMan, gameState, configs);
         originalArcExtent = pacMan.getArcExtent();
         gameState.getSoundPlayer().play(configs.PAC_MAN_DYING_CLIP_PATH());

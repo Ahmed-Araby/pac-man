@@ -9,8 +9,8 @@ import com.ahmedaraby.game.pacman.ghostmode.navigation.StrideCalculator;
 import com.ahmedaraby.game.pacman.model.event.collision.PacMan2GhostCollisionEvent;
 import com.ahmedaraby.game.pacman.model.exception.GameOverException;
 import com.ahmedaraby.game.pacman.sprite.MovingSprite;
-import com.ahmedaraby.game.pacman.sprite.pacman.mode.DyingPacManMode;
-import com.ahmedaraby.game.pacman.sprite.pacman.mode.ExplodingPacManMode;
+import com.ahmedaraby.game.pacman.sprite.pacman.mode.DefeatedPacManMode;
+import com.ahmedaraby.game.pacman.sprite.pacman.mode.BurstingPacManMode;
 import com.ahmedaraby.game.pacman.sprite.pacman.mode.PacManMode;
 import com.ahmedaraby.game.pacman.sprite.pacman.mode.PlayerPacManMode;
 import com.ahmedaraby.jengine.entity.Coordinate;
@@ -91,9 +91,12 @@ public class PacMan extends MovingSprite implements Subscriber<EventType> {
     }
 
     private void transitionMode(Event<EventType> event) {
-        switch (activeMode) {
-            case PlayerPacManMode playerPacManMode -> playerModeTransition(event);
-            default -> throw new IllegalStateException("no available transition for pacman");
+        if (activeMode instanceof PlayerPacManMode) {
+            playerModeTransition(event);
+        } else if (activeMode instanceof DefeatedPacManMode) {
+            DefeatedModeTransition();
+        } else {
+            throw new IllegalStateException("no available transition for pacman");
         }
     }
 
@@ -102,11 +105,16 @@ public class PacMan extends MovingSprite implements Subscriber<EventType> {
             final PacMan2GhostCollisionEvent collisionEvent = (PacMan2GhostCollisionEvent) event;
             if (collisionEvent.getGhost().getActiveMode() instanceof Chaser
                     || collisionEvent.getGhost().getActiveMode() instanceof Scattered) {
-                activeMode = new DyingPacManMode(this, gameState, configs);
+                activeMode = new DefeatedPacManMode(this, gameState, configs);
                 throw new GameOverException(gameState, configs);
             }
         }
 
     }
 
+    private void DefeatedModeTransition() {
+        if (activeMode.ended()) {
+            activeMode = new BurstingPacManMode(this, gameState, configs);
+        }
+    }
 }
