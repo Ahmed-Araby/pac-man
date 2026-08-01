@@ -17,11 +17,11 @@ public class SoundPlayer implements Subscriber<EventType> {
 
         // load
         registry.preload(configs.PAC_MAN_EAT_SUGAR_CLIP_PATH());
-        registry.preload(configs.PAC_MAN_DYING_CLIP_PATH());
-        registry.preload(configs.AFTER_PAC_MAN_DEATH_CLIP_PATH());
+        registry.preload(configs.PAC_MAN_DEFEATED_CLIP_PATH());
+        registry.preload(configs.PAC_MAN_BURST_CLIP_PATH());
     }
 
-    public void play(String key) {
+    public MediaPlayer play(String key) {
         MediaPlayer player = registry.get(key);
 
         if (player.getStatus() != MediaPlayer.Status.PLAYING) {
@@ -29,6 +29,7 @@ public class SoundPlayer implements Subscriber<EventType> {
             player.play();
         }
         player.setOnEndOfMedia(() -> player.stop());
+        return player;
     }
 
     public MediaPlayer repeat(String key, int count) {

@@ -17,7 +17,7 @@ public class BurstingPacManMode extends PacManMode {
     private final MediaPlayer mediaPlayer;
     public BurstingPacManMode(PacMan pacMan, GameState gameState, ConfigsEx configs) {
         super(pacMan, gameState, configs);
-        mediaPlayer = gameState.getSoundPlayer().repeat(configs.AFTER_PAC_MAN_DEATH_CLIP_PATH(), 2);
+        mediaPlayer = gameState.getSoundPlayer().repeat(configs.PAC_MAN_BURST_CLIP_PATH(), 2);
     }
 
     @Override

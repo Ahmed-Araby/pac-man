@@ -16,7 +16,6 @@ pacman:
   diameter: 50
   burstingArcExtentDeg: 10
   burstingArcCount: 10
-  deathPeriodSec: 3
   mouth:
     animation:
       completeDist: 50
@@ -85,5 +84,5 @@ superSugar:
 
 sound:
   pacmanEatSugarPath: "/assets/sounds/eat_sugar.wav"
-  pacManDyingPath: "/assets/sounds/death.wav"
-  afterPacManDeathPath: "/assets/sounds/after_death.wav"
+  pacManDefeatedPath: "/assets/sounds/defeated.wav"
+  pacManBurstPath: "/assets/sounds/burst.wav"

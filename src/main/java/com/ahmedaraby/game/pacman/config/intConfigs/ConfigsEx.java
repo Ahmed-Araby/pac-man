@@ -68,11 +68,6 @@ public class ConfigsEx {
         return pacman.getDiameter();
     }
 
-    // equals to the length of the dying music
-    public int PACMAN_DEATH_PERIOD_SEC() {
-        return pacman.getDeathPeriodSec();
-    }
-
     public double PACMAN_MOUTH_ANIMATION_COMPLETE_DIST() {
         return pacman.getMouth().getAnimation().getCompleteDist();
     }
@@ -260,11 +255,11 @@ public class ConfigsEx {
         return sound.getPacmanEatSugarPath();
     }
 
-    public String PAC_MAN_DYING_CLIP_PATH() {
-        return sound.getPacManDyingPath();
+    public String PAC_MAN_DEFEATED_CLIP_PATH() {
+        return sound.getPacManDefeatedPath();
     }
 
-    public String AFTER_PAC_MAN_DEATH_CLIP_PATH() {
-        return sound.getAfterPacManDeathPath();
+    public String PAC_MAN_BURST_CLIP_PATH() {
+        return sound.getPacManBurstPath();
     }
 }
