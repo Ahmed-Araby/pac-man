@@ -3,13 +3,16 @@ package com.ahmedaraby.game.pacman.scene;
 import com.ahmedaraby.game.pacman.config.intConfigs.ConfigsEx;
 import com.ahmedaraby.game.pacman.constant.ColorC;
 import com.ahmedaraby.game.pacman.model.GameState;
-import com.ahmedaraby.game.pacman.sound.DemolishingSoundPlayer;
+import com.ahmedaraby.game.pacman.model.event.Event;
+import com.ahmedaraby.game.pacman.model.event.EventType;
+import com.ahmedaraby.game.pacman.sound.SoundPlayer;
 import com.ahmedaraby.game.pacman.sprite.ghost.*;
 import com.ahmedaraby.game.pacman.sprite.pacman.DyingPacManS;
 import com.ahmedaraby.game.pacman.sprite.playground.GhostHouseS;
 import com.ahmedaraby.game.pacman.sprite.playground.Maze;
 import com.ahmedaraby.game.pacman.sprite.playground.Sugar;
 import com.ahmedaraby.game.pacman.sprite.playground.SuperSugar;
+import com.ahmedaraby.jengine.event.SyncEventManager;
 import javafx.scene.Scene;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
@@ -18,7 +21,7 @@ import javafx.scene.layout.Pane;
 public class DemolishingScene extends GameScene {
     private final GameState gameState;
     private final ConfigsEx configs;
-    private final DemolishingSoundPlayer soundPlayer;
+    private final SoundPlayer soundPlayer;
 
     // sprites
     GhostHouseS ghostHouseS;
@@ -39,6 +42,7 @@ public class DemolishingScene extends GameScene {
         super(canvas, pane, scene);
         this.gameState = gameState;
         this.configs = configs;
+        soundPlayer = new SoundPlayer(configs);
 
         // initiate sprites
         ghostHouseS = gameState.getGhostHouseS();
@@ -46,10 +50,8 @@ public class DemolishingScene extends GameScene {
         setGhosts();
         sugar = gameState.getSugar();
         superSugar = gameState.getSuperSugar();
-        this.dyingPacMan = new DyingPacManS(gameState.getPacMan(), gameState, configs);
+        this.dyingPacMan = new DyingPacManS(gameState.getPacMan(), gameState, soundPlayer, configs);
         gameState.setPrevFrameEndedAt(System.nanoTime());
-        soundPlayer = new DemolishingSoundPlayer(configs);
-        soundPlayer.playPacManDyingSound();
     }
 
     private void setGhosts() {

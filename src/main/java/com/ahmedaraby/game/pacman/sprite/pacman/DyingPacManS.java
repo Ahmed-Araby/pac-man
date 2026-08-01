@@ -5,25 +5,30 @@ import com.ahmedaraby.game.pacman.constant.ColorC;
 import com.ahmedaraby.game.pacman.constant.SpriteE;
 import com.ahmedaraby.game.pacman.model.GameState;
 import com.ahmedaraby.game.pacman.model.event.Event;
-import com.ahmedaraby.game.pacman.model.exception.GameOverException;
 import com.ahmedaraby.game.pacman.model.exception.GameStartException;
+import com.ahmedaraby.game.pacman.sound.SoundPlayer;
 import com.ahmedaraby.game.pacman.sprite.MovingSprite;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.shape.ArcType;
 
 public class DyingPacManS extends MovingSprite {
-    // pacman mouse geometric information
+    // mouth geometric information
     private double arcStartAngle;
     private double arcExtent;
     private final double originalArcExtent;
+    private final SoundPlayer soundPlayer;
 
-    public DyingPacManS(PacMan pacMan, GameState gameState, ConfigsEx configs) {
+    public DyingPacManS(PacMan pacMan, GameState gameState, SoundPlayer soundPlayer, ConfigsEx configs) {
         super(gameState, configs, null, SpriteE.DEMOLISHING_PAC_MAN,
                 pacMan.getTopLeftCorner(), pacMan.getWidth(), pacMan.getHeight(), pacMan.getDirV());
+        this.soundPlayer = soundPlayer;
+
+        // mouth geometric information
         arcStartAngle = pacMan.getArcStartAngle();
         arcExtent = pacMan.getArcExtent();
         originalArcExtent = pacMan.getArcExtent();
+        soundPlayer.play(configs.PAC_MAN_DYING_CLIP_PATH());
     }
 
     @Override
