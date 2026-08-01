@@ -5,7 +5,7 @@ import javafx.scene.image.Image;
 
 import java.net.URL;
 
-public class FxAssetRegistry extends AssetRegistry<String, Image> {
+public class FxSpriteRegistry extends AssetRegistry<String, Image> {
     @Override
     protected Image load(String path) {
         final URL url = getClass().getResource(path);

@@ -13,7 +13,7 @@ import com.ahmedaraby.game.pacman.sprite.ghost.Pinky;
 import com.ahmedaraby.game.pacman.sprite.playground.GhostHouseS;
 import com.ahmedaraby.game.pacman.sprite.playground.Maze;
 import com.ahmedaraby.game.pacman.sprite.playground.Sugar;
-import com.ahmedaraby.game.pacman.util.FxAssetRegistry;
+import com.ahmedaraby.game.pacman.util.FxSpriteRegistry;
 import com.ahmedaraby.jengine.sprite.AssetRegistry;
 import javafx.scene.Scene;
 import javafx.scene.canvas.Canvas;
@@ -37,7 +37,7 @@ import java.net.URISyntaxException;
 public class GamePlayGameScene extends GameScene {
     private final ConfigsEx configs;
     private final GameState gameState = new GameState();
-    private final AssetRegistry<String, Image> assetRegistry = new FxAssetRegistry();
+    private final AssetRegistry<String, Image> assetRegistry = new FxSpriteRegistry();
     private final StrideCalculator strideCalculator;
 
     // sprites
